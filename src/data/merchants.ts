@@ -9,6 +9,14 @@ export type Merchant = {
   rating: number;
   description: string;
   whatsapp: string; // E.164 without +
+  plan: "free" | "assisted" | "local_featured" | "highlighted" | "premium_partner";
+  priority?: number;
+  banner?: string;
+  socialLinks?: {
+    whatsapp?: string;
+    instagram?: string;
+    facebook?: string;
+  };
   featured?: boolean;
   isNew?: boolean;
   emoji: string;
@@ -47,6 +55,9 @@ export const merchants: Merchant[] = [
     rating: 4.9,
     description: "Massas artesanais e pizzas de forno a lenha.",
     whatsapp: "5511999990001",
+    plan: "premium_partner",
+    priority: 5,
+    socialLinks: { whatsapp: "5511999990001" },
     featured: true,
     emoji: "🍝",
   },
@@ -61,6 +72,8 @@ export const merchants: Merchant[] = [
     rating: 4.7,
     description: "Hortifruti fresco e produtos do dia a dia.",
     whatsapp: "5511999990002",
+    plan: "local_featured",
+    priority: 3,
     featured: true,
     emoji: "🛒",
   },
@@ -75,6 +88,8 @@ export const merchants: Merchant[] = [
     rating: 4.8,
     description: "Pães, bolos e cafés saindo do forno toda hora.",
     whatsapp: "5511999990003",
+    plan: "free",
+    priority: 1,
     emoji: "🥐",
   },
   {
@@ -88,6 +103,8 @@ export const merchants: Merchant[] = [
     rating: 4.6,
     description: "Entrega rápida de medicamentos no bairro.",
     whatsapp: "5511999990004",
+    plan: "assisted",
+    priority: 2,
     emoji: "💊",
   },
   {
@@ -101,6 +118,8 @@ export const merchants: Merchant[] = [
     rating: 4.9,
     description: "Cortes, coloração e tratamentos capilares.",
     whatsapp: "5511999990005",
+    plan: "highlighted",
+    priority: 4,
     isNew: true,
     emoji: "💇",
   },
@@ -115,6 +134,8 @@ export const merchants: Merchant[] = [
     rating: 4.8,
     description: "Reparos hidráulicos com atendimento no mesmo dia.",
     whatsapp: "5511999990006",
+    plan: "free",
+    priority: 1,
     emoji: "🔧",
   },
   {
@@ -128,6 +149,8 @@ export const merchants: Merchant[] = [
     rating: 4.7,
     description: "Banho, tosa e ração com entrega no bairro.",
     whatsapp: "5511999990007",
+    plan: "local_featured",
+    priority: 3,
     isNew: true,
     emoji: "🐾",
   },
@@ -142,6 +165,8 @@ export const merchants: Merchant[] = [
     rating: 4.8,
     description: "Smash burgers artesanais e batatas crocantes.",
     whatsapp: "5511999990008",
+    plan: "premium_partner",
+    priority: 5,
     featured: true,
     emoji: "🍔",
   },
@@ -156,6 +181,8 @@ export const merchants: Merchant[] = [
     rating: 4.6,
     description: "Açaí cremoso com frutas e complementos.",
     whatsapp: "5511999990009",
+    plan: "assisted",
+    priority: 2,
     isNew: true,
     emoji: "🍧",
   },

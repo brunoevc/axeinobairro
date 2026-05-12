@@ -4,13 +4,28 @@ import { Button } from "@/components/ui/button";
 
 type Props = { merchant: Merchant };
 
+const planLabels: Record<Merchant["plan"], string> = {
+  free: "Presença Local grátis",
+  assisted: "Cadastro Assistido R$27",
+  local_featured: "Destaque Local R$47",
+  highlighted: "Loja em Destaque R$97",
+  premium_partner: "Parceiro Premium R$147",
+};
+
 export function MerchantCard({ merchant }: Props) {
   const waUrl = `https://wa.me/${merchant.whatsapp}?text=${encodeURIComponent(
     `Olá ${merchant.name}! Vim pelo Axêi no Bairro 👋`
   )}`;
 
+  const planLabel = planLabels[merchant.plan];
+  const paidPlan = merchant.plan !== "free";
+
   return (
-    <article className="group rounded-2xl bg-card p-4 shadow-[var(--shadow-card)] transition-all hover:-translate-y-0.5 hover:shadow-[var(--shadow-glow)]">
+    <article
+      className={`group rounded-2xl bg-card p-4 shadow-[var(--shadow-card)] transition-all hover:-translate-y-0.5 hover:shadow-[var(--shadow-glow)] ${
+        paidPlan ? "border border-accent/10" : ""
+      }`}
+    >
       <div className="flex gap-3">
         <div
           className="flex h-16 w-16 shrink-0 items-center justify-center rounded-xl text-3xl"
@@ -22,9 +37,14 @@ export function MerchantCard({ merchant }: Props) {
 
         <div className="min-w-0 flex-1">
           <div className="flex items-start justify-between gap-2">
-            <h3 className="truncate text-base font-semibold text-foreground">
-              {merchant.name}
-            </h3>
+            <div className="min-w-0">
+              <h3 className="truncate text-base font-semibold text-foreground">
+                {merchant.name}
+              </h3>
+              <span className="mt-2 inline-flex rounded-full bg-secondary/10 px-2 py-1 text-[11px] font-semibold text-secondary-foreground">
+                {planLabel}
+              </span>
+            </div>
             <div className="flex items-center gap-0.5 text-xs font-medium text-foreground">
               <Star className="h-3.5 w-3.5 fill-brand-orange text-brand-orange" />
               {merchant.rating.toFixed(1)}

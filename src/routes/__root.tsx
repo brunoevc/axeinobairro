@@ -72,18 +72,30 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
     meta: [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { title: "Lovable App" },
-      { name: "description", content: "Axêi Local is a mobile-first marketplace for finding and contacting local businesses instantly." },
-      { name: "author", content: "Lovable" },
-      { property: "og:title", content: "Lovable App" },
-      { property: "og:description", content: "Axêi Local is a mobile-first marketplace for finding and contacting local businesses instantly." },
+      { title: "Axêi no Bairro — Marketplace local com WhatsApp" },
+      {
+        name: "description",
+        content:
+          "Axêi no Bairro é o marketplace hiperlocal para encontrar negócios do seu bairro e conversar diretamente por WhatsApp.",
+      },
+      { name: "author", content: "Axêi no Bairro" },
+      { property: "og:title", content: "Axêi no Bairro — Marketplace local com WhatsApp" },
+      {
+        property: "og:description",
+        content:
+          "Descubra comércios, serviços e ofertas do seu bairro e fale com eles pelo WhatsApp em segundos.",
+      },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary" },
-      { name: "twitter:site", content: "@Lovable" },
-      { name: "twitter:title", content: "Lovable App" },
-      { name: "twitter:description", content: "Axêi Local is a mobile-first marketplace for finding and contacting local businesses instantly." },
-      { property: "og:image", content: "https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/855c9f3c-5f2c-4853-aa4b-7fb64e73f961/id-preview-a4379114--e9d42d3e-d9d1-49dc-8980-22ef7c223516.lovable.app-1778536061257.png" },
-      { name: "twitter:image", content: "https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/855c9f3c-5f2c-4853-aa4b-7fb64e73f961/id-preview-a4379114--e9d42d3e-d9d1-49dc-8980-22ef7c223516.lovable.app-1778536061257.png" },
+      { name: "twitter:site", content: "@axeinobairro" },
+      { name: "twitter:title", content: "Axêi no Bairro — Marketplace local com WhatsApp" },
+      {
+        name: "twitter:description",
+        content:
+          "Descubra comércios, serviços e ofertas do seu bairro e fale com eles pelo WhatsApp em segundos.",
+      },
+      { property: "og:image", content: "https://via.placeholder.com/1200x630.png?text=Ax%C3%AAi+no+Bairro" },
+      { name: "twitter:image", content: "https://via.placeholder.com/1200x630.png?text=Ax%C3%AAi+no+Bairro" },
     ],
     links: [
       {
