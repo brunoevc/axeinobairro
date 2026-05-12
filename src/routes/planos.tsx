@@ -28,12 +28,14 @@ const plans: Plan[] = [
     id: "free",
     title: "Presença Local",
     price: null,
-    description: "Comece grátis e ganhe visibilidade no seu bairro.",
+    description: "Cadastro básico com visibilidade na sua região.",
     benefits: [
-      "Perfil básico da sua loja",
-      "Listagem no marketplace local",
+      "Nome da empresa, categoria e bairro",
+      "Endereço e horário de funcionamento",
       "Contato direto pelo WhatsApp",
-      "Categoria e descrição",
+      "Exibição na busca local",
+      "Card simples no app",
+      "Status ativo após aprovação",
     ],
     whatsappMessage:
       "Olá! Quero criar meu perfil grátis no Axêi no Bairro. Como funciona?",
@@ -42,12 +44,16 @@ const plans: Plan[] = [
     id: "assisted",
     title: "Cadastro Assistido",
     price: 27,
-    description: "Receba ajuda para criar um perfil profissional e atraente.",
+    description: "Seu perfil feito pela equipe Axêi. Mais completo e profissional.",
     benefits: [
-      "Suporte para montar seu cadastro",
-      "Foto profissional do seu comércio",
-      "Descrição otimizada",
-      "Atendimento via WhatsApp",
+      "Tudo do plano grátis",
+      "Cadastro criado pela equipe Axêi",
+      "Descrição comercial otimizada",
+      "Até 3 fotos/logo da loja",
+      "Link Google Maps integrado",
+      "WhatsApp ajustado e testado",
+      "Publicação mais rápida",
+      "Suporte inicial via WhatsApp",
     ],
     whatsappMessage:
       "Olá! Tenho interesse no plano Cadastro Assistido (R$27). Quero saber mais!",
@@ -57,11 +63,16 @@ const plans: Plan[] = [
     title: "Destaque Local",
     price: 47,
     description:
-      "Apareça em primeiro lugar e atraia mais clientes do seu bairro.",
+      "Apareça em destaque no seu bairro e categoria. O melhor custo-benefício.",
     benefits: [
-      "Prioridade na listagem do seu bairro",
-      "Badge especial destacando sua loja",
-      "Mais visibilidade em buscas locais",
+      "Tudo do plano R$27",
+      "Selo 'Destaque Local' no seu card",
+      "Prioridade acima dos perfis gratuitos",
+      "Destaque na categoria",
+      "Aparição garantida na seção 'Em destaque'",
+      "Até 5 fotos do seu comércio",
+      "Instagram ou Facebook integrados",
+      "Botão WhatsApp destacado",
       "Suporte dedicado",
     ],
     whatsappMessage:
@@ -72,12 +83,18 @@ const plans: Plan[] = [
     id: "highlighted",
     title: "Loja em Destaque",
     price: 97,
-    description: "Máxima visibilidade e se destaque dos concorrentes.",
+    description: "Prioridade máxima na listagem com banner e destaque visual.",
     benefits: [
-      "Posição preferencial em toda a plataforma",
-      "Badge premium na sua loja",
-      "Destaque visual extra no feed",
-      "Prioridade de suporte",
+      "Tudo do plano R$47",
+      "Prioridade maior na listagem",
+      "Destaque visual superior no card",
+      "Banner simples da sua loja",
+      "Inclusão em campanhas locais",
+      "Até 10 fotos para showcase",
+      "Redes sociais completas (todas)",
+      "Chamada comercial personalizada",
+      "Relatório simples de cliques/contatos",
+      "Suporte prioritário",
     ],
     whatsappMessage:
       "Olá! Tenho interesse no plano Loja em Destaque (R$97). Quero mais informações.",
@@ -86,12 +103,19 @@ const plans: Plan[] = [
     id: "premium",
     title: "Parceiro Premium",
     price: 147,
-    description: "Seja a referência local e apareça como parceiro oficial.",
+    description: "Máxima exposição com página completa e catálogo de produtos.",
     benefits: [
-      "Máxima prioridade de exibição",
-      "Badge Parceiro Premium exclusivo",
-      "Suporte VIP e personalizado",
-      "Acesso a recursos especiais",
+      "Tudo do plano R$97",
+      "Prioridade máxima em toda plataforma",
+      "Selo 'Parceiro Premium' exclusivo",
+      "Banner premium da loja",
+      "Página da loja mais completa",
+      "Catálogo básico de produtos/serviços",
+      "Múltiplos links (WhatsApp, Instagram, Facebook, site)",
+      "Destaque em campanhas do bairro",
+      "Divulgação em materiais do Axêi",
+      "Relatório mensal completo",
+      "Suporte VIP prioritário",
     ],
     whatsappMessage:
       "Olá! Quero conhecer o plano Parceiro Premium (R$147). Interessado!",
@@ -176,6 +200,60 @@ function PlanosPage() {
           </div>
         </section>
 
+        {/* Deliverables comparison */}
+        <section className="mb-10 rounded-2xl bg-card p-6 shadow-[var(--shadow-card)]">
+          <h3 className="text-lg font-bold text-foreground mb-6">
+            Entregáveis em cada plano
+          </h3>
+          <div className="space-y-6 text-sm">
+            <div className="border-l-4 border-accent pl-4">
+              <p className="font-bold text-foreground mb-2">Presença Local (Grátis)</p>
+              <p className="text-muted-foreground mb-2">
+                Cadastro básico para começar a receber clientes:
+              </p>
+              <p className="text-xs text-muted-foreground">
+                Nome, categoria, bairro, endereço, horário, WhatsApp, card simples, exibição na busca
+              </p>
+            </div>
+            <div className="border-l-4 border-accent pl-4">
+              <p className="font-bold text-foreground mb-2">Cadastro Assistido (R$27)</p>
+              <p className="text-muted-foreground mb-2">
+                Nossa equipe monta seu perfil profissional:
+              </p>
+              <p className="text-xs text-muted-foreground">
+                Tudo do grátis + cadastro pela equipe Axêi + até 3 fotos + descrição otimizada + Google Maps + suporte WhatsApp
+              </p>
+            </div>
+            <div className="border-l-4 border-accent/40 bg-accent/5 rounded px-4 py-3">
+              <p className="font-bold text-foreground mb-2">Destaque Local (R$47) — Melhor custo-benefício</p>
+              <p className="text-muted-foreground mb-2">
+                Prioridade na sua região com visibilidade garantida:
+              </p>
+              <p className="text-xs text-muted-foreground">
+                Tudo do R$27 + selo Destaque Local + até 5 fotos + Instagram/Facebook + botão WhatsApp destacado + aparece em "Em destaque"
+              </p>
+            </div>
+            <div className="border-l-4 border-accent pl-4">
+              <p className="font-bold text-foreground mb-2">Loja em Destaque (R$97)</p>
+              <p className="text-muted-foreground mb-2">
+                Máxima visibilidade com banner e relatórios:
+              </p>
+              <p className="text-xs text-muted-foreground">
+                Tudo do R$47 + banner da loja + até 10 fotos + redes sociais completas + chamada comercial personalizada + relatório de cliques
+              </p>
+            </div>
+            <div className="border-l-4 border-accent pl-4">
+              <p className="font-bold text-foreground mb-2">Parceiro Premium (R$147)</p>
+              <p className="text-muted-foreground mb-2">
+                Referência local com página completa e catálogo:
+              </p>
+              <p className="text-xs text-muted-foreground">
+                Tudo do R$97 + página loja completa + catálogo produtos/serviços + todos os links + badge Premium + relatório mensal + suporte VIP
+              </p>
+            </div>
+          </div>
+        </section>
+
         {/* FAQ */}
         <section className="mb-10 rounded-2xl bg-card p-6 shadow-[var(--shadow-card)]">
           <h3 className="text-lg font-bold text-foreground mb-4">
@@ -184,38 +262,42 @@ function PlanosPage() {
           <div className="space-y-4 text-sm">
             <div>
               <p className="font-semibold text-foreground mb-1">
-                Como funciona o pagamento?
+                Qual plano é melhor para começar?
               </p>
               <p className="text-muted-foreground">
-                Enviamos um link de pagamento via WhatsApp. Aceitamos Pix,
-                débito e crédito.
+                Se tem dúvida, comece com o grátis. Se quer clientes de verdade, o Destaque Local (R$47) é o melhor custo-benefício.
               </p>
             </div>
             <div>
               <p className="font-semibold text-foreground mb-1">
-                Posso cancelar meu plano?
+                O que muda entre um plano e outro?
               </p>
               <p className="text-muted-foreground">
-                Sim, sem problemas. Entre em contato pelo WhatsApp que
-                cancelamos na hora.
+                Quanto maior o plano, mais visibilidade, fotos, redes sociais e suporte você recebe. Todo plano inclui o anterior mais algo novo.
               </p>
             </div>
             <div>
               <p className="font-semibold text-foreground mb-1">
-                Qual plano vocês recomendam?
+                Vale a pena pagar se tenho WhatsApp próprio?
               </p>
               <p className="text-muted-foreground">
-                Para maioria dos lojistas, o Destaque Local (R$47) é o melhor
-                custo-benefício.
+                Seu WhatsApp sozinho não atrai clientes. Você precisa aparecer onde os clientes estão buscando. Aqui eles te encontram.
               </p>
             </div>
             <div>
               <p className="font-semibold text-foreground mb-1">
-                E se eu não vender nada?
+                Como cancelo um plano?
               </p>
               <p className="text-muted-foreground">
-                Se ninguém te encontrar, a culpa é nossa. Você recebe seu
-                dinheiro de volta.
+                Conversa conosco pelo WhatsApp. Sem burocracia, sem multa. É fácil assim.
+              </p>
+            </div>
+            <div>
+              <p className="font-semibold text-foreground mb-1">
+                O que é "relatório de cliques/contatos"?
+              </p>
+              <p className="text-muted-foreground">
+                A gente te manda quantas vezes seu card foi clicado e quantas vezes iniciaram conversa pelo WhatsApp. Você sabe se tá funcionando.
               </p>
             </div>
           </div>
@@ -224,10 +306,13 @@ function PlanosPage() {
         {/* CTA */}
         <section className="text-center mb-10 rounded-2xl bg-gradient-to-br from-accent/5 to-accent/10 border border-accent/20 p-8 shadow-[var(--shadow-card)]">
           <h3 className="text-lg font-bold text-foreground mb-3">
-            Pronto para começar?
+            Pronto para colocar sua loja em destaque?
           </h3>
-          <p className="text-sm text-muted-foreground mb-6">
-            Não tem certeza qual é o melhor plano? Converse com a gente!
+          <p className="text-sm text-muted-foreground mb-2">
+            Escolha seu plano acima e envie uma mensagem pelo WhatsApp.
+          </p>
+          <p className="text-xs text-muted-foreground mb-6">
+            Resposta rápida e sem burocracia.
           </p>
           <Button
             asChild
@@ -237,13 +322,13 @@ function PlanosPage() {
           >
             <a
               href={`https://wa.me/5521999869070?text=${encodeURIComponent(
-                "Olá, quero cadastrar minha loja no Axêi no Bairro"
+                "Olá! Quero conhecer os planos do Axêi no Bairro para minha loja"
               )}`}
               target="_blank"
               rel="noopener noreferrer"
             >
               <MessageCircle className="h-5 w-5" />
-              Falar com a gente
+              Conversar com Axêi
             </a>
           </Button>
         </section>

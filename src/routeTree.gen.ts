@@ -9,9 +9,18 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as Admin_rootRouteImport } from './routes/admin/__root'
 import { Route as PlanosRouteImport } from './routes/planos'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as AdminIndexRouteImport } from './routes/admin/index'
+import { Route as AdminPlanosRouteImport } from './routes/admin/planos'
+import { Route as AdminLojasRouteImport } from './routes/admin/lojas'
+import { Route as AdminAprovacoesRouteImport } from './routes/admin/aprovacoes'
 
+const Admin_rootRoute = Admin_rootRouteImport.update({
+  id: '/admin/__root',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const PlanosRoute = PlanosRouteImport.update({
   id: '/planos',
   path: '/planos',
@@ -22,35 +31,102 @@ const IndexRoute = IndexRouteImport.update({
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AdminIndexRoute = AdminIndexRouteImport.update({
+  id: '/admin/',
+  path: '/admin/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AdminPlanosRoute = AdminPlanosRouteImport.update({
+  id: '/admin/planos',
+  path: '/admin/planos',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AdminLojasRoute = AdminLojasRouteImport.update({
+  id: '/admin/lojas',
+  path: '/admin/lojas',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AdminAprovacoesRoute = AdminAprovacoesRouteImport.update({
+  id: '/admin/aprovacoes',
+  path: '/admin/aprovacoes',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/planos': typeof PlanosRoute
+  '/admin': typeof Admin_rootRoute
+  '/admin/aprovacoes': typeof AdminAprovacoesRoute
+  '/admin/lojas': typeof AdminLojasRoute
+  '/admin/planos': typeof AdminPlanosRoute
+  '/admin/': typeof AdminIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/planos': typeof PlanosRoute
+  '/admin': typeof AdminIndexRoute
+  '/admin/aprovacoes': typeof AdminAprovacoesRoute
+  '/admin/lojas': typeof AdminLojasRoute
+  '/admin/planos': typeof AdminPlanosRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/planos': typeof PlanosRoute
+  '/admin/__root': typeof Admin_rootRoute
+  '/admin/aprovacoes': typeof AdminAprovacoesRoute
+  '/admin/lojas': typeof AdminLojasRoute
+  '/admin/planos': typeof AdminPlanosRoute
+  '/admin/': typeof AdminIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/planos'
+  fullPaths:
+    | '/'
+    | '/planos'
+    | '/admin'
+    | '/admin/aprovacoes'
+    | '/admin/lojas'
+    | '/admin/planos'
+    | '/admin/'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/planos'
-  id: '__root__' | '/' | '/planos'
+  to:
+    | '/'
+    | '/planos'
+    | '/admin'
+    | '/admin/aprovacoes'
+    | '/admin/lojas'
+    | '/admin/planos'
+  id:
+    | '__root__'
+    | '/'
+    | '/planos'
+    | '/admin/__root'
+    | '/admin/aprovacoes'
+    | '/admin/lojas'
+    | '/admin/planos'
+    | '/admin/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   PlanosRoute: typeof PlanosRoute
+  Admin_rootRoute: typeof Admin_rootRoute
+  AdminAprovacoesRoute: typeof AdminAprovacoesRoute
+  AdminLojasRoute: typeof AdminLojasRoute
+  AdminPlanosRoute: typeof AdminPlanosRoute
+  AdminIndexRoute: typeof AdminIndexRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/admin/__root': {
+      id: '/admin/__root'
+      path: '/admin'
+      fullPath: '/admin'
+      preLoaderRoute: typeof Admin_rootRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/planos': {
       id: '/planos'
       path: '/planos'
@@ -65,12 +141,45 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/admin/': {
+      id: '/admin/'
+      path: '/admin'
+      fullPath: '/admin/'
+      preLoaderRoute: typeof AdminIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/admin/planos': {
+      id: '/admin/planos'
+      path: '/admin/planos'
+      fullPath: '/admin/planos'
+      preLoaderRoute: typeof AdminPlanosRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/admin/lojas': {
+      id: '/admin/lojas'
+      path: '/admin/lojas'
+      fullPath: '/admin/lojas'
+      preLoaderRoute: typeof AdminLojasRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/admin/aprovacoes': {
+      id: '/admin/aprovacoes'
+      path: '/admin/aprovacoes'
+      fullPath: '/admin/aprovacoes'
+      preLoaderRoute: typeof AdminAprovacoesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   PlanosRoute: PlanosRoute,
+  Admin_rootRoute: Admin_rootRoute,
+  AdminAprovacoesRoute: AdminAprovacoesRoute,
+  AdminLojasRoute: AdminLojasRoute,
+  AdminPlanosRoute: AdminPlanosRoute,
+  AdminIndexRoute: AdminIndexRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

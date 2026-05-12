@@ -1,0 +1,185 @@
+import { useState } from "react";
+import { ChevronDown } from "lucide-react";
+import { MerchantAdmin } from "@/data/admin";
+import { Button } from "@/components/ui/button";
+
+const planLabels = {
+  free: "Grátis",
+  assisted: "R$27",
+  local_featured: "R$47",
+  highlighted: "R$97",
+  premium_partner: "R$147",
+};
+
+const planColors = {
+  free: "bg-slate-100 text-slate-700 dark:bg-slate-900 dark:text-slate-300",
+  assisted: "bg-blue-100 text-blue-700 dark:bg-blue-900 dark:text-blue-300",
+  local_featured: "bg-accent/20 text-accent dark:bg-accent/30",
+  highlighted: "bg-purple-100 text-purple-700 dark:bg-purple-900 dark:text-purple-300",
+  premium_partner: "bg-rose-100 text-rose-700 dark:bg-rose-900 dark:text-rose-300",
+};
+
+const statusLabels = {
+  pending: "⏳ Pendente",
+  active: "✅ Ativo",
+  inactive: "⭐ Inativo",
+  rejected: "❌ Rejeitado",
+};
+
+type MerchantRowProps = {
+  merchant: MerchantAdmin;
+  onEdit: (merchant: MerchantAdmin) => void;
+  onToggleStatus: (id: string) => void;
+  onChangePlan: (id: string, plan: MerchantAdmin["plan"]) => void;
+};
+
+export function MerchantRow({
+  merchant,
+  onEdit,
+  onToggleStatus,
+  onChangePlan,
+}: MerchantRowProps) {
+  const [planOpen, setPlanOpen] = useState(false);
+  const plans: MerchantAdmin["plan"][] = [
+    "free",
+    "assisted",
+    "local_featured",
+    "highlighted",
+    "premium_partner",
+  ];
+
+  return (
+    <div className="border border-accent/10 rounded-lg p-4 mb-3 bg-card hover:border-accent/20 transition-colors">
+      <div className="flex items-start justify-between mb-3">
+        <div className="flex-1">
+          <div className="flex items-center gap-2 mb-2">
+            <span className="text-xl">{merchant.emoji}</span>
+            <h4 className="font-bold text-foreground">{merchant.name}</h4>
+          </div>
+          <p className="text-xs text-muted-foreground">
+            {merchant.category} • {merchant.neighborhood}
+          </p>
+        </div>
+        <div className="text-right text-xs text-muted-foreground">
+          <p>{merchant.whatsappClicks || 0} cliques</p>
+          <p>⭐ {merchant.rating}</p>
+        </div>
+      </div>
+
+      <div className="flex flex-wrap gap-2 mb-4">
+        <span
+          className={`inline-block px-2 py-1 rounded text-xs font-medium ${
+            merchant.status === "active"
+              ? "bg-emerald-100 text-emerald-700 dark:bg-emerald-900 dark:text-emerald-300"
+              : merchant.status === "pending"
+                ? "bg-amber-100 text-amber-700 dark:bg-amber-900 dark:text-amber-300"
+                : merchant.status === "inactive"
+                  ? "bg-slate-100 text-slate-700 dark:bg-slate-900 dark:text-slate-300"
+                  : "bg-rose-100 text-rose-700 dark:bg-rose-900 dark:text-rose-300"
+          }`}
+        >
+          {statusLabels[merchant.status]}
+        </span>
+        <span className={`inline-block px-2 py-1 rounded text-xs font-medium ${planColors[merchant.plan]}`}>
+          {planLabels[merchant.plan]}
+        </span>
+      </div>
+
+      <div className="flex flex-wrap gap-2">
+        <Button
+          variant="outline"
+          size="sm"
+          onClick={() => onEdit(merchant)}
+          className="text-xs"
+        >
+          ✏️ Editar
+        </Button>
+
+        {merchant.status !== "rejected" && merchant.status !== "pending" && (
+          <Button
+            variant="outline"
+            size="sm"
+            onClick={() => onToggleStatus(merchant.id)}
+            className="text-xs"
+          >
+            {merchant.status === "active" ? "⭐ Desativar" : "✅ Ativar"}
+          </Button>
+        )}
+
+        <div className="relative">
+          <Button
+            variant="outline"
+            size="sm"
+            onClick={() => setPlanOpen(!planOpen)}
+            className="text-xs flex items-center gap-1"
+          >
+            📊 Plano
+            <ChevronDown className="h-3 w-3" />
+          </Button>
+
+          {planOpen && (
+            <div className="absolute top-full left-0 mt-1 bg-card border border-accent/20 rounded-lg shadow-lg z-10 min-w-[150px]">
+              {plans.map((plan) => (
+                <button
+                  key={plan}
+                  onClick={() => {
+                    onChangePlan(merchant.id, plan);
+                    setPlanOpen(false);
+                  }}
+                  className={`w-full text-left px-3 py-2 text-xs hover:bg-accent/10 first:rounded-t-lg last:rounded-b-lg transition-colors ${
+                    merchant.plan === plan ? "bg-accent/20" : ""
+                  }`}
+                >
+                  {planLabels[plan]}
+                </button>
+              ))}
+            </div>
+          )}
+        </div>
+      </div>
+    </div>
+  );
+}
+
+type MerchantsTableProps = {
+  merchants: MerchantAdmin[];
+  onEdit: (merchant: MerchantAdmin) => void;
+  onToggleStatus: (id: string) => void;
+  onChangePlan: (id: string, plan: MerchantAdmin["plan"]) => void;
+  filterStatus?: MerchantAdmin["status"] | "all";
+};
+
+export function MerchantsTable({
+  merchants,
+  onEdit,
+  onToggleStatus,
+  onChangePlan,
+  filterStatus = "all",
+}: MerchantsTableProps) {
+  const filtered =
+    filterStatus === "all"
+      ? merchants
+      : merchants.filter((m) => m.status === filterStatus);
+
+  if (filtered.length === 0) {
+    return (
+      <div className="text-center py-8">
+        <p className="text-muted-foreground">Nenhuma loja encontrada</p>
+      </div>
+    );
+  }
+
+  return (
+    <div className="space-y-3">
+      {filtered.map((merchant) => (
+        <MerchantRow
+          key={merchant.id}
+          merchant={merchant}
+          onEdit={onEdit}
+          onToggleStatus={onToggleStatus}
+          onChangePlan={onChangePlan}
+        />
+      ))}
+    </div>
+  );
+}
