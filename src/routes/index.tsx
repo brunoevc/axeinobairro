@@ -13,6 +13,7 @@ import {
   PawPrint,
   Flame,
   Zap,
+  ChevronDown,
 } from "lucide-react";
 import logo from "@/assets/logo.jpg";
 import { merchants, categories, neighborhoods } from "@/data/merchants";
@@ -95,46 +96,52 @@ function Index() {
 
         <div className="mt-6">
           <h2 className="text-2xl font-bold leading-tight">
-            Encontre tudo do seu bairro
+            Chame o comércio do bairro
             <span
               className="block bg-clip-text text-transparent"
               style={{ backgroundImage: "var(--gradient-brand)" }}
             >
-              em poucos segundos.
+              no WhatsApp em segundos.
             </span>
           </h2>
           <p className="mt-1.5 text-sm text-white/70">
-            Restaurantes, mercados e serviços a um WhatsApp de distância.
+            Tudo o que você precisa, perto de você e direto no seu celular.
           </p>
         </div>
 
         {/* Search */}
-        <div className="mt-5 flex items-center gap-2 rounded-2xl bg-white p-2 shadow-[var(--shadow-glow)]">
-          <div className="flex flex-1 items-center gap-2 rounded-xl bg-secondary px-3 py-2.5">
-            <Search className="h-4 w-4 text-muted-foreground" />
+        <div className="mt-5 flex items-center gap-2 rounded-2xl bg-white p-2.5 shadow-[0_10px_40px_-10px_rgba(0,0,0,0.3)] ring-1 ring-black/5">
+          <div className="flex flex-1 items-center gap-2 rounded-xl bg-secondary/50 px-4 py-3 border border-border/50">
+            <Search className="h-5 w-5 text-muted-foreground" />
             <input
               value={query}
               onChange={(e) => setQuery(e.target.value)}
-              placeholder="Buscar comércios ou serviços"
-              className="w-full bg-transparent text-sm text-foreground placeholder:text-muted-foreground focus:outline-none"
+              placeholder="Buscar por pizza, farmácia, serviços..."
+              className="w-full bg-transparent text-base text-foreground placeholder:text-muted-foreground focus:outline-none"
             />
           </div>
         </div>
 
         {/* Neighborhood */}
-        <div className="mt-3 flex items-center gap-2 text-sm">
-          <MapPin className="h-4 w-4 text-white/70" />
-          <select
-            value={neighborhood}
-            onChange={(e) => setNeighborhood(e.target.value)}
-            className="flex-1 cursor-pointer appearance-none rounded-lg bg-white/10 px-3 py-2 text-sm font-medium text-white backdrop-blur-sm focus:outline-none focus:ring-2 focus:ring-accent"
-          >
-            {neighborhoods.map((n) => (
-              <option key={n} value={n} className="text-foreground">
-                {n}
-              </option>
-            ))}
-          </select>
+        <div className="mt-4 flex items-center gap-2 text-sm">
+          <div className="flex items-center gap-1.5 text-white/90 font-medium">
+            <MapPin className="h-4 w-4 text-accent" />
+            <span>Bairro:</span>
+          </div>
+          <div className="relative flex-1">
+            <select
+              value={neighborhood}
+              onChange={(e) => setNeighborhood(e.target.value)}
+              className="w-full cursor-pointer appearance-none rounded-xl bg-white/20 border border-white/10 px-4 py-2 text-sm font-semibold text-white backdrop-blur-md focus:outline-none focus:ring-2 focus:ring-accent pr-10"
+            >
+              {neighborhoods.map((n) => (
+                <option key={n} value={n} className="text-foreground">
+                  {n}
+                </option>
+              ))}
+            </select>
+            <ChevronDown className="absolute right-3 top-1/2 -translate-y-1/2 h-4 w-4 text-white/70 pointer-events-none" />
+          </div>
         </div>
       </header>
 
