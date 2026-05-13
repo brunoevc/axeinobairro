@@ -13,6 +13,7 @@ export default defineConfig({
   ],
   build: {
     target: "ES2020",
+    sourcemap: false,
     rollupOptions: {
       output: {
         entryFileNames: "assets/[name]-[hash].js",

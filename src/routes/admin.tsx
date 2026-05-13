@@ -2,7 +2,7 @@ import { createFileRoute, Outlet } from "@tanstack/react-router";
 import { AdminNav } from "@/components/admin/AdminNav";
 import logo from "@/assets/logo.jpg";
 
-export const Route = createFileRoute("/admin/__root")({
+export const Route = createFileRoute("/admin")({
   component: AdminLayout,
   head: () => ({
     meta: [
