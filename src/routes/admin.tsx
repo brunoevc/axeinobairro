@@ -1,62 +1,87 @@
-import { createFileRoute, Outlet } from "@tanstack/react-router";
-import { AdminNav } from "@/components/admin/AdminNav";
-import logo from "@/assets/logo.jpg";
+import { createFileRoute, useNavigate } from "@tanstack/react-router";
+import { ArrowLeft, Plus, Edit, Trash2, LayoutDashboard, Newspaper, Tag, Calendar, Wrench } from "lucide-react";
 
 export const Route = createFileRoute("/admin")({
-  component: AdminLayout,
-  head: () => ({
-    meta: [
-      { title: "Admin — Axêi no Bairro" },
-      {
-        name: "description",
-        content: "Painel administrativo do Axêi no Bairro",
-      },
-    ],
-  }),
+  component: AdminPanel,
 });
 
-function AdminLayout() {
+function AdminPanel() {
+  const navigate = useNavigate();
+
+  const sections = [
+    { label: "Notícias", icon: Newspaper, count: 12 },
+    { label: "Ofertas", icon: Tag, count: 24 },
+    { label: "Eventos", icon: Calendar, count: 8 },
+    { label: "Serviços", icon: Wrench, count: 42 }
+  ];
+
   return (
-    <div className="flex min-h-screen bg-background">
-      {/* Desktop Sidebar */}
-      <div className="hidden md:block md:w-64 flex-shrink-0">
-        <AdminNav />
-      </div>
+    <div className="min-h-screen bg-background">
+      <header className="px-6 pt-10 pb-6 border-b border-border bg-card">
+        <div className="flex justify-between items-center">
+          <button onClick={() => navigate({ to: "/" })} className="p-2 hover:bg-secondary rounded-full">
+            <ArrowLeft className="h-5 w-5" />
+          </button>
+          <h1 className="text-lg font-bold">Painel Admin</h1>
+          <div className="w-9 h-9" />
+        </div>
+      </header>
 
-      {/* Mobile Top Nav */}
-      <div className="md:hidden fixed top-0 left-0 right-0 z-40">
-        <AdminNav />
-      </div>
-
-      {/* Main Content */}
-      <div className="flex-1">
-        {/* Header */}
-        <header className="hidden md:block sticky top-0 bg-card border-b border-border h-16 z-30">
-          <div className="h-full px-8 flex items-center justify-between">
-            <div className="flex items-center gap-3">
-              <img
-                src={logo}
-                alt="Axêi no Bairro"
-                className="h-8 w-8 rounded-lg"
-              />
-              <h1 className="font-bold text-foreground">
-                ADMIN — Axêi no Bairro
-              </h1>
-            </div>
-            <p className="text-xs text-muted-foreground">
-              localStorage • Ambiente de Teste
-            </p>
+      <main className="p-6 space-y-6">
+        <div className="grid grid-cols-2 gap-4">
+          <div className="p-5 bg-primary/10 rounded-3xl border border-primary/20">
+            <p className="text-xs font-bold text-primary uppercase tracking-wider mb-1">Acessos Hoje</p>
+            <p className="text-3xl font-bold text-primary">1.240</p>
           </div>
-        </header>
+          <div className="p-5 bg-accent/10 rounded-3xl border border-accent/20">
+            <p className="text-xs font-bold text-accent uppercase tracking-wider mb-1">Interações IA</p>
+            <p className="text-3xl font-bold text-accent">312</p>
+          </div>
+        </div>
 
-        {/* Mobile Header Spacing */}
-        <div className="md:hidden h-16" />
+        <section>
+          <div className="flex justify-between items-center mb-4">
+            <h2 className="font-bold flex items-center gap-2">
+              <LayoutDashboard className="h-4 w-4" />
+              Gerenciar Conteúdo
+            </h2>
+            <button className="p-2 bg-primary text-white rounded-xl shadow-lg active:scale-95 transition-all">
+              <Plus className="h-4 w-4" />
+            </button>
+          </div>
 
-        {/* Content Area */}
-        <main className="p-4 md:p-8">
-          <Outlet />
-        </main>
-      </div>
+          <div className="space-y-3">
+            {sections.map((section) => (
+              <div key={section.label} className="bg-card p-4 rounded-2xl border border-border/50 flex items-center justify-between shadow-sm">
+                <div className="flex items-center gap-4">
+                  <div className="p-2.5 bg-secondary rounded-xl">
+                    <section.icon className="h-5 w-5 text-primary" />
+                  </div>
+                  <div>
+                    <h3 className="font-bold text-sm">{section.label}</h3>
+                    <p className="text-xs text-muted-foreground">{section.count} itens ativos</p>
+                  </div>
+                </div>
+                <div className="flex gap-1">
+                  <button className="p-2 hover:bg-secondary rounded-lg text-muted-foreground"><Edit className="h-4 w-4" /></button>
+                  <button className="p-2 hover:bg-secondary rounded-lg text-destructive"><Trash2 className="h-4 w-4" /></button>
+                </div>
+              </div>
+            ))}
+          </div>
+        </section>
+
+        <section className="bg-card border border-border/50 rounded-3xl p-6">
+          <h2 className="font-bold mb-4">Mensagem do Dia (IA)</h2>
+          <textarea 
+            className="w-full bg-secondary/50 border border-border/50 rounded-2xl p-4 text-sm outline-none focus:border-primary transition-colors h-32"
+            defaultValue="Sorria! Hoje é um ótimo dia para descobrir algo novo no seu bairro. Que tal visitar o Mercadinho do Zé?"
+          />
+          <button className="mt-4 w-full py-3 bg-primary text-white font-bold rounded-xl shadow-lg active:scale-95 transition-all">
+            Salvar e Atualizar
+          </button>
+        </section>
+      </main>
     </div>
   );
 }
