@@ -10,6 +10,7 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as ServicosRouteImport } from './routes/servicos'
+import { Route as PulsoRouteImport } from './routes/pulso'
 import { Route as PlanosRouteImport } from './routes/planos'
 import { Route as PerfilRouteImport } from './routes/perfil'
 import { Route as OfertasRouteImport } from './routes/ofertas'
@@ -27,6 +28,11 @@ import { Route as AdminAprovacoesRouteImport } from './routes/admin/aprovacoes'
 const ServicosRoute = ServicosRouteImport.update({
   id: '/servicos',
   path: '/servicos',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const PulsoRoute = PulsoRouteImport.update({
+  id: '/pulso',
+  path: '/pulso',
   getParentRoute: () => rootRouteImport,
 } as any)
 const PlanosRoute = PlanosRouteImport.update({
@@ -105,6 +111,7 @@ export interface FileRoutesByFullPath {
   '/ofertas': typeof OfertasRoute
   '/perfil': typeof PerfilRoute
   '/planos': typeof PlanosRoute
+  '/pulso': typeof PulsoRoute
   '/servicos': typeof ServicosRoute
   '/admin/aprovacoes': typeof AdminAprovacoesRoute
   '/admin/lojas': typeof AdminLojasRoute
@@ -120,6 +127,7 @@ export interface FileRoutesByTo {
   '/ofertas': typeof OfertasRoute
   '/perfil': typeof PerfilRoute
   '/planos': typeof PlanosRoute
+  '/pulso': typeof PulsoRoute
   '/servicos': typeof ServicosRoute
   '/admin/aprovacoes': typeof AdminAprovacoesRoute
   '/admin/lojas': typeof AdminLojasRoute
@@ -137,6 +145,7 @@ export interface FileRoutesById {
   '/ofertas': typeof OfertasRoute
   '/perfil': typeof PerfilRoute
   '/planos': typeof PlanosRoute
+  '/pulso': typeof PulsoRoute
   '/servicos': typeof ServicosRoute
   '/admin/aprovacoes': typeof AdminAprovacoesRoute
   '/admin/lojas': typeof AdminLojasRoute
@@ -155,6 +164,7 @@ export interface FileRouteTypes {
     | '/ofertas'
     | '/perfil'
     | '/planos'
+    | '/pulso'
     | '/servicos'
     | '/admin/aprovacoes'
     | '/admin/lojas'
@@ -170,6 +180,7 @@ export interface FileRouteTypes {
     | '/ofertas'
     | '/perfil'
     | '/planos'
+    | '/pulso'
     | '/servicos'
     | '/admin/aprovacoes'
     | '/admin/lojas'
@@ -186,6 +197,7 @@ export interface FileRouteTypes {
     | '/ofertas'
     | '/perfil'
     | '/planos'
+    | '/pulso'
     | '/servicos'
     | '/admin/aprovacoes'
     | '/admin/lojas'
@@ -203,6 +215,7 @@ export interface RootRouteChildren {
   OfertasRoute: typeof OfertasRoute
   PerfilRoute: typeof PerfilRoute
   PlanosRoute: typeof PlanosRoute
+  PulsoRoute: typeof PulsoRoute
   ServicosRoute: typeof ServicosRoute
 }
 
@@ -213,6 +226,13 @@ declare module '@tanstack/react-router' {
       path: '/servicos'
       fullPath: '/servicos'
       preLoaderRoute: typeof ServicosRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/pulso': {
+      id: '/pulso'
+      path: '/pulso'
+      fullPath: '/pulso'
+      preLoaderRoute: typeof PulsoRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/planos': {
@@ -335,6 +355,7 @@ const rootRouteChildren: RootRouteChildren = {
   OfertasRoute: OfertasRoute,
   PerfilRoute: PerfilRoute,
   PlanosRoute: PlanosRoute,
+  PulsoRoute: PulsoRoute,
   ServicosRoute: ServicosRoute,
 }
 export const routeTree = rootRouteImport
