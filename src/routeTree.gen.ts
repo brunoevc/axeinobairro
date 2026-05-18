@@ -18,6 +18,7 @@ import { Route as NoticiasRouteImport } from './routes/noticias'
 import { Route as IaAssistenteRouteImport } from './routes/ia-assistente'
 import { Route as EventosRouteImport } from './routes/eventos'
 import { Route as ConferirTudoRouteImport } from './routes/conferir-tudo'
+import { Route as ClimaRouteImport } from './routes/clima'
 import { Route as AdminRouteImport } from './routes/admin'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as AdminIndexRouteImport } from './routes/admin/index'
@@ -70,6 +71,11 @@ const ConferirTudoRoute = ConferirTudoRouteImport.update({
   path: '/conferir-tudo',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ClimaRoute = ClimaRouteImport.update({
+  id: '/clima',
+  path: '/clima',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const AdminRoute = AdminRouteImport.update({
   id: '/admin',
   path: '/admin',
@@ -104,6 +110,7 @@ const AdminAprovacoesRoute = AdminAprovacoesRouteImport.update({
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/admin': typeof AdminRouteWithChildren
+  '/clima': typeof ClimaRoute
   '/conferir-tudo': typeof ConferirTudoRoute
   '/eventos': typeof EventosRoute
   '/ia-assistente': typeof IaAssistenteRoute
@@ -120,6 +127,7 @@ export interface FileRoutesByFullPath {
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/clima': typeof ClimaRoute
   '/conferir-tudo': typeof ConferirTudoRoute
   '/eventos': typeof EventosRoute
   '/ia-assistente': typeof IaAssistenteRoute
@@ -138,6 +146,7 @@ export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/admin': typeof AdminRouteWithChildren
+  '/clima': typeof ClimaRoute
   '/conferir-tudo': typeof ConferirTudoRoute
   '/eventos': typeof EventosRoute
   '/ia-assistente': typeof IaAssistenteRoute
@@ -157,6 +166,7 @@ export interface FileRouteTypes {
   fullPaths:
     | '/'
     | '/admin'
+    | '/clima'
     | '/conferir-tudo'
     | '/eventos'
     | '/ia-assistente'
@@ -173,6 +183,7 @@ export interface FileRouteTypes {
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
+    | '/clima'
     | '/conferir-tudo'
     | '/eventos'
     | '/ia-assistente'
@@ -190,6 +201,7 @@ export interface FileRouteTypes {
     | '__root__'
     | '/'
     | '/admin'
+    | '/clima'
     | '/conferir-tudo'
     | '/eventos'
     | '/ia-assistente'
@@ -208,6 +220,7 @@ export interface FileRouteTypes {
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AdminRoute: typeof AdminRouteWithChildren
+  ClimaRoute: typeof ClimaRoute
   ConferirTudoRoute: typeof ConferirTudoRoute
   EventosRoute: typeof EventosRoute
   IaAssistenteRoute: typeof IaAssistenteRoute
@@ -284,6 +297,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ConferirTudoRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/clima': {
+      id: '/clima'
+      path: '/clima'
+      fullPath: '/clima'
+      preLoaderRoute: typeof ClimaRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/admin': {
       id: '/admin'
       path: '/admin'
@@ -348,6 +368,7 @@ const AdminRouteWithChildren = AdminRoute._addFileChildren(AdminRouteChildren)
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AdminRoute: AdminRouteWithChildren,
+  ClimaRoute: ClimaRoute,
   ConferirTudoRoute: ConferirTudoRoute,
   EventosRoute: EventosRoute,
   IaAssistenteRoute: IaAssistenteRoute,
