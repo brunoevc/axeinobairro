@@ -11,6 +11,7 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as PlanosRouteImport } from './routes/planos'
 import { Route as PerfilRouteImport } from './routes/perfil'
+import { Route as OfertasRouteImport } from './routes/ofertas'
 import { Route as NoticiasRouteImport } from './routes/noticias'
 import { Route as IaAssistenteRouteImport } from './routes/ia-assistente'
 import { Route as ConferirTudoRouteImport } from './routes/conferir-tudo'
@@ -29,6 +30,11 @@ const PlanosRoute = PlanosRouteImport.update({
 const PerfilRoute = PerfilRouteImport.update({
   id: '/perfil',
   path: '/perfil',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const OfertasRoute = OfertasRouteImport.update({
+  id: '/ofertas',
+  path: '/ofertas',
   getParentRoute: () => rootRouteImport,
 } as any)
 const NoticiasRoute = NoticiasRouteImport.update({
@@ -83,6 +89,7 @@ export interface FileRoutesByFullPath {
   '/conferir-tudo': typeof ConferirTudoRoute
   '/ia-assistente': typeof IaAssistenteRoute
   '/noticias': typeof NoticiasRoute
+  '/ofertas': typeof OfertasRoute
   '/perfil': typeof PerfilRoute
   '/planos': typeof PlanosRoute
   '/admin/aprovacoes': typeof AdminAprovacoesRoute
@@ -95,6 +102,7 @@ export interface FileRoutesByTo {
   '/conferir-tudo': typeof ConferirTudoRoute
   '/ia-assistente': typeof IaAssistenteRoute
   '/noticias': typeof NoticiasRoute
+  '/ofertas': typeof OfertasRoute
   '/perfil': typeof PerfilRoute
   '/planos': typeof PlanosRoute
   '/admin/aprovacoes': typeof AdminAprovacoesRoute
@@ -109,6 +117,7 @@ export interface FileRoutesById {
   '/conferir-tudo': typeof ConferirTudoRoute
   '/ia-assistente': typeof IaAssistenteRoute
   '/noticias': typeof NoticiasRoute
+  '/ofertas': typeof OfertasRoute
   '/perfil': typeof PerfilRoute
   '/planos': typeof PlanosRoute
   '/admin/aprovacoes': typeof AdminAprovacoesRoute
@@ -124,6 +133,7 @@ export interface FileRouteTypes {
     | '/conferir-tudo'
     | '/ia-assistente'
     | '/noticias'
+    | '/ofertas'
     | '/perfil'
     | '/planos'
     | '/admin/aprovacoes'
@@ -136,6 +146,7 @@ export interface FileRouteTypes {
     | '/conferir-tudo'
     | '/ia-assistente'
     | '/noticias'
+    | '/ofertas'
     | '/perfil'
     | '/planos'
     | '/admin/aprovacoes'
@@ -149,6 +160,7 @@ export interface FileRouteTypes {
     | '/conferir-tudo'
     | '/ia-assistente'
     | '/noticias'
+    | '/ofertas'
     | '/perfil'
     | '/planos'
     | '/admin/aprovacoes'
@@ -163,6 +175,7 @@ export interface RootRouteChildren {
   ConferirTudoRoute: typeof ConferirTudoRoute
   IaAssistenteRoute: typeof IaAssistenteRoute
   NoticiasRoute: typeof NoticiasRoute
+  OfertasRoute: typeof OfertasRoute
   PerfilRoute: typeof PerfilRoute
   PlanosRoute: typeof PlanosRoute
 }
@@ -181,6 +194,13 @@ declare module '@tanstack/react-router' {
       path: '/perfil'
       fullPath: '/perfil'
       preLoaderRoute: typeof PerfilRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/ofertas': {
+      id: '/ofertas'
+      path: '/ofertas'
+      fullPath: '/ofertas'
+      preLoaderRoute: typeof OfertasRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/noticias': {
@@ -271,6 +291,7 @@ const rootRouteChildren: RootRouteChildren = {
   ConferirTudoRoute: ConferirTudoRoute,
   IaAssistenteRoute: IaAssistenteRoute,
   NoticiasRoute: NoticiasRoute,
+  OfertasRoute: OfertasRoute,
   PerfilRoute: PerfilRoute,
   PlanosRoute: PlanosRoute,
 }
