@@ -10,6 +10,7 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as PlanosRouteImport } from './routes/planos'
+import { Route as IaAssistenteRouteImport } from './routes/ia-assistente'
 import { Route as AdminRouteImport } from './routes/admin'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as AdminIndexRouteImport } from './routes/admin/index'
@@ -20,6 +21,11 @@ import { Route as AdminAprovacoesRouteImport } from './routes/admin/aprovacoes'
 const PlanosRoute = PlanosRouteImport.update({
   id: '/planos',
   path: '/planos',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const IaAssistenteRoute = IaAssistenteRouteImport.update({
+  id: '/ia-assistente',
+  path: '/ia-assistente',
   getParentRoute: () => rootRouteImport,
 } as any)
 const AdminRoute = AdminRouteImport.update({
@@ -56,6 +62,7 @@ const AdminAprovacoesRoute = AdminAprovacoesRouteImport.update({
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/admin': typeof AdminRouteWithChildren
+  '/ia-assistente': typeof IaAssistenteRoute
   '/planos': typeof PlanosRoute
   '/admin/aprovacoes': typeof AdminAprovacoesRoute
   '/admin/lojas': typeof AdminLojasRoute
@@ -64,6 +71,7 @@ export interface FileRoutesByFullPath {
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/ia-assistente': typeof IaAssistenteRoute
   '/planos': typeof PlanosRoute
   '/admin/aprovacoes': typeof AdminAprovacoesRoute
   '/admin/lojas': typeof AdminLojasRoute
@@ -74,6 +82,7 @@ export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/admin': typeof AdminRouteWithChildren
+  '/ia-assistente': typeof IaAssistenteRoute
   '/planos': typeof PlanosRoute
   '/admin/aprovacoes': typeof AdminAprovacoesRoute
   '/admin/lojas': typeof AdminLojasRoute
@@ -85,6 +94,7 @@ export interface FileRouteTypes {
   fullPaths:
     | '/'
     | '/admin'
+    | '/ia-assistente'
     | '/planos'
     | '/admin/aprovacoes'
     | '/admin/lojas'
@@ -93,6 +103,7 @@ export interface FileRouteTypes {
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
+    | '/ia-assistente'
     | '/planos'
     | '/admin/aprovacoes'
     | '/admin/lojas'
@@ -102,6 +113,7 @@ export interface FileRouteTypes {
     | '__root__'
     | '/'
     | '/admin'
+    | '/ia-assistente'
     | '/planos'
     | '/admin/aprovacoes'
     | '/admin/lojas'
@@ -112,6 +124,7 @@ export interface FileRouteTypes {
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AdminRoute: typeof AdminRouteWithChildren
+  IaAssistenteRoute: typeof IaAssistenteRoute
   PlanosRoute: typeof PlanosRoute
 }
 
@@ -122,6 +135,13 @@ declare module '@tanstack/react-router' {
       path: '/planos'
       fullPath: '/planos'
       preLoaderRoute: typeof PlanosRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/ia-assistente': {
+      id: '/ia-assistente'
+      path: '/ia-assistente'
+      fullPath: '/ia-assistente'
+      preLoaderRoute: typeof IaAssistenteRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/admin': {
@@ -188,6 +208,7 @@ const AdminRouteWithChildren = AdminRoute._addFileChildren(AdminRouteChildren)
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AdminRoute: AdminRouteWithChildren,
+  IaAssistenteRoute: IaAssistenteRoute,
   PlanosRoute: PlanosRoute,
 }
 export const routeTree = rootRouteImport
