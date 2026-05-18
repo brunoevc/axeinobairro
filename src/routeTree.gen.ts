@@ -14,6 +14,7 @@ import { Route as PerfilRouteImport } from './routes/perfil'
 import { Route as OfertasRouteImport } from './routes/ofertas'
 import { Route as NoticiasRouteImport } from './routes/noticias'
 import { Route as IaAssistenteRouteImport } from './routes/ia-assistente'
+import { Route as EventosRouteImport } from './routes/eventos'
 import { Route as ConferirTudoRouteImport } from './routes/conferir-tudo'
 import { Route as AdminRouteImport } from './routes/admin'
 import { Route as IndexRouteImport } from './routes/index'
@@ -45,6 +46,11 @@ const NoticiasRoute = NoticiasRouteImport.update({
 const IaAssistenteRoute = IaAssistenteRouteImport.update({
   id: '/ia-assistente',
   path: '/ia-assistente',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const EventosRoute = EventosRouteImport.update({
+  id: '/eventos',
+  path: '/eventos',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ConferirTudoRoute = ConferirTudoRouteImport.update({
@@ -87,6 +93,7 @@ export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/admin': typeof AdminRouteWithChildren
   '/conferir-tudo': typeof ConferirTudoRoute
+  '/eventos': typeof EventosRoute
   '/ia-assistente': typeof IaAssistenteRoute
   '/noticias': typeof NoticiasRoute
   '/ofertas': typeof OfertasRoute
@@ -100,6 +107,7 @@ export interface FileRoutesByFullPath {
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/conferir-tudo': typeof ConferirTudoRoute
+  '/eventos': typeof EventosRoute
   '/ia-assistente': typeof IaAssistenteRoute
   '/noticias': typeof NoticiasRoute
   '/ofertas': typeof OfertasRoute
@@ -115,6 +123,7 @@ export interface FileRoutesById {
   '/': typeof IndexRoute
   '/admin': typeof AdminRouteWithChildren
   '/conferir-tudo': typeof ConferirTudoRoute
+  '/eventos': typeof EventosRoute
   '/ia-assistente': typeof IaAssistenteRoute
   '/noticias': typeof NoticiasRoute
   '/ofertas': typeof OfertasRoute
@@ -131,6 +140,7 @@ export interface FileRouteTypes {
     | '/'
     | '/admin'
     | '/conferir-tudo'
+    | '/eventos'
     | '/ia-assistente'
     | '/noticias'
     | '/ofertas'
@@ -144,6 +154,7 @@ export interface FileRouteTypes {
   to:
     | '/'
     | '/conferir-tudo'
+    | '/eventos'
     | '/ia-assistente'
     | '/noticias'
     | '/ofertas'
@@ -158,6 +169,7 @@ export interface FileRouteTypes {
     | '/'
     | '/admin'
     | '/conferir-tudo'
+    | '/eventos'
     | '/ia-assistente'
     | '/noticias'
     | '/ofertas'
@@ -173,6 +185,7 @@ export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AdminRoute: typeof AdminRouteWithChildren
   ConferirTudoRoute: typeof ConferirTudoRoute
+  EventosRoute: typeof EventosRoute
   IaAssistenteRoute: typeof IaAssistenteRoute
   NoticiasRoute: typeof NoticiasRoute
   OfertasRoute: typeof OfertasRoute
@@ -215,6 +228,13 @@ declare module '@tanstack/react-router' {
       path: '/ia-assistente'
       fullPath: '/ia-assistente'
       preLoaderRoute: typeof IaAssistenteRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/eventos': {
+      id: '/eventos'
+      path: '/eventos'
+      fullPath: '/eventos'
+      preLoaderRoute: typeof EventosRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/conferir-tudo': {
@@ -289,6 +309,7 @@ const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AdminRoute: AdminRouteWithChildren,
   ConferirTudoRoute: ConferirTudoRoute,
+  EventosRoute: EventosRoute,
   IaAssistenteRoute: IaAssistenteRoute,
   NoticiasRoute: NoticiasRoute,
   OfertasRoute: OfertasRoute,
