@@ -12,6 +12,7 @@ import { Route as rootRouteImport } from './routes/__root'
 import { Route as PlanosRouteImport } from './routes/planos'
 import { Route as PerfilRouteImport } from './routes/perfil'
 import { Route as IaAssistenteRouteImport } from './routes/ia-assistente'
+import { Route as ConferirTudoRouteImport } from './routes/conferir-tudo'
 import { Route as AdminRouteImport } from './routes/admin'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as AdminIndexRouteImport } from './routes/admin/index'
@@ -32,6 +33,11 @@ const PerfilRoute = PerfilRouteImport.update({
 const IaAssistenteRoute = IaAssistenteRouteImport.update({
   id: '/ia-assistente',
   path: '/ia-assistente',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ConferirTudoRoute = ConferirTudoRouteImport.update({
+  id: '/conferir-tudo',
+  path: '/conferir-tudo',
   getParentRoute: () => rootRouteImport,
 } as any)
 const AdminRoute = AdminRouteImport.update({
@@ -68,6 +74,7 @@ const AdminAprovacoesRoute = AdminAprovacoesRouteImport.update({
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/admin': typeof AdminRouteWithChildren
+  '/conferir-tudo': typeof ConferirTudoRoute
   '/ia-assistente': typeof IaAssistenteRoute
   '/perfil': typeof PerfilRoute
   '/planos': typeof PlanosRoute
@@ -78,6 +85,7 @@ export interface FileRoutesByFullPath {
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/conferir-tudo': typeof ConferirTudoRoute
   '/ia-assistente': typeof IaAssistenteRoute
   '/perfil': typeof PerfilRoute
   '/planos': typeof PlanosRoute
@@ -90,6 +98,7 @@ export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/admin': typeof AdminRouteWithChildren
+  '/conferir-tudo': typeof ConferirTudoRoute
   '/ia-assistente': typeof IaAssistenteRoute
   '/perfil': typeof PerfilRoute
   '/planos': typeof PlanosRoute
@@ -103,6 +112,7 @@ export interface FileRouteTypes {
   fullPaths:
     | '/'
     | '/admin'
+    | '/conferir-tudo'
     | '/ia-assistente'
     | '/perfil'
     | '/planos'
@@ -113,6 +123,7 @@ export interface FileRouteTypes {
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
+    | '/conferir-tudo'
     | '/ia-assistente'
     | '/perfil'
     | '/planos'
@@ -124,6 +135,7 @@ export interface FileRouteTypes {
     | '__root__'
     | '/'
     | '/admin'
+    | '/conferir-tudo'
     | '/ia-assistente'
     | '/perfil'
     | '/planos'
@@ -136,6 +148,7 @@ export interface FileRouteTypes {
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AdminRoute: typeof AdminRouteWithChildren
+  ConferirTudoRoute: typeof ConferirTudoRoute
   IaAssistenteRoute: typeof IaAssistenteRoute
   PerfilRoute: typeof PerfilRoute
   PlanosRoute: typeof PlanosRoute
@@ -162,6 +175,13 @@ declare module '@tanstack/react-router' {
       path: '/ia-assistente'
       fullPath: '/ia-assistente'
       preLoaderRoute: typeof IaAssistenteRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/conferir-tudo': {
+      id: '/conferir-tudo'
+      path: '/conferir-tudo'
+      fullPath: '/conferir-tudo'
+      preLoaderRoute: typeof ConferirTudoRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/admin': {
@@ -228,6 +248,7 @@ const AdminRouteWithChildren = AdminRoute._addFileChildren(AdminRouteChildren)
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AdminRoute: AdminRouteWithChildren,
+  ConferirTudoRoute: ConferirTudoRoute,
   IaAssistenteRoute: IaAssistenteRoute,
   PerfilRoute: PerfilRoute,
   PlanosRoute: PlanosRoute,
