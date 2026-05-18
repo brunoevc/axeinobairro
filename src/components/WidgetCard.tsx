@@ -8,8 +8,9 @@ interface WidgetCardProps {
 
 export function WidgetCard({ widget }: WidgetCardProps) {
   const navigate = useNavigate();
-  // @ts-ignore - Lucide icons are valid keys
-  const Icon = LucideIcons[widget.iconName as keyof typeof LucideIcons] || LucideIcons.HelpCircle;
+  
+  // @ts-ignore - indexing LucideIcons is safe for valid icon names
+  const Icon = (LucideIcons[widget.iconName as keyof typeof LucideIcons] || LucideIcons.HelpCircle) as React.ElementType;
 
   return (
     <div 
