@@ -9,6 +9,7 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as ServicosRouteImport } from './routes/servicos'
 import { Route as PlanosRouteImport } from './routes/planos'
 import { Route as PerfilRouteImport } from './routes/perfil'
 import { Route as OfertasRouteImport } from './routes/ofertas'
@@ -23,6 +24,11 @@ import { Route as AdminPlanosRouteImport } from './routes/admin/planos'
 import { Route as AdminLojasRouteImport } from './routes/admin/lojas'
 import { Route as AdminAprovacoesRouteImport } from './routes/admin/aprovacoes'
 
+const ServicosRoute = ServicosRouteImport.update({
+  id: '/servicos',
+  path: '/servicos',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const PlanosRoute = PlanosRouteImport.update({
   id: '/planos',
   path: '/planos',
@@ -99,6 +105,7 @@ export interface FileRoutesByFullPath {
   '/ofertas': typeof OfertasRoute
   '/perfil': typeof PerfilRoute
   '/planos': typeof PlanosRoute
+  '/servicos': typeof ServicosRoute
   '/admin/aprovacoes': typeof AdminAprovacoesRoute
   '/admin/lojas': typeof AdminLojasRoute
   '/admin/planos': typeof AdminPlanosRoute
@@ -113,6 +120,7 @@ export interface FileRoutesByTo {
   '/ofertas': typeof OfertasRoute
   '/perfil': typeof PerfilRoute
   '/planos': typeof PlanosRoute
+  '/servicos': typeof ServicosRoute
   '/admin/aprovacoes': typeof AdminAprovacoesRoute
   '/admin/lojas': typeof AdminLojasRoute
   '/admin/planos': typeof AdminPlanosRoute
@@ -129,6 +137,7 @@ export interface FileRoutesById {
   '/ofertas': typeof OfertasRoute
   '/perfil': typeof PerfilRoute
   '/planos': typeof PlanosRoute
+  '/servicos': typeof ServicosRoute
   '/admin/aprovacoes': typeof AdminAprovacoesRoute
   '/admin/lojas': typeof AdminLojasRoute
   '/admin/planos': typeof AdminPlanosRoute
@@ -146,6 +155,7 @@ export interface FileRouteTypes {
     | '/ofertas'
     | '/perfil'
     | '/planos'
+    | '/servicos'
     | '/admin/aprovacoes'
     | '/admin/lojas'
     | '/admin/planos'
@@ -160,6 +170,7 @@ export interface FileRouteTypes {
     | '/ofertas'
     | '/perfil'
     | '/planos'
+    | '/servicos'
     | '/admin/aprovacoes'
     | '/admin/lojas'
     | '/admin/planos'
@@ -175,6 +186,7 @@ export interface FileRouteTypes {
     | '/ofertas'
     | '/perfil'
     | '/planos'
+    | '/servicos'
     | '/admin/aprovacoes'
     | '/admin/lojas'
     | '/admin/planos'
@@ -191,10 +203,18 @@ export interface RootRouteChildren {
   OfertasRoute: typeof OfertasRoute
   PerfilRoute: typeof PerfilRoute
   PlanosRoute: typeof PlanosRoute
+  ServicosRoute: typeof ServicosRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/servicos': {
+      id: '/servicos'
+      path: '/servicos'
+      fullPath: '/servicos'
+      preLoaderRoute: typeof ServicosRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/planos': {
       id: '/planos'
       path: '/planos'
@@ -315,6 +335,7 @@ const rootRouteChildren: RootRouteChildren = {
   OfertasRoute: OfertasRoute,
   PerfilRoute: PerfilRoute,
   PlanosRoute: PlanosRoute,
+  ServicosRoute: ServicosRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
