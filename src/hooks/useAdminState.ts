@@ -124,9 +124,9 @@ export function useAdminState() {
       const merchant = state.merchants.find((m) => m.id === merchantId);
       if (!merchant || merchant.status === "rejected" || merchant.status === "pending") return;
 
-      const newStatus = merchant.status === "active" ? "inactive" : "active";
+      const newStatus = (merchant.status === "active" ? "inactive" : "active") as "active" | "inactive";
       const updatedMerchants = state.merchants.map((m) =>
-        m.id === merchantId ? { ...m, status: newStatus as const } : m
+        m.id === merchantId ? { ...m, status: newStatus } : m
       );
 
       const action: AdminAction = {
