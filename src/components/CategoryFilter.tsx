@@ -16,7 +16,7 @@ type Category = {
 };
 
 type CategoryFilterProps = {
-  categories: Category[];
+  categories: readonly Category[];
   category: string;
   onCategoryChange: (value: string) => void;
 };
