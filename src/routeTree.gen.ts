@@ -9,17 +9,9 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
-import { Route as ServicosRouteImport } from './routes/servicos'
-import { Route as PulsoRouteImport } from './routes/pulso'
-import { Route as PlanosRouteImport } from './routes/planos'
 import { Route as PerfilRouteImport } from './routes/perfil'
 import { Route as OfertasRouteImport } from './routes/ofertas'
-import { Route as NoticiasRouteImport } from './routes/noticias'
 import { Route as NegociosRouteImport } from './routes/negocios'
-import { Route as IaAssistenteRouteImport } from './routes/ia-assistente'
-import { Route as EventosRouteImport } from './routes/eventos'
-import { Route as ConferirTudoRouteImport } from './routes/conferir-tudo'
-import { Route as ClimaRouteImport } from './routes/clima'
 import { Route as CadastroRouteImport } from './routes/cadastro'
 import { Route as AdminRouteImport } from './routes/admin'
 import { Route as IndexRouteImport } from './routes/index'
@@ -30,21 +22,6 @@ import { Route as AdminPlanosRouteImport } from './routes/admin/planos'
 import { Route as AdminLojasRouteImport } from './routes/admin/lojas'
 import { Route as AdminAprovacoesRouteImport } from './routes/admin/aprovacoes'
 
-const ServicosRoute = ServicosRouteImport.update({
-  id: '/servicos',
-  path: '/servicos',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const PulsoRoute = PulsoRouteImport.update({
-  id: '/pulso',
-  path: '/pulso',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const PlanosRoute = PlanosRouteImport.update({
-  id: '/planos',
-  path: '/planos',
-  getParentRoute: () => rootRouteImport,
-} as any)
 const PerfilRoute = PerfilRouteImport.update({
   id: '/perfil',
   path: '/perfil',
@@ -55,34 +32,9 @@ const OfertasRoute = OfertasRouteImport.update({
   path: '/ofertas',
   getParentRoute: () => rootRouteImport,
 } as any)
-const NoticiasRoute = NoticiasRouteImport.update({
-  id: '/noticias',
-  path: '/noticias',
-  getParentRoute: () => rootRouteImport,
-} as any)
 const NegociosRoute = NegociosRouteImport.update({
   id: '/negocios',
   path: '/negocios',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const IaAssistenteRoute = IaAssistenteRouteImport.update({
-  id: '/ia-assistente',
-  path: '/ia-assistente',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const EventosRoute = EventosRouteImport.update({
-  id: '/eventos',
-  path: '/eventos',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const ConferirTudoRoute = ConferirTudoRouteImport.update({
-  id: '/conferir-tudo',
-  path: '/conferir-tudo',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const ClimaRoute = ClimaRouteImport.update({
-  id: '/clima',
-  path: '/clima',
   getParentRoute: () => rootRouteImport,
 } as any)
 const CadastroRoute = CadastroRouteImport.update({
@@ -135,17 +87,9 @@ export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/admin': typeof AdminRouteWithChildren
   '/cadastro': typeof CadastroRoute
-  '/clima': typeof ClimaRoute
-  '/conferir-tudo': typeof ConferirTudoRoute
-  '/eventos': typeof EventosRoute
-  '/ia-assistente': typeof IaAssistenteRoute
   '/negocios': typeof NegociosRouteWithChildren
-  '/noticias': typeof NoticiasRoute
   '/ofertas': typeof OfertasRoute
   '/perfil': typeof PerfilRoute
-  '/planos': typeof PlanosRoute
-  '/pulso': typeof PulsoRoute
-  '/servicos': typeof ServicosRoute
   '/admin/aprovacoes': typeof AdminAprovacoesRoute
   '/admin/lojas': typeof AdminLojasRoute
   '/admin/planos': typeof AdminPlanosRoute
@@ -156,16 +100,8 @@ export interface FileRoutesByFullPath {
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/cadastro': typeof CadastroRoute
-  '/clima': typeof ClimaRoute
-  '/conferir-tudo': typeof ConferirTudoRoute
-  '/eventos': typeof EventosRoute
-  '/ia-assistente': typeof IaAssistenteRoute
-  '/noticias': typeof NoticiasRoute
   '/ofertas': typeof OfertasRoute
   '/perfil': typeof PerfilRoute
-  '/planos': typeof PlanosRoute
-  '/pulso': typeof PulsoRoute
-  '/servicos': typeof ServicosRoute
   '/admin/aprovacoes': typeof AdminAprovacoesRoute
   '/admin/lojas': typeof AdminLojasRoute
   '/admin/planos': typeof AdminPlanosRoute
@@ -178,17 +114,9 @@ export interface FileRoutesById {
   '/': typeof IndexRoute
   '/admin': typeof AdminRouteWithChildren
   '/cadastro': typeof CadastroRoute
-  '/clima': typeof ClimaRoute
-  '/conferir-tudo': typeof ConferirTudoRoute
-  '/eventos': typeof EventosRoute
-  '/ia-assistente': typeof IaAssistenteRoute
   '/negocios': typeof NegociosRouteWithChildren
-  '/noticias': typeof NoticiasRoute
   '/ofertas': typeof OfertasRoute
   '/perfil': typeof PerfilRoute
-  '/planos': typeof PlanosRoute
-  '/pulso': typeof PulsoRoute
-  '/servicos': typeof ServicosRoute
   '/admin/aprovacoes': typeof AdminAprovacoesRoute
   '/admin/lojas': typeof AdminLojasRoute
   '/admin/planos': typeof AdminPlanosRoute
@@ -202,17 +130,9 @@ export interface FileRouteTypes {
     | '/'
     | '/admin'
     | '/cadastro'
-    | '/clima'
-    | '/conferir-tudo'
-    | '/eventos'
-    | '/ia-assistente'
     | '/negocios'
-    | '/noticias'
     | '/ofertas'
     | '/perfil'
-    | '/planos'
-    | '/pulso'
-    | '/servicos'
     | '/admin/aprovacoes'
     | '/admin/lojas'
     | '/admin/planos'
@@ -223,16 +143,8 @@ export interface FileRouteTypes {
   to:
     | '/'
     | '/cadastro'
-    | '/clima'
-    | '/conferir-tudo'
-    | '/eventos'
-    | '/ia-assistente'
-    | '/noticias'
     | '/ofertas'
     | '/perfil'
-    | '/planos'
-    | '/pulso'
-    | '/servicos'
     | '/admin/aprovacoes'
     | '/admin/lojas'
     | '/admin/planos'
@@ -244,17 +156,9 @@ export interface FileRouteTypes {
     | '/'
     | '/admin'
     | '/cadastro'
-    | '/clima'
-    | '/conferir-tudo'
-    | '/eventos'
-    | '/ia-assistente'
     | '/negocios'
-    | '/noticias'
     | '/ofertas'
     | '/perfil'
-    | '/planos'
-    | '/pulso'
-    | '/servicos'
     | '/admin/aprovacoes'
     | '/admin/lojas'
     | '/admin/planos'
@@ -267,42 +171,13 @@ export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AdminRoute: typeof AdminRouteWithChildren
   CadastroRoute: typeof CadastroRoute
-  ClimaRoute: typeof ClimaRoute
-  ConferirTudoRoute: typeof ConferirTudoRoute
-  EventosRoute: typeof EventosRoute
-  IaAssistenteRoute: typeof IaAssistenteRoute
   NegociosRoute: typeof NegociosRouteWithChildren
-  NoticiasRoute: typeof NoticiasRoute
   OfertasRoute: typeof OfertasRoute
   PerfilRoute: typeof PerfilRoute
-  PlanosRoute: typeof PlanosRoute
-  PulsoRoute: typeof PulsoRoute
-  ServicosRoute: typeof ServicosRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
-    '/servicos': {
-      id: '/servicos'
-      path: '/servicos'
-      fullPath: '/servicos'
-      preLoaderRoute: typeof ServicosRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/pulso': {
-      id: '/pulso'
-      path: '/pulso'
-      fullPath: '/pulso'
-      preLoaderRoute: typeof PulsoRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/planos': {
-      id: '/planos'
-      path: '/planos'
-      fullPath: '/planos'
-      preLoaderRoute: typeof PlanosRouteImport
-      parentRoute: typeof rootRouteImport
-    }
     '/perfil': {
       id: '/perfil'
       path: '/perfil'
@@ -317,46 +192,11 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof OfertasRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/noticias': {
-      id: '/noticias'
-      path: '/noticias'
-      fullPath: '/noticias'
-      preLoaderRoute: typeof NoticiasRouteImport
-      parentRoute: typeof rootRouteImport
-    }
     '/negocios': {
       id: '/negocios'
       path: '/negocios'
       fullPath: '/negocios'
       preLoaderRoute: typeof NegociosRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/ia-assistente': {
-      id: '/ia-assistente'
-      path: '/ia-assistente'
-      fullPath: '/ia-assistente'
-      preLoaderRoute: typeof IaAssistenteRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/eventos': {
-      id: '/eventos'
-      path: '/eventos'
-      fullPath: '/eventos'
-      preLoaderRoute: typeof EventosRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/conferir-tudo': {
-      id: '/conferir-tudo'
-      path: '/conferir-tudo'
-      fullPath: '/conferir-tudo'
-      preLoaderRoute: typeof ConferirTudoRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/clima': {
-      id: '/clima'
-      path: '/clima'
-      fullPath: '/clima'
-      preLoaderRoute: typeof ClimaRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/cadastro': {
@@ -459,17 +299,9 @@ const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AdminRoute: AdminRouteWithChildren,
   CadastroRoute: CadastroRoute,
-  ClimaRoute: ClimaRoute,
-  ConferirTudoRoute: ConferirTudoRoute,
-  EventosRoute: EventosRoute,
-  IaAssistenteRoute: IaAssistenteRoute,
   NegociosRoute: NegociosRouteWithChildren,
-  NoticiasRoute: NoticiasRoute,
   OfertasRoute: OfertasRoute,
   PerfilRoute: PerfilRoute,
-  PlanosRoute: PlanosRoute,
-  PulsoRoute: PulsoRoute,
-  ServicosRoute: ServicosRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
