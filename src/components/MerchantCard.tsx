@@ -1,97 +1,105 @@
-import { MapPin, Star, Bike, MessageCircle } from "lucide-react";
+import { MapPin, Star, Bike, MessageCircle, Instagram, Clock, Tag } from "lucide-react";
 import type { Merchant } from "@/data/merchants";
 import { Button } from "@/components/ui/button";
+import { Link } from "@tanstack/react-router";
 
 type Props = { merchant: Merchant };
 
-const planLabels: Record<Merchant["plan"], string> = {
-  free: "Presença Local grátis",
-  assisted: "Cadastro Assistido R$27",
-  local_featured: "Destaque Local R$47",
-  highlighted: "Loja em Destaque R$97",
-  premium_partner: "Parceiro Premium R$147",
-};
+export function PromotionBadge() {
+  return (
+    <div className="inline-flex items-center gap-1 rounded-full bg-brand-orange/10 px-2 py-0.5 text-[10px] font-bold uppercase tracking-wider text-brand-orange">
+      <Tag className="h-3 w-3" />
+      Promoção ativa
+    </div>
+  );
+}
 
 export function MerchantCard({ merchant }: Props) {
   const waUrl = `https://wa.me/${merchant.whatsapp}?text=${encodeURIComponent(
-    `Olá ${merchant.name}! Vim pelo Axêi no Bairro 👋`
+    `Olá ${merchant.name}! Vi sua oferta no Axêi no Bairro e gostaria de mais informações 👋`
   )}`;
-
-  const planLabel = planLabels[merchant.plan];
-  const paidPlan = merchant.plan !== "free";
 
   return (
     <article
-      className={`group rounded-2xl bg-card p-4 shadow-[var(--shadow-card)] transition-all hover:-translate-y-0.5 hover:shadow-[var(--shadow-glow)] ${
-        paidPlan ? "border border-accent/10" : ""
-      }`}
+      className="group flex flex-col overflow-hidden rounded-[2rem] bg-card shadow-[var(--shadow-card)] transition-all hover:-translate-y-1 hover:shadow-[var(--shadow-glow)] border border-border/40"
     >
-      <div className="flex gap-3">
-        <div
-          className="flex h-16 w-16 shrink-0 items-center justify-center rounded-xl text-3xl"
-          style={{ background: "var(--gradient-brand)" }}
-          aria-hidden
-        >
-          <span>{merchant.emoji}</span>
-        </div>
-
-        <div className="min-w-0 flex-1">
-          <div className="flex items-start justify-between gap-2">
-            <div className="min-w-0">
-              <h3 className="truncate text-base font-semibold text-foreground">
-                {merchant.name}
-              </h3>
-              <span className="mt-2 inline-flex rounded-full bg-secondary/10 px-2 py-1 text-[11px] font-semibold text-secondary-foreground">
-                {planLabel}
-              </span>
-            </div>
-            <div className="flex items-center gap-0.5 text-xs font-medium text-foreground">
-              <Star className="h-3.5 w-3.5 fill-brand-orange text-brand-orange" />
-              {merchant.rating.toFixed(1)}
-            </div>
-          </div>
-
-          <p className="mt-0.5 line-clamp-1 text-xs text-muted-foreground">
-            {merchant.description}
-          </p>
-
-          <div className="mt-2 flex flex-wrap items-center gap-1.5 text-[11px]">
-            <span className="inline-flex items-center gap-1 rounded-full bg-secondary px-2 py-0.5 font-medium text-secondary-foreground">
-              <MapPin className="h-3 w-3" />
-              {merchant.neighborhood}
-            </span>
-            {merchant.isOpen ? (
-              <span className="inline-flex items-center gap-1 rounded-full bg-whatsapp/10 px-2 py-0.5 font-medium text-whatsapp">
-                <span className="h-1.5 w-1.5 rounded-full bg-whatsapp" />
-                Aberto agora
-              </span>
-            ) : (
-              <span className="inline-flex items-center gap-1 rounded-full bg-muted px-2 py-0.5 font-medium text-muted-foreground">
-                <span className="h-1.5 w-1.5 rounded-full bg-muted-foreground" />
-                Fechado
-              </span>
-            )}
-            {merchant.delivery && (
-              <span className="inline-flex items-center gap-1 rounded-full bg-accent/10 px-2 py-0.5 font-medium text-accent">
-                <Bike className="h-3 w-3" />
-                Entrega
-              </span>
-            )}
+      <div className="relative h-48 w-full overflow-hidden">
+        <img 
+          src={merchant.image} 
+          alt={merchant.name}
+          className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-110"
+        />
+        <div className="absolute top-4 left-4 flex flex-col gap-2">
+          {merchant.promotion.isActive && <PromotionBadge />}
+          <div className="inline-flex items-center gap-1 rounded-full bg-black/40 backdrop-blur-md px-2 py-1 text-[10px] font-bold uppercase text-white border border-white/20">
+            {merchant.category}
           </div>
         </div>
       </div>
 
-      <Button
-        asChild
-        variant="whatsapp"
-        size="lg"
-        className="mt-3 w-full"
-      >
-        <a href={waUrl} target="_blank" rel="noopener noreferrer">
-          <MessageCircle className="h-5 w-5" />
-          Chamar no WhatsApp
-        </a>
-      </Button>
+      <div className="flex flex-col p-5">
+        <div className="flex items-start justify-between gap-2">
+          <div className="min-w-0">
+            <h3 className="truncate text-lg font-bold text-foreground">
+              {merchant.name}
+            </h3>
+            <div className="mt-1 flex items-center gap-1 text-xs text-muted-foreground">
+              <MapPin className="h-3.5 w-3.5 text-primary" />
+              {merchant.neighborhood}
+            </div>
+          </div>
+          <div className="flex items-center gap-0.5 rounded-full bg-primary/10 px-2 py-1 text-xs font-bold text-primary">
+            <Star className="h-3 w-3 fill-primary" />
+            {merchant.rating.toFixed(1)}
+          </div>
+        </div>
+
+        <p className="mt-3 line-clamp-2 text-sm text-muted-foreground leading-relaxed">
+          {merchant.description}
+        </p>
+
+        <div className="mt-4 flex flex-wrap items-center gap-2">
+          {merchant.isOpen ? (
+            <span className="inline-flex items-center gap-1 rounded-full bg-whatsapp/10 px-2 py-0.5 text-[11px] font-bold text-whatsapp">
+              <Clock className="h-3 w-3" />
+              Aberto
+            </span>
+          ) : (
+            <span className="inline-flex items-center gap-1 rounded-full bg-muted px-2 py-0.5 text-[11px] font-bold text-muted-foreground">
+              <Clock className="h-3 w-3" />
+              Fechado
+            </span>
+          )}
+          {merchant.delivery && (
+            <span className="inline-flex items-center gap-1 rounded-full bg-accent/10 px-2 py-0.5 text-[11px] font-bold text-accent">
+              <Bike className="h-3 w-3" />
+              Entrega
+            </span>
+          )}
+        </div>
+
+        <div className="mt-6 flex gap-2">
+          <Button
+            asChild
+            variant="outline"
+            className="flex-1 rounded-xl h-11 text-xs font-bold border-border/60"
+          >
+            <Link to="/negocios/$id" params={{ id: merchant.id }}>
+              Ver detalhes
+            </Link>
+          </Button>
+          <Button
+            asChild
+            variant="whatsapp"
+            className="flex-1 rounded-xl h-11 text-xs font-bold shadow-lg shadow-whatsapp/20"
+          >
+            <a href={waUrl} target="_blank" rel="noopener noreferrer">
+              <MessageCircle className="h-4 w-4" />
+              WhatsApp
+            </a>
+          </Button>
+        </div>
+      </div>
     </article>
   );
 }
