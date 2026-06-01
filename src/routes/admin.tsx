@@ -91,11 +91,11 @@ function AdminLayout() {
 
         <div className="mt-auto p-6 hidden md:block">
           <button 
-            onClick={() => navigate({ to: '/' })}
+            onClick={handleLogout}
             className="w-full flex items-center gap-3 px-5 py-4 rounded-2xl text-sm font-bold text-slate-400 hover:bg-red-50 hover:text-red-600 transition-all group"
           >
-            <ArrowLeft className="h-5 w-5 group-hover:-translate-x-1 transition-transform" />
-            Sair para o Site
+            <LogOut className="h-5 w-5 group-hover:-translate-x-1 transition-transform" />
+            Sair do Painel
           </button>
         </div>
       </aside>
