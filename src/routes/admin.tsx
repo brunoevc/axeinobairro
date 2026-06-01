@@ -13,7 +13,7 @@ function AdminLayout() {
       {/* Sidebar - Desktop */}
       <aside className="w-full md:w-72 bg-white border-b md:border-r border-slate-100 flex flex-col sticky top-0 md:h-screen z-40">
         <div className="p-8 border-b border-slate-50 hidden md:flex items-center gap-4">
-          <div className="w-12 h-12 rounded-2xl bg-violet-600 flex items-center justify-center text-white font-black text-2xl shadow-xl shadow-violet-200 tracking-tighter">A</div>
+          <div className="w-12 h-12 rounded-2xl bg-orange-600 flex items-center justify-center text-white font-black text-2xl shadow-xl shadow-orange-200 tracking-tighter">A</div>
           <div>
             <p className="font-black text-slate-900 leading-none text-lg">Painel Admin</p>
             <p className="text-[10px] font-bold text-slate-400 uppercase tracking-widest mt-1">Axêi no Bairro</p>
@@ -23,7 +23,7 @@ function AdminLayout() {
         {/* Mobile Header */}
         <div className="md:hidden flex items-center justify-between p-4 bg-white border-b border-slate-100">
            <div className="flex items-center gap-2">
-              <div className="w-8 h-8 rounded-lg bg-violet-600 flex items-center justify-center text-white font-black text-sm">A</div>
+              <div className="w-8 h-8 rounded-lg bg-orange-600 flex items-center justify-center text-white font-black text-sm">A</div>
               <span className="font-black text-slate-900">Admin</span>
            </div>
            <button onClick={() => navigate({ to: '/' })} className="p-2 text-slate-400">
@@ -34,7 +34,7 @@ function AdminLayout() {
         <nav className="flex md:flex-col p-4 md:p-6 gap-2 overflow-x-auto md:overflow-x-visible">
           <Link 
             to="/admin" 
-            activeProps={{ className: "bg-violet-600 text-white shadow-lg shadow-violet-200" }}
+            activeProps={{ className: "bg-orange-600 text-white shadow-lg shadow-orange-200" }}
             inactiveProps={{ className: "text-slate-500 hover:bg-slate-50 hover:text-slate-900" }}
             className="flex items-center gap-3 px-5 py-4 rounded-2xl text-sm font-bold transition-all shrink-0 md:shrink"
           >
@@ -43,7 +43,7 @@ function AdminLayout() {
           </Link>
           <Link 
             to="/admin/lojas" 
-            activeProps={{ className: "bg-violet-600 text-white shadow-lg shadow-violet-200" }}
+            activeProps={{ className: "bg-orange-600 text-white shadow-lg shadow-orange-200" }}
             inactiveProps={{ className: "text-slate-500 hover:bg-slate-50 hover:text-slate-900" }}
             className="flex items-center gap-3 px-5 py-4 rounded-2xl text-sm font-bold transition-all shrink-0 md:shrink"
           >
@@ -52,7 +52,7 @@ function AdminLayout() {
           </Link>
           <Link 
             to="/admin/aprovacoes" 
-            activeProps={{ className: "bg-violet-600 text-white shadow-lg shadow-violet-200" }}
+            activeProps={{ className: "bg-orange-600 text-white shadow-lg shadow-orange-200" }}
             inactiveProps={{ className: "text-slate-500 hover:bg-slate-50 hover:text-slate-900" }}
             className="flex items-center gap-3 px-5 py-4 rounded-2xl text-sm font-bold transition-all shrink-0 md:shrink"
           >
@@ -61,7 +61,7 @@ function AdminLayout() {
           </Link>
           <Link 
             to="/admin/planos" 
-            activeProps={{ className: "bg-violet-600 text-white shadow-lg shadow-violet-200" }}
+            activeProps={{ className: "bg-orange-600 text-white shadow-lg shadow-orange-200" }}
             inactiveProps={{ className: "text-slate-500 hover:bg-slate-50 hover:text-slate-900" }}
             className="flex items-center gap-3 px-5 py-4 rounded-2xl text-sm font-bold transition-all shrink-0 md:shrink"
           >
