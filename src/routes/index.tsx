@@ -19,6 +19,7 @@ import { MerchantCard } from "@/components/MerchantCard";
 import { TopBar } from "@/components/TopBar";
 import { FloatingNav } from "@/components/FloatingNav";
 import { Button } from "@/components/ui/button";
+import { Logo } from "@/components/ui/Logo";
 import { useLocation } from "@/hooks/useLocation";
 
 export const Route = createFileRoute("/")({
@@ -64,14 +65,14 @@ function Index() {
           <div className="flex-1 text-center md:text-left">
             <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-orange-50 text-orange-600 text-[10px] font-black uppercase tracking-widest mb-6 border border-orange-100 shadow-sm">
               <TrendingUp className="h-3 w-3" />
-              O melhor do seu bairro em um só lugar
+              Encontre. Conecte. Fortaleça o comércio local.
             </div>
             <h1 className="text-4xl md:text-7xl font-black tracking-tighter text-slate-900 mb-6 leading-[0.9]">
               Conecte-se com o <br className="hidden md:block" />
-              <span className="text-orange-600">Comércio Local</span>
+              <span className="text-orange-600">Bairro</span>
             </h1>
-            <p className="text-slate-500 text-lg md:text-xl font-medium mb-10 leading-relaxed max-w-xl">
-              Descubra padarias, restaurantes, serviços e ofertas exclusivas <br className="hidden md:block" /> pertinho de você em segundos. Tudo via WhatsApp.
+            <p className="text-slate-500 text-lg md:text-xl font-medium mb-10 leading-relaxed max-w-xl mx-auto md:mx-0">
+              O marketplace onde você encontra padarias, restaurantes, serviços e ofertas exclusivas pertinho de você. Tudo via WhatsApp.
             </p>
             
             <div className="flex flex-col sm:flex-row gap-4">
@@ -265,6 +266,43 @@ function Index() {
           </div>
         </div>
       </section>
+
+      <footer className="bg-slate-900 text-white py-20 px-6 mt-20">
+        <div className="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center gap-12">
+          <div className="flex flex-col items-center md:items-start text-center md:text-left gap-4">
+            <Logo dark />
+            <p className="text-slate-400 font-medium max-w-xs">
+              Encontre. Conecte. Fortaleça o comércio local.
+            </p>
+          </div>
+          
+          <div className="grid grid-cols-2 sm:grid-cols-3 gap-12 md:gap-24">
+             <div className="flex flex-col gap-4 text-center md:text-left">
+                <span className="text-[10px] font-black uppercase tracking-widest text-slate-500">Plataforma</span>
+                <Link to="/negocios" className="text-sm font-bold text-slate-300 hover:text-orange-500 transition-colors">Ver Negócios</Link>
+                <Link to="/cadastro" className="text-sm font-bold text-slate-300 hover:text-orange-500 transition-colors">Cadastrar Loja</Link>
+             </div>
+             <div className="flex flex-col gap-4 text-center md:text-left">
+                <span className="text-[10px] font-black uppercase tracking-widest text-slate-500">Suporte</span>
+                <a href="#" className="text-sm font-bold text-slate-300 hover:text-orange-500 transition-colors">Central de Ajuda</a>
+                <a href="#" className="text-sm font-bold text-slate-300 hover:text-orange-500 transition-colors">Termos de Uso</a>
+             </div>
+             <div className="hidden sm:flex flex-col gap-4 text-center md:text-left">
+                <span className="text-[10px] font-black uppercase tracking-widest text-slate-500">Cidade</span>
+                <span className="text-sm font-bold text-slate-300">Barra Mansa / RJ</span>
+             </div>
+          </div>
+        </div>
+        
+        <div className="max-w-7xl mx-auto mt-20 pt-8 border-t border-white/5 flex flex-col md:flex-row justify-between items-center gap-6 text-[10px] font-black uppercase tracking-widest text-slate-500">
+           <span>© 2026 Axêi no Bairro. Todos os direitos reservados.</span>
+           <div className="flex items-center gap-6">
+              <a href="#" className="hover:text-white transition-colors">Instagram</a>
+              <a href="#" className="hover:text-white transition-colors">Facebook</a>
+              <a href="#" className="hover:text-white transition-colors">WhatsApp</a>
+           </div>
+        </div>
+      </footer>
 
       <FloatingNav />
     </div>
