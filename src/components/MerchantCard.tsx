@@ -1,8 +1,9 @@
-import { MapPin, Star, Bike, MessageCircle, Clock, Tag, ChevronRight, User, Navigation } from "lucide-react";
+import { MapPin, Star, Bike, MessageCircle, Clock, Tag, ChevronRight, User, Navigation, TrendingUp } from "lucide-react";
 import type { Merchant } from "@/data/merchants";
 import { Button } from "@/components/ui/button";
 import { Link } from "@tanstack/react-router";
 import { useLocation } from "@/hooks/useLocation";
+import { useState } from "react";
 
 type Props = { merchant: Merchant };
 
@@ -17,6 +18,8 @@ export function PromotionBadge() {
 
 export function MerchantCard({ merchant }: Props) {
   const { coords, getDistance, formatDistance } = useLocation();
+  const [imageError, setImageError] = useState(false);
+
   const waUrl = `https://wa.me/${merchant.whatsapp}?text=${encodeURIComponent(
     `Olá ${merchant.name}! Vi seu perfil no Axêi no Bairro e gostaria de mais informações 👋`
   )}`;
@@ -30,16 +33,18 @@ export function MerchantCard({ merchant }: Props) {
       className="group flex flex-col overflow-hidden rounded-[2.5rem] bg-white border border-slate-100 shadow-sm transition-all hover:shadow-xl hover:-translate-y-1 active:scale-[0.98]"
     >
       <div className="relative aspect-[4/3] w-full overflow-hidden bg-slate-100">
-        {merchant.image ? (
+        {!imageError && merchant.image ? (
           <img 
             src={merchant.image} 
             alt={merchant.name}
             className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-110"
             loading="lazy"
+            onError={() => setImageError(true)}
           />
         ) : (
-          <div className="w-full h-full flex items-center justify-center bg-slate-50">
-            <User className="w-12 h-12 text-slate-200" />
+          <div className="w-full h-full flex flex-col items-center justify-center bg-slate-50 text-slate-300 gap-2">
+            <TrendingUp className="w-10 h-10 opacity-20" />
+            <span className="text-[10px] font-black uppercase tracking-widest">Imagem não disponível</span>
           </div>
         )}
         <div className="absolute top-4 left-4 flex flex-col gap-2 z-10">

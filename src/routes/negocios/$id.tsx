@@ -8,13 +8,13 @@ import {
   Share2, 
   Star,
   CheckCircle2,
-  Calendar,
   AlertTriangle,
   ChevronRight,
   ShieldCheck,
   Smartphone,
   Tag,
-  Navigation
+  Navigation,
+  TrendingUp
 } from "lucide-react";
 import { merchants } from "@/data/merchants";
 import { Button } from "@/components/ui/button";
@@ -23,6 +23,7 @@ import { TopBar } from "@/components/TopBar";
 import { FloatingNav } from "@/components/FloatingNav";
 import { useLocation } from "@/hooks/useLocation";
 import { toast } from "sonner";
+import { useState } from "react";
 
 export const Route = createFileRoute("/negocios/$id")({
   component: DetailPage,
@@ -32,6 +33,9 @@ function DetailPage() {
   const { id } = Route.useParams();
   const navigate = useNavigate();
   const { coords, getDistance, formatDistance } = useLocation();
+  const [coverError, setCoverError] = useState(false);
+  const [logoError, setLogoError] = useState(false);
+  
   const merchant = merchants.find((m) => m.id === id);
 
   if (!merchant) {
@@ -89,14 +93,22 @@ function DetailPage() {
     <div className="min-h-screen bg-slate-50 pb-32">
       <TopBar />
       
-      {/* Hero Section */}
+      {/* Hero Section with Cover Fallback */}
       <div className="relative w-full max-w-7xl mx-auto md:mt-8 md:px-6">
-        <div className="relative h-[40vh] md:h-[50vh] w-full overflow-hidden md:rounded-3xl shadow-2xl shadow-slate-200">
-          <img 
-            src={merchant.image} 
-            alt={merchant.name} 
-            className="w-full h-full object-cover"
-          />
+        <div className="relative h-[40vh] md:h-[50vh] w-full overflow-hidden md:rounded-3xl shadow-2xl shadow-slate-200 bg-slate-900">
+          {!coverError && merchant.image ? (
+            <img 
+              src={merchant.image} 
+              alt={merchant.name} 
+              className="w-full h-full object-cover opacity-60"
+              onError={() => setCoverError(true)}
+            />
+          ) : (
+            <div className="w-full h-full flex flex-col items-center justify-center text-slate-500">
+              <TrendingUp className="w-16 h-16 opacity-10 mb-4" />
+              <span className="text-sm font-black uppercase tracking-[0.2em]">Capa não disponível</span>
+            </div>
+          )}
           <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent" />
           
           {/* Top Actions */}
@@ -118,61 +130,72 @@ function DetailPage() {
             </button>
           </div>
 
-          {/* Business Core Info Overlay */}
+          {/* Business Core Info Overlay with Logo Fallback */}
           <div className="absolute bottom-8 left-6 right-6 md:left-12 md:right-12">
-            <div className="flex flex-col gap-4">
-              <div className="flex flex-wrap gap-2">
-                <span className="inline-flex items-center gap-1 rounded-full bg-orange-600 px-3 py-1 text-[10px] font-black uppercase text-white shadow-lg">
-                  {merchant.category}
-                </span>
-                {merchant.promotion.isActive && <PromotionBadge />}
-                {merchant.featured && (
-                   <span className="inline-flex items-center gap-1 rounded-full bg-yellow-400 px-3 py-1 text-[10px] font-black uppercase text-slate-900 shadow-lg">
-                     Destaque
-                   </span>
-                )}
-              </div>
-              
-              <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-4">
-                <div>
-                  <h1 className="text-4xl md:text-6xl font-black text-white leading-tight tracking-tighter">
-                    {merchant.name}
-                  </h1>
-                  <div className="flex flex-wrap items-center gap-4 mt-2 text-white/90 text-sm font-bold">
-                    <div className="flex items-center gap-1.5">
-                      <MapPin className="h-4 w-4 text-orange-400" />
-                      {merchant.neighborhood}
+            <div className="flex items-end gap-6">
+               <div className="w-24 h-24 md:w-32 md:h-32 rounded-[2rem] bg-white p-2 shadow-2xl relative z-10 -mb-12 md:-mb-16 overflow-hidden border-4 border-white">
+                  {!logoError && merchant.image ? (
+                    <img 
+                      src={merchant.image} 
+                      alt={merchant.name} 
+                      className="w-full h-full object-cover rounded-[1.5rem]"
+                      onError={() => setLogoError(true)}
+                    />
+                  ) : (
+                    <div className="w-full h-full flex items-center justify-center bg-slate-50 text-orange-600 font-black text-xl">
+                      {merchant.name.substring(0, 1)}
                     </div>
-                    <div className="flex items-center gap-1.5">
-                      <div className="flex items-center gap-0.5 bg-white/10 backdrop-blur-sm px-2 py-0.5 rounded-lg border border-white/20">
-                        <Star className="h-3.5 w-3.5 fill-yellow-400 text-yellow-400" />
-                        {merchant.rating.toFixed(1)}
-                      </div>
-                      {distance !== null && (
-                        <div className="flex items-center gap-1 bg-orange-600 px-2 py-0.5 rounded-lg shadow-lg">
-                           <Navigation className="w-3 h-3 text-white" />
-                           <span className="text-white text-[10px] font-black uppercase">{formatDistance(distance)}</span>
+                  )}
+                </div>
+                <div className="flex-1 pb-2">
+                  <div className="flex flex-wrap gap-2 mb-3">
+                    <span className="inline-flex items-center gap-1 rounded-full bg-orange-600 px-3 py-1 text-[10px] font-black uppercase text-white shadow-lg">
+                      {merchant.category}
+                    </span>
+                    {merchant.promotion.isActive && <PromotionBadge />}
+                  </div>
+                  
+                  <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-4">
+                    <div>
+                      <h1 className="text-4xl md:text-6xl font-black text-white leading-tight tracking-tighter drop-shadow-lg">
+                        {merchant.name}
+                      </h1>
+                      <div className="flex flex-wrap items-center gap-4 mt-2 text-white/90 text-sm font-bold">
+                        <div className="flex items-center gap-1.5">
+                          <MapPin className="h-4 w-4 text-orange-400" />
+                          {merchant.neighborhood}
                         </div>
-                      )}
+                        <div className="flex items-center gap-1.5">
+                          <div className="flex items-center gap-0.5 bg-white/10 backdrop-blur-sm px-2 py-0.5 rounded-lg border border-white/20">
+                            <Star className="h-3.5 w-3.5 fill-yellow-400 text-yellow-400" />
+                            {merchant.rating.toFixed(1)}
+                          </div>
+                          {distance !== null && (
+                            <div className="flex items-center gap-1 bg-orange-600 px-2 py-0.5 rounded-lg shadow-lg">
+                               <Navigation className="w-3 h-3 text-white" />
+                               <span className="text-white text-[10px] font-black uppercase">{formatDistance(distance)}</span>
+                            </div>
+                          )}
+                        </div>
+                      </div>
+                    </div>
+
+                    <div className="hidden md:flex gap-4">
+                       <Button asChild className="bg-emerald-600 hover:bg-emerald-700 text-white rounded-2xl h-14 px-8 font-black shadow-xl shadow-emerald-900/20">
+                         <a href={waUrl} target="_blank" rel="noopener noreferrer">
+                           <MessageCircle className="w-5 h-5 mr-2" />
+                           Chamar no WhatsApp
+                         </a>
+                       </Button>
                     </div>
                   </div>
                 </div>
-
-                <div className="hidden md:flex gap-4">
-                   <Button asChild className="bg-emerald-600 hover:bg-emerald-700 text-white rounded-2xl h-14 px-8 font-black shadow-xl shadow-emerald-900/20">
-                     <a href={waUrl} target="_blank" rel="noopener noreferrer">
-                       <MessageCircle className="w-5 h-5 mr-2" />
-                       Chamar no WhatsApp
-                     </a>
-                   </Button>
-                </div>
-              </div>
             </div>
           </div>
         </div>
       </div>
 
-      <main className="max-w-7xl mx-auto px-6 mt-8 md:mt-12 grid grid-cols-1 lg:grid-cols-3 gap-8">
+      <main className="max-w-7xl mx-auto px-6 mt-16 md:mt-24 grid grid-cols-1 lg:grid-cols-3 gap-8">
         <div className="lg:col-span-2 space-y-8">
           {/* Promotion Highlight */}
           {merchant.promotion.isActive && (

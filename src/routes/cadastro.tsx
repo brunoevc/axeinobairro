@@ -21,6 +21,8 @@ import { Button } from "@/components/ui/button";
 import { TopBar } from "@/components/TopBar";
 import { FloatingNav } from "@/components/FloatingNav";
 import { Logo } from "@/components/ui/Logo";
+import { ImageUploadPreview } from "@/components/ImageUploadPreview";
+
 
 export const Route = createFileRoute("/cadastro")({
   component: RegistrationPage,
@@ -39,6 +41,10 @@ function RegistrationPage() {
     description: "",
     hours: "",
     image: "",
+    logoUrl: "",
+    coverUrl: "",
+    cardUrl: "",
+    promoUrl: "",
     promoTitle: "",
     promoDesc: "",
     promoActive: false
@@ -269,18 +275,33 @@ function RegistrationPage() {
                   />
                 </div>
               </div>
-              <div className="space-y-3">
-                <label className="text-sm font-black text-slate-700 ml-1">Link da Foto Principal</label>
-                <div className="relative group">
-                  <ImageIcon className="absolute left-5 top-5 h-5 w-5 text-slate-400 group-focus-within:text-orange-600 transition-colors" />
-                  <input 
-                    type="url" 
-                    placeholder="https://exemplo.com/foto.jpg"
-                    className="w-full bg-slate-50 border border-slate-200 rounded-2xl p-5 pl-14 text-sm font-bold outline-none focus:border-violet-600 focus:bg-white transition-all shadow-sm"
-                    value={formData.image}
-                    onChange={(e) => setFormData({...formData, image: e.target.value})}
-                  />
-                </div>
+              <div className="space-y-8">
+                <ImageUploadPreview
+                  label="Logo da Loja"
+                  description="Aparecerá no seu perfil e resultados"
+                  recommendedSize="512x512 px • 1:1"
+                  aspectRatio="square"
+                  value={formData.logoUrl}
+                  onChange={(url) => setFormData({ ...formData, logoUrl: url })}
+                />
+
+                <ImageUploadPreview
+                  label="Imagem do Card"
+                  description="Principal imagem na listagem de bairros"
+                  recommendedSize="1200x900 px • 4:3"
+                  aspectRatio="card"
+                  value={formData.cardUrl}
+                  onChange={(url) => setFormData({ ...formData, cardUrl: url })}
+                />
+
+                <ImageUploadPreview
+                  label="Capa do Comércio"
+                  description="Destaque no topo da sua página"
+                  recommendedSize="1600x900 px • 16:9"
+                  aspectRatio="video"
+                  value={formData.coverUrl}
+                  onChange={(url) => setFormData({ ...formData, coverUrl: url })}
+                />
               </div>
             </div>
           </section>
