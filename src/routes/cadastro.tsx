@@ -56,7 +56,7 @@ function RegistrationPage() {
           <CheckCircle2 className="h-12 w-12 text-emerald-600" />
         </div>
         <h1 className="text-4xl font-black text-slate-900 mb-4 leading-tight tracking-tighter">
-          Tudo certo! <br /> <span className="text-violet-600">Sua loja está na fila.</span>
+          Tudo certo! <br /> <span className="text-orange-600">Sua loja está na fila.</span>
         </h1>
         <p className="text-slate-500 mb-12 max-w-xs leading-relaxed font-medium text-lg">
           Seu negócio foi cadastrado para análise. Em breve ele estará visível para todos no bairro.
@@ -64,7 +64,7 @@ function RegistrationPage() {
         <div className="flex flex-col w-full max-w-sm gap-4">
           <Button 
             onClick={() => navigate({ to: '/' })} 
-            className="rounded-2xl h-16 text-lg font-black bg-violet-600 hover:bg-violet-700 text-white shadow-xl shadow-violet-200 transition-all active:scale-95"
+            className="rounded-2xl h-16 text-lg font-black bg-orange-600 hover:bg-orange-700 text-white shadow-xl shadow-orange-200 transition-all active:scale-95"
           >
             Voltar para o Início
           </Button>
