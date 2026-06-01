@@ -2,8 +2,6 @@ import { createFileRoute, useNavigate, Link } from "@tanstack/react-router";
 import { 
   ArrowLeft, 
   Settings, 
-  Store, 
-  Tag, 
   Eye, 
   Edit3, 
   Power,
