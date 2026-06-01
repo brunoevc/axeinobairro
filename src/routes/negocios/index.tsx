@@ -17,6 +17,7 @@ import { z } from "zod";
 import { TopBar } from "@/components/TopBar";
 import { FloatingNav } from "@/components/FloatingNav";
 import { Button } from "@/components/ui/button";
+import { useLocation } from "@/hooks/useLocation";
 
 const searchSchema = z.object({
   category: z.string().optional(),
@@ -37,8 +38,21 @@ function ListingPage() {
   const [selectedCategory, setSelectedCategory] = useState(searchParams.category || "all");
   const [selectedNeighborhood, setSelectedNeighborhood] = useState(searchParams.neighborhood || "all");
 
+  const { coords, getDistance } = useLocation();
+
   const filteredMerchants = useMemo(() => {
-    return merchants.filter(merchant => {
+    let list = [...merchants];
+    
+    // Calculate distance and sort if coordinates are available
+    if (coords) {
+      list = list.map(m => ({
+        ...m,
+        calculatedDistance: getDistance(coords.latitude, coords.longitude, m.latitude, m.longitude)
+      }))
+      .sort((a, b) => (a as any).calculatedDistance - (b as any).calculatedDistance);
+    }
+
+    return list.filter(merchant => {
       const matchesSearch = merchant.name.toLowerCase().includes(searchTerm.toLowerCase()) || 
                            merchant.description.toLowerCase().includes(searchTerm.toLowerCase());
       const matchesCategory = selectedCategory === "all" || merchant.category === selectedCategory;
@@ -47,7 +61,7 @@ function ListingPage() {
       
       return matchesSearch && matchesCategory && matchesNeighborhood && matchesPromotion;
     });
-  }, [searchTerm, selectedCategory, selectedNeighborhood, searchParams.hasPromotion]);
+  }, [searchTerm, selectedCategory, selectedNeighborhood, searchParams.hasPromotion, coords, getDistance]);
 
   const clearFilters = () => {
     setSearchTerm("");
