@@ -218,21 +218,27 @@ function ListingPage() {
                {selectedCategory !== 'all' && (
                   <div className="flex items-center gap-2 bg-orange-50 text-orange-600 px-3 py-1.5 rounded-full text-[10px] font-black uppercase border border-orange-100">
                     {categories.find(c => c.slug === selectedCategory)?.label}
-                    <button onClick={() => setSelectedCategory('all')}><X className="w-3 h-3" /></button>
+                    <button onClick={() => {
+                      setSelectedCategory('all');
+                      updateFilters({ categoria: 'all' });
+                    }}><X className="w-3 h-3" /></button>
                  </div>
                )}
 
                {selectedNeighborhood !== 'all' && (
                  <div className="flex items-center gap-2 bg-orange-50 text-orange-600 px-3 py-1.5 rounded-full text-[10px] font-black uppercase border border-orange-100">
                     {selectedNeighborhood}
-                    <button onClick={() => setSelectedNeighborhood('all')}><X className="w-3 h-3" /></button>
+                    <button onClick={() => {
+                      setSelectedNeighborhood('all');
+                      updateFilters({ bairro: 'all' });
+                    }}><X className="w-3 h-3" /></button>
                  </div>
                )}
 
                {searchParams.hasPromotion && (
                  <div className="flex items-center gap-2 bg-orange-50 text-orange-600 px-3 py-1.5 rounded-full text-[10px] font-black uppercase border border-orange-100">
                     Com Promoção
-                    <button onClick={() => navigate({ to: '/negocios', search: { ...searchParams, hasPromotion: undefined } })}><X className="w-3 h-3" /></button>
+                    <button onClick={() => navigate({ to: '/negocios', search: { ...searchParams, hasPromotion: undefined }, replace: true })}><X className="w-3 h-3" /></button>
                  </div>
                )}
 
@@ -240,7 +246,7 @@ function ListingPage() {
                 onClick={clearFilters}
                 className="text-[10px] font-black text-slate-400 hover:text-red-500 uppercase tracking-widest underline underline-offset-4 decoration-slate-200 hover:decoration-red-200 transition-all"
                >
-                Limpar tudo
+                Limpar filtros
                </button>
             </div>
           )}
