@@ -24,7 +24,6 @@ export type Merchant = {
   description: string;
   whatsapp: string; // E.164 without +
   address: string;
-  neighborhood: string;
   hours: string;
   instagram: string;
   image: string;
