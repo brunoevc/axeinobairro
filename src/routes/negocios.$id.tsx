@@ -12,7 +12,8 @@ import {
   AlertTriangle,
   ChevronRight,
   ShieldCheck,
-  Smartphone
+  Smartphone,
+  Tag
 } from "lucide-react";
 import { merchants } from "@/data/merchants";
 import { Button } from "@/components/ui/button";
