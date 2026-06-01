@@ -1,23 +1,15 @@
 import { useState, useEffect } from "react";
-import { Clock, CloudSun, MapPin, Search } from "lucide-react";
+import { Clock, CloudSun, MapPin, Search, RefreshCw, AlertCircle } from "lucide-react";
 import { Link, useNavigate } from "@tanstack/react-router";
+import { useLocation } from "@/hooks/useLocation";
 
 export function TopBar() {
   const [time, setTime] = useState(new Date());
-  const [location, setLocation] = useState("Barra Mansa/RJ");
   const navigate = useNavigate();
+  const { locationName, loading, error, retry } = useLocation();
 
   useEffect(() => {
     const timer = setInterval(() => setTime(new Date()), 1000);
-    
-    if ("geolocation" in navigator) {
-      navigator.geolocation.getCurrentPosition((position) => {
-        console.log("Location access granted", position.coords);
-      }, (error) => {
-        console.log("Location access denied", error);
-      });
-    }
-
     return () => clearInterval(timer);
   }, []);
 
@@ -28,16 +20,23 @@ export function TopBar() {
         <div className="hidden md:flex justify-between items-center py-2 text-[10px] font-medium text-slate-500 uppercase tracking-wider border-b border-slate-50">
           <div className="flex items-center gap-6">
             <div className="flex items-center gap-1.5">
-            <Clock className="w-3 h-3 text-orange-500" />
+              <Clock className="w-3 h-3 text-orange-500" />
               {time.toLocaleTimeString('pt-BR')}
             </div>
             <div className="flex items-center gap-1.5">
               <CloudSun className="w-3 h-3 text-orange-500" />
               28°C Parcialmente nublado
             </div>
-            <div className="flex items-center gap-1.5">
+            <div className="flex items-center gap-1.5 group cursor-pointer" onClick={retry}>
               <MapPin className="w-3 h-3 text-orange-500" />
-              {location}
+              {loading ? (
+                <div className="h-3 w-32 bg-slate-100 animate-pulse rounded" />
+              ) : (
+                <span className="flex items-center gap-1">
+                  {locationName}
+                  {error && <AlertCircle className="w-2.5 h-2.5 text-red-500" />}
+                </span>
+              )}
             </div>
           </div>
           <div>{time.toLocaleDateString('pt-BR', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' })}</div>
@@ -76,14 +75,19 @@ export function TopBar() {
             </div>
           </div>
 
-          {/* Mobile Profile Link */}
-          <Link to="/perfil" className="md:hidden flex flex-col items-end">
+          {/* Mobile Location Header */}
+          <div className="md:hidden flex flex-col items-end cursor-pointer" onClick={retry}>
              <div className="flex items-center gap-1 text-[10px] font-bold text-orange-600 uppercase">
                 <MapPin className="w-3 h-3" />
-                {location.split(',')[0]}
+                {loading ? (
+                   <div className="h-2 w-20 bg-slate-100 animate-pulse rounded" />
+                ) : (
+                   locationName.split(' - ')[0]
+                )}
+                {error && <RefreshCw className="w-2.5 h-2.5 ml-1 animate-spin-slow" />}
              </div>
              <div className="text-[10px] text-slate-400">{time.toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' })}</div>
-          </Link>
+          </div>
         </div>
       </div>
     </div>
