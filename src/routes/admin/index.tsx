@@ -3,7 +3,11 @@ import { useAdminState } from "@/hooks/useAdminState";
 import { DashboardStats } from "@/components/admin/DashboardStats";
 import { PlansChart } from "@/components/admin/PlansChart";
 import { ActivityLog } from "@/components/admin/ActivityLog";
-import { ShieldCheck, Info, TrendingUp, BarChart3, Clock } from "lucide-react";
+import { ShieldCheck, Info, TrendingUp, BarChart3, Clock, Layout, Save } from "lucide-react";
+import { ImageUploadPreview } from "@/components/ImageUploadPreview";
+import { useState, useEffect } from "react";
+import { Button } from "@/components/ui/button";
+import { toast } from "sonner";
 
 export const Route = createFileRoute("/admin/")({
   component: AdminDashboard,
@@ -17,6 +21,21 @@ export const Route = createFileRoute("/admin/")({
 
 function AdminDashboard() {
   const { stats, state, loading } = useAdminState();
+  const [platformLogo, setPlatformLogo] = useState("");
+
+  useEffect(() => {
+    const saved = localStorage.getItem("platform_logo_url");
+    if (saved) setPlatformLogo(saved);
+  }, []);
+
+  const handleSavePlatformConfig = () => {
+    localStorage.setItem("platform_logo_url", platformLogo);
+    toast.success("Configurações visuais salvas com sucesso!");
+    // Force reload to update logos in TopBar/Footer without full page refresh
+    window.dispatchEvent(new Event("storage"));
+    setTimeout(() => window.location.reload(), 500);
+  };
+
 
   if (loading || !stats || !state) {
     return (
@@ -163,6 +182,40 @@ function AdminDashboard() {
           </div>
         </div>
       </section>
+
+      {/* Visual Configuration Section */}
+      <section className="bg-white rounded-[2.5rem] p-10 border border-slate-100 shadow-sm">
+        <div className="flex items-center justify-between mb-8 border-b border-slate-50 pb-6">
+          <div className="flex items-center gap-3">
+             <div className="p-2 bg-orange-50 rounded-xl text-orange-600">
+                <Layout className="w-5 h-5" />
+             </div>
+             <div>
+                <h3 className="text-xl font-black text-slate-900 tracking-tight">Configuração Visual da Plataforma</h3>
+                <p className="text-xs text-slate-400 font-bold uppercase tracking-wider mt-1">Personalize a identidade do Axêi no Bairro</p>
+             </div>
+          </div>
+          <Button 
+            onClick={handleSavePlatformConfig}
+            className="bg-orange-600 hover:bg-orange-700 text-white rounded-xl h-12 px-6 font-black shadow-lg shadow-orange-100 active:scale-95 transition-all"
+          >
+            <Save className="w-4 h-4 mr-2" />
+            Salvar Alterações
+          </Button>
+        </div>
+
+        <div className="max-w-4xl">
+          <ImageUploadPreview
+            label="Logo da Plataforma (Horizontal)"
+            description="Substitui o texto 'Axêi no Bairro' no TopBar e Footer"
+            recommendedSize="1200x400 px • PNG transparente"
+            aspectRatio="horizontal"
+            value={platformLogo}
+            onChange={setPlatformLogo}
+          />
+        </div>
+      </section>
+
 
       {/* Info Box */}
       <div className="rounded-[2.5rem] bg-slate-900 p-10 text-white relative overflow-hidden shadow-2xl">
