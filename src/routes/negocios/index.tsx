@@ -110,7 +110,7 @@ function ListingPage() {
             <div className="md:col-span-3 relative">
                <MapPin className="absolute left-4 top-1/2 -translate-y-1/2 h-4 w-4 text-violet-600 pointer-events-none" />
                <select 
-                className="w-full bg-slate-50 border border-slate-200 rounded-2xl py-4 pl-10 pr-10 text-xs font-black uppercase tracking-wider outline-none focus:ring-4 focus:ring-violet-500/5 focus:border-violet-600 focus:bg-white appearance-none cursor-pointer shadow-sm"
+                className="w-full bg-slate-50 border border-slate-200 rounded-2xl py-4 pl-10 pr-10 text-xs font-black uppercase tracking-wider outline-none focus:ring-4 focus:ring-violet-500/5 focus:border-violet-600 focus:bg-white appearance-none cursor-pointer shadow-sm disabled:opacity-50 disabled:cursor-not-allowed"
                 value={selectedNeighborhood}
                 onChange={(e) => setSelectedNeighborhood(e.target.value)}
               >
@@ -125,7 +125,7 @@ function ListingPage() {
             <div className="md:col-span-3 relative">
                <Settings2 className="absolute left-4 top-1/2 -translate-y-1/2 h-4 w-4 text-violet-600 pointer-events-none" />
                <select 
-                className="w-full bg-slate-50 border border-slate-200 rounded-2xl py-4 pl-10 pr-10 text-xs font-black uppercase tracking-wider outline-none focus:ring-4 focus:ring-violet-500/5 focus:border-violet-600 focus:bg-white appearance-none cursor-pointer shadow-sm"
+                className="w-full bg-slate-50 border border-slate-200 rounded-2xl py-4 pl-10 pr-10 text-xs font-black uppercase tracking-wider outline-none focus:ring-4 focus:ring-violet-500/5 focus:border-violet-600 focus:bg-white appearance-none cursor-pointer shadow-sm disabled:opacity-50 disabled:cursor-not-allowed"
                 value={selectedCategory}
                 onChange={(e) => setSelectedCategory(e.target.value)}
               >
