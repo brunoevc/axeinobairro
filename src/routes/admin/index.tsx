@@ -9,7 +9,7 @@ import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { toast } from "sonner";
 import { useAtom } from "jotai";
-import { passwordAtom, recoveryRequestsAtom } from "@/hooks/useAuth";
+import { passwordAtom, recoveryRequestsAtom, authUserAtom } from "@/hooks/useAuth";
 
 export const Route = createFileRoute("/admin/")({
   component: AdminDashboard,
@@ -26,6 +26,7 @@ function AdminDashboard() {
   const [platformLogo, setPlatformLogo] = useState("");
   const [adminPassword, setAdminPassword] = useAtom(passwordAtom);
   const [recoveryRequests] = useAtom(recoveryRequestsAtom);
+  const [authUser] = useAtom(authUserAtom);
 
   const [currentPass, setCurrentPass] = useState("");
   const [newPass, setNewPass] = useState("");
