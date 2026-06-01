@@ -302,48 +302,64 @@ function AdminDashboard() {
                </div>
                <div>
                   <h3 className="text-xl font-black text-slate-900 tracking-tight">Segurança da Conta</h3>
-                  <p className="text-xs text-slate-400 font-bold uppercase tracking-wider mt-1">Gerenciar senha de acesso</p>
+                  <p className="text-xs text-slate-400 font-bold uppercase tracking-wider mt-1">
+                    {authUser?.provider === 'google' ? 'Autenticado via Google' : 'Gerenciar senha de acesso'}
+                  </p>
                </div>
             </div>
           </div>
 
-          <form onSubmit={handleUpdatePassword} className="space-y-6">
-            <div className="space-y-2">
-              <label className="text-xs font-black text-slate-400 uppercase tracking-widest ml-1">Senha Atual</label>
-              <input 
-                required
-                type="password" 
-                className="w-full bg-slate-50 border border-slate-200 rounded-2xl p-4 text-sm font-bold outline-none focus:border-orange-600 transition-all"
-                value={currentPass}
-                onChange={(e) => setCurrentPass(e.target.value)}
-              />
+          {authUser?.provider === 'google' ? (
+            <div className="py-10 text-center space-y-4">
+              <div className="w-16 h-16 bg-blue-50 rounded-full flex items-center justify-center mx-auto border border-blue-100">
+                <ShieldCheck className="w-8 h-8 text-blue-600" />
+              </div>
+              <div>
+                <p className="text-slate-900 font-black tracking-tight">Conta protegida pelo Google</p>
+                <p className="text-sm text-slate-500 font-medium max-w-xs mx-auto mt-2 leading-relaxed">
+                  Sua senha é gerenciada pelo Google OAuth. Alterações de senha devem ser feitas diretamente na sua Conta Google.
+                </p>
+              </div>
             </div>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          ) : (
+            <form onSubmit={handleUpdatePassword} className="space-y-6">
               <div className="space-y-2">
-                <label className="text-xs font-black text-slate-400 uppercase tracking-widest ml-1">Nova Senha</label>
+                <label className="text-xs font-black text-slate-400 uppercase tracking-widest ml-1">Senha Atual</label>
                 <input 
                   required
                   type="password" 
                   className="w-full bg-slate-50 border border-slate-200 rounded-2xl p-4 text-sm font-bold outline-none focus:border-orange-600 transition-all"
-                  value={newPass}
-                  onChange={(e) => setNewPass(e.target.value)}
+                  value={currentPass}
+                  onChange={(e) => setCurrentPass(e.target.value)}
                 />
               </div>
-              <div className="space-y-2">
-                <label className="text-xs font-black text-slate-400 uppercase tracking-widest ml-1">Confirmar Nova Senha</label>
-                <input 
-                  required
-                  type="password" 
-                  className="w-full bg-slate-50 border border-slate-200 rounded-2xl p-4 text-sm font-bold outline-none focus:border-orange-600 transition-all"
-                  value={confirmPass}
-                  onChange={(e) => setConfirmPass(e.target.value)}
-                />
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div className="space-y-2">
+                  <label className="text-xs font-black text-slate-400 uppercase tracking-widest ml-1">Nova Senha</label>
+                  <input 
+                    required
+                    type="password" 
+                    className="w-full bg-slate-50 border border-slate-200 rounded-2xl p-4 text-sm font-bold outline-none focus:border-orange-600 transition-all"
+                    value={newPass}
+                    onChange={(e) => setNewPass(e.target.value)}
+                  />
+                </div>
+                <div className="space-y-2">
+                  <label className="text-xs font-black text-slate-400 uppercase tracking-widest ml-1">Confirmar Nova Senha</label>
+                  <input 
+                    required
+                    type="password" 
+                    className="w-full bg-slate-50 border border-slate-200 rounded-2xl p-4 text-sm font-bold outline-none focus:border-orange-600 transition-all"
+                    value={confirmPass}
+                    onChange={(e) => setConfirmPass(e.target.value)}
+                  />
+                </div>
               </div>
-            </div>
-            <Button type="submit" className="w-full h-12 rounded-xl bg-slate-900 hover:bg-slate-800 text-white font-black shadow-lg">
-              Atualizar Senha
-            </Button>
-          </form>
+              <Button type="submit" className="w-full h-12 rounded-xl bg-slate-900 hover:bg-slate-800 text-white font-black shadow-lg">
+                Atualizar Senha
+              </Button>
+            </form>
+          )}
         </section>
 
         <section className="bg-white rounded-[2.5rem] p-8 border border-slate-100 shadow-sm">
