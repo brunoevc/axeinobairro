@@ -34,6 +34,8 @@ export type Merchant = {
   };
   plan?: "free" | "assisted" | "local_featured" | "highlighted" | "premium_partner";
   featured?: boolean;
+  latitude: number;
+  longitude: number;
 };
 
 export const categories = [
@@ -81,6 +83,8 @@ export const merchants: Merchant[] = [
       isActive: true,
     },
     featured: true,
+    latitude: -22.5445,
+    longitude: -44.1725,
   },
   {
     id: "2",
@@ -103,6 +107,8 @@ export const merchants: Merchant[] = [
       isActive: true,
     },
     featured: true,
+    latitude: -22.5458,
+    longitude: -44.1742,
   },
   {
     id: "3",
@@ -124,6 +130,8 @@ export const merchants: Merchant[] = [
       description: "Ganhe um check-up de 20 itens na troca de óleo.",
       isActive: false,
     },
+    latitude: -22.5412,
+    longitude: -44.1711,
   },
   {
     id: "4",
@@ -146,6 +154,8 @@ export const merchants: Merchant[] = [
       isActive: true,
     },
     featured: true,
+    latitude: -22.5472,
+    longitude: -44.1755,
   },
   {
     id: "5",
@@ -167,6 +177,8 @@ export const merchants: Merchant[] = [
       description: "Medicamentos genéricos selecionados com descontos de até 70%.",
       isActive: true,
     },
+    latitude: -22.5433,
+    longitude: -44.1738,
   },
   {
     id: "6",
@@ -188,6 +200,8 @@ export const merchants: Merchant[] = [
       description: "Toda quarta-feira descontos de até 30% em toda a seção de hortifruti.",
       isActive: true,
     },
+    latitude: -22.5398,
+    longitude: -44.1688,
   },
   {
     id: "7",
@@ -209,6 +223,8 @@ export const merchants: Merchant[] = [
       description: "Corte clássico e barba com toalha quente por apenas R$ 80,00.",
       isActive: true,
     },
+    latitude: -22.5421,
+    longitude: -44.1677,
   },
   {
     id: "8",
@@ -230,6 +246,8 @@ export const merchants: Merchant[] = [
       description: "Toda a coleção de inverno com até 50% de desconto.",
       isActive: false,
     },
+    latitude: -22.5441,
+    longitude: -44.1766,
   },
   {
     id: "9",
@@ -251,6 +269,8 @@ export const merchants: Merchant[] = [
       description: "Filé de Tilápia com 15% de desconto toda sexta.",
       isActive: true,
     },
+    latitude: -22.5455,
+    longitude: -44.1700,
   },
   {
     id: "10",
@@ -272,5 +292,7 @@ export const merchants: Merchant[] = [
       description: "Avaliação gratuita para novos pacientes.",
       isActive: false,
     },
+    latitude: -22.5405,
+    longitude: -44.1695,
   },
 ];
