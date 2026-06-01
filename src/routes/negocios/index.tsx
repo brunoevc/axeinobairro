@@ -122,13 +122,14 @@ function ListingPage() {
     const searchKeywords = normalizeString(searchTerm).split(/\s+/).filter((k: string) => k.length > 0);
 
     return list.filter(merchant => {
-      const merchantText = normalizeString(`${merchant.name} ${merchant.description} ${merchant.category} ${merchant.neighborhood}`);
+      const categoryLabel = categories.find(c => c.slug === merchant.category)?.label || "";
+      const merchantText = normalizeString(`${merchant.name} ${merchant.description} ${merchant.category} ${categoryLabel} ${merchant.neighborhood}`);
       
       const matchesSearch = searchKeywords.length === 0 || 
                            searchKeywords.every((keyword: string) => merchantText.includes(keyword));
 
       const matchesCategory = selectedCategory === "all" || 
-                              normalizeString(merchant.category) === normalizeString(selectedCategory);
+                               normalizeString(merchant.category) === normalizeString(selectedCategory);
       const matchesNeighborhood = selectedNeighborhood === "all" || 
                                   normalizeString(merchant.neighborhood) === normalizeString(selectedNeighborhood);
       const matchesPromotion = !searchParams.hasPromotion || merchant.promotion.isActive;
