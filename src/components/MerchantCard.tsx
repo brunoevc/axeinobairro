@@ -3,7 +3,7 @@ import type { Merchant } from "@/data/merchants";
 import { Button } from "@/components/ui/button";
 import { Link } from "@tanstack/react-router";
 import { useLocation } from "@/hooks/useLocation";
-import { useState } from "react";
+import { useState, memo } from "react";
 
 type Props = { merchant: Merchant };
 
@@ -16,7 +16,7 @@ export function PromotionBadge() {
   );
 }
 
-export function MerchantCard({ merchant }: Props) {
+export const MerchantCard = memo(function MerchantCard({ merchant }: Props) {
   const { coords, getDistance, formatDistance } = useLocation();
   const [imageError, setImageError] = useState(false);
 
@@ -136,4 +136,4 @@ export function MerchantCard({ merchant }: Props) {
       </div>
     </article>
   );
-}
+});

@@ -57,7 +57,7 @@ export function useLocation() {
     };
   });
 
-  const getDistance = (lat1: number, lon1: number, lat2: number, lon2: number) => {
+  const getDistance = useCallback((lat1: number, lon1: number, lat2: number, lon2: number) => {
     const R = 6371;
     const dLat = (lat2 - lat1) * (Math.PI / 180);
     const dLon = (lon2 - lon1) * (Math.PI / 180);
@@ -69,15 +69,15 @@ export function useLocation() {
         Math.sin(dLon / 2);
     const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
     return R * c;
-  };
+  }, []);
 
-  const formatDistance = (km: number) => {
+  const formatDistance = useCallback((km: number) => {
     if (km < 1) {
       const meters = Math.round(km * 1000);
       return meters < 100 ? "Bem próximo" : `${meters}m`;
     }
     return `${km.toFixed(1)}km`;
-  };
+  }, []);
 
   const setManualLocation = useCallback((neighborhood: string, city: string) => {
     const locationName = `${neighborhood} - ${city}`;

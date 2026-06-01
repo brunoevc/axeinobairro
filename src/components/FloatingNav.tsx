@@ -1,7 +1,8 @@
 import { Home, Search, PlusCircle } from "lucide-react";
 import { Link, useLocation } from "@tanstack/react-router";
+import { memo } from "react";
 
-export function FloatingNav() {
+export const FloatingNav = memo(function FloatingNav() {
   const location = useLocation();
   
   const isActive = (path: string) => {
@@ -37,4 +38,4 @@ export function FloatingNav() {
       </Link>
     </nav>
   );
-}
+});

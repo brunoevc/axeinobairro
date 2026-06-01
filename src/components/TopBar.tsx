@@ -1,21 +1,16 @@
-import { useState, useEffect } from "react";
-import { Clock, MapPin, Search, RefreshCw, AlertCircle, ChevronDown, X } from "lucide-react";
+import { useState, memo } from "react";
+import { MapPin, Search, RefreshCw, AlertCircle, ChevronDown, X } from "lucide-react";
 import { Link, useNavigate } from "@tanstack/react-router";
 import { Logo } from "@/components/ui/Logo";
 import { useLocation } from "@/hooks/useLocation";
 import { neighborhoods } from "@/data/merchants";
 import { Button } from "@/components/ui/button";
+import { DigitalClock, DigitalDate } from "./DigitalClock";
 
-export function TopBar() {
-  const [time, setTime] = useState(new Date());
+export const TopBar = memo(function TopBar() {
   const [isLocationModalOpen, setIsLocationModalOpen] = useState(false);
   const navigate = useNavigate();
   const { locationName, loading, error, retry, setManualLocation } = useLocation();
-
-  useEffect(() => {
-    const timer = setInterval(() => setTime(new Date()), 1000);
-    return () => clearInterval(timer);
-  }, []);
 
   const handleManualSelect = (neighborhood: string) => {
     setManualLocation(neighborhood, "Araruama/RJ");
@@ -28,12 +23,10 @@ export function TopBar() {
         {/* Upper Row: Utility Info (Desktop/Tablet) */}
         <div className="hidden md:flex justify-between items-center py-2 text-[10px] font-medium text-slate-500 uppercase tracking-wider border-b border-slate-50">
           <div className="flex items-center gap-6">
-            <div className="flex items-center gap-1.5">
-              <Clock className="w-3 h-3 text-orange-500" />
-              {time.toLocaleTimeString('pt-BR')}
-            </div>
+            <DigitalClock />
             <div 
               className={`flex items-center gap-1.5 group cursor-pointer transition-opacity ${loading ? 'opacity-50' : 'opacity-100'}`} 
+
               onClick={() => setIsLocationModalOpen(true)}
             >
               <MapPin className="w-3 h-3 text-orange-500" />
@@ -51,7 +44,7 @@ export function TopBar() {
               )}
             </div>
           </div>
-          <div>{time.toLocaleDateString('pt-BR', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' })}</div>
+          <DigitalDate />
         </div>
 
         {/* Lower Row: Main Nav */}
@@ -92,7 +85,9 @@ export function TopBar() {
                  {loading ? 'Buscando...' : locationName.split(' - ')[0]}
                  <ChevronDown className="w-2.5 h-2.5" />
              </div>
-             <div className="text-[10px] text-slate-400 mt-0.5">{time.toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' })}</div>
+             <div className="text-[10px] text-slate-400 mt-0.5">
+               <DigitalClock showIcon={false} />
+             </div>
           </div>
         </div>
       </div>
@@ -151,4 +146,4 @@ export function TopBar() {
       )}
     </div>
   );
-}
+});
