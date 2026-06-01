@@ -9,7 +9,8 @@ import { toast } from "sonner";
 export const Route = createFileRoute("/admin")({
   beforeLoad: ({ location }) => {
     const authStatus = localStorage.getItem("axei_auth_status");
-    const isAuthenticated = authStatus === "true";
+    const authUser = localStorage.getItem("axei_auth_user");
+    const isAuthenticated = authStatus === "true" && authUser !== null && authUser !== "null";
     
     if (!isAuthenticated) {
       throw redirect({
