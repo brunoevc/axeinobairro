@@ -85,24 +85,24 @@ function RegistrationPage() {
       <TopBar />
       
       <header className="relative bg-white border-b border-slate-100 overflow-hidden">
-        <div className="absolute top-0 right-0 w-96 h-96 bg-violet-50 rounded-full blur-3xl -mr-48 -mt-48 opacity-60" />
+        <div className="absolute top-0 right-0 w-96 h-96 bg-orange-50 rounded-full blur-3xl -mr-48 -mt-48 opacity-60" />
         
         <div className="max-w-7xl mx-auto px-6 py-16 relative z-10">
           <button 
             onClick={() => navigate({ to: "/" })}
             className="mb-8 p-3 bg-slate-50 rounded-full border border-slate-100 hover:bg-white hover:shadow-md transition-all active:scale-90 inline-flex group"
           >
-            <ArrowLeft className="h-5 w-5 text-slate-400 group-hover:text-violet-600" />
+            <ArrowLeft className="h-5 w-5 text-slate-400 group-hover:text-orange-600" />
           </button>
           
           <div className="flex flex-col md:flex-row md:items-end justify-between gap-8">
             <div>
-              <div className="inline-flex items-center gap-2 px-3 py-1 bg-violet-600 rounded-full text-[10px] font-black text-white uppercase tracking-[0.2em] mb-4 shadow-lg shadow-violet-200">
+              <div className="inline-flex items-center gap-2 px-3 py-1 bg-orange-600 rounded-full text-[10px] font-black text-white uppercase tracking-[0.2em] mb-4 shadow-lg shadow-orange-200">
                 <Rocket className="w-3 h-3" />
                 Cresça com a gente
               </div>
               <h1 className="text-4xl md:text-6xl font-black text-slate-900 leading-none tracking-tighter">
-                Anuncie no <br /><span className="text-violet-600">Axêi no Bairro</span>
+                Anuncie no <br /><span className="text-orange-600">Axêi no Bairro</span>
               </h1>
               <p className="text-slate-500 text-lg md:text-xl font-medium mt-6 max-w-xl leading-relaxed">
                 Junte-se a centenas de comerciantes locais e comece a atrair clientes qualificados hoje mesmo.
@@ -131,7 +131,7 @@ function RegistrationPage() {
         <form onSubmit={handleSubmit} className="space-y-10">
           {/* Sessão 1: Básico */}
           <section className="bg-white rounded-[2.5rem] p-8 md:p-12 border border-slate-100 shadow-sm space-y-8">
-            <h2 className="text-xs font-black uppercase tracking-[0.3em] text-violet-600 flex items-center gap-3">
+            <h2 className="text-xs font-black uppercase tracking-[0.3em] text-orange-600 flex items-center gap-3">
               <Store className="h-5 w-5" />
               Informações da Loja
             </h2>
@@ -142,7 +142,7 @@ function RegistrationPage() {
                 required
                 type="text" 
                 placeholder="Ex: Cantina da Nonna"
-                className="w-full bg-slate-50 border border-slate-200 rounded-2xl p-5 text-sm font-bold outline-none focus:ring-4 focus:ring-violet-500/5 focus:border-violet-600 focus:bg-white transition-all shadow-sm"
+                className="w-full bg-slate-50 border border-slate-200 rounded-2xl p-5 text-sm font-bold outline-none focus:ring-4 focus:ring-orange-500/5 focus:border-orange-600 focus:bg-white transition-all shadow-sm"
                 value={formData.name}
                 onChange={(e) => setFormData({...formData, name: e.target.value})}
               />
@@ -184,12 +184,12 @@ function RegistrationPage() {
             <div className="space-y-3">
               <label className="text-sm font-black text-slate-700 ml-1">Endereço Completo</label>
               <div className="relative group">
-                <MapPin className="absolute left-5 top-5 h-5 w-5 text-slate-400 group-focus-within:text-violet-600 transition-colors" />
+                <MapPin className="absolute left-5 top-5 h-5 w-5 text-slate-400 group-focus-within:text-orange-600 transition-colors" />
                 <input 
                   required
                   type="text" 
                   placeholder="Rua, Número, Referência"
-                  className="w-full bg-slate-50 border border-slate-200 rounded-2xl p-5 pl-14 text-sm font-bold outline-none focus:ring-4 focus:ring-violet-500/5 focus:border-violet-600 focus:bg-white transition-all shadow-sm"
+                  className="w-full bg-slate-50 border border-slate-200 rounded-2xl p-5 pl-14 text-sm font-bold outline-none focus:ring-4 focus:ring-orange-500/5 focus:border-orange-600 focus:bg-white transition-all shadow-sm"
                   value={formData.address}
                   onChange={(e) => setFormData({...formData, address: e.target.value})}
                 />
@@ -199,7 +199,7 @@ function RegistrationPage() {
 
           {/* Sessão 2: Contato */}
           <section className="bg-white rounded-[2.5rem] p-8 md:p-12 border border-slate-100 shadow-sm space-y-8">
-            <h2 className="text-xs font-black uppercase tracking-[0.3em] text-violet-600 flex items-center gap-3">
+            <h2 className="text-xs font-black uppercase tracking-[0.3em] text-orange-600 flex items-center gap-3">
               <MessageCircle className="h-5 w-5" />
               Contato e Links
             </h2>
@@ -208,12 +208,12 @@ function RegistrationPage() {
               <div className="space-y-3">
                 <label className="text-sm font-black text-slate-700 ml-1">WhatsApp (com DDD)</label>
                 <div className="relative group">
-                  <MessageCircle className="absolute left-5 top-5 h-5 w-5 text-slate-400 group-focus-within:text-violet-600 transition-colors" />
+                  <MessageCircle className="absolute left-5 top-5 h-5 w-5 text-slate-400 group-focus-within:text-orange-600 transition-colors" />
                   <input 
                     required
                     type="tel" 
                     placeholder="11999990000"
-                    className="w-full bg-slate-50 border border-slate-200 rounded-2xl p-5 pl-14 text-sm font-bold outline-none focus:border-violet-600 focus:bg-white transition-all shadow-sm"
+                    className="w-full bg-slate-50 border border-slate-200 rounded-2xl p-5 pl-14 text-sm font-bold outline-none focus:border-orange-600 focus:bg-white transition-all shadow-sm"
                     value={formData.whatsapp}
                     onChange={(e) => setFormData({...formData, whatsapp: e.target.value})}
                   />
@@ -222,11 +222,11 @@ function RegistrationPage() {
               <div className="space-y-3">
                 <label className="text-sm font-black text-slate-700 ml-1">Instagram (@usuario)</label>
                 <div className="relative group">
-                  <Instagram className="absolute left-5 top-5 h-5 w-5 text-slate-400 group-focus-within:text-violet-600 transition-colors" />
+                  <Instagram className="absolute left-5 top-5 h-5 w-5 text-slate-400 group-focus-within:text-orange-600 transition-colors" />
                   <input 
                     type="text" 
                     placeholder="@seunegocio"
-                    className="w-full bg-slate-50 border border-slate-200 rounded-2xl p-5 pl-14 text-sm font-bold outline-none focus:border-violet-600 focus:bg-white transition-all shadow-sm"
+                    className="w-full bg-slate-50 border border-slate-200 rounded-2xl p-5 pl-14 text-sm font-bold outline-none focus:border-orange-600 focus:bg-white transition-all shadow-sm"
                     value={formData.instagram}
                     onChange={(e) => setFormData({...formData, instagram: e.target.value})}
                   />
@@ -237,7 +237,7 @@ function RegistrationPage() {
 
           {/* Sessão 3: Detalhes */}
           <section className="bg-white rounded-[2.5rem] p-8 md:p-12 border border-slate-100 shadow-sm space-y-8">
-            <h2 className="text-xs font-black uppercase tracking-[0.3em] text-violet-600 flex items-center gap-3">
+            <h2 className="text-xs font-black uppercase tracking-[0.3em] text-orange-600 flex items-center gap-3">
               <Sparkles className="h-5 w-5" />
               Apresentação
             </h2>
@@ -247,7 +247,7 @@ function RegistrationPage() {
               <textarea 
                 required
                 placeholder="Conte para a vizinhança o que torna seu negócio especial..."
-                className="w-full bg-slate-50 border border-slate-200 rounded-2xl p-6 text-sm font-bold outline-none focus:ring-4 focus:ring-violet-500/5 focus:border-violet-600 focus:bg-white transition-all h-40 resize-none shadow-sm"
+                className="w-full bg-slate-50 border border-slate-200 rounded-2xl p-6 text-sm font-bold outline-none focus:ring-4 focus:ring-orange-500/5 focus:border-orange-600 focus:bg-white transition-all h-40 resize-none shadow-sm"
                 value={formData.description}
                 onChange={(e) => setFormData({...formData, description: e.target.value})}
               />
@@ -257,7 +257,7 @@ function RegistrationPage() {
               <div className="space-y-3">
                 <label className="text-sm font-black text-slate-700 ml-1">Horário de Funcionamento</label>
                 <div className="relative group">
-                  <Clock className="absolute left-5 top-5 h-5 w-5 text-slate-400 group-focus-within:text-violet-600 transition-colors" />
+                  <Clock className="absolute left-5 top-5 h-5 w-5 text-slate-400 group-focus-within:text-orange-600 transition-colors" />
                   <input 
                     required
                     type="text" 
@@ -271,7 +271,7 @@ function RegistrationPage() {
               <div className="space-y-3">
                 <label className="text-sm font-black text-slate-700 ml-1">Link da Foto Principal</label>
                 <div className="relative group">
-                  <ImageIcon className="absolute left-5 top-5 h-5 w-5 text-slate-400 group-focus-within:text-violet-600 transition-colors" />
+                  <ImageIcon className="absolute left-5 top-5 h-5 w-5 text-slate-400 group-focus-within:text-orange-600 transition-colors" />
                   <input 
                     type="url" 
                     placeholder="https://exemplo.com/foto.jpg"
@@ -285,17 +285,17 @@ function RegistrationPage() {
           </section>
 
           {/* Sessão 4: Promoção */}
-          <section className="bg-violet-600 rounded-[2.5rem] p-8 md:p-12 text-white relative overflow-hidden shadow-xl shadow-violet-200">
+          <section className="bg-orange-600 rounded-[2.5rem] p-8 md:p-12 text-white relative overflow-hidden shadow-xl shadow-orange-200">
             <div className="absolute top-0 right-0 w-64 h-64 bg-white/5 rounded-full blur-3xl -mr-32 -mt-32" />
             
             <div className="relative z-10 space-y-8">
               <div className="flex items-center justify-between">
-                <h2 className="text-xs font-black uppercase tracking-[0.3em] text-violet-200 flex items-center gap-3">
+                <h2 className="text-xs font-black uppercase tracking-[0.3em] text-orange-200 flex items-center gap-3">
                   <Tag className="h-5 w-5" />
                   Promoção Especial
                 </h2>
                 <div className="flex items-center gap-3">
-                  <span className="text-[10px] font-black uppercase text-violet-200">Ativar agora?</span>
+                  <span className="text-[10px] font-black uppercase text-orange-200">Ativar agora?</span>
                   <label className="relative inline-flex items-center cursor-pointer">
                     <input 
                       type="checkbox" 
@@ -303,29 +303,29 @@ function RegistrationPage() {
                       checked={formData.promoActive}
                       onChange={(e) => setFormData({...formData, promoActive: e.target.checked})}
                     />
-                    <div className="w-11 h-6 bg-violet-700 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-emerald-500"></div>
+                    <div className="w-11 h-6 bg-orange-700 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-emerald-500"></div>
                   </label>
                 </div>
               </div>
 
               <div className={`space-y-6 transition-all duration-500 ${formData.promoActive ? 'opacity-100 translate-y-0' : 'opacity-40 pointer-events-none translate-y-4'}`}>
                 <div className="space-y-3">
-                  <label className="text-sm font-black text-violet-100 ml-1">Título Chamativo da Oferta</label>
+                  <label className="text-sm font-black text-orange-100 ml-1">Título Chamativo da Oferta</label>
                   <input 
                     type="text" 
                     placeholder="Ex: Compre 1 Leve 2 / 30% de Desconto"
-                    className="w-full bg-white/10 border border-white/20 rounded-2xl p-5 text-sm font-bold outline-none focus:bg-white focus:text-slate-900 focus:border-white transition-all placeholder:text-violet-300"
+                    className="w-full bg-white/10 border border-white/20 rounded-2xl p-5 text-sm font-bold outline-none focus:bg-white focus:text-slate-900 focus:border-white transition-all placeholder:text-orange-300"
                     disabled={!formData.promoActive}
                     value={formData.promoTitle}
                     onChange={(e) => setFormData({...formData, promoTitle: e.target.value})}
                   />
                 </div>
                 <div className="space-y-3">
-                  <label className="text-sm font-black text-violet-100 ml-1">Regras da Promoção</label>
+                  <label className="text-sm font-black text-orange-100 ml-1">Regras da Promoção</label>
                   <input 
                     type="text" 
                     placeholder="Ex: Válido apenas para novos clientes..."
-                    className="w-full bg-white/10 border border-white/20 rounded-2xl p-5 text-sm font-bold outline-none focus:bg-white focus:text-slate-900 focus:border-white transition-all placeholder:text-violet-300"
+                    className="w-full bg-white/10 border border-white/20 rounded-2xl p-5 text-sm font-bold outline-none focus:bg-white focus:text-slate-900 focus:border-white transition-all placeholder:text-orange-300"
                     disabled={!formData.promoActive}
                     value={formData.promoDesc}
                     onChange={(e) => setFormData({...formData, promoDesc: e.target.value})}
@@ -333,7 +333,7 @@ function RegistrationPage() {
                 </div>
               </div>
 
-              <div className="pt-4 flex items-center gap-3 text-violet-200">
+              <div className="pt-4 flex items-center gap-3 text-orange-200">
                  <ShieldCheck className="w-5 h-5 opacity-60" />
                  <p className="text-[11px] font-bold leading-relaxed">Sua promoção será destacada com um selo especial nos resultados de busca.</p>
               </div>
