@@ -287,6 +287,10 @@ function Index() {
             <p className="text-slate-400 font-medium max-w-xs">
               Encontre. Conecte. Fortaleça o comércio local.
             </p>
+            <div className="mt-4 space-y-1">
+              <p className="text-[10px] font-black uppercase tracking-widest text-slate-500">Uma solução Hubia Connect</p>
+              <p className="text-[10px] font-black uppercase tracking-widest text-slate-500">CNPJ 27.807.284/0001-89</p>
+            </div>
           </div>
           
           <div className="grid grid-cols-2 sm:grid-cols-3 gap-12 md:gap-24">
@@ -301,8 +305,8 @@ function Index() {
                 <a href="#" className="text-sm font-bold text-slate-300 hover:text-orange-500 transition-colors">Termos de Uso</a>
              </div>
              <div className="hidden sm:flex flex-col gap-4 text-center md:text-left">
-                <span className="text-[10px] font-black uppercase tracking-widest text-slate-500">Cidade</span>
-                <span className="text-sm font-bold text-slate-300">Barra Mansa / RJ</span>
+                <span className="text-[10px] font-black uppercase tracking-widest text-slate-500">Cidade Sede</span>
+                <span className="text-sm font-bold text-slate-300">Araruama / RJ</span>
              </div>
           </div>
         </div>
@@ -310,9 +314,9 @@ function Index() {
         <div className="max-w-7xl mx-auto mt-20 pt-8 border-t border-white/5 flex flex-col md:flex-row justify-between items-center gap-6 text-[10px] font-black uppercase tracking-widest text-slate-500">
            <span>© 2026 Axêi no Bairro. Todos os direitos reservados.</span>
            <div className="flex items-center gap-6">
-              <a href="#" className="hover:text-white transition-colors">Instagram</a>
-              <a href="#" className="hover:text-white transition-colors">Facebook</a>
-              <a href="#" className="hover:text-white transition-colors">WhatsApp</a>
+              <a href="https://www.instagram.com/axeinobairro" target="_blank" rel="noopener noreferrer" className="hover:text-white transition-colors">Instagram</a>
+              <a href="https://www.facebook.com/axeinobairro/" target="_blank" rel="noopener noreferrer" className="hover:text-white transition-colors">Facebook</a>
+              <a href="https://wa.me/5521999869070" target="_blank" rel="noopener noreferrer" className="hover:text-white transition-colors">WhatsApp</a>
            </div>
         </div>
       </footer>

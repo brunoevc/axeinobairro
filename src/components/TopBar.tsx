@@ -1,18 +1,26 @@
 import { useState, useEffect } from "react";
-import { Clock, CloudSun, MapPin, Search, RefreshCw, AlertCircle } from "lucide-react";
+import { Clock, MapPin, Search, RefreshCw, AlertCircle, ChevronDown, X } from "lucide-react";
 import { Link, useNavigate } from "@tanstack/react-router";
 import { Logo } from "@/components/ui/Logo";
 import { useLocation } from "@/hooks/useLocation";
+import { neighborhoods } from "@/data/merchants";
+import { Button } from "@/components/ui/button";
 
 export function TopBar() {
   const [time, setTime] = useState(new Date());
+  const [isLocationModalOpen, setIsLocationModalOpen] = useState(false);
   const navigate = useNavigate();
-  const { locationName, loading, error, retry } = useLocation();
+  const { locationName, loading, error, retry, setManualLocation } = useLocation();
 
   useEffect(() => {
     const timer = setInterval(() => setTime(new Date()), 1000);
     return () => clearInterval(timer);
   }, []);
+
+  const handleManualSelect = (neighborhood: string) => {
+    setManualLocation(neighborhood, "Araruama/RJ");
+    setIsLocationModalOpen(false);
+  };
 
   return (
     <div className="w-full bg-white border-b border-slate-100 sticky top-0 z-50">
@@ -24,13 +32,9 @@ export function TopBar() {
               <Clock className="w-3 h-3 text-orange-500" />
               {time.toLocaleTimeString('pt-BR')}
             </div>
-            <div className="flex items-center gap-1.5">
-              <CloudSun className="w-3 h-3 text-orange-500" />
-              28°C Parcialmente nublado
-            </div>
             <div 
               className={`flex items-center gap-1.5 group cursor-pointer transition-opacity ${loading ? 'opacity-50' : 'opacity-100'}`} 
-              onClick={() => !loading && retry()}
+              onClick={() => setIsLocationModalOpen(true)}
             >
               <MapPin className="w-3 h-3 text-orange-500" />
               {loading ? (
@@ -41,6 +45,7 @@ export function TopBar() {
               ) : (
                 <span className="flex items-center gap-1 hover:text-orange-600 transition-colors">
                   {locationName}
+                  <ChevronDown className="w-2.5 h-2.5" />
                   {error && <AlertCircle className="w-2.5 h-2.5 text-red-500" />}
                 </span>
               )}
@@ -60,11 +65,10 @@ export function TopBar() {
               <Link to="/" className="text-sm font-semibold text-slate-600 hover:text-orange-600 transition-colors">Início</Link>
               <Link to="/negocios" className="text-sm font-semibold text-slate-600 hover:text-orange-600 transition-colors">Negócios</Link>
               <Link to="/cadastro" className="text-sm font-semibold text-slate-600 hover:text-orange-600 transition-colors">Cadastro</Link>
-              <Link to="/perfil" className="text-sm font-semibold text-slate-600 hover:text-orange-600 transition-colors">Perfil</Link>
             </nav>
           </div>
 
-          <div className="flex-1 max-w-md mx-8 hidden md:block">
+          <div className="flex-1 max-w-sm mx-8 hidden md:block">
             <div className="relative group">
               <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400 group-focus-within:text-orange-500 transition-colors" />
               <input 
@@ -81,16 +85,69 @@ export function TopBar() {
           </div>
 
           {/* Mobile Location Header */}
-          <div className="md:hidden flex flex-col items-end cursor-pointer" onClick={retry}>
-             <div className="flex items-center gap-1 text-[10px] font-bold text-orange-600 uppercase">
+          <div className="md:hidden flex flex-col items-end cursor-pointer" onClick={() => setIsLocationModalOpen(true)}>
+             <div className="flex items-center gap-1 text-[10px] font-bold text-orange-600 uppercase leading-none">
                 <MapPin className="w-3 h-3" />
                  {loading ? 'Buscando...' : locationName.split(' - ')[0]}
-                {error && <RefreshCw className="w-2.5 h-2.5 ml-1 animate-spin" />}
+                 <ChevronDown className="w-2.5 h-2.5" />
              </div>
-             <div className="text-[10px] text-slate-400">{time.toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' })}</div>
+             <div className="text-[10px] text-slate-400 mt-0.5">{time.toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' })}</div>
           </div>
         </div>
       </div>
+
+      {/* Manual Location Modal */}
+      {isLocationModalOpen && (
+        <div className="fixed inset-0 z-[100] flex items-center justify-center p-4">
+          <div className="absolute inset-0 bg-slate-900/60 backdrop-blur-sm" onClick={() => setIsLocationModalOpen(false)} />
+          <div className="relative bg-white w-full max-w-sm rounded-[2rem] shadow-2xl overflow-hidden animate-in fade-in zoom-in-95 duration-200">
+            <div className="p-6 border-b border-slate-50 flex items-center justify-between">
+              <div>
+                <h3 className="text-xl font-black text-slate-900 tracking-tight">Alterar localização</h3>
+                <p className="text-xs font-bold text-slate-500 mt-1 uppercase tracking-wider">Araruama - RJ</p>
+              </div>
+              <button onClick={() => setIsLocationModalOpen(false)} className="p-2 hover:bg-slate-100 rounded-full transition-colors">
+                <X className="w-5 h-5 text-slate-400" />
+              </button>
+            </div>
+            <div className="p-4 max-h-[60vh] overflow-y-auto">
+              <button 
+                onClick={() => { retry(); setIsLocationModalOpen(false); }}
+                className="w-full flex items-center gap-3 p-4 hover:bg-orange-50 rounded-2xl transition-colors group mb-2 border border-dashed border-slate-200 hover:border-orange-200"
+              >
+                <div className="w-10 h-10 rounded-xl bg-orange-100 flex items-center justify-center text-orange-600 group-hover:bg-orange-600 group-hover:text-white transition-all">
+                  <RefreshCw className="w-5 h-5" />
+                </div>
+                <div className="text-left">
+                  <p className="text-sm font-black text-slate-900">Usar minha localização</p>
+                  <p className="text-[10px] font-bold text-slate-400 uppercase tracking-widest">Ativar GPS do celular</p>
+                </div>
+              </button>
+              
+              <div className="grid grid-cols-1 gap-1">
+                {neighborhoods.map(hood => (
+                  <button 
+                    key={hood}
+                    onClick={() => handleManualSelect(hood)}
+                    className="w-full text-left px-4 py-3 hover:bg-slate-50 rounded-xl text-sm font-bold text-slate-600 hover:text-orange-600 transition-colors flex items-center justify-between group"
+                  >
+                    {hood}
+                    <ChevronDown className="w-4 h-4 opacity-0 -rotate-90 group-hover:opacity-100 transition-all" />
+                  </button>
+                ))}
+              </div>
+            </div>
+            <div className="p-4 bg-slate-50">
+              <Button 
+                onClick={() => setIsLocationModalOpen(false)}
+                className="w-full bg-slate-900 hover:bg-slate-800 text-white font-black rounded-xl h-12"
+              >
+                Cancelar
+              </Button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }

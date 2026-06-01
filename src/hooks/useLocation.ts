@@ -12,26 +12,33 @@ export type LocationState = {
   permissionStatus: PermissionState | null;
   locationName: string;
   accuracy: number | null;
+  manualNeighborhood: string | null;
+  manualCity: string | null;
 };
 
-const DEFAULT_COORDS = { latitude: -22.5444, longitude: -44.1722 }; // Barra Mansa Central
-const DEFAULT_LOCATION_NAME = "Barra Mansa/RJ";
+// Araruama Central
+const DEFAULT_COORDS = { latitude: -22.8732, longitude: -42.3431 };
+const DEFAULT_CITY = "Araruama/RJ";
+const DEFAULT_NEIGHBORHOOD = "Centro";
+const DEFAULT_LOCATION_NAME = `${DEFAULT_NEIGHBORHOOD} - ${DEFAULT_CITY}`;
+
 const STORAGE_KEY = "axei_location_data";
 
 export function useLocation() {
   const [state, setState] = useState<LocationState>(() => {
-    // Try to load from localStorage on init
     try {
       const saved = localStorage.getItem(STORAGE_KEY);
       if (saved) {
         const parsed = JSON.parse(saved);
         return {
-          coords: parsed.coords,
+          coords: parsed.coords || null,
           loading: false,
           error: null,
           permissionStatus: null,
           locationName: parsed.locationName || DEFAULT_LOCATION_NAME,
           accuracy: parsed.accuracy || null,
+          manualNeighborhood: parsed.manualNeighborhood || null,
+          manualCity: parsed.manualCity || null,
         };
       }
     } catch (e) {
@@ -45,11 +52,13 @@ export function useLocation() {
       permissionStatus: null,
       locationName: DEFAULT_LOCATION_NAME,
       accuracy: null,
+      manualNeighborhood: null,
+      manualCity: null,
     };
   });
 
   const getDistance = (lat1: number, lon1: number, lat2: number, lon2: number) => {
-    const R = 6371; // Earth radius in km
+    const R = 6371;
     const dLat = (lat2 - lat1) * (Math.PI / 180);
     const dLon = (lon2 - lon1) * (Math.PI / 180);
     const a =
@@ -70,7 +79,38 @@ export function useLocation() {
     return `${km.toFixed(1)}km`;
   };
 
+  const setManualLocation = useCallback((neighborhood: string, city: string) => {
+    const locationName = `${neighborhood} - ${city}`;
+    setState(prev => ({
+      ...prev,
+      manualNeighborhood: neighborhood,
+      manualCity: city,
+      locationName,
+      loading: false
+    }));
+
+    try {
+      const saved = localStorage.getItem(STORAGE_KEY);
+      const parsed = saved ? JSON.parse(saved) : {};
+      localStorage.setItem(STORAGE_KEY, JSON.stringify({
+        ...parsed,
+        manualNeighborhood: neighborhood,
+        manualCity: city,
+        locationName,
+        timestamp: Date.now()
+      }));
+    } catch (e) {
+      console.error("Error saving manual location", e);
+    }
+  }, []);
+
   const fetchLocation = useCallback((isRetry = false) => {
+    // If we have manual location and it's not a retry, skip auto-fetching GPS
+    if (state.manualNeighborhood && !isRetry) {
+      setState(prev => ({ ...prev, loading: false }));
+      return;
+    }
+
     setState((prev) => ({ ...prev, loading: true, error: null }));
 
     if (!("geolocation" in navigator)) {
@@ -85,7 +125,7 @@ export function useLocation() {
 
     const options = {
       enableHighAccuracy: true,
-      timeout: 15000,
+      timeout: 10000,
       maximumAge: isRetry ? 0 : 60000,
     };
 
@@ -98,17 +138,20 @@ export function useLocation() {
           },
           loading: false,
           error: null,
-          locationName: "Vila Nova - Barra Mansa/RJ", // In a real app, reverse geocode here
+          locationName: state.manualNeighborhood 
+            ? `${state.manualNeighborhood} - ${state.manualCity}` 
+            : DEFAULT_LOCATION_NAME,
           accuracy: position.coords.accuracy,
         };
 
         setState((prev) => ({ ...prev, ...newState }));
         
-        // Save to localStorage
         try {
+          const saved = localStorage.getItem(STORAGE_KEY);
+          const parsed = saved ? JSON.parse(saved) : {};
           localStorage.setItem(STORAGE_KEY, JSON.stringify({
+            ...parsed,
             coords: newState.coords,
-            locationName: newState.locationName,
             accuracy: newState.accuracy,
             timestamp: Date.now()
           }));
@@ -117,22 +160,19 @@ export function useLocation() {
         }
       },
       (error) => {
-        let errorMsg = "Erro desconhecido";
-        if (error.code === 1) errorMsg = "Permissão negada. Ative o GPS para ver lojas próximas.";
-        else if (error.code === 2) errorMsg = "Posição indisponível";
-        else if (error.code === 3) errorMsg = "Tempo esgotado ao buscar localização";
-
+        let errorMsg = "Erro ao buscar GPS";
+        if (error.code === 1) errorMsg = "GPS desativado";
+        
         setState((prev) => ({
           ...prev,
           loading: false,
-          error: errorMsg,
+          error: state.manualNeighborhood ? null : errorMsg,
           coords: prev.coords || DEFAULT_COORDS,
-          locationName: prev.coords ? prev.locationName : "Localização aproximada",
         }));
       },
       options
     );
-  }, []);
+  }, [state.manualNeighborhood, state.manualCity]);
 
   useEffect(() => {
     if ("permissions" in navigator) {
@@ -144,20 +184,21 @@ export function useLocation() {
       });
     }
     
-    // Only auto-fetch if we don't have stored coords or if they are stale
     const saved = localStorage.getItem(STORAGE_KEY);
     if (!saved) {
       fetchLocation();
     } else {
       const parsed = JSON.parse(saved);
-      const isStale = Date.now() - parsed.timestamp > 1000 * 60 * 30; // 30 mins
-      if (isStale) fetchLocation();
+      const isStale = Date.now() - parsed.timestamp > 1000 * 60 * 30;
+      if (isStale && !parsed.manualNeighborhood) fetchLocation();
+      else setState(prev => ({ ...prev, loading: false }));
     }
   }, [fetchLocation]);
 
   return {
     ...state,
     retry: () => fetchLocation(true),
+    setManualLocation,
     getDistance,
     formatDistance,
   };

@@ -100,10 +100,10 @@ function ListingPage() {
                  >
                    <ArrowLeft className="h-5 w-5" />
                  </button>
-                 <h1 className="text-3xl font-black text-slate-900 tracking-tighter">Negócios do Bairro</h1>
+                 <h1 className="text-3xl font-black text-slate-900 tracking-tighter">Negócios em Araruama</h1>
                </div>
                <p className="text-slate-500 font-medium ml-12">
-                 {filteredMerchants.length} estabelecimentos encontrados na região
+                 {filteredMerchants.length} estabelecimentos em {selectedNeighborhood === 'all' ? 'toda a cidade' : selectedNeighborhood}
                </p>
             </div>
 
