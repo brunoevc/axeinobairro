@@ -61,7 +61,7 @@ function Profile() {
             ].map((item, i) => (
               <div key={i} className={`flex items-center justify-between p-6 hover:bg-slate-50 transition-colors cursor-pointer ${i !== 2 ? 'border-b border-slate-50' : ''}`}>
                 <div className="flex items-center gap-4">
-                  <div className="p-3 bg-slate-50 rounded-2xl border border-slate-100 group-hover:bg-white transition-colors">
+                  <div className="p-3 bg-slate-50 rounded-2xl border border-slate-100 transition-colors">
                      <item.icon className="h-5 w-5 text-violet-600" />
                   </div>
                   <span className="font-bold text-slate-700">{item.label}</span>
