@@ -3,6 +3,7 @@ import { ArrowLeft, User, MapPin, Bell, Shield, Settings, ChevronRight, Store, S
 import { useState } from "react";
 import { TopBar } from "@/components/TopBar";
 import { FloatingNav } from "@/components/FloatingNav";
+import { Logo } from "@/components/ui/Logo";
 import React from "react";
 
 export const Route = createFileRoute("/perfil")({
@@ -29,11 +30,7 @@ function Profile() {
           </button>
           
           <div className="flex items-center gap-8">
-            <div className="w-24 h-24 rounded-[2.5rem] bg-orange-600 p-1 shadow-2xl shadow-orange-200 shrink-0">
-               <div className="w-full h-full rounded-[2.3rem] bg-white flex items-center justify-center">
-                  <User className="h-10 w-10 text-orange-600" />
-               </div>
-            </div>
+            <Logo iconOnly className="scale-150 origin-left ml-4" />
             <div>
               <h1 className="text-4xl font-black text-slate-900 tracking-tighter leading-none">{name}</h1>
               <div className="flex items-center gap-3 mt-3">

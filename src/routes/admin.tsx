@@ -1,5 +1,6 @@
 import { createFileRoute, useNavigate, Outlet, Link } from "@tanstack/react-router";
 import { LayoutDashboard, Store, CheckCircle, CreditCard, ArrowLeft, LogOut } from "lucide-react";
+import { Logo } from "@/components/ui/Logo";
 
 export const Route = createFileRoute("/admin")({
   component: AdminLayout,
@@ -13,19 +14,12 @@ function AdminLayout() {
       {/* Sidebar - Desktop */}
       <aside className="w-full md:w-72 bg-white border-b md:border-r border-slate-100 flex flex-col sticky top-0 md:h-screen z-40">
         <div className="p-8 border-b border-slate-50 hidden md:flex items-center gap-4">
-          <div className="w-12 h-12 rounded-2xl bg-orange-600 flex items-center justify-center text-white font-black text-2xl shadow-xl shadow-orange-200 tracking-tighter">A</div>
-          <div>
-            <p className="font-black text-slate-900 leading-none text-lg">Painel Admin</p>
-            <p className="text-[10px] font-bold text-slate-400 uppercase tracking-widest mt-1">Axêi no Bairro</p>
-          </div>
+          <Logo />
         </div>
 
         {/* Mobile Header */}
         <div className="md:hidden flex items-center justify-between p-4 bg-white border-b border-slate-100">
-           <div className="flex items-center gap-2">
-              <div className="w-8 h-8 rounded-lg bg-orange-600 flex items-center justify-center text-white font-black text-sm">A</div>
-              <span className="font-black text-slate-900">Admin</span>
-           </div>
+           <Logo className="scale-75 origin-left" />
            <button onClick={() => navigate({ to: '/' })} className="p-2 text-slate-400">
               <LogOut className="w-5 h-5" />
            </button>

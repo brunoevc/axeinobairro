@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { Clock, CloudSun, MapPin, Search, RefreshCw, AlertCircle } from "lucide-react";
 import { Link, useNavigate } from "@tanstack/react-router";
+import { Logo } from "@/components/ui/Logo";
 import { useLocation } from "@/hooks/useLocation";
 
 export function TopBar() {
@@ -46,9 +47,7 @@ export function TopBar() {
         <div className="flex justify-between items-center h-16 md:h-20">
           <div className="flex items-center gap-8">
             <Link to="/" className="flex items-center">
-              <span className="text-xl md:text-2xl font-black tracking-tighter text-slate-900">
-                Axêi no <span className="text-orange-600">Bairro</span>
-              </span>
+              <Logo />
             </Link>
             
             <nav className="hidden lg:flex items-center gap-6">

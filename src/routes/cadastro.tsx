@@ -20,6 +20,7 @@ import { categories, neighborhoods } from "@/data/merchants";
 import { Button } from "@/components/ui/button";
 import { TopBar } from "@/components/TopBar";
 import { FloatingNav } from "@/components/FloatingNav";
+import { Logo } from "@/components/ui/Logo";
 
 export const Route = createFileRoute("/cadastro")({
   component: RegistrationPage,
@@ -102,7 +103,7 @@ function RegistrationPage() {
                 Cresça com a gente
               </div>
               <h1 className="text-4xl md:text-6xl font-black text-slate-900 leading-none tracking-tighter">
-                Anuncie no <br /><span className="text-orange-600">Axêi no Bairro</span>
+                Anuncie no <Logo className="inline-flex h-10 ml-2" />
               </h1>
               <p className="text-slate-500 text-lg md:text-xl font-medium mt-6 max-w-xl leading-relaxed">
                 Junte-se a centenas de comerciantes locais e comece a atrair clientes qualificados hoje mesmo.
