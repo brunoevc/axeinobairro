@@ -1,7 +1,8 @@
-import { MapPin, Star, Bike, MessageCircle, Clock, Tag, ChevronRight, User } from "lucide-react";
+import { MapPin, Star, Bike, MessageCircle, Clock, Tag, ChevronRight, User, Navigation } from "lucide-react";
 import type { Merchant } from "@/data/merchants";
 import { Button } from "@/components/ui/button";
 import { Link } from "@tanstack/react-router";
+import { useLocation } from "@/hooks/useLocation";
 
 type Props = { merchant: Merchant };
 
@@ -15,9 +16,14 @@ export function PromotionBadge() {
 }
 
 export function MerchantCard({ merchant }: Props) {
+  const { coords, getDistance, formatDistance } = useLocation();
   const waUrl = `https://wa.me/${merchant.whatsapp}?text=${encodeURIComponent(
     `Olá ${merchant.name}! Vi seu perfil no Axêi no Bairro e gostaria de mais informações 👋`
   )}`;
+
+  const distance = coords 
+    ? getDistance(coords.latitude, coords.longitude, merchant.latitude, merchant.longitude)
+    : null;
 
   return (
     <article
@@ -62,6 +68,12 @@ export function MerchantCard({ merchant }: Props) {
               <MapPin className="h-3 w-3 text-orange-500" />
               <span className="text-xs font-bold text-slate-500 truncate">
                 {merchant.neighborhood}
+                {distance !== null && (
+                  <span className="flex items-center gap-1 ml-1 pl-1 border-l border-slate-200">
+                    <Navigation className="w-2.5 h-2.5" />
+                    {formatDistance(distance)}
+                  </span>
+                )}
               </span>
             </div>
           </div>

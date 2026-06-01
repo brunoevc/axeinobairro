@@ -1,4 +1,5 @@
 import { createFileRoute, useNavigate, Link } from "@tanstack/react-router";
+import { useMemo } from "react";
 import { 
   Search, 
   ArrowRight, 
@@ -10,13 +11,15 @@ import {
   MapPin,
   Clock,
   ShieldCheck,
-  Zap
+  Zap,
+  Navigation
 } from "lucide-react";
 import { merchants, categories } from "@/data/merchants";
 import { MerchantCard } from "@/components/MerchantCard";
 import { TopBar } from "@/components/TopBar";
 import { FloatingNav } from "@/components/FloatingNav";
 import { Button } from "@/components/ui/button";
+import { useLocation } from "@/hooks/useLocation";
 
 export const Route = createFileRoute("/")({
   component: Index,
@@ -33,8 +36,21 @@ export const Route = createFileRoute("/")({
 
 function Index() {
   const navigate = useNavigate();
+  const { coords, getDistance } = useLocation();
+  
   const featuredMerchants = merchants.filter(m => m.featured).slice(0, 3);
   const promotionalMerchants = merchants.filter(m => m.promotion.isActive).slice(0, 4);
+
+  const nearbyMerchants = useMemo(() => {
+    if (!coords) return [];
+    return [...merchants]
+      .map(m => ({
+        ...m,
+        distance: getDistance(coords.latitude, coords.longitude, m.latitude, m.longitude)
+      }))
+      .sort((a, b) => a.distance - b.distance)
+      .slice(0, 3);
+  }, [coords, getDistance]);
 
   return (
     <div className="min-h-screen bg-slate-50 pb-24 font-sans selection:bg-violet-100">
@@ -169,6 +185,27 @@ function Index() {
           ))}
         </div>
       </section>
+
+      {/* Nearby Businesses */}
+      {nearbyMerchants.length > 0 && (
+        <section className="max-w-7xl mx-auto px-6 mt-24">
+          <div className="flex flex-col md:flex-row md:items-end justify-between mb-10 gap-4">
+            <div>
+              <h2 className="text-3xl font-black text-slate-900 tracking-tighter flex items-center gap-3">
+                <Navigation className="w-8 h-8 text-orange-600" />
+                Mais próximos de você
+              </h2>
+              <p className="text-slate-500 font-medium text-lg">Negócios que estão a poucos passos de distância</p>
+            </div>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {nearbyMerchants.map((merchant) => (
+              <MerchantCard key={merchant.id} merchant={merchant} />
+            ))}
+          </div>
+        </section>
+      )}
 
       {/* Local Widgets / Info */}
       <section className="max-w-7xl mx-auto px-6 mt-24">
