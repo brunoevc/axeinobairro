@@ -28,15 +28,15 @@ export function TopBar() {
         <div className="hidden md:flex justify-between items-center py-2 text-[10px] font-medium text-slate-500 uppercase tracking-wider border-b border-slate-50">
           <div className="flex items-center gap-6">
             <div className="flex items-center gap-1.5">
-              <Clock className="w-3 h-3 text-violet-500" />
+            <Clock className="w-3 h-3 text-orange-500" />
               {time.toLocaleTimeString('pt-BR')}
             </div>
             <div className="flex items-center gap-1.5">
-              <CloudSun className="w-3 h-3 text-violet-500" />
+              <CloudSun className="w-3 h-3 text-orange-500" />
               28°C Parcialmente nublado
             </div>
             <div className="flex items-center gap-1.5">
-              <MapPin className="w-3 h-3 text-violet-500" />
+              <MapPin className="w-3 h-3 text-orange-500" />
               {location}
             </div>
           </div>
@@ -48,25 +48,25 @@ export function TopBar() {
           <div className="flex items-center gap-8">
             <Link to="/" className="flex items-center">
               <span className="text-xl md:text-2xl font-black tracking-tighter text-slate-900">
-                Axêi no <span className="text-violet-600">Bairro</span>
+                Axêi no <span className="text-orange-600">Bairro</span>
               </span>
             </Link>
             
             <nav className="hidden lg:flex items-center gap-6">
-              <Link to="/" className="text-sm font-semibold text-slate-600 hover:text-violet-600 transition-colors">Início</Link>
-              <Link to="/negocios" className="text-sm font-semibold text-slate-600 hover:text-violet-600 transition-colors">Negócios</Link>
-              <Link to="/cadastro" className="text-sm font-semibold text-slate-600 hover:text-violet-600 transition-colors">Cadastro</Link>
-              <Link to="/perfil" className="text-sm font-semibold text-slate-600 hover:text-violet-600 transition-colors">Perfil</Link>
+              <Link to="/" className="text-sm font-semibold text-slate-600 hover:text-orange-600 transition-colors">Início</Link>
+              <Link to="/negocios" className="text-sm font-semibold text-slate-600 hover:text-orange-600 transition-colors">Negócios</Link>
+              <Link to="/cadastro" className="text-sm font-semibold text-slate-600 hover:text-orange-600 transition-colors">Cadastro</Link>
+              <Link to="/perfil" className="text-sm font-semibold text-slate-600 hover:text-orange-600 transition-colors">Perfil</Link>
             </nav>
           </div>
 
           <div className="flex-1 max-w-md mx-8 hidden md:block">
             <div className="relative group">
-              <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400 group-focus-within:text-violet-500 transition-colors" />
+              <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400 group-focus-within:text-orange-500 transition-colors" />
               <input 
                 type="text" 
                 placeholder="O que você procura hoje?"
-                className="w-full bg-slate-50 border border-slate-200 rounded-xl py-2.5 pl-10 pr-4 text-sm outline-none focus:ring-2 focus:ring-violet-500/10 focus:border-violet-500 transition-all"
+                className="w-full bg-slate-50 border border-slate-200 rounded-xl py-2.5 pl-10 pr-4 text-sm outline-none focus:ring-2 focus:ring-orange-500/10 focus:border-orange-500 transition-all"
                 onKeyDown={(e) => {
                   if (e.key === 'Enter') {
                     navigate({ to: '/negocios', search: { q: (e.target as HTMLInputElement).value } });
@@ -78,7 +78,7 @@ export function TopBar() {
 
           {/* Mobile Profile Link */}
           <Link to="/perfil" className="md:hidden flex flex-col items-end">
-             <div className="flex items-center gap-1 text-[10px] font-bold text-violet-600 uppercase">
+             <div className="flex items-center gap-1 text-[10px] font-bold text-orange-600 uppercase">
                 <MapPin className="w-3 h-3" />
                 {location.split(',')[0]}
              </div>

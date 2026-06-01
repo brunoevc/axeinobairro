@@ -64,7 +64,7 @@ function AdminApprovals() {
       <header className="flex flex-col md:flex-row md:items-center justify-between gap-6">
         <div>
           <h1 className="text-4xl font-black text-slate-900 tracking-tighter leading-none mb-3">
-            Fila de <span className="text-violet-600">Aprovações</span>
+            Fila de <span className="text-orange-600">Aprovações</span>
           </h1>
           <p className="text-slate-500 font-medium text-lg">
             Revisão de novos cadastros e moderação de conteúdo.

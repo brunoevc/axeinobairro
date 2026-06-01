@@ -59,14 +59,14 @@ export function MerchantCard({ merchant }: Props) {
               {merchant.name}
             </h3>
             <div className="flex items-center gap-1 mt-1">
-              <MapPin className="h-3 w-3 text-violet-500" />
+              <MapPin className="h-3 w-3 text-orange-500" />
               <span className="text-xs font-bold text-slate-500 truncate">
                 {merchant.neighborhood}
               </span>
             </div>
           </div>
           <div className="flex items-center gap-1 rounded-lg bg-slate-50 px-2 py-1 text-xs font-bold text-slate-900 border border-slate-100">
-            <Star className="h-3 w-3 fill-violet-500 text-violet-500" />
+            <Star className="h-3 w-3 fill-orange-500 text-orange-500" />
             {merchant.rating.toFixed(1)}
           </div>
         </div>
@@ -88,7 +88,7 @@ export function MerchantCard({ merchant }: Props) {
             </span>
           )}
           {merchant.delivery && (
-            <span className="inline-flex items-center gap-1 rounded-full bg-violet-50 px-2.5 py-1 text-[10px] font-bold text-violet-600 border border-violet-100">
+            <span className="inline-flex items-center gap-1 rounded-full bg-orange-50 px-2.5 py-1 text-[10px] font-bold text-orange-600 border border-orange-100">
               <Bike className="h-3 w-3" />
               Entrega
             </span>
@@ -99,7 +99,7 @@ export function MerchantCard({ merchant }: Props) {
           <Button
             asChild
             variant="outline"
-            className="flex-1 rounded-xl h-11 text-xs font-bold border-slate-200 hover:bg-slate-50 hover:text-violet-600 group/btn"
+            className="flex-1 rounded-xl h-11 text-xs font-bold border-slate-200 hover:bg-slate-50 hover:text-orange-600 group/btn"
           >
             <Link to="/negocios/$id" params={{ id: merchant.id }}>
               Ver Detalhes

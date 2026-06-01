@@ -80,7 +80,7 @@ function ListingPage() {
 
             <Button 
               onClick={() => navigate({ to: '/cadastro' })}
-              className="bg-violet-600 hover:bg-violet-700 text-white rounded-xl h-12 px-6 font-black shadow-lg shadow-violet-100 active:scale-95 transition-all self-start md:self-auto"
+              className="bg-orange-600 hover:bg-orange-700 text-white rounded-xl h-12 px-6 font-black shadow-lg shadow-orange-100 active:scale-95 transition-all self-start md:self-auto"
             >
               <PlusCircle className="w-4 h-4 mr-2" />
               Anunciar meu negócio
@@ -89,11 +89,11 @@ function ListingPage() {
 
           <div className="mt-10 grid grid-cols-1 md:grid-cols-12 gap-4">
             <div className="md:col-span-6 relative group">
-              <Search className="absolute left-4 top-1/2 -translate-y-1/2 h-5 w-5 text-slate-400 group-focus-within:text-violet-600 transition-colors" />
+              <Search className="absolute left-4 top-1/2 -translate-y-1/2 h-5 w-5 text-slate-400 group-focus-within:text-orange-600 transition-colors" />
               <input 
                 type="text" 
                 placeholder="Pesquisar por nome ou serviço..."
-                className="w-full bg-slate-50 border border-slate-200 rounded-2xl py-4 pl-12 pr-4 text-sm font-medium outline-none focus:ring-4 focus:ring-violet-500/5 focus:border-violet-600 focus:bg-white transition-all shadow-sm"
+                className="w-full bg-slate-50 border border-slate-200 rounded-2xl py-4 pl-12 pr-4 text-sm font-medium outline-none focus:ring-4 focus:ring-orange-500/5 focus:border-orange-600 focus:bg-white transition-all shadow-sm"
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
               />
@@ -108,9 +108,9 @@ function ListingPage() {
             </div>
 
             <div className="md:col-span-3 relative">
-               <MapPin className="absolute left-4 top-1/2 -translate-y-1/2 h-4 w-4 text-violet-600 pointer-events-none" />
+               <MapPin className="absolute left-4 top-1/2 -translate-y-1/2 h-4 w-4 text-orange-600 pointer-events-none" />
                <select 
-                className="w-full bg-slate-50 border border-slate-200 rounded-2xl py-4 pl-10 pr-10 text-xs font-black uppercase tracking-wider outline-none focus:ring-4 focus:ring-violet-500/5 focus:border-violet-600 focus:bg-white appearance-none cursor-pointer shadow-sm disabled:opacity-50 disabled:cursor-not-allowed"
+                className="w-full bg-slate-50 border border-slate-200 rounded-2xl py-4 pl-10 pr-10 text-xs font-black uppercase tracking-wider outline-none focus:ring-4 focus:ring-orange-500/5 focus:border-orange-600 focus:bg-white appearance-none cursor-pointer shadow-sm disabled:opacity-50 disabled:cursor-not-allowed"
                 value={selectedNeighborhood}
                 onChange={(e) => setSelectedNeighborhood(e.target.value)}
               >
@@ -123,9 +123,9 @@ function ListingPage() {
             </div>
 
             <div className="md:col-span-3 relative">
-               <Settings2 className="absolute left-4 top-1/2 -translate-y-1/2 h-4 w-4 text-violet-600 pointer-events-none" />
+               <Settings2 className="absolute left-4 top-1/2 -translate-y-1/2 h-4 w-4 text-orange-600 pointer-events-none" />
                <select 
-                className="w-full bg-slate-50 border border-slate-200 rounded-2xl py-4 pl-10 pr-10 text-xs font-black uppercase tracking-wider outline-none focus:ring-4 focus:ring-violet-500/5 focus:border-violet-600 focus:bg-white appearance-none cursor-pointer shadow-sm disabled:opacity-50 disabled:cursor-not-allowed"
+                className="w-full bg-slate-50 border border-slate-200 rounded-2xl py-4 pl-10 pr-10 text-xs font-black uppercase tracking-wider outline-none focus:ring-4 focus:ring-orange-500/5 focus:border-orange-600 focus:bg-white appearance-none cursor-pointer shadow-sm disabled:opacity-50 disabled:cursor-not-allowed"
                 value={selectedCategory}
                 onChange={(e) => setSelectedCategory(e.target.value)}
               >
@@ -143,14 +143,14 @@ function ListingPage() {
                <span className="text-[10px] font-black text-slate-400 uppercase tracking-widest mr-2">Filtros ativos:</span>
                
                {selectedCategory !== 'all' && (
-                 <div className="flex items-center gap-2 bg-violet-50 text-violet-600 px-3 py-1.5 rounded-full text-[10px] font-black uppercase border border-violet-100">
+                  <div className="flex items-center gap-2 bg-orange-50 text-orange-600 px-3 py-1.5 rounded-full text-[10px] font-black uppercase border border-orange-100">
                     {categories.find(c => c.slug === selectedCategory)?.label}
                     <button onClick={() => setSelectedCategory('all')}><X className="w-3 h-3" /></button>
                  </div>
                )}
 
                {selectedNeighborhood !== 'all' && (
-                 <div className="flex items-center gap-2 bg-violet-50 text-violet-600 px-3 py-1.5 rounded-full text-[10px] font-black uppercase border border-violet-100">
+                 <div className="flex items-center gap-2 bg-orange-50 text-orange-600 px-3 py-1.5 rounded-full text-[10px] font-black uppercase border border-orange-100">
                     {selectedNeighborhood}
                     <button onClick={() => setSelectedNeighborhood('all')}><X className="w-3 h-3" /></button>
                  </div>
@@ -192,7 +192,7 @@ function ListingPage() {
             </p>
             <Button 
               onClick={clearFilters}
-              className="bg-violet-600 hover:bg-violet-700 text-white rounded-2xl h-14 px-8 font-black shadow-xl shadow-violet-200 active:scale-95 transition-all"
+              className="bg-orange-600 hover:bg-orange-700 text-white rounded-2xl h-14 px-8 font-black shadow-xl shadow-orange-200 active:scale-95 transition-all"
             >
               Ver todos os negócios
             </Button>
