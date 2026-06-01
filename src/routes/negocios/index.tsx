@@ -1,5 +1,5 @@
 import { createFileRoute, useNavigate, Link } from "@tanstack/react-router";
-import { useState, useMemo } from "react";
+import { useState, useMemo, useEffect } from "react";
 import { 
   ArrowLeft, 
   Search, 
@@ -10,10 +10,12 @@ import {
   PlusCircle,
   Settings2,
   ChevronDown,
-  Navigation
+  Navigation,
+  RefreshCw
 } from "lucide-react";
 import { merchants, categories, neighborhoods } from "@/data/merchants";
 import { MerchantCard } from "@/components/MerchantCard";
+import { MerchantSkeleton } from "@/components/MerchantSkeleton";
 import { z } from "zod";
 import { TopBar } from "@/components/TopBar";
 import { FloatingNav } from "@/components/FloatingNav";
@@ -38,8 +40,15 @@ function ListingPage() {
   const [searchTerm, setSearchTerm] = useState(searchParams.q || "");
   const [selectedCategory, setSelectedCategory] = useState(searchParams.category || "all");
   const [selectedNeighborhood, setSelectedNeighborhood] = useState(searchParams.neighborhood || "all");
+  const [isInitialLoading, setIsInitialLoading] = useState(true);
 
-  const { coords, getDistance } = useLocation();
+  const { coords, getDistance, loading: locationLoading } = useLocation();
+
+  useEffect(() => {
+    // Simulate a brief loading for a more "premium" feel with skeletons
+    const timer = setTimeout(() => setIsInitialLoading(false), 800);
+    return () => clearTimeout(timer);
+  }, []);
 
   const filteredMerchants = useMemo(() => {
     let list = [...merchants];
@@ -207,7 +216,13 @@ function ListingPage() {
           )}
         </div>
 
-        {filteredMerchants.length > 0 ? (
+        {isInitialLoading ? (
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
+            {[...Array(8)].map((_, i) => (
+              <MerchantSkeleton key={i} />
+            ))}
+          </div>
+        ) : filteredMerchants.length > 0 ? (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
             {filteredMerchants.map(merchant => (
               <MerchantCard key={merchant.id} merchant={merchant} />
