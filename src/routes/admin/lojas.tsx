@@ -9,7 +9,8 @@ import {
   TrendingUp,
   MessageSquare,
   Instagram as InstagramIcon,
-  Users
+  Users,
+  ShieldCheck
 } from "lucide-react";
 import { useState } from "react";
 import { merchants as initialMerchants } from "@/data/merchants";
