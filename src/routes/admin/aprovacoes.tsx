@@ -5,7 +5,7 @@ import { ApprovalQueue } from "@/components/admin/ApprovalQueue";
 import { MerchantEditForm } from "@/components/admin/MerchantEditForm";
 import { MerchantAdmin } from "@/data/admin";
 import { Button } from "@/components/ui/button";
-import { ArrowLeft, Clock, ShieldCheck, Filter } from "lucide-react";
+import { ArrowLeft, Clock, ShieldCheck, Filter, ChevronDown } from "lucide-react";
 
 export const Route = createFileRoute("/admin/aprovacoes")({
   component: AdminApprovals,
