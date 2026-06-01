@@ -63,7 +63,7 @@ export function ApprovalQueue({
             <div className="flex items-start justify-between mb-4">
               <div>
                 <div className="flex items-center gap-2 mb-2">
-                  <span className="text-2xl">{merchant.emoji}</span>
+                  <span className="text-2xl">🏪</span>
                   <h4 className="font-bold text-lg text-foreground">
                     {merchant.name}
                   </h4>
