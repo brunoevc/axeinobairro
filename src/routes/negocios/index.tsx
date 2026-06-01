@@ -42,6 +42,15 @@ function ListingPage() {
   const [selectedNeighborhood, setSelectedNeighborhood] = useState(searchParams.bairro || "all");
   const [isInitialLoading, setIsInitialLoading] = useState(true);
 
+  // Helper function to normalize strings for search (remove accents)
+  const normalizeString = (str: string) => {
+    return str
+      .normalize("NFD")
+      .replace(/[\u0300-\u036f]/g, "")
+      .toLowerCase()
+      .trim();
+  };
+
   // Synchronize internal state when URL parameters change (e.g. back/forward button)
   useEffect(() => {
     if (searchParams.q !== undefined && searchParams.q !== searchTerm) {
@@ -110,16 +119,18 @@ function ListingPage() {
       .sort((a, b) => (a as any).calculatedDistance - (b as any).calculatedDistance);
     }
 
-    const searchKeywords = searchTerm.toLowerCase().trim().split(/\s+/).filter((k: string) => k.length > 0);
+    const searchKeywords = normalizeString(searchTerm).split(/\s+/).filter((k: string) => k.length > 0);
 
     return list.filter(merchant => {
-      const merchantText = `${merchant.name} ${merchant.description} ${merchant.category} ${merchant.neighborhood}`.toLowerCase();
+      const merchantText = normalizeString(`${merchant.name} ${merchant.description} ${merchant.category} ${merchant.neighborhood}`);
       
       const matchesSearch = searchKeywords.length === 0 || 
                            searchKeywords.every((keyword: string) => merchantText.includes(keyword));
 
-      const matchesCategory = selectedCategory === "all" || merchant.category === selectedCategory;
-      const matchesNeighborhood = selectedNeighborhood === "all" || merchant.neighborhood === selectedNeighborhood;
+      const matchesCategory = selectedCategory === "all" || 
+                              normalizeString(merchant.category) === normalizeString(selectedCategory);
+      const matchesNeighborhood = selectedNeighborhood === "all" || 
+                                  normalizeString(merchant.neighborhood) === normalizeString(selectedNeighborhood);
       const matchesPromotion = !searchParams.hasPromotion || merchant.promotion.isActive;
       
       return matchesSearch && matchesCategory && matchesNeighborhood && matchesPromotion;
