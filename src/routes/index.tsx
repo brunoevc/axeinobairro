@@ -46,13 +46,13 @@ function Index() {
         
         <div className="max-w-7xl mx-auto px-6 py-12 md:py-20 relative z-10 flex flex-col md:flex-row items-center gap-12">
           <div className="flex-1 text-center md:text-left">
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-violet-50 text-violet-600 text-[10px] font-black uppercase tracking-widest mb-6 border border-violet-100 shadow-sm">
+            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-orange-50 text-orange-600 text-[10px] font-black uppercase tracking-widest mb-6 border border-orange-100 shadow-sm">
               <TrendingUp className="h-3 w-3" />
               O melhor do seu bairro em um só lugar
             </div>
             <h1 className="text-4xl md:text-7xl font-black tracking-tighter text-slate-900 mb-6 leading-[0.9]">
               Conecte-se com o <br className="hidden md:block" />
-              <span className="text-violet-600">Comércio Local</span>
+              <span className="text-orange-600">Comércio Local</span>
             </h1>
             <p className="text-slate-500 text-lg md:text-xl font-medium mb-10 leading-relaxed max-w-xl">
               Descubra padarias, restaurantes, serviços e ofertas exclusivas <br className="hidden md:block" /> pertinho de você em segundos. Tudo via WhatsApp.
@@ -61,7 +61,7 @@ function Index() {
             <div className="flex flex-col sm:flex-row gap-4">
               <Button 
                 onClick={() => navigate({ to: '/negocios' })}
-                className="h-16 px-10 bg-violet-600 hover:bg-violet-700 text-white rounded-2xl font-black shadow-xl shadow-violet-200 transition-all active:scale-95 text-lg group"
+                className="h-16 px-10 bg-orange-600 hover:bg-orange-700 text-white rounded-2xl font-black shadow-xl shadow-orange-200 transition-all active:scale-95 text-lg group"
               >
                 Explorar Negócios
                 <ChevronRight className="ml-2 h-5 w-5 transition-transform group-hover:translate-x-1" />
@@ -78,10 +78,10 @@ function Index() {
 
           <div className="flex-1 w-full max-w-md hidden md:block">
             <div className="relative">
-               <div className="absolute -inset-4 bg-violet-100 rounded-[3rem] blur-3xl opacity-30 animate-pulse" />
+               <div className="absolute -inset-4 bg-orange-100 rounded-[3rem] blur-3xl opacity-30 animate-pulse" />
                <div className="relative bg-white border border-slate-100 p-8 rounded-[3rem] shadow-2xl space-y-6">
                   <div className="flex items-center gap-4 p-4 bg-slate-50 rounded-2xl">
-                     <div className="w-12 h-12 bg-violet-600 rounded-xl flex items-center justify-center text-white">
+                     <div className="w-12 h-12 bg-orange-600 rounded-xl flex items-center justify-center text-white">
                         <Star className="w-6 h-6 fill-white" />
                      </div>
                      <div>
@@ -120,7 +120,7 @@ function Index() {
         <div className="bg-white border border-slate-100 rounded-[2.5rem] p-8 shadow-2xl shadow-slate-200/50">
           <div className="flex justify-between items-center mb-8">
             <h2 className="text-xs font-black uppercase tracking-[0.2em] text-slate-400 flex items-center gap-2">
-              <Zap className="h-4 w-4 text-violet-500 fill-violet-500" />
+              <Zap className="h-4 w-4 text-orange-500 fill-orange-500" />
               Acesso Rápido
             </h2>
           </div>
@@ -133,10 +133,10 @@ function Index() {
                   onClick={() => navigate({ to: '/negocios', search: { category: cat.slug } })}
                   className="flex flex-col items-center gap-3 group"
                 >
-                  <div className="w-20 h-20 rounded-3xl bg-slate-50 flex items-center justify-center border border-slate-100 group-hover:bg-violet-600 group-hover:border-violet-600 group-hover:scale-105 transition-all duration-300 shadow-sm group-hover:shadow-xl group-hover:shadow-violet-200">
-                    <Icon className="w-8 h-8 text-violet-600 group-hover:text-white transition-colors" />
+                  <div className="w-20 h-20 rounded-3xl bg-slate-50 flex items-center justify-center border border-slate-100 group-hover:bg-orange-600 group-hover:border-orange-600 group-hover:scale-105 transition-all duration-300 shadow-sm group-hover:shadow-xl group-hover:shadow-orange-200">
+                    <Icon className="w-8 h-8 text-orange-600 group-hover:text-white transition-colors" />
                   </div>
-                  <span className="text-[11px] font-black text-center uppercase tracking-wider text-slate-500 group-hover:text-violet-600 transition-colors">
+                  <span className="text-[11px] font-black text-center uppercase tracking-wider text-slate-500 group-hover:text-orange-600 transition-colors">
                     {cat.label}
                   </span>
                 </button>
@@ -156,7 +156,7 @@ function Index() {
           <Button 
             variant="ghost"
             onClick={() => navigate({ to: '/negocios' })}
-            className="text-violet-600 font-black hover:bg-violet-50 self-start md:self-auto"
+            className="text-orange-600 font-black hover:bg-orange-50 self-start md:self-auto"
           >
             Ver todos
             <ArrowRight className="ml-2 h-4 w-4" />
@@ -199,9 +199,9 @@ function Index() {
 
       {/* Promotions Section */}
       <section className="max-w-7xl mx-auto px-6 mt-24 pb-20">
-        <div className="bg-violet-600 rounded-[3rem] p-8 md:p-16 relative overflow-hidden">
+        <div className="bg-orange-600 rounded-[3rem] p-8 md:p-16 relative overflow-hidden">
           <div className="absolute top-0 right-0 w-96 h-96 bg-white/5 rounded-full blur-3xl -mr-48 -mt-48" />
-          <div className="absolute bottom-0 left-0 w-96 h-96 bg-violet-400/20 rounded-full blur-3xl -ml-48 -mb-48" />
+          <div className="absolute bottom-0 left-0 w-96 h-96 bg-orange-400/20 rounded-full blur-3xl -ml-48 -mb-48" />
           
           <div className="relative z-10 flex flex-col md:flex-row md:items-end justify-between mb-12 gap-4">
             <div>
@@ -210,12 +210,12 @@ function Index() {
                 Economia Real
               </div>
               <h2 className="text-4xl md:text-5xl font-black text-white tracking-tighter">Ofertas do Bairro</h2>
-              <p className="text-violet-100 font-medium text-lg mt-2">Aproveite descontos exclusivos que você só encontra aqui</p>
+              <p className="text-orange-100 font-medium text-lg mt-2">Aproveite descontos exclusivos que você só encontra aqui</p>
             </div>
             <Button 
               variant="outline"
               onClick={() => navigate({ to: '/negocios', search: { hasPromotion: true } })}
-              className="bg-white text-violet-600 hover:bg-violet-50 font-black rounded-xl border-none h-12 px-8 shadow-xl shadow-violet-900/20 transition-all active:scale-95 self-start md:self-auto"
+              className="bg-white text-orange-600 hover:bg-orange-50 font-black rounded-xl border-none h-12 px-8 shadow-xl shadow-orange-900/20 transition-all active:scale-95 self-start md:self-auto"
             >
               Ver todas as ofertas
             </Button>
