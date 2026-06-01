@@ -1,5 +1,5 @@
 import { createFileRoute, useNavigate, Link } from "@tanstack/react-router";
-import { useState, useMemo } from "react";
+import { useState, useMemo, useEffect } from "react";
 import { 
   ArrowLeft, 
   Search, 
@@ -10,10 +10,12 @@ import {
   PlusCircle,
   Settings2,
   ChevronDown,
-  Navigation
+  Navigation,
+  RefreshCw
 } from "lucide-react";
 import { merchants, categories, neighborhoods } from "@/data/merchants";
 import { MerchantCard } from "@/components/MerchantCard";
+import { MerchantSkeleton } from "@/components/MerchantSkeleton";
 import { z } from "zod";
 import { TopBar } from "@/components/TopBar";
 import { FloatingNav } from "@/components/FloatingNav";
@@ -38,8 +40,15 @@ function ListingPage() {
   const [searchTerm, setSearchTerm] = useState(searchParams.q || "");
   const [selectedCategory, setSelectedCategory] = useState(searchParams.category || "all");
   const [selectedNeighborhood, setSelectedNeighborhood] = useState(searchParams.neighborhood || "all");
+  const [isInitialLoading, setIsInitialLoading] = useState(true);
 
-  const { coords, getDistance } = useLocation();
+  const { coords, getDistance, loading: locationLoading } = useLocation();
+
+  useEffect(() => {
+    // Simulate a brief loading for a more "premium" feel with skeletons
+    const timer = setTimeout(() => setIsInitialLoading(false), 800);
+    return () => clearTimeout(timer);
+  }, []);
 
   const filteredMerchants = useMemo(() => {
     let list = [...merchants];
@@ -53,9 +62,14 @@ function ListingPage() {
       .sort((a, b) => (a as any).calculatedDistance - (b as any).calculatedDistance);
     }
 
+    const searchKeywords = searchTerm.toLowerCase().trim().split(/\s+/).filter((k: string) => k.length > 0);
+
     return list.filter(merchant => {
-      const matchesSearch = merchant.name.toLowerCase().includes(searchTerm.toLowerCase()) || 
-                           merchant.description.toLowerCase().includes(searchTerm.toLowerCase());
+      const merchantText = `${merchant.name} ${merchant.description} ${merchant.category} ${merchant.neighborhood}`.toLowerCase();
+      
+      const matchesSearch = searchKeywords.length === 0 || 
+                           searchKeywords.every((keyword: string) => merchantText.includes(keyword));
+
       const matchesCategory = selectedCategory === "all" || merchant.category === selectedCategory;
       const matchesNeighborhood = selectedNeighborhood === "all" || merchant.neighborhood === selectedNeighborhood;
       const matchesPromotion = !searchParams.hasPromotion || merchant.promotion.isActive;
@@ -190,19 +204,25 @@ function ListingPage() {
       </header>
 
       <main className="max-w-7xl mx-auto px-6 py-12">
-        <div className="mb-8 flex items-center justify-between">
+        <div className="mb-8 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
           <p className="text-xs font-black text-slate-400 uppercase tracking-widest">
-            {filteredMerchants.length} {filteredMerchants.length === 1 ? 'resultado' : 'resultados'}
+            {filteredMerchants.length} {filteredMerchants.length === 1 ? 'resultado' : 'resultados'} encontrados
           </p>
           {coords && (
-             <div className="flex items-center gap-2 px-3 py-1 bg-orange-50 rounded-lg border border-orange-100">
-                <Navigation className="w-3 h-3 text-orange-600" />
+             <div className="flex items-center gap-2 px-3 py-1.5 bg-orange-50 rounded-xl border border-orange-100 shadow-sm animate-in fade-in slide-in-from-right-4">
+                <Navigation className="w-3.5 h-3.5 text-orange-600" />
                 <span className="text-[10px] font-black text-orange-600 uppercase tracking-widest">Ordenado por proximidade</span>
              </div>
           )}
         </div>
 
-        {filteredMerchants.length > 0 ? (
+        {isInitialLoading ? (
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
+            {[...Array(8)].map((_, i) => (
+              <MerchantSkeleton key={i} />
+            ))}
+          </div>
+        ) : filteredMerchants.length > 0 ? (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
             {filteredMerchants.map(merchant => (
               <MerchantCard key={merchant.id} merchant={merchant} />

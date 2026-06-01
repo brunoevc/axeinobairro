@@ -23,7 +23,7 @@ export function Logo({ className, iconOnly = false, dark = false }: LogoProps) {
             Axêi no <span className="text-orange-600">Bairro</span>
           </span>
           <span className={cn("text-[8px] md:text-[9px] font-black uppercase tracking-[0.2em] leading-none opacity-60", dark ? "text-slate-300" : "text-slate-500")}>
-            Marketplace Hiperlocal
+            Encontre. Conecte. Fortaleça.
           </span>
         </div>
       )}

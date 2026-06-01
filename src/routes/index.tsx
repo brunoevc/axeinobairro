@@ -1,5 +1,5 @@
 import { createFileRoute, useNavigate, Link } from "@tanstack/react-router";
-import { useMemo } from "react";
+import { useMemo, useState, useEffect } from "react";
 import { 
   Search, 
   ArrowRight, 
@@ -16,6 +16,7 @@ import {
 } from "lucide-react";
 import { merchants, categories } from "@/data/merchants";
 import { MerchantCard } from "@/components/MerchantCard";
+import { MerchantSkeleton } from "@/components/MerchantSkeleton";
 import { TopBar } from "@/components/TopBar";
 import { FloatingNav } from "@/components/FloatingNav";
 import { Button } from "@/components/ui/button";
@@ -38,6 +39,12 @@ export const Route = createFileRoute("/")({
 function Index() {
   const navigate = useNavigate();
   const { coords, getDistance } = useLocation();
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    const timer = setTimeout(() => setIsLoading(false), 800);
+    return () => clearTimeout(timer);
+  }, []);
   
   const featuredMerchants = merchants.filter(m => m.featured).slice(0, 3);
   const promotionalMerchants = merchants.filter(m => m.promotion.isActive).slice(0, 4);
@@ -181,9 +188,12 @@ function Index() {
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {featuredMerchants.map((merchant) => (
-            <MerchantCard key={merchant.id} merchant={merchant} />
-          ))}
+          {isLoading 
+            ? [...Array(3)].map((_, i) => <MerchantSkeleton key={i} />)
+            : featuredMerchants.map((merchant) => (
+              <MerchantCard key={merchant.id} merchant={merchant} />
+            ))
+          }
         </div>
       </section>
 
@@ -260,9 +270,12 @@ function Index() {
           </div>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 relative z-10">
-            {promotionalMerchants.map((merchant) => (
-              <MerchantCard key={merchant.id} merchant={merchant} />
-            ))}
+            {isLoading 
+              ? [...Array(4)].map((_, i) => <MerchantSkeleton key={i} />)
+              : promotionalMerchants.map((merchant) => (
+                <MerchantCard key={merchant.id} merchant={merchant} />
+              ))
+            }
           </div>
         </div>
       </section>
