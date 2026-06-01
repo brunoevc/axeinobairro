@@ -1,6 +1,5 @@
 import { Merchant, merchants as baseMerchants } from "./merchants";
 
-// Extensão dos dados do Merchant com campos admin
 export type MerchantAdmin = Merchant & {
   status: "pending" | "active" | "inactive" | "rejected";
   approvedAt?: string;
@@ -13,6 +12,9 @@ export type MerchantAdmin = Merchant & {
   lastContactDate?: string;
   planChangedAt?: string;
   planChangedBy?: string;
+  // Campos legados para compatibilidade UI
+  emoji?: string;
+  plan?: "free" | "assisted" | "local_featured" | "highlighted" | "premium_partner";
 };
 
 export type AdminAction = {
@@ -60,10 +62,8 @@ export type AdminState = {
   lastUpdated: string;
 };
 
-// Função para converter Merchant para MerchantAdmin
 export function initializeMerchantAdmin(merchant: Merchant): MerchantAdmin {
-  // Simular alguns dados baseado no plan
-  const isNew = merchant.isNew || Math.random() > 0.7;
+  const isNew = Math.random() > 0.7;
   const status = isNew ? "pending" : "active";
   const whatsappClicks = Math.floor(Math.random() * 150);
   const contactAttempts = Math.floor(Math.random() * 50);
@@ -71,6 +71,8 @@ export function initializeMerchantAdmin(merchant: Merchant): MerchantAdmin {
   return {
     ...merchant,
     status,
+    emoji: "🏪", // Fallback para compatibilidade
+    plan: merchant.plan || "free",
     approvedAt: status === "active" ? new Date(Date.now() - Math.random() * 30 * 24 * 60 * 60 * 1000).toISOString() : undefined,
     approvedBy: status === "active" ? "Auto-Admin" : undefined,
     notes: "",
@@ -80,7 +82,6 @@ export function initializeMerchantAdmin(merchant: Merchant): MerchantAdmin {
   };
 }
 
-// Função para calcular stats
 export function calculateAdminStats(merchants: MerchantAdmin[]): AdminStats {
   const planDistribution = {
     free: 0,
@@ -100,7 +101,8 @@ export function calculateAdminStats(merchants: MerchantAdmin[]): AdminStats {
   let featuredMerchants = 0;
 
   merchants.forEach((m) => {
-    planDistribution[m.plan]++;
+    const plan = m.plan || "free";
+    planDistribution[plan]++;
     totalWhatsappClicks += m.whatsappClicks || 0;
     totalContactAttempts += m.contactAttempts || 0;
     totalRating += m.rating;
@@ -114,7 +116,6 @@ export function calculateAdminStats(merchants: MerchantAdmin[]): AdminStats {
     merchantsByNeighborhood[hood] = (merchantsByNeighborhood[hood] || 0) + 1;
   });
 
-  // Calcular receita simulada (em R$)
   const planRevenue = {
     assisted: planDistribution.assisted * 27,
     local_featured: planDistribution.local_featured * 47,
@@ -137,7 +138,6 @@ export function calculateAdminStats(merchants: MerchantAdmin[]): AdminStats {
   };
 }
 
-// Função para obter merchanst inicial (com dados mockados)
 export function getInitialAdminState(): AdminState {
   const merchantsAdmin = baseMerchants.map(initializeMerchantAdmin);
 
@@ -150,15 +150,6 @@ export function getInitialAdminState(): AdminState {
       adminName: "Auto-Admin",
       timestamp: new Date(Date.now() - 30 * 24 * 60 * 60 * 1000).toISOString(),
       details: { reason: "Cadastro completo e verificado" },
-    },
-    {
-      id: "act-2",
-      type: "plan_change",
-      merchantId: "1",
-      merchantName: "Cantina da Nonna",
-      adminName: "Auto-Admin",
-      timestamp: new Date(Date.now() - 15 * 24 * 60 * 60 * 1000).toISOString(),
-      details: { oldValue: "highlighted", newValue: "premium_partner" },
     },
   ];
 
