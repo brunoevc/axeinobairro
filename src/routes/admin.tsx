@@ -1,15 +1,16 @@
 import { createFileRoute, useNavigate, Outlet, Link, redirect } from "@tanstack/react-router";
-import { LayoutDashboard, Store, CheckCircle, CreditCard, ArrowLeft, LogOut, ShieldCheck } from "lucide-react";
+import { LayoutDashboard, Store, CheckCircle, CreditCard, ArrowLeft, LogOut, ShieldCheck, User } from "lucide-react";
 import { Logo } from "@/components/ui/Logo";
 import { useAtom } from "jotai";
-import { isAuthenticatedAtom } from "@/hooks/useAuth";
+import { isAuthenticatedAtom, authUserAtom } from "@/hooks/useAuth";
 import { useEffect } from "react";
 import { toast } from "sonner";
 
 export const Route = createFileRoute("/admin")({
   beforeLoad: ({ location }) => {
     const authStatus = localStorage.getItem("axei_auth_status");
-    const isAuthenticated = authStatus === "true";
+    const authUser = localStorage.getItem("axei_auth_user");
+    const isAuthenticated = authStatus === "true" && authUser !== null && authUser !== "null";
     
     if (!isAuthenticated) {
       throw redirect({
@@ -26,9 +27,11 @@ export const Route = createFileRoute("/admin")({
 function AdminLayout() {
   const navigate = useNavigate();
   const [isAuthenticated, setIsAuthenticated] = useAtom(isAuthenticatedAtom);
+  const [authUser, setAuthUser] = useAtom(authUserAtom);
 
   const handleLogout = () => {
     setIsAuthenticated(false);
+    setAuthUser(null);
     toast.success("Você saiu com sucesso.");
     navigate({ to: "/login" });
   };
@@ -38,16 +41,48 @@ function AdminLayout() {
     <div className="min-h-screen bg-slate-50 flex flex-col md:flex-row">
       {/* Sidebar - Desktop */}
       <aside className="w-full md:w-72 bg-white border-b md:border-r border-slate-100 flex flex-col sticky top-0 md:h-screen z-40">
-        <div className="p-8 border-b border-slate-50 hidden md:flex items-center gap-4">
+        <div className="p-8 border-b border-slate-50 hidden md:flex flex-col gap-6">
           <Logo />
+          
+          {authUser && (
+            <div className="flex items-center gap-4 p-4 bg-slate-50 rounded-2xl border border-slate-100">
+              <div className="w-10 h-10 rounded-full bg-orange-100 border-2 border-white shadow-sm flex items-center justify-center overflow-hidden">
+                {authUser.avatar ? (
+                  <img src={authUser.avatar} alt={authUser.name} className="w-full h-full object-cover" />
+                ) : (
+                  <User className="w-5 h-5 text-orange-600" />
+                )}
+              </div>
+              <div className="flex-1 min-w-0">
+                <p className="text-sm font-black text-slate-900 truncate">{authUser.name}</p>
+                <div className="flex items-center gap-1.5 mt-0.5">
+                  <div className={`w-1.5 h-1.5 rounded-full ${authUser.provider === 'google' ? 'bg-blue-500' : 'bg-orange-500'}`} />
+                  <p className="text-[10px] font-black text-slate-400 uppercase tracking-widest truncate">
+                    {authUser.provider === 'google' ? 'Google Login' : 'Acesso Local'}
+                  </p>
+                </div>
+              </div>
+            </div>
+          )}
         </div>
 
         {/* Mobile Header */}
         <div className="md:hidden flex items-center justify-between p-4 bg-white border-b border-slate-100">
            <Logo className="scale-75 origin-left" />
-           <button onClick={() => navigate({ to: '/' })} className="p-2 text-slate-400">
-              <LogOut className="w-5 h-5" />
-           </button>
+           <div className="flex items-center gap-3">
+              {authUser && (
+                <div className="w-8 h-8 rounded-full bg-slate-100 flex items-center justify-center overflow-hidden border border-slate-200">
+                   {authUser.avatar ? (
+                     <img src={authUser.avatar} alt={authUser.name} className="w-full h-full object-cover" />
+                   ) : (
+                     <User className="w-4 h-4 text-slate-400" />
+                   )}
+                </div>
+              )}
+              <button onClick={handleLogout} className="p-2 text-slate-400">
+                 <LogOut className="w-5 h-5" />
+              </button>
+           </div>
         </div>
 
         <nav className="flex md:flex-col p-4 md:p-6 gap-2 overflow-x-auto md:overflow-x-visible">
