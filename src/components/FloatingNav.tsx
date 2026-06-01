@@ -14,7 +14,7 @@ export function FloatingNav() {
     <nav className="fixed bottom-6 left-1/2 -translate-x-1/2 bg-white/90 backdrop-blur-lg border border-slate-200/50 rounded-full px-4 py-2 shadow-2xl flex items-center gap-8 z-50 md:hidden">
       <Link 
         to="/" 
-        className={`flex flex-col items-center gap-1 p-2 transition-all ${isActive('/') ? 'text-violet-600 scale-110' : 'text-slate-400'}`}
+        className={`flex flex-col items-center gap-1 p-2 transition-all ${isActive('/') ? 'text-orange-600 scale-110' : 'text-slate-400'}`}
       >
         <Home className="w-5 h-5" />
         <span className="text-[10px] font-bold">Início</span>
@@ -22,7 +22,7 @@ export function FloatingNav() {
       
       <Link 
         to="/negocios" 
-        className={`flex flex-col items-center gap-1 p-2 transition-all ${isActive('/negocios') ? 'text-violet-600 scale-110' : 'text-slate-400'}`}
+        className={`flex flex-col items-center gap-1 p-2 transition-all ${isActive('/negocios') ? 'text-orange-600 scale-110' : 'text-slate-400'}`}
       >
         <Search className="w-5 h-5" />
         <span className="text-[10px] font-bold">Buscar</span>
@@ -30,7 +30,7 @@ export function FloatingNav() {
       
       <Link 
         to="/cadastro" 
-        className={`flex flex-col items-center gap-1 p-2 transition-all ${isActive('/cadastro') ? 'text-violet-600 scale-110' : 'text-slate-400'}`}
+        className={`flex flex-col items-center gap-1 p-2 transition-all ${isActive('/cadastro') ? 'text-orange-600 scale-110' : 'text-slate-400'}`}
       >
         <PlusCircle className="w-5 h-5" />
         <span className="text-[10px] font-bold">Anunciar</span>
