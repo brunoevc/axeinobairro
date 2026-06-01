@@ -44,32 +44,51 @@ function ListingPage() {
 
   // Synchronize internal state when URL parameters change (e.g. back/forward button)
   useEffect(() => {
-    setSearchTerm(searchParams.q || "");
-    setSelectedCategory(searchParams.categoria || "all");
-    setSelectedNeighborhood(searchParams.bairro || "all");
+    if (searchParams.q !== undefined && searchParams.q !== searchTerm) {
+      setSearchTerm(searchParams.q || "");
+    }
+    if (searchParams.categoria !== undefined && searchParams.categoria !== (selectedCategory === "all" ? undefined : selectedCategory)) {
+      setSelectedCategory(searchParams.categoria || "all");
+    }
+    if (searchParams.bairro !== undefined && searchParams.bairro !== (selectedNeighborhood === "all" ? undefined : selectedNeighborhood)) {
+      setSelectedNeighborhood(searchParams.bairro || "all");
+    }
   }, [searchParams.q, searchParams.categoria, searchParams.bairro]);
 
-  // Update URL search parameters when local filters change
-  const updateFilters = (newFilters: { q?: string; categoria?: string; bairro?: string }) => {
-    const nextSearch = { ...searchParams };
-    
-    if (newFilters.q !== undefined) {
-      if (newFilters.q) nextSearch.q = newFilters.q;
-      else delete nextSearch.q;
-    }
-    
-    if (newFilters.categoria !== undefined) {
-      if (newFilters.categoria !== 'all') nextSearch.categoria = newFilters.categoria;
-      else delete nextSearch.categoria;
-    }
-    
-    if (newFilters.bairro !== undefined) {
-      if (newFilters.bairro !== 'all') nextSearch.bairro = newFilters.bairro;
-      else delete nextSearch.bairro;
-    }
+  // Debounced filter update to URL
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      const nextSearch = { ...searchParams };
+      let changed = false;
 
-    navigate({ to: '/negocios', search: nextSearch, replace: true });
-  };
+      const qVal = searchTerm || undefined;
+      if (nextSearch.q !== qVal) {
+        if (qVal) nextSearch.q = qVal;
+        else delete nextSearch.q;
+        changed = true;
+      }
+
+      const catVal = selectedCategory !== 'all' ? selectedCategory : undefined;
+      if (nextSearch.categoria !== catVal) {
+        if (catVal) nextSearch.categoria = catVal;
+        else delete nextSearch.categoria;
+        changed = true;
+      }
+
+      const neighborhoodVal = selectedNeighborhood !== 'all' ? selectedNeighborhood : undefined;
+      if (nextSearch.bairro !== neighborhoodVal) {
+        if (neighborhoodVal) nextSearch.bairro = neighborhoodVal;
+        else delete nextSearch.bairro;
+        changed = true;
+      }
+
+      if (changed) {
+        navigate({ to: '/negocios', search: nextSearch, replace: true });
+      }
+    }, 400);
+
+    return () => clearTimeout(timer);
+  }, [searchTerm, selectedCategory, selectedNeighborhood]);
 
   const { coords, getDistance, loading: locationLoading } = useLocation();
 
@@ -154,16 +173,13 @@ function ListingPage() {
                 className="w-full bg-slate-50 border border-slate-200 rounded-2xl py-4 pl-12 pr-4 text-sm font-medium outline-none focus:ring-4 focus:ring-orange-500/5 focus:border-orange-600 focus:bg-white transition-all shadow-sm"
                 value={searchTerm}
                 onChange={(e) => {
-                  const val = e.target.value;
-                  setSearchTerm(val);
-                  updateFilters({ q: val });
+                  setSearchTerm(e.target.value);
                 }}
               />
               {searchTerm && (
                 <button 
                   onClick={() => {
                     setSearchTerm("");
-                    updateFilters({ q: "" });
                   }}
                   className="absolute right-4 top-1/2 -translate-y-1/2 p-1.5 bg-slate-200/50 hover:bg-slate-200 rounded-full transition-colors"
                 >
@@ -178,9 +194,7 @@ function ListingPage() {
                 className="w-full bg-slate-50 border border-slate-200 rounded-2xl py-4 pl-10 pr-10 text-xs font-black uppercase tracking-wider outline-none focus:ring-4 focus:ring-orange-500/5 focus:border-orange-600 focus:bg-white appearance-none cursor-pointer shadow-sm disabled:opacity-50 disabled:cursor-not-allowed"
                 value={selectedNeighborhood}
                 onChange={(e) => {
-                  const val = e.target.value;
-                  setSelectedNeighborhood(val);
-                  updateFilters({ bairro: val });
+                  setSelectedNeighborhood(e.target.value);
                 }}
               >
                 <option value="all">Todos os Bairros</option>
@@ -197,9 +211,7 @@ function ListingPage() {
                 className="w-full bg-slate-50 border border-slate-200 rounded-2xl py-4 pl-10 pr-10 text-xs font-black uppercase tracking-wider outline-none focus:ring-4 focus:ring-orange-500/5 focus:border-orange-600 focus:bg-white appearance-none cursor-pointer shadow-sm disabled:opacity-50 disabled:cursor-not-allowed"
                 value={selectedCategory}
                 onChange={(e) => {
-                  const val = e.target.value;
-                  setSelectedCategory(val);
-                  updateFilters({ categoria: val });
+                  setSelectedCategory(e.target.value);
                 }}
               >
                 <option value="all">Todas Categorias</option>
@@ -220,7 +232,6 @@ function ListingPage() {
                     {categories.find(c => c.slug === selectedCategory)?.label}
                     <button onClick={() => {
                       setSelectedCategory('all');
-                      updateFilters({ categoria: 'all' });
                     }}><X className="w-3 h-3" /></button>
                  </div>
                )}
@@ -230,7 +241,6 @@ function ListingPage() {
                     {selectedNeighborhood}
                     <button onClick={() => {
                       setSelectedNeighborhood('all');
-                      updateFilters({ bairro: 'all' });
                     }}><X className="w-3 h-3" /></button>
                  </div>
                )}

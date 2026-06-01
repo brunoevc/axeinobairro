@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, memo } from "react";
 import { cn } from "@/lib/utils";
 
 interface LogoProps {
@@ -7,7 +7,7 @@ interface LogoProps {
   dark?: boolean;
 }
 
-export function Logo({ className, iconOnly = false, dark = false }: LogoProps) {
+export const Logo = memo(function Logo({ className, iconOnly = false, dark = false }: LogoProps) {
   const [customLogoUrl, setCustomLogoUrl] = useState<string | null>(null);
 
   useEffect(() => {
@@ -38,4 +38,4 @@ export function Logo({ className, iconOnly = false, dark = false }: LogoProps) {
       )}
     </div>
   );
-}
+});
