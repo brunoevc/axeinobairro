@@ -53,13 +53,13 @@ function ListingPage() {
       .sort((a, b) => (a as any).calculatedDistance - (b as any).calculatedDistance);
     }
 
-    const searchKeywords = searchTerm.toLowerCase().trim().split(/\s+/).filter(k => k.length > 0);
+    const searchKeywords = searchTerm.toLowerCase().trim().split(/\s+/).filter((k: string) => k.length > 0);
 
     return list.filter(merchant => {
       const merchantText = `${merchant.name} ${merchant.description} ${merchant.category} ${merchant.neighborhood}`.toLowerCase();
       
       const matchesSearch = searchKeywords.length === 0 || 
-                           searchKeywords.every(keyword => merchantText.includes(keyword));
+                           searchKeywords.every((keyword: string) => merchantText.includes(keyword));
 
       const matchesCategory = selectedCategory === "all" || merchant.category === selectedCategory;
       const matchesNeighborhood = selectedNeighborhood === "all" || merchant.neighborhood === selectedNeighborhood;

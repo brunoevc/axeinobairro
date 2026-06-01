@@ -41,7 +41,7 @@ export function TopBar() {
               ) : (
                 <span className="flex items-center gap-1 hover:text-orange-600 transition-colors">
                   {locationName}
-                  {error && <AlertCircle className="w-2.5 h-2.5 text-red-500" title={error} />}
+                  {error && <AlertCircle className="w-2.5 h-2.5 text-red-500" />}
                 </span>
               )}
             </div>
