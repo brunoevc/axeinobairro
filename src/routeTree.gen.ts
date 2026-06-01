@@ -15,7 +15,6 @@ import { Route as PlanosRouteImport } from './routes/planos'
 import { Route as PerfilRouteImport } from './routes/perfil'
 import { Route as OfertasRouteImport } from './routes/ofertas'
 import { Route as NoticiasRouteImport } from './routes/noticias'
-import { Route as NegociosRouteImport } from './routes/negocios'
 import { Route as IaAssistenteRouteImport } from './routes/ia-assistente'
 import { Route as EventosRouteImport } from './routes/eventos'
 import { Route as ConferirTudoRouteImport } from './routes/conferir-tudo'
@@ -23,6 +22,7 @@ import { Route as ClimaRouteImport } from './routes/clima'
 import { Route as CadastroRouteImport } from './routes/cadastro'
 import { Route as AdminRouteImport } from './routes/admin'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as NegociosIndexRouteImport } from './routes/negocios/index'
 import { Route as AdminIndexRouteImport } from './routes/admin/index'
 import { Route as NegociosIdRouteImport } from './routes/negocios.$id'
 import { Route as AdminPlanosRouteImport } from './routes/admin/planos'
@@ -57,11 +57,6 @@ const OfertasRoute = OfertasRouteImport.update({
 const NoticiasRoute = NoticiasRouteImport.update({
   id: '/noticias',
   path: '/noticias',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const NegociosRoute = NegociosRouteImport.update({
-  id: '/negocios',
-  path: '/negocios',
   getParentRoute: () => rootRouteImport,
 } as any)
 const IaAssistenteRoute = IaAssistenteRouteImport.update({
@@ -99,6 +94,11 @@ const IndexRoute = IndexRouteImport.update({
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const NegociosIndexRoute = NegociosIndexRouteImport.update({
+  id: '/negocios/',
+  path: '/negocios/',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const AdminIndexRoute = AdminIndexRouteImport.update({
   id: '/',
   path: '/',
@@ -133,7 +133,6 @@ export interface FileRoutesByFullPath {
   '/conferir-tudo': typeof ConferirTudoRoute
   '/eventos': typeof EventosRoute
   '/ia-assistente': typeof IaAssistenteRoute
-  '/negocios': typeof NegociosRouteWithChildren
   '/noticias': typeof NoticiasRoute
   '/ofertas': typeof OfertasRoute
   '/perfil': typeof PerfilRoute
@@ -145,6 +144,7 @@ export interface FileRoutesByFullPath {
   '/admin/planos': typeof AdminPlanosRoute
   '/negocios/$id': typeof NegociosIdRoute
   '/admin/': typeof AdminIndexRoute
+  '/negocios/': typeof NegociosIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -153,7 +153,6 @@ export interface FileRoutesByTo {
   '/conferir-tudo': typeof ConferirTudoRoute
   '/eventos': typeof EventosRoute
   '/ia-assistente': typeof IaAssistenteRoute
-  '/negocios': typeof NegociosRouteWithChildren
   '/noticias': typeof NoticiasRoute
   '/ofertas': typeof OfertasRoute
   '/perfil': typeof PerfilRoute
@@ -165,6 +164,7 @@ export interface FileRoutesByTo {
   '/admin/planos': typeof AdminPlanosRoute
   '/negocios/$id': typeof NegociosIdRoute
   '/admin': typeof AdminIndexRoute
+  '/negocios': typeof NegociosIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -175,7 +175,6 @@ export interface FileRoutesById {
   '/conferir-tudo': typeof ConferirTudoRoute
   '/eventos': typeof EventosRoute
   '/ia-assistente': typeof IaAssistenteRoute
-  '/negocios': typeof NegociosRouteWithChildren
   '/noticias': typeof NoticiasRoute
   '/ofertas': typeof OfertasRoute
   '/perfil': typeof PerfilRoute
@@ -187,6 +186,7 @@ export interface FileRoutesById {
   '/admin/planos': typeof AdminPlanosRoute
   '/negocios/$id': typeof NegociosIdRoute
   '/admin/': typeof AdminIndexRoute
+  '/negocios/': typeof NegociosIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -198,7 +198,6 @@ export interface FileRouteTypes {
     | '/conferir-tudo'
     | '/eventos'
     | '/ia-assistente'
-    | '/negocios'
     | '/noticias'
     | '/ofertas'
     | '/perfil'
@@ -210,6 +209,7 @@ export interface FileRouteTypes {
     | '/admin/planos'
     | '/negocios/$id'
     | '/admin/'
+    | '/negocios/'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -218,7 +218,6 @@ export interface FileRouteTypes {
     | '/conferir-tudo'
     | '/eventos'
     | '/ia-assistente'
-    | '/negocios'
     | '/noticias'
     | '/ofertas'
     | '/perfil'
@@ -230,6 +229,7 @@ export interface FileRouteTypes {
     | '/admin/planos'
     | '/negocios/$id'
     | '/admin'
+    | '/negocios'
   id:
     | '__root__'
     | '/'
@@ -239,7 +239,6 @@ export interface FileRouteTypes {
     | '/conferir-tudo'
     | '/eventos'
     | '/ia-assistente'
-    | '/negocios'
     | '/noticias'
     | '/ofertas'
     | '/perfil'
@@ -251,6 +250,7 @@ export interface FileRouteTypes {
     | '/admin/planos'
     | '/negocios/$id'
     | '/admin/'
+    | '/negocios/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -261,13 +261,13 @@ export interface RootRouteChildren {
   ConferirTudoRoute: typeof ConferirTudoRoute
   EventosRoute: typeof EventosRoute
   IaAssistenteRoute: typeof IaAssistenteRoute
-  NegociosRoute: typeof NegociosRouteWithChildren
   NoticiasRoute: typeof NoticiasRoute
   OfertasRoute: typeof OfertasRoute
   PerfilRoute: typeof PerfilRoute
   PlanosRoute: typeof PlanosRoute
   PulsoRoute: typeof PulsoRoute
   ServicosRoute: typeof ServicosRoute
+  NegociosIndexRoute: typeof NegociosIndexRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -312,13 +312,6 @@ declare module '@tanstack/react-router' {
       path: '/noticias'
       fullPath: '/noticias'
       preLoaderRoute: typeof NoticiasRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/negocios': {
-      id: '/negocios'
-      path: '/negocios'
-      fullPath: '/negocios'
-      preLoaderRoute: typeof NegociosRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/ia-assistente': {
@@ -368,6 +361,13 @@ declare module '@tanstack/react-router' {
       path: '/'
       fullPath: '/'
       preLoaderRoute: typeof IndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/negocios/': {
+      id: '/negocios/'
+      path: '/negocios'
+      fullPath: '/negocios/'
+      preLoaderRoute: typeof NegociosIndexRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/admin/': {
@@ -424,18 +424,6 @@ const AdminRouteChildren: AdminRouteChildren = {
 
 const AdminRouteWithChildren = AdminRoute._addFileChildren(AdminRouteChildren)
 
-interface NegociosRouteChildren {
-  NegociosIdRoute: typeof NegociosIdRoute
-}
-
-const NegociosRouteChildren: NegociosRouteChildren = {
-  NegociosIdRoute: NegociosIdRoute,
-}
-
-const NegociosRouteWithChildren = NegociosRoute._addFileChildren(
-  NegociosRouteChildren,
-)
-
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AdminRoute: AdminRouteWithChildren,
@@ -444,13 +432,13 @@ const rootRouteChildren: RootRouteChildren = {
   ConferirTudoRoute: ConferirTudoRoute,
   EventosRoute: EventosRoute,
   IaAssistenteRoute: IaAssistenteRoute,
-  NegociosRoute: NegociosRouteWithChildren,
   NoticiasRoute: NoticiasRoute,
   OfertasRoute: OfertasRoute,
   PerfilRoute: PerfilRoute,
   PlanosRoute: PlanosRoute,
   PulsoRoute: PulsoRoute,
   ServicosRoute: ServicosRoute,
+  NegociosIndexRoute: NegociosIndexRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

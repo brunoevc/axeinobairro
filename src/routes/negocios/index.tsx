@@ -18,7 +18,7 @@ const searchSchema = z.object({
   q: z.string().optional(),
 });
 
-export const Route = createFileRoute("/negocios")({
+export const Route = createFileRoute("/negocios/")({
   validateSearch: (search) => searchSchema.parse(search),
   component: ListingPage,
 });
