@@ -9,6 +9,7 @@ import {
   TrendingUp,
   MessageSquare,
   Instagram as InstagramIcon,
+  MessageCircle,
   Users,
   ShieldCheck
 } from "lucide-react";
