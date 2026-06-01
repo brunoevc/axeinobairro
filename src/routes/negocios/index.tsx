@@ -111,7 +111,7 @@ function ListingPage() {
     setSearchTerm("");
     setSelectedCategory("all");
     setSelectedNeighborhood("all");
-    navigate({ to: '/negocios', search: {} });
+    navigate({ to: '/negocios', search: {}, replace: true });
   };
 
   return (
