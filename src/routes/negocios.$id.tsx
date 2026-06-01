@@ -22,6 +22,7 @@ import { PromotionBadge } from "@/components/MerchantCard";
 import { TopBar } from "@/components/TopBar";
 import { FloatingNav } from "@/components/FloatingNav";
 import { useLocation } from "@/hooks/useLocation";
+import { toast } from "sonner";
 
 export const Route = createFileRoute("/negocios/$id")({
   component: DetailPage,
@@ -60,6 +61,30 @@ function DetailPage() {
 
   const mapsUrl = `https://www.google.com/maps/dir/?api=1&destination=${merchant.latitude},${merchant.longitude}`;
 
+  const handleShare = async () => {
+    const shareData = {
+      title: `${merchant.name} - Axêi no Bairro`,
+      text: `Confira este negócio local: ${merchant.name}. Encontre, Conecte, Fortaleça o comércio local!`,
+      url: window.location.href,
+    };
+
+    try {
+      if (navigator.share && navigator.canShare && navigator.canShare(shareData)) {
+        await navigator.share(shareData);
+        toast.success("Compartilhado com sucesso!");
+      } else {
+        await navigator.clipboard.writeText(window.location.href);
+        toast.success("Link copiado para a área de transferência!");
+      }
+    } catch (err) {
+      if ((err as Error).name !== 'AbortError') {
+        console.error('Error sharing:', err);
+        toast.error("Erro ao compartilhar. Link copiado como fallback.");
+        navigator.clipboard.writeText(window.location.href);
+      }
+    }
+  };
+
   return (
     <div className="min-h-screen bg-slate-50 pb-32">
       <TopBar />
@@ -85,7 +110,10 @@ function DetailPage() {
           </div>
 
           <div className="absolute top-6 right-6">
-            <button className="p-3 bg-white/20 backdrop-blur-md rounded-full border border-white/30 text-white hover:bg-white/30 transition-all active:scale-90">
+            <button 
+              onClick={handleShare}
+              className="p-3 bg-white/20 backdrop-blur-md rounded-full border border-white/30 text-white hover:bg-white/30 transition-all active:scale-90"
+            >
               <Share2 className="h-5 w-5" />
             </button>
           </div>
@@ -264,7 +292,10 @@ function DetailPage() {
              <Smartphone className="w-8 h-8 mb-4 opacity-50" />
              <h4 className="text-xl font-black mb-2 tracking-tighter leading-tight">Gostou deste negócio?</h4>
              <p className="text-orange-100 text-sm font-medium mb-6">Compartilhe com seus vizinhos e ajude o comércio local do seu bairro a crescer.</p>
-             <Button className="w-full bg-white text-orange-600 hover:bg-slate-50 rounded-xl font-bold border-none shadow-xl shadow-orange-900/20">
+             <Button 
+                onClick={handleShare}
+                className="w-full bg-white text-orange-600 hover:bg-slate-50 rounded-xl font-bold border-none shadow-xl shadow-orange-900/20"
+             >
                Compartilhar agora
              </Button>
           </div>

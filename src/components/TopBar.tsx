@@ -28,14 +28,20 @@ export function TopBar() {
               <CloudSun className="w-3 h-3 text-orange-500" />
               28°C Parcialmente nublado
             </div>
-            <div className="flex items-center gap-1.5 group cursor-pointer" onClick={retry}>
+            <div 
+              className={`flex items-center gap-1.5 group cursor-pointer transition-opacity ${loading ? 'opacity-50' : 'opacity-100'}`} 
+              onClick={() => !loading && retry()}
+            >
               <MapPin className="w-3 h-3 text-orange-500" />
               {loading ? (
-                <div className="h-3 w-32 bg-slate-100 animate-pulse rounded" />
+                <div className="flex items-center gap-2">
+                  <RefreshCw className="w-2.5 h-2.5 animate-spin text-orange-500" />
+                  <span className="animate-pulse">Buscando...</span>
+                </div>
               ) : (
-                <span className="flex items-center gap-1">
+                <span className="flex items-center gap-1 hover:text-orange-600 transition-colors">
                   {locationName}
-                  {error && <AlertCircle className="w-2.5 h-2.5 text-red-500" />}
+                  {error && <AlertCircle className="w-2.5 h-2.5 text-red-500" title={error} />}
                 </span>
               )}
             </div>
