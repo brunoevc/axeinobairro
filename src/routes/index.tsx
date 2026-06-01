@@ -39,12 +39,22 @@ export const Route = createFileRoute("/")({
 function Index() {
   const navigate = useNavigate();
   const { coords, getDistance } = useLocation();
+  const [searchTerm, setSearchTerm] = useState("");
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     const timer = setTimeout(() => setIsLoading(false), 800);
     return () => clearTimeout(timer);
   }, []);
+
+  const handleSearch = (e?: React.FormEvent) => {
+    e?.preventDefault();
+    if (searchTerm.trim()) {
+      navigate({ to: '/negocios', search: { q: searchTerm.trim() } });
+    } else {
+      navigate({ to: '/negocios' });
+    }
+  };
   
   const featuredMerchants = merchants.filter(m => m.featured).slice(0, 3);
   const promotionalMerchants = merchants.filter(m => m.promotion.isActive).slice(0, 4);
@@ -82,21 +92,40 @@ function Index() {
               O marketplace onde você encontra padarias, restaurantes, serviços e ofertas exclusivas pertinho de você. Tudo via WhatsApp.
             </p>
             
-            <div className="flex flex-col sm:flex-row gap-4">
-              <Button 
-                onClick={() => navigate({ to: '/negocios' })}
-                className="h-16 px-10 bg-orange-600 hover:bg-orange-700 text-white rounded-2xl font-black shadow-xl shadow-orange-200 transition-all active:scale-95 text-lg group"
-              >
-                Explorar Negócios
-                <ChevronRight className="ml-2 h-5 w-5 transition-transform group-hover:translate-x-1" />
-              </Button>
-              <Button 
-                variant="outline"
-                onClick={() => navigate({ to: '/cadastro' })}
-                className="h-16 px-10 bg-white border-slate-200 text-slate-700 rounded-2xl font-black hover:bg-slate-50 transition-all active:scale-95 text-lg"
-              >
-                Anunciar minha loja
-              </Button>
+            <div className="flex flex-col gap-6">
+              <form onSubmit={handleSearch} className="relative max-w-xl group">
+                <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-slate-400 group-focus-within:text-orange-500 transition-colors" />
+                <input 
+                  type="text" 
+                  placeholder="Busque por restaurante, padaria, serviço..."
+                  className="w-full bg-white border border-slate-200 rounded-2xl py-5 pl-12 pr-32 text-sm md:text-base font-medium outline-none focus:ring-4 focus:ring-orange-500/5 focus:border-orange-600 transition-all shadow-xl shadow-slate-200/50"
+                  value={searchTerm}
+                  onChange={(e) => setSearchTerm(e.target.value)}
+                />
+                <Button 
+                  type="submit"
+                  className="absolute right-2 top-1/2 -translate-y-1/2 h-12 px-6 bg-slate-900 hover:bg-slate-800 text-white rounded-xl font-black text-xs uppercase tracking-widest transition-all active:scale-95"
+                >
+                  Pesquisar
+                </Button>
+              </form>
+
+              <div className="flex flex-col sm:flex-row gap-4">
+                <Button 
+                  onClick={() => navigate({ to: '/negocios' })}
+                  className="h-16 px-10 bg-orange-600 hover:bg-orange-700 text-white rounded-2xl font-black shadow-xl shadow-orange-200 transition-all active:scale-95 text-lg group"
+                >
+                  Explorar Negócios
+                  <ChevronRight className="ml-2 h-5 w-5 transition-transform group-hover:translate-x-1" />
+                </Button>
+                <Button 
+                  variant="outline"
+                  onClick={() => navigate({ to: '/cadastro' })}
+                  className="h-16 px-10 bg-white border-slate-200 text-slate-700 rounded-2xl font-black hover:bg-slate-50 transition-all active:scale-95 text-lg"
+                >
+                  Anunciar minha loja
+                </Button>
+              </div>
             </div>
           </div>
 
@@ -154,7 +183,7 @@ function Index() {
               return (
                 <button
                   key={cat.slug}
-                  onClick={() => navigate({ to: '/negocios', search: { category: cat.slug } })}
+                  onClick={() => navigate({ to: '/negocios', search: { categoria: cat.slug } })}
                   className="flex flex-col items-center gap-3 group"
                 >
                   <div className="w-20 h-20 rounded-3xl bg-slate-50 flex items-center justify-center border border-slate-100 group-hover:bg-orange-600 group-hover:border-orange-600 group-hover:scale-105 transition-all duration-300 shadow-sm group-hover:shadow-xl group-hover:shadow-orange-200">
