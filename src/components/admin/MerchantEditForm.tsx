@@ -37,7 +37,7 @@ export function MerchantEditForm({
     <div className="max-w-2xl mx-auto">
       <div className="rounded-xl bg-card p-6 border border-accent/10 shadow-sm">
         <h3 className="text-lg font-bold text-foreground mb-6 flex items-center gap-2">
-          <span>{merchant.emoji}</span> Editar {merchant.name}
+          <span>🏪</span> Editar {merchant.name}
         </h3>
 
         <form onSubmit={handleSubmit} className="space-y-5">
