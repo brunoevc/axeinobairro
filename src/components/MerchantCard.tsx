@@ -1,4 +1,4 @@
-import { MapPin, Star, Bike, MessageCircle, Instagram, Clock, Tag } from "lucide-react";
+import { MapPin, Star, Bike, MessageCircle, Clock, Tag, ChevronRight } from "lucide-react";
 import type { Merchant } from "@/data/merchants";
 import { Button } from "@/components/ui/button";
 import { Link } from "@tanstack/react-router";
@@ -7,94 +7,105 @@ type Props = { merchant: Merchant };
 
 export function PromotionBadge() {
   return (
-    <div className="inline-flex items-center gap-1 rounded-full bg-brand-orange/10 px-2 py-0.5 text-[10px] font-bold uppercase tracking-wider text-brand-orange">
+    <div className="inline-flex items-center gap-1 rounded-full bg-orange-500 px-2 py-0.5 text-[10px] font-bold uppercase tracking-wider text-white shadow-sm">
       <Tag className="h-3 w-3" />
-      Promoção ativa
+      Promoção
     </div>
   );
 }
 
 export function MerchantCard({ merchant }: Props) {
   const waUrl = `https://wa.me/${merchant.whatsapp}?text=${encodeURIComponent(
-    `Olá ${merchant.name}! Vi sua oferta no Axêi no Bairro e gostaria de mais informações 👋`
+    `Olá ${merchant.name}! Vi seu perfil no Axêi no Bairro e gostaria de mais informações 👋`
   )}`;
 
   return (
     <article
-      className="group flex flex-col overflow-hidden rounded-[2rem] bg-card shadow-[var(--shadow-card)] transition-all hover:-translate-y-1 hover:shadow-[var(--shadow-glow)] border border-border/40"
+      className="group flex flex-col overflow-hidden rounded-3xl bg-white border border-slate-100 shadow-sm transition-all hover:shadow-xl hover:-translate-y-1 active:scale-[0.98]"
     >
-      <div className="relative h-48 w-full overflow-hidden">
+      <div className="relative aspect-[4/3] w-full overflow-hidden bg-slate-100">
         <img 
           src={merchant.image} 
           alt={merchant.name}
-          className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-110"
+          className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-110"
+          loading="lazy"
         />
-        <div className="absolute top-4 left-4 flex flex-col gap-2">
+        <div className="absolute top-4 left-4 flex flex-col gap-2 z-10">
           {merchant.promotion.isActive && <PromotionBadge />}
-          <div className="inline-flex items-center gap-1 rounded-full bg-black/40 backdrop-blur-md px-2 py-1 text-[10px] font-bold uppercase text-white border border-white/20">
+          <div className="inline-flex items-center gap-1 rounded-full bg-white/90 backdrop-blur-md px-2.5 py-1 text-[10px] font-extrabold uppercase text-slate-900 shadow-sm border border-slate-200/50">
             {merchant.category}
           </div>
         </div>
+        
+        {merchant.featured && (
+           <div className="absolute top-4 right-4 z-10">
+             <div className="bg-violet-600 text-white p-1.5 rounded-full shadow-lg">
+                <Star className="w-3.5 h-3.5 fill-white" />
+             </div>
+           </div>
+        )}
       </div>
 
-      <div className="flex flex-col p-5">
-        <div className="flex items-start justify-between gap-2">
-          <div className="min-w-0">
-            <h3 className="truncate text-lg font-bold text-foreground">
+      <div className="flex flex-col p-5 flex-1">
+        <div className="flex items-start justify-between gap-2 mb-2">
+          <div className="min-w-0 flex-1">
+            <h3 className="truncate text-lg font-black text-slate-900 leading-tight">
               {merchant.name}
             </h3>
-            <div className="mt-1 flex items-center gap-1 text-xs text-muted-foreground">
-              <MapPin className="h-3.5 w-3.5 text-primary" />
-              {merchant.neighborhood}
+            <div className="flex items-center gap-1 mt-1">
+              <MapPin className="h-3 w-3 text-violet-500" />
+              <span className="text-xs font-bold text-slate-500 truncate">
+                {merchant.neighborhood}
+              </span>
             </div>
           </div>
-          <div className="flex items-center gap-0.5 rounded-full bg-primary/10 px-2 py-1 text-xs font-bold text-primary">
-            <Star className="h-3 w-3 fill-primary" />
+          <div className="flex items-center gap-1 rounded-lg bg-slate-50 px-2 py-1 text-xs font-bold text-slate-900 border border-slate-100">
+            <Star className="h-3 w-3 fill-violet-500 text-violet-500" />
             {merchant.rating.toFixed(1)}
           </div>
         </div>
 
-        <p className="mt-3 line-clamp-2 text-sm text-muted-foreground leading-relaxed">
+        <p className="line-clamp-2 text-sm text-slate-500 leading-relaxed mb-4 min-h-[2.5rem]">
           {merchant.description}
         </p>
 
-        <div className="mt-4 flex flex-wrap items-center gap-2">
+        <div className="flex flex-wrap items-center gap-2 mb-6 mt-auto">
           {merchant.isOpen ? (
-            <span className="inline-flex items-center gap-1 rounded-full bg-whatsapp/10 px-2 py-0.5 text-[11px] font-bold text-whatsapp">
-              <Clock className="h-3 w-3" />
+            <span className="inline-flex items-center gap-1 rounded-full bg-emerald-50 px-2.5 py-1 text-[10px] font-bold text-emerald-600 border border-emerald-100">
+              <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
               Aberto
             </span>
           ) : (
-            <span className="inline-flex items-center gap-1 rounded-full bg-muted px-2 py-0.5 text-[11px] font-bold text-muted-foreground">
+            <span className="inline-flex items-center gap-1 rounded-full bg-slate-50 px-2.5 py-1 text-[10px] font-bold text-slate-400 border border-slate-100">
               <Clock className="h-3 w-3" />
               Fechado
             </span>
           )}
           {merchant.delivery && (
-            <span className="inline-flex items-center gap-1 rounded-full bg-accent/10 px-2 py-0.5 text-[11px] font-bold text-accent">
+            <span className="inline-flex items-center gap-1 rounded-full bg-violet-50 px-2.5 py-1 text-[10px] font-bold text-violet-600 border border-violet-100">
               <Bike className="h-3 w-3" />
               Entrega
             </span>
           )}
         </div>
 
-        <div className="mt-6 flex gap-2">
+        <div className="flex gap-2">
           <Button
             asChild
             variant="outline"
-            className="flex-1 rounded-xl h-11 text-xs font-bold border-border/60"
+            className="flex-1 rounded-xl h-11 text-xs font-bold border-slate-200 hover:bg-slate-50 hover:text-violet-600 group/btn"
           >
             <Link to="/negocios/$id" params={{ id: merchant.id }}>
-              Ver detalhes
+              Ver Detalhes
+              <ChevronRight className="w-3 h-3 ml-1 transition-transform group-hover/btn:translate-x-0.5" />
             </Link>
           </Button>
           <Button
             asChild
-            variant="whatsapp"
-            className="flex-1 rounded-xl h-11 text-xs font-bold shadow-lg shadow-whatsapp/20"
+            className="flex-1 rounded-xl h-11 text-xs font-bold bg-emerald-600 hover:bg-emerald-700 text-white shadow-md shadow-emerald-100"
           >
             <a href={waUrl} target="_blank" rel="noopener noreferrer">
-              <MessageCircle className="h-4 w-4" />
+              <MessageCircle className="h-4 w-4 mr-1.5" />
               WhatsApp
             </a>
           </Button>
