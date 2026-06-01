@@ -9,7 +9,8 @@ import {
   X,
   PlusCircle,
   Settings2,
-  ChevronDown
+  ChevronDown,
+  Navigation
 } from "lucide-react";
 import { merchants, categories, neighborhoods } from "@/data/merchants";
 import { MerchantCard } from "@/components/MerchantCard";
@@ -189,6 +190,18 @@ function ListingPage() {
       </header>
 
       <main className="max-w-7xl mx-auto px-6 py-12">
+        <div className="mb-8 flex items-center justify-between">
+          <p className="text-xs font-black text-slate-400 uppercase tracking-widest">
+            {filteredMerchants.length} {filteredMerchants.length === 1 ? 'resultado' : 'resultados'}
+          </p>
+          {coords && (
+             <div className="flex items-center gap-2 px-3 py-1 bg-orange-50 rounded-lg border border-orange-100">
+                <Navigation className="w-3 h-3 text-orange-600" />
+                <span className="text-[10px] font-black text-orange-600 uppercase tracking-widest">Ordenado por proximidade</span>
+             </div>
+          )}
+        </div>
+
         {filteredMerchants.length > 0 ? (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
             {filteredMerchants.map(merchant => (
