@@ -123,7 +123,14 @@ function ListingPage() {
 
     return list.filter(merchant => {
       const categoryLabel = categories.find(c => c.slug === merchant.category)?.label || "";
-      const merchantText = normalizeString(`${merchant.name} ${merchant.description} ${merchant.category} ${categoryLabel} ${merchant.neighborhood}`);
+      const searchableFields = [
+        merchant.name,
+        merchant.description,
+        merchant.category,
+        categoryLabel,
+        merchant.neighborhood
+      ];
+      const merchantText = searchableFields.map(field => normalizeString(field || "")).join(" ");
       
       const matchesSearch = searchKeywords.length === 0 || 
                            searchKeywords.every((keyword: string) => merchantText.includes(keyword));
