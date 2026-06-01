@@ -1,4 +1,4 @@
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute, Link } from "@tanstack/react-router";
 import { useAdminState } from "@/hooks/useAdminState";
 import { DashboardStats } from "@/components/admin/DashboardStats";
 import { PlansChart } from "@/components/admin/PlansChart";

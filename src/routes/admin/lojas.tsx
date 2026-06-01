@@ -1,4 +1,5 @@
 import { createFileRoute, useNavigate, Link } from "@tanstack/react-router";
+import React from "react";
 import { 
   Eye, 
   Edit3, 
@@ -9,6 +10,7 @@ import {
   TrendingUp,
   MessageSquare,
   Instagram as InstagramIcon,
+  MessageCircle,
   Users,
   ShieldCheck
 } from "lucide-react";
@@ -110,7 +112,7 @@ function AdminLojas() {
                 variant="outline" 
                 className="rounded-2xl h-14 text-sm font-black border-slate-200 flex items-center gap-2 bg-white hover:bg-slate-50 hover:text-violet-600 transition-all"
               >
-                <Link to="/negocios/$id" params={{ id: merchant.id }}>
+                <Link to="/negocios/$id" params={{ id: merchant.id }} className="flex items-center gap-2">
                   <Eye className="h-5 w-5" />
                   Visualizar Página
                 </Link>

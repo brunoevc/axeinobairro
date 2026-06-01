@@ -141,8 +141,8 @@ export const merchants: Merchant[] = [
     instagram: "@amigofiel_pet",
     image: "https://images.unsplash.com/photo-1516734212186-a967f81ad0d7?w=800&q=80",
     promotion: {
-      title: "Banho & Tosa",
-      description: "Traga seu pet na terça ou quarta e ganhe 20% de desconto.",
+      title: "Banho & Tosa 20% OFF",
+      description: "Traga seu pet na terça ou quarta e ganhe 20% de desconto no banho e tosa.",
       isActive: true,
     },
     featured: true,
@@ -163,8 +163,8 @@ export const merchants: Merchant[] = [
     instagram: "@farmacia_boasaude",
     image: "https://images.unsplash.com/photo-1587854692152-cbe660dbbb88?w=800&q=80",
     promotion: {
-      title: "Desconto em Genéricos",
-      description: "Até 70% de desconto em medicamentos genéricos selecionados.",
+      title: "70% Off em Genéricos",
+      description: "Medicamentos genéricos selecionados com descontos de até 70%.",
       isActive: true,
     },
   },
@@ -185,7 +185,7 @@ export const merchants: Merchant[] = [
     image: "https://images.unsplash.com/photo-1542838132-92c53300491e?w=800&q=80",
     promotion: {
       title: "Quarta da Feira",
-      description: "Toda quarta-feira descontos especiais em toda a seção de hortifruti.",
+      description: "Toda quarta-feira descontos de até 30% em toda a seção de hortifruti.",
       isActive: true,
     },
   },
@@ -205,8 +205,8 @@ export const merchants: Merchant[] = [
     instagram: "@barbearia_estilo",
     image: "https://images.unsplash.com/photo-1503951914875-452162b0f3f1?w=800&q=80",
     promotion: {
-      title: "Cabelo + Barba",
-      description: "Combo especial: Cabelo e Barba por R$ 80,00.",
+      title: "Combo Cabelo + Barba",
+      description: "Corte clássico e barba com toalha quente por apenas R$ 80,00.",
       isActive: true,
     },
   },

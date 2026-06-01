@@ -80,7 +80,7 @@ export function TopBar() {
           <Link to="/perfil" className="md:hidden flex flex-col items-end">
              <div className="flex items-center gap-1 text-[10px] font-bold text-violet-600 uppercase">
                 <MapPin className="w-3 h-3" />
-                {location}
+                {location.split(',')[0]}
              </div>
              <div className="text-[10px] text-slate-400">{time.toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' })}</div>
           </Link>
