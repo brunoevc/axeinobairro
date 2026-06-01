@@ -24,6 +24,12 @@ export const Route = createFileRoute("/admin/")({
 function AdminDashboard() {
   const { stats, state, loading } = useAdminState();
   const [platformLogo, setPlatformLogo] = useState("");
+  const [adminPassword, setAdminPassword] = useAtom(passwordAtom);
+  const [recoveryRequests] = useAtom(recoveryRequestsAtom);
+
+  const [currentPass, setCurrentPass] = useState("");
+  const [newPass, setNewPass] = useState("");
+  const [confirmPass, setConfirmPass] = useState("");
 
   useEffect(() => {
     const saved = localStorage.getItem("platform_logo_url");
@@ -33,10 +39,32 @@ function AdminDashboard() {
   const handleSavePlatformConfig = () => {
     localStorage.setItem("platform_logo_url", platformLogo);
     toast.success("Configurações visuais salvas com sucesso!");
-    // Force reload to update logos in TopBar/Footer without full page refresh
     window.dispatchEvent(new Event("storage"));
     setTimeout(() => window.location.reload(), 500);
   };
+
+  const handleUpdatePassword = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (currentPass !== adminPassword) {
+      toast.error("Senha atual incorreta.");
+      return;
+    }
+    if (newPass.length < 6) {
+      toast.error("A nova senha deve ter no mínimo 6 caracteres.");
+      return;
+    }
+    if (newPass !== confirmPass) {
+      toast.error("As novas senhas não coincidem.");
+      return;
+    }
+
+    setAdminPassword(newPass);
+    toast.success("Senha alterada com sucesso!");
+    setCurrentPass("");
+    setNewPass("");
+    setConfirmPass("");
+  };
+
 
 
   if (loading || !stats || !state) {
