@@ -40,7 +40,7 @@ function DetailPage() {
         <p className="text-slate-500 mb-8 max-w-xs leading-relaxed">
           O estabelecimento que você está procurando não existe ou foi removido.
         </p>
-        <Button onClick={() => navigate({ to: '/negocios' })} className="bg-violet-600 hover:bg-violet-700 rounded-2xl h-14 px-8 font-bold text-white shadow-lg shadow-violet-200 transition-all active:scale-95">
+        <Button onClick={() => navigate({ to: '/negocios' })} className="bg-orange-600 hover:bg-orange-700 rounded-2xl h-14 px-8 font-bold text-white shadow-lg shadow-orange-200 transition-all active:scale-95">
           Voltar para a lista
         </Button>
       </div>
@@ -85,7 +85,7 @@ function DetailPage() {
           <div className="absolute bottom-8 left-6 right-6 md:left-12 md:right-12">
             <div className="flex flex-col gap-4">
               <div className="flex flex-wrap gap-2">
-                <span className="inline-flex items-center gap-1 rounded-full bg-violet-600 px-3 py-1 text-[10px] font-black uppercase text-white shadow-lg">
+                <span className="inline-flex items-center gap-1 rounded-full bg-orange-600 px-3 py-1 text-[10px] font-black uppercase text-white shadow-lg">
                   {merchant.category}
                 </span>
                 {merchant.promotion.isActive && <PromotionBadge />}
@@ -103,7 +103,7 @@ function DetailPage() {
                   </h1>
                   <div className="flex flex-wrap items-center gap-4 mt-2 text-white/90 text-sm font-bold">
                     <div className="flex items-center gap-1.5">
-                      <MapPin className="h-4 w-4 text-violet-400" />
+                      <MapPin className="h-4 w-4 text-orange-400" />
                       {merchant.neighborhood}
                     </div>
                     <div className="flex items-center gap-1.5">
@@ -152,7 +152,7 @@ function DetailPage() {
           {/* About */}
           <section className="bg-white rounded-3xl p-8 border border-slate-100 shadow-sm">
             <h2 className="text-xl font-black text-slate-900 mb-6 flex items-center gap-2">
-              <ShieldCheck className="w-6 h-6 text-violet-600" />
+              <ShieldCheck className="w-6 h-6 text-orange-600" />
               Sobre o negócio
             </h2>
             <p className="text-slate-600 text-lg leading-relaxed font-medium">
@@ -189,8 +189,8 @@ function DetailPage() {
             <h3 className="text-lg font-black text-slate-900">Informações de Contato</h3>
             
             <div className="space-y-4">
-              <div className="flex items-start gap-4 p-4 bg-slate-50 rounded-2xl group hover:bg-violet-50 transition-colors cursor-pointer">
-                <div className="p-3 bg-white rounded-xl text-violet-600 shadow-sm group-hover:bg-violet-600 group-hover:text-white transition-all">
+              <div className="flex items-start gap-4 p-4 bg-slate-50 rounded-2xl group hover:bg-orange-50 transition-colors cursor-pointer">
+                <div className="p-3 bg-white rounded-xl text-orange-600 shadow-sm group-hover:bg-orange-600 group-hover:text-white transition-all">
                   <Clock className="h-5 w-5" />
                 </div>
                 <div>
@@ -199,25 +199,25 @@ function DetailPage() {
                 </div>
               </div>
 
-              <div className="flex items-start gap-4 p-4 bg-slate-50 rounded-2xl group hover:bg-violet-50 transition-colors cursor-pointer">
-                <div className="p-3 bg-white rounded-xl text-violet-600 shadow-sm group-hover:bg-violet-600 group-hover:text-white transition-all">
+              <div className="flex items-start gap-4 p-4 bg-slate-50 rounded-2xl group hover:bg-orange-50 transition-colors cursor-pointer">
+                <div className="p-3 bg-white rounded-xl text-orange-600 shadow-sm group-hover:bg-orange-600 group-hover:text-white transition-all">
                   <MapPin className="h-5 w-5" />
                 </div>
                 <div>
                   <p className="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-1">Endereço</p>
                   <p className="text-sm font-bold text-slate-900 leading-tight">{merchant.address}</p>
-                  <p className="text-xs font-bold text-violet-600 mt-1">{merchant.neighborhood}</p>
+                  <p className="text-xs font-bold text-orange-600 mt-1">{merchant.neighborhood}</p>
                 </div>
               </div>
 
-              <div className="flex items-start gap-4 p-4 bg-slate-50 rounded-2xl group hover:bg-violet-50 transition-colors cursor-pointer">
-                <div className="p-3 bg-white rounded-xl text-violet-600 shadow-sm group-hover:bg-violet-600 group-hover:text-white transition-all">
+              <div className="flex items-start gap-4 p-4 bg-slate-50 rounded-2xl group hover:bg-orange-50 transition-colors cursor-pointer">
+                <div className="p-3 bg-white rounded-xl text-orange-600 shadow-sm group-hover:bg-orange-600 group-hover:text-white transition-all">
                   <InstagramIcon className="h-5 w-5" />
                 </div>
                 <div>
                   <p className="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-1">Instagram</p>
                   <p className="text-sm font-bold text-slate-900 leading-none">{merchant.instagram}</p>
-                  <a href={`https://instagram.com/${merchant.instagram.replace('@', '')}`} target="_blank" rel="noreferrer" className="text-xs font-bold text-violet-600 mt-1 inline-flex items-center gap-1">
+                  <a href={`https://instagram.com/${merchant.instagram.replace('@', '')}`} target="_blank" rel="noreferrer" className="text-xs font-bold text-orange-600 mt-1 inline-flex items-center gap-1">
                     Ver perfil <ChevronRight className="w-3 h-3" />
                   </a>
                 </div>
@@ -240,12 +240,12 @@ function DetailPage() {
             </div>
           </div>
 
-          <div className="bg-violet-600 rounded-3xl p-8 text-white relative overflow-hidden">
+          <div className="bg-orange-600 rounded-3xl p-8 text-white relative overflow-hidden">
              <div className="absolute -bottom-6 -right-6 w-32 h-32 bg-white/10 rounded-full blur-2xl" />
              <Smartphone className="w-8 h-8 mb-4 opacity-50" />
              <h4 className="text-xl font-black mb-2 tracking-tighter leading-tight">Gostou deste negócio?</h4>
-             <p className="text-violet-100 text-sm font-medium mb-6">Compartilhe com seus vizinhos e ajude o comércio local do seu bairro a crescer.</p>
-             <Button className="w-full bg-white text-violet-600 hover:bg-violet-50 rounded-xl font-bold border-none shadow-xl shadow-violet-900/20">
+             <p className="text-orange-100 text-sm font-medium mb-6">Compartilhe com seus vizinhos e ajude o comércio local do seu bairro a crescer.</p>
+             <Button className="w-full bg-white text-orange-600 hover:bg-slate-50 rounded-xl font-bold border-none shadow-xl shadow-orange-900/20">
                Compartilhar agora
              </Button>
           </div>
