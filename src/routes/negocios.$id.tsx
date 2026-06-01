@@ -9,11 +9,17 @@ import {
   Star,
   CheckCircle2,
   Calendar,
-  AlertTriangle
+  AlertTriangle,
+  ChevronRight,
+  ShieldCheck,
+  Smartphone,
+  Tag
 } from "lucide-react";
 import { merchants } from "@/data/merchants";
 import { Button } from "@/components/ui/button";
 import { PromotionBadge } from "@/components/MerchantCard";
+import { TopBar } from "@/components/TopBar";
+import { FloatingNav } from "@/components/FloatingNav";
 
 export const Route = createFileRoute("/negocios/$id")({
   component: DetailPage,
@@ -26,16 +32,16 @@ function DetailPage() {
 
   if (!merchant) {
     return (
-      <div className="min-h-screen bg-background flex flex-col items-center justify-center p-6 text-center">
-        <div className="w-20 h-20 bg-destructive/10 rounded-full flex items-center justify-center mb-6">
-          <AlertTriangle className="h-10 w-10 text-destructive" />
+      <div className="min-h-screen bg-slate-50 flex flex-col items-center justify-center p-6 text-center">
+        <div className="w-20 h-20 bg-red-100 rounded-full flex items-center justify-center mb-6">
+          <AlertTriangle className="h-10 w-10 text-red-600" />
         </div>
-        <h1 className="text-2xl font-black text-foreground mb-2">Negócio não encontrado</h1>
-        <p className="text-muted-foreground mb-8 max-w-xs leading-relaxed">
+        <h1 className="text-2xl font-black text-slate-900 mb-2">Negócio não encontrado</h1>
+        <p className="text-slate-500 mb-8 max-w-xs leading-relaxed">
           O estabelecimento que você está procurando não existe ou foi removido.
         </p>
-        <Button asChild className="rounded-2xl h-14 px-8 font-bold">
-          <Link to="/negocios">Voltar para a lista</Link>
+        <Button onClick={() => navigate({ to: '/negocios' })} className="bg-violet-600 hover:bg-violet-700 rounded-2xl h-14 px-8 font-bold text-white shadow-lg shadow-violet-200 transition-all active:scale-95">
+          Voltar para a lista
         </Button>
       </div>
     );
@@ -46,148 +52,207 @@ function DetailPage() {
   )}`;
 
   return (
-    <div className="min-h-screen bg-background pb-32">
-      {/* Cover Image & Header Actions */}
-      <header className="relative h-[40vh] w-full overflow-hidden">
-        <img 
-          src={merchant.image} 
-          alt={merchant.name} 
-          className="w-full h-full object-cover"
-        />
-        <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent" />
-        
-        <div className="absolute top-10 left-6 flex items-center gap-2">
-          <button 
-            onClick={() => navigate({ to: "/negocios" })}
-            className="p-3 bg-white/10 backdrop-blur-md rounded-full border border-white/20 text-white active:scale-90 transition-all"
-          >
-            <ArrowLeft className="h-5 w-5" />
-          </button>
-        </div>
-
-        <div className="absolute top-10 right-6">
-          <button className="p-3 bg-white/10 backdrop-blur-md rounded-full border border-white/20 text-white active:scale-90 transition-all">
-            <Share2 className="h-5 w-5" />
-          </button>
-        </div>
-
-        <div className="absolute bottom-6 left-6 right-6">
-          <div className="flex flex-col gap-2">
-            <div className="flex gap-2">
-              <span className="inline-flex items-center gap-1 rounded-full bg-primary px-2 py-0.5 text-[10px] font-black uppercase text-white">
-                {merchant.category}
-              </span>
-              {merchant.promotion.isActive && <PromotionBadge />}
-            </div>
-            <h1 className="text-3xl font-black text-white leading-tight">
-              {merchant.name}
-            </h1>
-            <div className="flex items-center gap-4 text-white/90 text-sm font-medium">
-              <div className="flex items-center gap-1">
-                <MapPin className="h-3.5 w-3.5 text-primary" />
-                {merchant.neighborhood}
-              </div>
-              <div className="flex items-center gap-1">
-                <Star className="h-3.5 w-3.5 fill-primary text-primary" />
-                {merchant.rating.toFixed(1)}
-              </div>
-            </div>
-          </div>
-        </div>
-      </header>
-
-      <main className="px-6 mt-8 space-y-8">
-        {/* Promotion Highlight */}
-        {merchant.promotion.isActive && (
-          <section className="bg-brand-orange/5 border border-brand-orange/20 rounded-3xl p-6 relative overflow-hidden">
-            <div className="absolute -top-6 -right-6 w-20 h-20 bg-brand-orange/10 rounded-full blur-2xl" />
-            <div className="relative z-10">
-              <h3 className="text-brand-orange text-xs font-black uppercase tracking-widest mb-2 flex items-center gap-1.5">
-                <CheckCircle2 className="h-3.5 w-3.5" />
-                Oferta Especial Ativa
-              </h3>
-              <p className="text-lg font-bold text-foreground mb-1">{merchant.promotion.title}</p>
-              <p className="text-sm text-muted-foreground leading-relaxed">
-                {merchant.promotion.description}
-              </p>
-            </div>
-          </section>
-        )}
-
-        {/* About */}
-        <section>
-          <h2 className="text-lg font-black text-foreground mb-3">Sobre o negócio</h2>
-          <p className="text-muted-foreground text-sm leading-relaxed">
-            {merchant.description}
-          </p>
-        </section>
-
-        {/* Info Cards */}
-        <section className="grid grid-cols-1 gap-4">
-          <div className="flex items-start gap-4 p-5 bg-card border border-border/40 rounded-3xl shadow-sm">
-            <div className="p-3 bg-secondary/50 rounded-2xl text-primary">
-              <Clock className="h-5 w-5" />
-            </div>
-            <div>
-              <p className="text-xs font-bold text-muted-foreground uppercase tracking-widest mb-1">Horário de Funcionamento</p>
-              <p className="text-sm font-bold text-foreground">{merchant.hours}</p>
-              <p className={`text-[11px] font-bold mt-1 ${merchant.isOpen ? 'text-whatsapp' : 'text-muted-foreground'}`}>
-                {merchant.isOpen ? '● Aberto agora' : '○ Fechado no momento'}
-              </p>
-            </div>
-          </div>
-
-          <div className="flex items-start gap-4 p-5 bg-card border border-border/40 rounded-3xl shadow-sm">
-            <div className="p-3 bg-secondary/50 rounded-2xl text-primary">
-              <MapPin className="h-5 w-5" />
-            </div>
-            <div>
-              <p className="text-xs font-bold text-muted-foreground uppercase tracking-widest mb-1">Endereço</p>
-              <p className="text-sm font-bold text-foreground leading-relaxed">{merchant.address}</p>
-              <p className="text-[11px] font-bold text-muted-foreground mt-1">{merchant.neighborhood}</p>
-            </div>
-          </div>
-
-          <div className="flex items-start gap-4 p-5 bg-card border border-border/40 rounded-3xl shadow-sm">
-            <div className="p-3 bg-secondary/50 rounded-2xl text-primary">
-              <InstagramIcon className="h-5 w-5" />
-            </div>
-            <div>
-              <p className="text-xs font-bold text-muted-foreground uppercase tracking-widest mb-1">Instagram</p>
-              <p className="text-sm font-bold text-foreground">{merchant.instagram}</p>
-              <a href={`https://instagram.com/${merchant.instagram.replace('@', '')}`} target="_blank" rel="noreferrer" className="text-[11px] font-bold text-primary underline mt-1 block">
-                Abrir perfil no Instagram
-              </a>
-            </div>
-          </div>
-        </section>
-      </main>
-
-      {/* Primary Action Button */}
-      <div className="fixed bottom-8 left-6 right-6 z-50">
-        <div className="flex gap-3">
-          <Button
-            asChild
-            variant="whatsapp"
-            className="flex-1 h-16 rounded-[1.25rem] text-sm font-black shadow-2xl shadow-whatsapp/30"
-          >
-            <a href={waUrl} target="_blank" rel="noopener noreferrer">
-              <MessageCircle className="h-6 w-6" />
-              Chamar no WhatsApp
-            </a>
-          </Button>
+    <div className="min-h-screen bg-slate-50 pb-32">
+      <TopBar />
+      
+      {/* Hero Section */}
+      <div className="relative w-full max-w-7xl mx-auto md:mt-8 md:px-6">
+        <div className="relative h-[40vh] md:h-[50vh] w-full overflow-hidden md:rounded-3xl shadow-2xl shadow-slate-200">
+          <img 
+            src={merchant.image} 
+            alt={merchant.name} 
+            className="w-full h-full object-cover"
+          />
+          <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent" />
           
-          <Button
-            asChild
-            variant="outline"
-            className="w-16 h-16 rounded-[1.25rem] border-border/60 bg-card p-0"
-          >
-            <a href={`https://instagram.com/${merchant.instagram.replace('@', '')}`} target="_blank" rel="noreferrer">
-              <InstagramIcon className="h-6 w-6 text-foreground" />
-            </a>
-          </Button>
+          {/* Top Actions */}
+          <div className="absolute top-6 left-6 flex items-center gap-2">
+            <button 
+              onClick={() => window.history.back()}
+              className="p-3 bg-white/20 backdrop-blur-md rounded-full border border-white/30 text-white hover:bg-white/30 transition-all active:scale-90"
+            >
+              <ArrowLeft className="h-5 w-5" />
+            </button>
+          </div>
+
+          <div className="absolute top-6 right-6">
+            <button className="p-3 bg-white/20 backdrop-blur-md rounded-full border border-white/30 text-white hover:bg-white/30 transition-all active:scale-90">
+              <Share2 className="h-5 w-5" />
+            </button>
+          </div>
+
+          {/* Business Core Info Overlay */}
+          <div className="absolute bottom-8 left-6 right-6 md:left-12 md:right-12">
+            <div className="flex flex-col gap-4">
+              <div className="flex flex-wrap gap-2">
+                <span className="inline-flex items-center gap-1 rounded-full bg-violet-600 px-3 py-1 text-[10px] font-black uppercase text-white shadow-lg">
+                  {merchant.category}
+                </span>
+                {merchant.promotion.isActive && <PromotionBadge />}
+                {merchant.featured && (
+                   <span className="inline-flex items-center gap-1 rounded-full bg-yellow-400 px-3 py-1 text-[10px] font-black uppercase text-slate-900 shadow-lg">
+                     Destaque
+                   </span>
+                )}
+              </div>
+              
+              <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-4">
+                <div>
+                  <h1 className="text-4xl md:text-6xl font-black text-white leading-tight tracking-tighter">
+                    {merchant.name}
+                  </h1>
+                  <div className="flex flex-wrap items-center gap-4 mt-2 text-white/90 text-sm font-bold">
+                    <div className="flex items-center gap-1.5">
+                      <MapPin className="h-4 w-4 text-violet-400" />
+                      {merchant.neighborhood}
+                    </div>
+                    <div className="flex items-center gap-1.5">
+                      <div className="flex items-center gap-0.5 bg-white/10 backdrop-blur-sm px-2 py-0.5 rounded-lg border border-white/20">
+                        <Star className="h-3.5 w-3.5 fill-yellow-400 text-yellow-400" />
+                        {merchant.rating.toFixed(1)}
+                      </div>
+                      <span className="text-xs opacity-70">Avaliação da comunidade</span>
+                    </div>
+                  </div>
+                </div>
+
+                <div className="hidden md:flex gap-4">
+                   <Button asChild className="bg-emerald-600 hover:bg-emerald-700 text-white rounded-2xl h-14 px-8 font-black shadow-xl shadow-emerald-900/20">
+                     <a href={waUrl} target="_blank" rel="noopener noreferrer">
+                       <MessageCircle className="w-5 h-5 mr-2" />
+                       Chamar no WhatsApp
+                     </a>
+                   </Button>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
+
+      <main className="max-w-7xl mx-auto px-6 mt-8 md:mt-12 grid grid-cols-1 lg:grid-cols-3 gap-8">
+        <div className="lg:col-span-2 space-y-8">
+          {/* Promotion Highlight */}
+          {merchant.promotion.isActive && (
+            <section className="bg-orange-50 border border-orange-100 rounded-3xl p-8 relative overflow-hidden group">
+              <div className="absolute -top-12 -right-12 w-40 h-40 bg-orange-100/50 rounded-full blur-3xl group-hover:scale-125 transition-transform duration-700" />
+              <div className="relative z-10">
+                <div className="inline-flex items-center gap-2 px-3 py-1 bg-orange-500 rounded-full text-[10px] font-black text-white uppercase tracking-widest mb-4">
+                  <Tag className="w-3 h-3" />
+                  Oferta do Bairro
+                </div>
+                <p className="text-2xl font-black text-slate-900 mb-2">{merchant.promotion.title}</p>
+                <p className="text-slate-600 leading-relaxed font-medium">
+                  {merchant.promotion.description}
+                </p>
+              </div>
+            </section>
+          )}
+
+          {/* About */}
+          <section className="bg-white rounded-3xl p-8 border border-slate-100 shadow-sm">
+            <h2 className="text-xl font-black text-slate-900 mb-6 flex items-center gap-2">
+              <ShieldCheck className="w-6 h-6 text-violet-600" />
+              Sobre o negócio
+            </h2>
+            <p className="text-slate-600 text-lg leading-relaxed font-medium">
+              {merchant.description}
+            </p>
+            
+            <div className="mt-8 pt-8 border-t border-slate-50 grid grid-cols-2 md:grid-cols-4 gap-6">
+              <div className="flex flex-col gap-1">
+                 <span className="text-[10px] font-bold text-slate-400 uppercase">Status</span>
+                 <div className="flex items-center gap-1.5">
+                   <span className={`w-2 h-2 rounded-full ${merchant.isOpen ? 'bg-emerald-500 animate-pulse' : 'bg-slate-300'}`} />
+                   <span className="text-sm font-bold text-slate-900">{merchant.isOpen ? 'Aberto' : 'Fechado'}</span>
+                 </div>
+              </div>
+              <div className="flex flex-col gap-1">
+                 <span className="text-[10px] font-bold text-slate-400 uppercase">Entrega</span>
+                 <span className="text-sm font-bold text-slate-900">{merchant.delivery ? 'Sim' : 'Não'}</span>
+              </div>
+              <div className="flex flex-col gap-1">
+                 <span className="text-[10px] font-bold text-slate-400 uppercase">Preço</span>
+                 <span className="text-sm font-bold text-slate-900">$$$</span>
+              </div>
+              <div className="flex flex-col gap-1">
+                 <span className="text-[10px] font-bold text-slate-400 uppercase">No App desde</span>
+                 <span className="text-sm font-bold text-slate-900">Maio 2026</span>
+              </div>
+            </div>
+          </section>
+        </div>
+
+        {/* Sidebar Info */}
+        <div className="space-y-6">
+          <div className="bg-white rounded-3xl p-6 border border-slate-100 shadow-sm space-y-6">
+            <h3 className="text-lg font-black text-slate-900">Informações de Contato</h3>
+            
+            <div className="space-y-4">
+              <div className="flex items-start gap-4 p-4 bg-slate-50 rounded-2xl group hover:bg-violet-50 transition-colors cursor-pointer">
+                <div className="p-3 bg-white rounded-xl text-violet-600 shadow-sm group-hover:bg-violet-600 group-hover:text-white transition-all">
+                  <Clock className="h-5 w-5" />
+                </div>
+                <div>
+                  <p className="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-1">Horário</p>
+                  <p className="text-sm font-bold text-slate-900 leading-none">{merchant.hours}</p>
+                </div>
+              </div>
+
+              <div className="flex items-start gap-4 p-4 bg-slate-50 rounded-2xl group hover:bg-violet-50 transition-colors cursor-pointer">
+                <div className="p-3 bg-white rounded-xl text-violet-600 shadow-sm group-hover:bg-violet-600 group-hover:text-white transition-all">
+                  <MapPin className="h-5 w-5" />
+                </div>
+                <div>
+                  <p className="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-1">Endereço</p>
+                  <p className="text-sm font-bold text-slate-900 leading-tight">{merchant.address}</p>
+                  <p className="text-xs font-bold text-violet-600 mt-1">{merchant.neighborhood}</p>
+                </div>
+              </div>
+
+              <div className="flex items-start gap-4 p-4 bg-slate-50 rounded-2xl group hover:bg-violet-50 transition-colors cursor-pointer">
+                <div className="p-3 bg-white rounded-xl text-violet-600 shadow-sm group-hover:bg-violet-600 group-hover:text-white transition-all">
+                  <InstagramIcon className="h-5 w-5" />
+                </div>
+                <div>
+                  <p className="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-1">Instagram</p>
+                  <p className="text-sm font-bold text-slate-900 leading-none">{merchant.instagram}</p>
+                  <a href={`https://instagram.com/${merchant.instagram.replace('@', '')}`} target="_blank" rel="noreferrer" className="text-xs font-bold text-violet-600 mt-1 inline-flex items-center gap-1">
+                    Ver perfil <ChevronRight className="w-3 h-3" />
+                  </a>
+                </div>
+              </div>
+            </div>
+
+            <div className="pt-4 flex flex-col gap-3">
+              <Button asChild className="w-full bg-emerald-600 hover:bg-emerald-700 text-white rounded-2xl h-14 font-black shadow-lg shadow-emerald-100">
+                <a href={waUrl} target="_blank" rel="noopener noreferrer">
+                  <MessageCircle className="w-5 h-5 mr-2" />
+                  Enviar Mensagem
+                </a>
+              </Button>
+              <Button asChild variant="outline" className="w-full border-slate-200 rounded-2xl h-14 font-black text-slate-700 hover:bg-slate-50">
+                <a href={`https://instagram.com/${merchant.instagram.replace('@', '')}`} target="_blank" rel="noreferrer">
+                  <InstagramIcon className="w-5 h-5 mr-2" />
+                  Seguir no Instagram
+                </a>
+              </Button>
+            </div>
+          </div>
+
+          <div className="bg-violet-600 rounded-3xl p-8 text-white relative overflow-hidden">
+             <div className="absolute -bottom-6 -right-6 w-32 h-32 bg-white/10 rounded-full blur-2xl" />
+             <Smartphone className="w-8 h-8 mb-4 opacity-50" />
+             <h4 className="text-xl font-black mb-2 tracking-tighter leading-tight">Gostou deste negócio?</h4>
+             <p className="text-violet-100 text-sm font-medium mb-6">Compartilhe com seus vizinhos e ajude o comércio local do seu bairro a crescer.</p>
+             <Button className="w-full bg-white text-violet-600 hover:bg-violet-50 rounded-xl font-bold border-none shadow-xl shadow-violet-900/20">
+               Compartilhar agora
+             </Button>
+          </div>
+        </div>
+      </main>
+
+      <FloatingNav />
     </div>
   );
 }

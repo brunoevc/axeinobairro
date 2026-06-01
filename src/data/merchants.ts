@@ -7,8 +7,9 @@ import {
   Wrench, 
   PawPrint, 
   Shirt, 
-  Waves, 
-  Stethoscope 
+  Stethoscope,
+  Fish,
+  Leaf
 } from "lucide-react";
 
 export type Merchant = {
@@ -36,15 +37,17 @@ export type Merchant = {
 };
 
 export const categories = [
-  { slug: "padaria", label: "Padaria", icon: "Croissant" },
-  { slug: "restaurante", label: "Restaurante", icon: "UtensilsCrossed" },
-  { slug: "mercado", label: "Mercado", icon: "ShoppingBasket" },
-  { slug: "farmacia", label: "Farmácia", icon: "Pill" },
-  { slug: "beleza", label: "Beleza", icon: "Scissors" },
-  { slug: "servicos", label: "Serviços", icon: "Wrench" },
-  { slug: "pet", label: "Pet", icon: "PawPrint" },
-  { slug: "roupas", label: "Roupas", icon: "Shirt" },
-  { slug: "saude", label: "Saúde", icon: "Stethoscope" },
+  { slug: "padaria", label: "Padaria", icon: Croissant },
+  { slug: "restaurante", label: "Restaurante", icon: UtensilsCrossed },
+  { slug: "mercado", label: "Mercado", icon: ShoppingBasket },
+  { slug: "farmacia", label: "Farmácia", icon: Pill },
+  { slug: "beleza", label: "Beleza", icon: Scissors },
+  { slug: "servicos", label: "Serviços", icon: Wrench },
+  { slug: "pet", label: "Pet Shop", icon: PawPrint },
+  { slug: "roupas", label: "Roupas", icon: Shirt },
+  { slug: "saude", label: "Saúde", icon: Stethoscope },
+  { slug: "peixaria", label: "Peixaria", icon: Fish },
+  { slug: "hortifruti", label: "Hortifruti", icon: Leaf },
 ] as const;
 
 export const neighborhoods = [
@@ -168,8 +171,8 @@ export const merchants: Merchant[] = [
   {
     id: "6",
     name: "Hortifruti da Terra",
-    category: "mercado",
-    categoryIcon: "ShoppingBasket",
+    category: "hortifruti",
+    categoryIcon: "Leaf",
     neighborhood: "Parque das Águas",
     isOpen: true,
     delivery: true,
@@ -231,8 +234,8 @@ export const merchants: Merchant[] = [
   {
     id: "9",
     name: "Peixaria Mar Azul",
-    category: "servicos",
-    categoryIcon: "Wrench",
+    category: "peixaria",
+    categoryIcon: "Fish",
     neighborhood: "Centro",
     isOpen: true,
     delivery: true,
