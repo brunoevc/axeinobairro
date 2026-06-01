@@ -154,7 +154,7 @@ function RegistrationPage() {
                 <div className="relative">
                   <select 
                     required
-                    className="w-full bg-slate-50 border border-slate-200 rounded-2xl p-5 text-sm font-bold outline-none focus:border-violet-600 focus:bg-white transition-all appearance-none cursor-pointer shadow-sm"
+                    className="w-full bg-slate-50 border border-slate-200 rounded-2xl p-5 text-sm font-bold outline-none focus:border-violet-600 focus:bg-white transition-all appearance-none cursor-pointer shadow-sm disabled:opacity-50"
                     value={formData.category}
                     onChange={(e) => setFormData({...formData, category: e.target.value})}
                   >
@@ -169,7 +169,7 @@ function RegistrationPage() {
                 <div className="relative">
                   <select 
                     required
-                    className="w-full bg-slate-50 border border-slate-200 rounded-2xl p-5 text-sm font-bold outline-none focus:border-violet-600 focus:bg-white transition-all appearance-none cursor-pointer shadow-sm"
+                    className="w-full bg-slate-50 border border-slate-200 rounded-2xl p-5 text-sm font-bold outline-none focus:border-violet-600 focus:bg-white transition-all appearance-none cursor-pointer shadow-sm disabled:opacity-50"
                     value={formData.neighborhood}
                     onChange={(e) => setFormData({...formData, neighborhood: e.target.value})}
                   >
