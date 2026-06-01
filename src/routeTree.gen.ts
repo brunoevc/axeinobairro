@@ -12,6 +12,7 @@ import { Route as rootRouteImport } from './routes/__root'
 import { Route as PerfilRouteImport } from './routes/perfil'
 import { Route as OfertasRouteImport } from './routes/ofertas'
 import { Route as NegociosRouteImport } from './routes/negocios'
+import { Route as LoginRouteImport } from './routes/login'
 import { Route as CadastroRouteImport } from './routes/cadastro'
 import { Route as AdminRouteImport } from './routes/admin'
 import { Route as IndexRouteImport } from './routes/index'
@@ -35,6 +36,11 @@ const OfertasRoute = OfertasRouteImport.update({
 const NegociosRoute = NegociosRouteImport.update({
   id: '/negocios',
   path: '/negocios',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const LoginRoute = LoginRouteImport.update({
+  id: '/login',
+  path: '/login',
   getParentRoute: () => rootRouteImport,
 } as any)
 const CadastroRoute = CadastroRouteImport.update({
@@ -87,6 +93,7 @@ export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/admin': typeof AdminRouteWithChildren
   '/cadastro': typeof CadastroRoute
+  '/login': typeof LoginRoute
   '/negocios': typeof NegociosRouteWithChildren
   '/ofertas': typeof OfertasRoute
   '/perfil': typeof PerfilRoute
@@ -100,6 +107,7 @@ export interface FileRoutesByFullPath {
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/cadastro': typeof CadastroRoute
+  '/login': typeof LoginRoute
   '/ofertas': typeof OfertasRoute
   '/perfil': typeof PerfilRoute
   '/admin/aprovacoes': typeof AdminAprovacoesRoute
@@ -114,6 +122,7 @@ export interface FileRoutesById {
   '/': typeof IndexRoute
   '/admin': typeof AdminRouteWithChildren
   '/cadastro': typeof CadastroRoute
+  '/login': typeof LoginRoute
   '/negocios': typeof NegociosRouteWithChildren
   '/ofertas': typeof OfertasRoute
   '/perfil': typeof PerfilRoute
@@ -130,6 +139,7 @@ export interface FileRouteTypes {
     | '/'
     | '/admin'
     | '/cadastro'
+    | '/login'
     | '/negocios'
     | '/ofertas'
     | '/perfil'
@@ -143,6 +153,7 @@ export interface FileRouteTypes {
   to:
     | '/'
     | '/cadastro'
+    | '/login'
     | '/ofertas'
     | '/perfil'
     | '/admin/aprovacoes'
@@ -156,6 +167,7 @@ export interface FileRouteTypes {
     | '/'
     | '/admin'
     | '/cadastro'
+    | '/login'
     | '/negocios'
     | '/ofertas'
     | '/perfil'
@@ -171,6 +183,7 @@ export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AdminRoute: typeof AdminRouteWithChildren
   CadastroRoute: typeof CadastroRoute
+  LoginRoute: typeof LoginRoute
   NegociosRoute: typeof NegociosRouteWithChildren
   OfertasRoute: typeof OfertasRoute
   PerfilRoute: typeof PerfilRoute
@@ -197,6 +210,13 @@ declare module '@tanstack/react-router' {
       path: '/negocios'
       fullPath: '/negocios'
       preLoaderRoute: typeof NegociosRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/login': {
+      id: '/login'
+      path: '/login'
+      fullPath: '/login'
+      preLoaderRoute: typeof LoginRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/cadastro': {
@@ -299,6 +319,7 @@ const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AdminRoute: AdminRouteWithChildren,
   CadastroRoute: CadastroRoute,
+  LoginRoute: LoginRoute,
   NegociosRoute: NegociosRouteWithChildren,
   OfertasRoute: OfertasRoute,
   PerfilRoute: PerfilRoute,

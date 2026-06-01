@@ -1,13 +1,38 @@
-import { createFileRoute, useNavigate, Outlet, Link } from "@tanstack/react-router";
-import { LayoutDashboard, Store, CheckCircle, CreditCard, ArrowLeft, LogOut } from "lucide-react";
+import { createFileRoute, useNavigate, Outlet, Link, redirect } from "@tanstack/react-router";
+import { LayoutDashboard, Store, CheckCircle, CreditCard, ArrowLeft, LogOut, ShieldCheck } from "lucide-react";
 import { Logo } from "@/components/ui/Logo";
+import { useAtom } from "jotai";
+import { isAuthenticatedAtom } from "@/hooks/useAuth";
+import { useEffect } from "react";
+import { toast } from "sonner";
 
 export const Route = createFileRoute("/admin")({
+  beforeLoad: ({ location }) => {
+    const authStatus = localStorage.getItem("axei_auth_status");
+    const isAuthenticated = authStatus === "true";
+    
+    if (!isAuthenticated) {
+      throw redirect({
+        to: "/login",
+        search: {
+          redirect: location.href,
+        },
+      });
+    }
+  },
   component: AdminLayout,
 });
 
 function AdminLayout() {
   const navigate = useNavigate();
+  const [isAuthenticated, setIsAuthenticated] = useAtom(isAuthenticatedAtom);
+
+  const handleLogout = () => {
+    setIsAuthenticated(false);
+    toast.success("Você saiu com sucesso.");
+    navigate({ to: "/login" });
+  };
+
 
   return (
     <div className="min-h-screen bg-slate-50 flex flex-col md:flex-row">
@@ -66,11 +91,11 @@ function AdminLayout() {
 
         <div className="mt-auto p-6 hidden md:block">
           <button 
-            onClick={() => navigate({ to: '/' })}
+            onClick={handleLogout}
             className="w-full flex items-center gap-3 px-5 py-4 rounded-2xl text-sm font-bold text-slate-400 hover:bg-red-50 hover:text-red-600 transition-all group"
           >
-            <ArrowLeft className="h-5 w-5 group-hover:-translate-x-1 transition-transform" />
-            Sair para o Site
+            <LogOut className="h-5 w-5 group-hover:-translate-x-1 transition-transform" />
+            Sair do Painel
           </button>
         </div>
       </aside>
