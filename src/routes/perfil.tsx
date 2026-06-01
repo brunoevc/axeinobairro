@@ -1,4 +1,4 @@
-import { createFileRoute, useNavigate } from "@tanstack/react-router";
+import { createFileRoute, useNavigate, Link } from "@tanstack/react-router";
 import { ArrowLeft, User, MapPin, Bell, Shield, Settings, ChevronRight, Store, Sparkles, ChevronLeft } from "lucide-react";
 import { useState } from "react";
 import { TopBar } from "@/components/TopBar";
