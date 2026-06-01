@@ -77,7 +77,8 @@ export function TopBar() {
                 className="w-full bg-slate-50 border border-slate-200 rounded-xl py-2.5 pl-10 pr-4 text-sm outline-none focus:ring-2 focus:ring-orange-500/10 focus:border-orange-500 transition-all"
                 onKeyDown={(e) => {
                   if (e.key === 'Enter') {
-                    navigate({ to: '/negocios', search: { q: (e.target as HTMLInputElement).value } });
+                    const value = (e.target as HTMLInputElement).value;
+                    navigate({ to: '/negocios', search: { q: value } });
                   }
                 }}
               />

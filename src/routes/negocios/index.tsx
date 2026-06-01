@@ -23,8 +23,8 @@ import { Button } from "@/components/ui/button";
 import { useLocation } from "@/hooks/useLocation";
 
 const searchSchema = z.object({
-  category: z.string().optional(),
-  neighborhood: z.string().optional(),
+  categoria: z.string().optional(),
+  bairro: z.string().optional(),
   q: z.string().optional(),
   hasPromotion: z.boolean().optional(),
 });
@@ -38,9 +38,38 @@ function ListingPage() {
   const navigate = useNavigate();
   const searchParams = Route.useSearch();
   const [searchTerm, setSearchTerm] = useState(searchParams.q || "");
-  const [selectedCategory, setSelectedCategory] = useState(searchParams.category || "all");
-  const [selectedNeighborhood, setSelectedNeighborhood] = useState(searchParams.neighborhood || "all");
+  const [selectedCategory, setSelectedCategory] = useState(searchParams.categoria || "all");
+  const [selectedNeighborhood, setSelectedNeighborhood] = useState(searchParams.bairro || "all");
   const [isInitialLoading, setIsInitialLoading] = useState(true);
+
+  // Synchronize internal state when URL parameters change (e.g. back/forward button)
+  useEffect(() => {
+    setSearchTerm(searchParams.q || "");
+    setSelectedCategory(searchParams.categoria || "all");
+    setSelectedNeighborhood(searchParams.bairro || "all");
+  }, [searchParams.q, searchParams.categoria, searchParams.bairro]);
+
+  // Update URL search parameters when local filters change
+  const updateFilters = (newFilters: { q?: string; categoria?: string; bairro?: string }) => {
+    const nextSearch = { ...searchParams };
+    
+    if (newFilters.q !== undefined) {
+      if (newFilters.q) nextSearch.q = newFilters.q;
+      else delete nextSearch.q;
+    }
+    
+    if (newFilters.categoria !== undefined) {
+      if (newFilters.categoria !== 'all') nextSearch.categoria = newFilters.categoria;
+      else delete nextSearch.categoria;
+    }
+    
+    if (newFilters.bairro !== undefined) {
+      if (newFilters.bairro !== 'all') nextSearch.bairro = newFilters.bairro;
+      else delete nextSearch.bairro;
+    }
+
+    navigate({ to: '/negocios', search: nextSearch, replace: true });
+  };
 
   const { coords, getDistance, loading: locationLoading } = useLocation();
 
@@ -124,11 +153,18 @@ function ListingPage() {
                 placeholder="Pesquisar por nome ou serviço..."
                 className="w-full bg-slate-50 border border-slate-200 rounded-2xl py-4 pl-12 pr-4 text-sm font-medium outline-none focus:ring-4 focus:ring-orange-500/5 focus:border-orange-600 focus:bg-white transition-all shadow-sm"
                 value={searchTerm}
-                onChange={(e) => setSearchTerm(e.target.value)}
+                onChange={(e) => {
+                  const val = e.target.value;
+                  setSearchTerm(val);
+                  updateFilters({ q: val });
+                }}
               />
               {searchTerm && (
                 <button 
-                  onClick={() => setSearchTerm("")}
+                  onClick={() => {
+                    setSearchTerm("");
+                    updateFilters({ q: "" });
+                  }}
                   className="absolute right-4 top-1/2 -translate-y-1/2 p-1.5 bg-slate-200/50 hover:bg-slate-200 rounded-full transition-colors"
                 >
                   <X className="h-3 w-3 text-slate-500" />
@@ -141,7 +177,11 @@ function ListingPage() {
                <select 
                 className="w-full bg-slate-50 border border-slate-200 rounded-2xl py-4 pl-10 pr-10 text-xs font-black uppercase tracking-wider outline-none focus:ring-4 focus:ring-orange-500/5 focus:border-orange-600 focus:bg-white appearance-none cursor-pointer shadow-sm disabled:opacity-50 disabled:cursor-not-allowed"
                 value={selectedNeighborhood}
-                onChange={(e) => setSelectedNeighborhood(e.target.value)}
+                onChange={(e) => {
+                  const val = e.target.value;
+                  setSelectedNeighborhood(val);
+                  updateFilters({ bairro: val });
+                }}
               >
                 <option value="all">Todos os Bairros</option>
                 {neighborhoods.map(hood => (
@@ -156,7 +196,11 @@ function ListingPage() {
                <select 
                 className="w-full bg-slate-50 border border-slate-200 rounded-2xl py-4 pl-10 pr-10 text-xs font-black uppercase tracking-wider outline-none focus:ring-4 focus:ring-orange-500/5 focus:border-orange-600 focus:bg-white appearance-none cursor-pointer shadow-sm disabled:opacity-50 disabled:cursor-not-allowed"
                 value={selectedCategory}
-                onChange={(e) => setSelectedCategory(e.target.value)}
+                onChange={(e) => {
+                  const val = e.target.value;
+                  setSelectedCategory(val);
+                  updateFilters({ categoria: val });
+                }}
               >
                 <option value="all">Todas Categorias</option>
                 {categories.map(cat => (
