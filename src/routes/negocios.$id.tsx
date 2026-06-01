@@ -20,6 +20,7 @@ import { Button } from "@/components/ui/button";
 import { PromotionBadge } from "@/components/MerchantCard";
 import { TopBar } from "@/components/TopBar";
 import { FloatingNav } from "@/components/FloatingNav";
+import { useLocation } from "@/hooks/useLocation";
 
 export const Route = createFileRoute("/negocios/$id")({
   component: DetailPage,
@@ -111,7 +112,12 @@ function DetailPage() {
                         <Star className="h-3.5 w-3.5 fill-yellow-400 text-yellow-400" />
                         {merchant.rating.toFixed(1)}
                       </div>
-                      <span className="text-xs opacity-70">Avaliação da comunidade</span>
+                      {distance !== null && (
+                        <div className="flex items-center gap-1 bg-orange-600 px-2 py-0.5 rounded-lg shadow-lg">
+                           <Navigation className="w-3 h-3 text-white" />
+                           <span className="text-white text-[10px] font-black uppercase">{formatDistance(distance)}</span>
+                        </div>
+                      )}
                     </div>
                   </div>
                 </div>
@@ -207,6 +213,11 @@ function DetailPage() {
                   <p className="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-1">Endereço</p>
                   <p className="text-sm font-bold text-slate-900 leading-tight">{merchant.address}</p>
                   <p className="text-xs font-bold text-orange-600 mt-1">{merchant.neighborhood}</p>
+                  <Button asChild variant="link" className="text-orange-600 h-auto p-0 font-bold text-xs mt-2">
+                    <a href={mapsUrl} target="_blank" rel="noopener noreferrer" className="flex items-center gap-1">
+                      Ver no mapa / Rota <ChevronRight className="w-3 h-3" />
+                    </a>
+                  </Button>
                 </div>
               </div>
 
