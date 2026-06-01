@@ -13,7 +13,8 @@ import {
   ChevronRight,
   ShieldCheck,
   Smartphone,
-  Tag
+  Tag,
+  Navigation
 } from "lucide-react";
 import { merchants } from "@/data/merchants";
 import { Button } from "@/components/ui/button";
@@ -29,6 +30,7 @@ export const Route = createFileRoute("/negocios/$id")({
 function DetailPage() {
   const { id } = Route.useParams();
   const navigate = useNavigate();
+  const { coords, getDistance, formatDistance } = useLocation();
   const merchant = merchants.find((m) => m.id === id);
 
   if (!merchant) {
@@ -48,9 +50,15 @@ function DetailPage() {
     );
   }
 
+  const distance = coords 
+    ? getDistance(coords.latitude, coords.longitude, merchant.latitude, merchant.longitude)
+    : null;
+
   const waUrl = `https://wa.me/${merchant.whatsapp}?text=${encodeURIComponent(
     `Olá ${merchant.name}! Vi seu perfil no Axêi no Bairro e gostaria de mais informações 👋`
   )}`;
+
+  const mapsUrl = `https://www.google.com/maps/dir/?api=1&destination=${merchant.latitude},${merchant.longitude}`;
 
   return (
     <div className="min-h-screen bg-slate-50 pb-32">
