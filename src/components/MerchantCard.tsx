@@ -1,4 +1,4 @@
-import { MapPin, Star, Bike, MessageCircle, Clock, Tag, ChevronRight } from "lucide-react";
+import { MapPin, Star, Bike, MessageCircle, Clock, Tag, ChevronRight, User } from "lucide-react";
 import type { Merchant } from "@/data/merchants";
 import { Button } from "@/components/ui/button";
 import { Link } from "@tanstack/react-router";
@@ -21,15 +21,21 @@ export function MerchantCard({ merchant }: Props) {
 
   return (
     <article
-      className="group flex flex-col overflow-hidden rounded-3xl bg-white border border-slate-100 shadow-sm transition-all hover:shadow-xl hover:-translate-y-1 active:scale-[0.98]"
+      className="group flex flex-col overflow-hidden rounded-[2.5rem] bg-white border border-slate-100 shadow-sm transition-all hover:shadow-xl hover:-translate-y-1 active:scale-[0.98]"
     >
       <div className="relative aspect-[4/3] w-full overflow-hidden bg-slate-100">
-        <img 
-          src={merchant.image} 
-          alt={merchant.name}
-          className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-110"
-          loading="lazy"
-        />
+        {merchant.image ? (
+          <img 
+            src={merchant.image} 
+            alt={merchant.name}
+            className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-110"
+            loading="lazy"
+          />
+        ) : (
+          <div className="w-full h-full flex items-center justify-center bg-slate-50">
+            <User className="w-12 h-12 text-slate-200" />
+          </div>
+        )}
         <div className="absolute top-4 left-4 flex flex-col gap-2 z-10">
           {merchant.promotion.isActive && <PromotionBadge />}
           <div className="inline-flex items-center gap-1 rounded-full bg-white/90 backdrop-blur-md px-2.5 py-1 text-[10px] font-extrabold uppercase text-slate-900 shadow-sm border border-slate-200/50">

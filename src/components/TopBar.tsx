@@ -4,7 +4,7 @@ import { Link, useNavigate } from "@tanstack/react-router";
 
 export function TopBar() {
   const [time, setTime] = useState(new Date());
-  const [location, setLocation] = useState("Vila Nova - Barra Mansa/RJ");
+  const [location, setLocation] = useState("Barra Mansa/RJ");
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -56,7 +56,7 @@ export function TopBar() {
               <Link to="/" className="text-sm font-semibold text-slate-600 hover:text-violet-600 transition-colors">Início</Link>
               <Link to="/negocios" className="text-sm font-semibold text-slate-600 hover:text-violet-600 transition-colors">Negócios</Link>
               <Link to="/cadastro" className="text-sm font-semibold text-slate-600 hover:text-violet-600 transition-colors">Cadastro</Link>
-              <Link to="/admin" className="text-sm font-semibold text-slate-600 hover:text-violet-600 transition-colors">Admin</Link>
+              <Link to="/perfil" className="text-sm font-semibold text-slate-600 hover:text-violet-600 transition-colors">Perfil</Link>
             </nav>
           </div>
 
@@ -76,14 +76,14 @@ export function TopBar() {
             </div>
           </div>
 
-          {/* Mobile Location Header */}
-          <div className="flex md:hidden flex-col items-end">
+          {/* Mobile Profile Link */}
+          <Link to="/perfil" className="md:hidden flex flex-col items-end">
              <div className="flex items-center gap-1 text-[10px] font-bold text-violet-600 uppercase">
                 <MapPin className="w-3 h-3" />
-                {location.split(' - ')[0]}
+                {location}
              </div>
              <div className="text-[10px] text-slate-400">{time.toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' })}</div>
-          </div>
+          </Link>
         </div>
       </div>
     </div>
