@@ -290,6 +290,109 @@ function AdminDashboard() {
           </div>
         </div>
       </div>
+
+      {/* Security and Recovery Grid */}
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-10">
+        <section className="bg-white rounded-[2.5rem] p-8 border border-slate-100 shadow-sm">
+          <div className="mb-8 flex items-center justify-between border-b border-slate-50 pb-6">
+            <div className="flex items-center gap-3">
+               <div className="p-2 bg-orange-50 rounded-xl text-orange-600">
+                  <Lock className="w-5 h-5" />
+               </div>
+               <div>
+                  <h3 className="text-xl font-black text-slate-900 tracking-tight">Segurança da Conta</h3>
+                  <p className="text-xs text-slate-400 font-bold uppercase tracking-wider mt-1">Gerenciar senha de acesso</p>
+               </div>
+            </div>
+          </div>
+
+          <form onSubmit={handleUpdatePassword} className="space-y-6">
+            <div className="space-y-2">
+              <label className="text-xs font-black text-slate-400 uppercase tracking-widest ml-1">Senha Atual</label>
+              <input 
+                required
+                type="password" 
+                className="w-full bg-slate-50 border border-slate-200 rounded-2xl p-4 text-sm font-bold outline-none focus:border-orange-600 transition-all"
+                value={currentPass}
+                onChange={(e) => setCurrentPass(e.target.value)}
+              />
+            </div>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div className="space-y-2">
+                <label className="text-xs font-black text-slate-400 uppercase tracking-widest ml-1">Nova Senha</label>
+                <input 
+                  required
+                  type="password" 
+                  className="w-full bg-slate-50 border border-slate-200 rounded-2xl p-4 text-sm font-bold outline-none focus:border-orange-600 transition-all"
+                  value={newPass}
+                  onChange={(e) => setNewPass(e.target.value)}
+                />
+              </div>
+              <div className="space-y-2">
+                <label className="text-xs font-black text-slate-400 uppercase tracking-widest ml-1">Confirmar Nova Senha</label>
+                <input 
+                  required
+                  type="password" 
+                  className="w-full bg-slate-50 border border-slate-200 rounded-2xl p-4 text-sm font-bold outline-none focus:border-orange-600 transition-all"
+                  value={confirmPass}
+                  onChange={(e) => setConfirmPass(e.target.value)}
+                />
+              </div>
+            </div>
+            <Button type="submit" className="w-full h-12 rounded-xl bg-slate-900 hover:bg-slate-800 text-white font-black shadow-lg">
+              Atualizar Senha
+            </Button>
+          </form>
+        </section>
+
+        <section className="bg-white rounded-[2.5rem] p-8 border border-slate-100 shadow-sm">
+          <div className="mb-8 flex items-center justify-between border-b border-slate-50 pb-6">
+            <div className="flex items-center gap-3">
+               <div className="p-2 bg-orange-50 rounded-xl text-orange-600">
+                  <Mail className="w-5 h-5" />
+               </div>
+               <div>
+                  <h3 className="text-xl font-black text-slate-900 tracking-tight">Recuperação de Senha</h3>
+                  <p className="text-xs text-slate-400 font-bold uppercase tracking-wider mt-1">Solicitações de vizinhos lojistas</p>
+               </div>
+            </div>
+          </div>
+
+          <div className="space-y-4 max-h-[300px] overflow-y-auto pr-2">
+            {recoveryRequests.length === 0 ? (
+              <div className="text-center py-10 text-slate-400">
+                <p className="text-sm font-bold">Nenhuma solicitação pendente.</p>
+              </div>
+            ) : (
+              recoveryRequests.map((req, idx) => (
+                <div key={idx} className="flex items-center justify-between p-4 bg-slate-50 rounded-2xl border border-slate-100 group">
+                  <div>
+                    <p className="text-sm font-black text-slate-900">{req.email}</p>
+                    <p className="text-[10px] font-bold text-slate-400 uppercase mt-0.5">Solicitado em: {new Date(req.date).toLocaleString("pt-BR")}</p>
+                  </div>
+                  <div className="inline-flex items-center gap-1.5 px-3 py-1 bg-orange-100 rounded-full text-[10px] font-black text-orange-600 uppercase tracking-widest border border-orange-200">
+                    {req.status}
+                  </div>
+                </div>
+              ))
+            ).reverse()}
+          </div>
+        </section>
+      </div>
+
+      {/* Demo Warning Banner */}
+      <div className="rounded-2xl bg-orange-50 border border-orange-100 p-6 flex items-start gap-4 shadow-sm animate-in fade-in slide-in-from-bottom-4">
+        <div className="p-3 bg-white rounded-xl text-orange-600 shadow-sm">
+           <ShieldCheck className="w-6 h-6" />
+        </div>
+        <div>
+           <h4 className="text-lg font-black text-slate-900 tracking-tight">Login Provisório Ativado</h4>
+           <p className="text-sm text-slate-600 font-medium leading-relaxed max-w-2xl mt-1">
+             Este sistema de login é provisório para validação do MVP e utiliza armazenamento local do navegador. Na próxima fase, será substituído por uma autenticação real e segura via <span className="font-black text-orange-600">Supabase Auth</span>.
+           </p>
+        </div>
+      </div>
+
     </div>
   );
 }
