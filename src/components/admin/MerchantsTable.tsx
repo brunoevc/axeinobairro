@@ -3,7 +3,7 @@ import { ChevronDown } from "lucide-react";
 import { MerchantAdmin } from "@/data/admin";
 import { Button } from "@/components/ui/button";
 
-const planLabels = {
+const planLabels: Record<string, string> = {
   free: "Grátis",
   assisted: "R$27",
   local_featured: "R$47",
@@ -11,7 +11,7 @@ const planLabels = {
   premium_partner: "R$147",
 };
 
-const planColors = {
+const planColors: Record<string, string> = {
   free: "bg-slate-100 text-slate-700 dark:bg-slate-900 dark:text-slate-300",
   assisted: "bg-blue-100 text-blue-700 dark:bg-blue-900 dark:text-blue-300",
   local_featured: "bg-accent/20 text-accent dark:bg-accent/30",
@@ -30,7 +30,7 @@ type MerchantRowProps = {
   merchant: MerchantAdmin;
   onEdit: (merchant: MerchantAdmin) => void;
   onToggleStatus: (id: string) => void;
-  onChangePlan: (id: string, plan: MerchantAdmin["plan"]) => void;
+  onChangePlan: (id: string, plan: NonNullable<MerchantAdmin["plan"]>) => void;
 };
 
 export function MerchantRow({
@@ -40,7 +40,9 @@ export function MerchantRow({
   onChangePlan,
 }: MerchantRowProps) {
   const [planOpen, setPlanOpen] = useState(false);
-  const plans: MerchantAdmin["plan"][] = [
+  const currentPlan = merchant.plan || "free";
+  
+  const plans: NonNullable<MerchantAdmin["plan"]>[] = [
     "free",
     "assisted",
     "local_featured",
@@ -53,7 +55,7 @@ export function MerchantRow({
       <div className="flex items-start justify-between mb-3">
         <div className="flex-1">
           <div className="flex items-center gap-2 mb-2">
-            <span className="text-xl">{merchant.emoji}</span>
+            <span className="text-xl">{merchant.emoji || "🏪"}</span>
             <h4 className="font-bold text-foreground">{merchant.name}</h4>
           </div>
           <p className="text-xs text-muted-foreground">
@@ -80,8 +82,8 @@ export function MerchantRow({
         >
           {statusLabels[merchant.status]}
         </span>
-        <span className={`inline-block px-2 py-1 rounded text-xs font-medium ${planColors[merchant.plan]}`}>
-          {planLabels[merchant.plan]}
+        <span className={`inline-block px-2 py-1 rounded text-xs font-medium ${planColors[currentPlan]}`}>
+          {planLabels[currentPlan]}
         </span>
       </div>
 
@@ -127,7 +129,7 @@ export function MerchantRow({
                     setPlanOpen(false);
                   }}
                   className={`w-full text-left px-3 py-2 text-xs hover:bg-accent/10 first:rounded-t-lg last:rounded-b-lg transition-colors ${
-                    merchant.plan === plan ? "bg-accent/20" : ""
+                    currentPlan === plan ? "bg-accent/20" : ""
                   }`}
                 >
                   {planLabels[plan]}
@@ -145,7 +147,7 @@ type MerchantsTableProps = {
   merchants: MerchantAdmin[];
   onEdit: (merchant: MerchantAdmin) => void;
   onToggleStatus: (id: string) => void;
-  onChangePlan: (id: string, plan: MerchantAdmin["plan"]) => void;
+  onChangePlan: (id: string, plan: NonNullable<MerchantAdmin["plan"]>) => void;
   filterStatus?: MerchantAdmin["status"] | "all";
 };
 

@@ -15,13 +15,16 @@ import { Route as PlanosRouteImport } from './routes/planos'
 import { Route as PerfilRouteImport } from './routes/perfil'
 import { Route as OfertasRouteImport } from './routes/ofertas'
 import { Route as NoticiasRouteImport } from './routes/noticias'
+import { Route as NegociosRouteImport } from './routes/negocios'
 import { Route as IaAssistenteRouteImport } from './routes/ia-assistente'
 import { Route as EventosRouteImport } from './routes/eventos'
 import { Route as ConferirTudoRouteImport } from './routes/conferir-tudo'
 import { Route as ClimaRouteImport } from './routes/clima'
+import { Route as CadastroRouteImport } from './routes/cadastro'
 import { Route as AdminRouteImport } from './routes/admin'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as AdminIndexRouteImport } from './routes/admin/index'
+import { Route as NegociosIdRouteImport } from './routes/negocios.$id'
 import { Route as AdminPlanosRouteImport } from './routes/admin/planos'
 import { Route as AdminLojasRouteImport } from './routes/admin/lojas'
 import { Route as AdminAprovacoesRouteImport } from './routes/admin/aprovacoes'
@@ -56,6 +59,11 @@ const NoticiasRoute = NoticiasRouteImport.update({
   path: '/noticias',
   getParentRoute: () => rootRouteImport,
 } as any)
+const NegociosRoute = NegociosRouteImport.update({
+  id: '/negocios',
+  path: '/negocios',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const IaAssistenteRoute = IaAssistenteRouteImport.update({
   id: '/ia-assistente',
   path: '/ia-assistente',
@@ -76,6 +84,11 @@ const ClimaRoute = ClimaRouteImport.update({
   path: '/clima',
   getParentRoute: () => rootRouteImport,
 } as any)
+const CadastroRoute = CadastroRouteImport.update({
+  id: '/cadastro',
+  path: '/cadastro',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const AdminRoute = AdminRouteImport.update({
   id: '/admin',
   path: '/admin',
@@ -90,6 +103,11 @@ const AdminIndexRoute = AdminIndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => AdminRoute,
+} as any)
+const NegociosIdRoute = NegociosIdRouteImport.update({
+  id: '/$id',
+  path: '/$id',
+  getParentRoute: () => NegociosRoute,
 } as any)
 const AdminPlanosRoute = AdminPlanosRouteImport.update({
   id: '/planos',
@@ -110,10 +128,12 @@ const AdminAprovacoesRoute = AdminAprovacoesRouteImport.update({
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/admin': typeof AdminRouteWithChildren
+  '/cadastro': typeof CadastroRoute
   '/clima': typeof ClimaRoute
   '/conferir-tudo': typeof ConferirTudoRoute
   '/eventos': typeof EventosRoute
   '/ia-assistente': typeof IaAssistenteRoute
+  '/negocios': typeof NegociosRouteWithChildren
   '/noticias': typeof NoticiasRoute
   '/ofertas': typeof OfertasRoute
   '/perfil': typeof PerfilRoute
@@ -123,14 +143,17 @@ export interface FileRoutesByFullPath {
   '/admin/aprovacoes': typeof AdminAprovacoesRoute
   '/admin/lojas': typeof AdminLojasRoute
   '/admin/planos': typeof AdminPlanosRoute
+  '/negocios/$id': typeof NegociosIdRoute
   '/admin/': typeof AdminIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/cadastro': typeof CadastroRoute
   '/clima': typeof ClimaRoute
   '/conferir-tudo': typeof ConferirTudoRoute
   '/eventos': typeof EventosRoute
   '/ia-assistente': typeof IaAssistenteRoute
+  '/negocios': typeof NegociosRouteWithChildren
   '/noticias': typeof NoticiasRoute
   '/ofertas': typeof OfertasRoute
   '/perfil': typeof PerfilRoute
@@ -140,16 +163,19 @@ export interface FileRoutesByTo {
   '/admin/aprovacoes': typeof AdminAprovacoesRoute
   '/admin/lojas': typeof AdminLojasRoute
   '/admin/planos': typeof AdminPlanosRoute
+  '/negocios/$id': typeof NegociosIdRoute
   '/admin': typeof AdminIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/admin': typeof AdminRouteWithChildren
+  '/cadastro': typeof CadastroRoute
   '/clima': typeof ClimaRoute
   '/conferir-tudo': typeof ConferirTudoRoute
   '/eventos': typeof EventosRoute
   '/ia-assistente': typeof IaAssistenteRoute
+  '/negocios': typeof NegociosRouteWithChildren
   '/noticias': typeof NoticiasRoute
   '/ofertas': typeof OfertasRoute
   '/perfil': typeof PerfilRoute
@@ -159,6 +185,7 @@ export interface FileRoutesById {
   '/admin/aprovacoes': typeof AdminAprovacoesRoute
   '/admin/lojas': typeof AdminLojasRoute
   '/admin/planos': typeof AdminPlanosRoute
+  '/negocios/$id': typeof NegociosIdRoute
   '/admin/': typeof AdminIndexRoute
 }
 export interface FileRouteTypes {
@@ -166,10 +193,12 @@ export interface FileRouteTypes {
   fullPaths:
     | '/'
     | '/admin'
+    | '/cadastro'
     | '/clima'
     | '/conferir-tudo'
     | '/eventos'
     | '/ia-assistente'
+    | '/negocios'
     | '/noticias'
     | '/ofertas'
     | '/perfil'
@@ -179,14 +208,17 @@ export interface FileRouteTypes {
     | '/admin/aprovacoes'
     | '/admin/lojas'
     | '/admin/planos'
+    | '/negocios/$id'
     | '/admin/'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
+    | '/cadastro'
     | '/clima'
     | '/conferir-tudo'
     | '/eventos'
     | '/ia-assistente'
+    | '/negocios'
     | '/noticias'
     | '/ofertas'
     | '/perfil'
@@ -196,15 +228,18 @@ export interface FileRouteTypes {
     | '/admin/aprovacoes'
     | '/admin/lojas'
     | '/admin/planos'
+    | '/negocios/$id'
     | '/admin'
   id:
     | '__root__'
     | '/'
     | '/admin'
+    | '/cadastro'
     | '/clima'
     | '/conferir-tudo'
     | '/eventos'
     | '/ia-assistente'
+    | '/negocios'
     | '/noticias'
     | '/ofertas'
     | '/perfil'
@@ -214,16 +249,19 @@ export interface FileRouteTypes {
     | '/admin/aprovacoes'
     | '/admin/lojas'
     | '/admin/planos'
+    | '/negocios/$id'
     | '/admin/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AdminRoute: typeof AdminRouteWithChildren
+  CadastroRoute: typeof CadastroRoute
   ClimaRoute: typeof ClimaRoute
   ConferirTudoRoute: typeof ConferirTudoRoute
   EventosRoute: typeof EventosRoute
   IaAssistenteRoute: typeof IaAssistenteRoute
+  NegociosRoute: typeof NegociosRouteWithChildren
   NoticiasRoute: typeof NoticiasRoute
   OfertasRoute: typeof OfertasRoute
   PerfilRoute: typeof PerfilRoute
@@ -276,6 +314,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof NoticiasRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/negocios': {
+      id: '/negocios'
+      path: '/negocios'
+      fullPath: '/negocios'
+      preLoaderRoute: typeof NegociosRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/ia-assistente': {
       id: '/ia-assistente'
       path: '/ia-assistente'
@@ -304,6 +349,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ClimaRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/cadastro': {
+      id: '/cadastro'
+      path: '/cadastro'
+      fullPath: '/cadastro'
+      preLoaderRoute: typeof CadastroRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/admin': {
       id: '/admin'
       path: '/admin'
@@ -324,6 +376,13 @@ declare module '@tanstack/react-router' {
       fullPath: '/admin/'
       preLoaderRoute: typeof AdminIndexRouteImport
       parentRoute: typeof AdminRoute
+    }
+    '/negocios/$id': {
+      id: '/negocios/$id'
+      path: '/$id'
+      fullPath: '/negocios/$id'
+      preLoaderRoute: typeof NegociosIdRouteImport
+      parentRoute: typeof NegociosRoute
     }
     '/admin/planos': {
       id: '/admin/planos'
@@ -365,13 +424,27 @@ const AdminRouteChildren: AdminRouteChildren = {
 
 const AdminRouteWithChildren = AdminRoute._addFileChildren(AdminRouteChildren)
 
+interface NegociosRouteChildren {
+  NegociosIdRoute: typeof NegociosIdRoute
+}
+
+const NegociosRouteChildren: NegociosRouteChildren = {
+  NegociosIdRoute: NegociosIdRoute,
+}
+
+const NegociosRouteWithChildren = NegociosRoute._addFileChildren(
+  NegociosRouteChildren,
+)
+
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AdminRoute: AdminRouteWithChildren,
+  CadastroRoute: CadastroRoute,
   ClimaRoute: ClimaRoute,
   ConferirTudoRoute: ConferirTudoRoute,
   EventosRoute: EventosRoute,
   IaAssistenteRoute: IaAssistenteRoute,
+  NegociosRoute: NegociosRouteWithChildren,
   NoticiasRoute: NoticiasRoute,
   OfertasRoute: OfertasRoute,
   PerfilRoute: PerfilRoute,

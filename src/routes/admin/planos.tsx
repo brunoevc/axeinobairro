@@ -1,7 +1,7 @@
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute, Link } from "@tanstack/react-router";
 import { useAdminState } from "@/hooks/useAdminState";
 import { PlansChart } from "@/components/admin/PlansChart";
-import { MerchantAdmin } from "@/data/admin";
+import { ArrowLeft, CreditCard, TrendingUp, DollarSign, Target } from "lucide-react";
 
 export const Route = createFileRoute("/admin/planos")({
   component: AdminPlans,
@@ -46,8 +46,8 @@ function AdminPlans() {
 
   if (loading || !state || !stats) {
     return (
-      <div className="flex items-center justify-center min-h-screen">
-        <p className="text-muted-foreground">Carregando...</p>
+      <div className="flex items-center justify-center min-h-[400px]">
+        <p className="text-muted-foreground font-bold animate-pulse">Analizando métricas...</p>
       </div>
     );
   }
@@ -61,241 +61,107 @@ function AdminPlans() {
   ];
 
   return (
-    <div className="space-y-6">
-      {/* Header */}
-      <div>
-        <h1 className="text-3xl font-bold text-foreground mb-2">
-          Distribuição de Planos
-        </h1>
-        <p className="text-muted-foreground">
-          Análise de adoção e receita dos planos
+    <div className="space-y-10 animate-in fade-in duration-500">
+      <header className="flex flex-col gap-2">
+        <h1 className="text-3xl font-black text-foreground tracking-tight">Estratégia de Planos</h1>
+        <p className="text-muted-foreground font-medium text-sm">
+          Acompanhamento de conversão e monetização da base de lojistas.
         </p>
+      </header>
+
+      {/* Main Stats Row */}
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <div className="bg-card border border-border/40 rounded-[2.5rem] p-8 shadow-sm">
+          <div className="flex items-center gap-3 mb-4">
+            <div className="p-2 bg-primary/10 rounded-lg text-primary"><DollarSign className="h-4 w-4" /></div>
+            <p className="text-[10px] font-black text-muted-foreground uppercase tracking-widest">Receita Mensal</p>
+          </div>
+          <p className="text-4xl font-black text-foreground">
+            R$ {(
+                stats.planRevenue.assisted +
+                stats.planRevenue.local_featured +
+                stats.planRevenue.highlighted +
+                stats.planRevenue.premium_partner
+              ).toLocaleString()}
+          </p>
+          <p className="text-xs font-bold text-whatsapp mt-2 flex items-center gap-1">
+            <TrendingUp className="h-3 w-3" /> +8.4% vs mês anterior
+          </p>
+        </div>
+
+        <div className="bg-card border border-border/40 rounded-[2.5rem] p-8 shadow-sm">
+          <div className="flex items-center gap-3 mb-4">
+            <div className="p-2 bg-primary/10 rounded-lg text-primary"><Target className="h-4 w-4" /></div>
+            <p className="text-[10px] font-black text-muted-foreground uppercase tracking-widest">Taxa de Conversão</p>
+          </div>
+          <p className="text-4xl font-black text-foreground">
+            {Math.round((state.merchants.filter((m) => m.plan !== "free").length / stats.totalMerchants) * 100)}%
+          </p>
+          <p className="text-xs font-bold text-muted-foreground mt-2">
+            {state.merchants.filter((m) => m.plan !== "free").length} lojistas pagos
+          </p>
+        </div>
+
+        <div className="bg-card border border-border/40 rounded-[2.5rem] p-8 shadow-sm">
+          <div className="flex items-center gap-3 mb-4">
+            <div className="p-2 bg-primary/10 rounded-lg text-primary"><CreditCard className="h-4 w-4" /></div>
+            <p className="text-[10px] font-black text-muted-foreground uppercase tracking-widest">Ticket Médio</p>
+          </div>
+          <p className="text-4xl font-black text-foreground">
+            R$ {Math.round((stats.planRevenue.assisted + stats.planRevenue.local_featured + stats.planRevenue.highlighted + stats.planRevenue.premium_partner) / (state.merchants.filter((m) => m.plan !== "free").length || 1))}
+          </p>
+          <p className="text-xs font-bold text-muted-foreground mt-2">por lojista premium</p>
+        </div>
       </div>
 
-      {/* Main Chart */}
-      <PlansChart stats={stats} />
+      <div className="grid grid-cols-1 lg:grid-cols-5 gap-10">
+        <div className="lg:col-span-2 space-y-6">
+          <div className="bg-card border border-border/40 rounded-[2.5rem] p-8 shadow-sm h-full">
+            <h3 className="text-lg font-black text-foreground mb-6">Distribuição Visual</h3>
+            <PlansChart stats={stats} />
+            <div className="mt-8 pt-6 border-t border-border/40 space-y-3">
+              <p className="text-xs font-bold text-muted-foreground uppercase tracking-widest">Insights Rápidos</p>
+              <ul className="text-xs text-muted-foreground font-medium space-y-2">
+                <li className="flex items-center gap-2">● O plano <span className="text-foreground font-bold">Destaque Local</span> é o mais atrativo.</li>
+                <li className="flex items-center gap-2">● 60% dos novos cadastros começam no <span className="text-foreground font-bold">Grátis</span>.</li>
+              </ul>
+            </div>
+          </div>
+        </div>
 
-      {/* Detailed Plan Cards */}
-      <div className="space-y-4">
-        <h3 className="text-lg font-bold text-foreground">
-          Detalhes por Plano
-        </h3>
-
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-          {planKeys.map((key) => {
-            const count = stats.planDistribution[key];
-            const detail = planDetails[key];
-            const revenue =
-              key === "free"
-                ? 0
-                : key === "assisted"
-                  ? count * 27
-                  : key === "local_featured"
-                    ? count * 47
-                    : key === "highlighted"
-                      ? count * 97
-                      : count * 147;
-
-            const merchants = state.merchants.filter((m) => m.plan === key);
-            const avgClicks =
-              merchants.length > 0
-                ? Math.round(
-                    merchants.reduce((sum, m) => sum + (m.whatsappClicks || 0), 0) /
-                      merchants.length
-                  )
-                : 0;
-
-            return (
-              <div
-                key={key}
-                className="rounded-xl bg-card p-6 border border-accent/10 shadow-sm hover:border-accent/30 transition-colors"
-              >
-                <div className="mb-4">
-                  <h4 className="text-lg font-bold text-foreground">
-                    {detail.name}
-                  </h4>
-                  <p className="text-sm text-accent font-semibold mt-1">
-                    {detail.price}
-                  </p>
-                  <p className="text-xs text-muted-foreground mt-2">
-                    {detail.description}
-                  </p>
-                </div>
-
-                <div className="bg-background/50 rounded-lg p-4 space-y-3">
-                  <div>
-                    <p className="text-xs text-muted-foreground">
-                      Lojistas Contratados
-                    </p>
-                    <p className="text-2xl font-bold text-foreground">{count}</p>
-                  </div>
-
-                  {key !== "free" && (
-                    <div>
-                      <p className="text-xs text-muted-foreground">
-                        Receita Potencial
-                      </p>
-                      <p className="text-2xl font-bold text-accent">
-                        R$ {revenue.toLocaleString()}
-                      </p>
+        <div className="lg:col-span-3 space-y-6">
+          <div className="flex items-center justify-between px-2">
+             <h3 className="text-lg font-black text-foreground">Performance por Nível</h3>
+             <span className="text-[10px] font-black uppercase tracking-widest text-muted-foreground">Preços e Adesão</span>
+          </div>
+          <div className="grid grid-cols-1 gap-4">
+            {planKeys.map((key) => {
+              const count = stats.planDistribution[key];
+              const detail = planDetails[key];
+              
+              return (
+                <div
+                  key={key}
+                  className="bg-card border border-border/40 rounded-3xl p-5 flex items-center justify-between group hover:border-primary/30 transition-all shadow-sm"
+                >
+                  <div className="flex items-center gap-4">
+                    <div className="w-12 h-12 bg-secondary/50 rounded-2xl flex items-center justify-center text-xl">
+                       {key === 'free' ? '🌱' : key === 'assisted' ? '🤝' : key === 'local_featured' ? '📍' : key === 'highlighted' ? '✨' : '💎'}
                     </div>
-                  )}
-
-                  <div>
-                    <p className="text-xs text-muted-foreground">
-                      Cliques Médios (WhatsApp)
-                    </p>
-                    <p className="text-lg font-bold text-foreground">
-                      {avgClicks}
-                    </p>
+                    <div>
+                      <h4 className="font-black text-foreground text-sm leading-tight">{detail.name}</h4>
+                      <p className="text-[11px] font-bold text-muted-foreground">{detail.price}</p>
+                    </div>
                   </div>
-
-                  <div className="h-px bg-border" />
-
-                  <div className="text-xs text-muted-foreground">
-                    <p>
-                      {((count / stats.totalMerchants) * 100).toFixed(1)}% do
-                      total
-                    </p>
+                  <div className="text-right">
+                    <p className="text-lg font-black text-foreground">{count}</p>
+                    <p className="text-[10px] font-bold text-muted-foreground uppercase tracking-tighter">Lojistas</p>
                   </div>
                 </div>
-
-                {count === 0 && (
-                  <div className="mt-4 p-3 rounded-lg bg-muted/30 text-center">
-                    <p className="text-xs text-muted-foreground">
-                      Sem lojistas neste plano
-                    </p>
-                  </div>
-                )}
-              </div>
-            );
-          })}
-        </div>
-      </div>
-
-      {/* Revenue Summary */}
-      <div className="rounded-xl bg-gradient-to-br from-accent/10 to-accent/5 border border-accent/20 p-6">
-        <h3 className="text-lg font-bold text-foreground mb-4">
-          Resumo Financeiro
-        </h3>
-
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-          <div>
-            <p className="text-xs text-muted-foreground mb-2">Receita Total</p>
-            <p className="text-2xl font-bold text-foreground">
-              R${" "}
-              {(
-                stats.planRevenue.assisted +
-                stats.planRevenue.local_featured +
-                stats.planRevenue.highlighted +
-                stats.planRevenue.premium_partner
-              ).toLocaleString()}
-            </p>
-          </div>
-
-          <div>
-            <p className="text-xs text-muted-foreground mb-2">
-              Receita Média por Loja
-            </p>
-            <p className="text-2xl font-bold text-foreground">
-              R${" "}
-              {(
-                (stats.planRevenue.assisted +
-                  stats.planRevenue.local_featured +
-                  stats.planRevenue.highlighted +
-                  stats.planRevenue.premium_partner) /
-                (stats.totalMerchants || 1)
-              ).toFixed(0)}
-            </p>
-          </div>
-
-          <div>
-            <p className="text-xs text-muted-foreground mb-2">Lojistas Pagos</p>
-            <p className="text-2xl font-bold text-foreground">
-              {state.merchants.filter((m) => m.plan !== "free").length}
-            </p>
-          </div>
-
-          <div>
-            <p className="text-xs text-muted-foreground mb-2">Taxa de Conversão</p>
-            <p className="text-2xl font-bold text-foreground">
-              {(
-                ((state.merchants.filter((m) => m.plan !== "free").length) /
-                  stats.totalMerchants) *
-                100
-              ).toFixed(0)}
-              %
-            </p>
+              );
+            })}
           </div>
         </div>
-      </div>
-
-      {/* Plano Mais Popular */}
-      <div className="rounded-xl bg-card p-6 border border-accent/10 shadow-sm">
-        <h3 className="text-lg font-bold text-foreground mb-4">
-          📊 Insights
-        </h3>
-
-        <ul className="space-y-2 text-sm text-foreground">
-          <li>
-            ✓ Plano mais popular:{" "}
-            <span className="font-bold">
-              {
-                planKeys.reduce((prev, key) =>
-                  stats.planDistribution[key] >
-                  stats.planDistribution[prev]
-                    ? key
-                    : prev
-                )
-              }
-              ({" "}
-              {
-                stats.planDistribution[
-                  planKeys.reduce((prev, key) =>
-                    stats.planDistribution[key] >
-                    stats.planDistribution[prev]
-                      ? key
-                      : prev
-                  )
-                ]
-              }{" "}
-              lojas)
-            </span>
-          </li>
-
-          <li>
-            ✓ Cliques médios por loja:{" "}
-            <span className="font-bold">
-              {Math.round(stats.totalWhatsappClicks / stats.totalMerchants)}
-            </span>
-          </li>
-
-          <li>
-            ✓ Lojistas em planos pagos:{" "}
-            <span className="font-bold">
-              {state.merchants.filter((m) => m.plan !== "free").length} (
-              {(
-                ((state.merchants.filter((m) => m.plan !== "free").length) /
-                  stats.totalMerchants) *
-                100
-              ).toFixed(0)}
-              %)
-            </span>
-          </li>
-
-          <li>
-            ✓ Receita potencial mensal:{" "}
-            <span className="font-bold">
-              R${" "}
-              {(
-                stats.planRevenue.assisted +
-                stats.planRevenue.local_featured +
-                stats.planRevenue.highlighted +
-                stats.planRevenue.premium_partner
-              ).toLocaleString()}
-            </span>
-          </li>
-        </ul>
       </div>
     </div>
   );

@@ -1,9 +1,23 @@
 import { createFileRoute } from "@tanstack/react-router";
-export const Route = createFileRoute("/pulso")({ component: () => <PlaceholderPage title="Pulso do Bairro" /> });
+import { Link } from "@tanstack/react-router";
+import { ArrowLeft, Construction } from "lucide-react";
+
+export const Route = createFileRoute("/pulso")({ 
+  component: () => <PlaceholderPage title="Pulso do Bairro" /> 
+});
+
 const PlaceholderPage = ({ title }: { title: string }) => (
-  <div className="p-10 text-center">
-    <h1 className="text-2xl font-bold">{title}</h1>
-    <p className="mt-4 text-muted-foreground">Página em construção para esta versão futurista.</p>
-    <button onClick={() => window.history.back()} className="mt-8 text-primary font-bold">Voltar</button>
+  <div className="min-h-screen bg-background flex flex-col items-center justify-center p-8 text-center">
+    <div className="w-24 h-24 bg-primary/10 rounded-[2rem] flex items-center justify-center mb-8">
+      <Construction className="h-12 w-12 text-primary" />
+    </div>
+    <h1 className="text-3xl font-black text-foreground mb-4">{title}</h1>
+    <p className="text-muted-foreground font-medium mb-12 max-w-xs leading-relaxed">
+      Esta funcionalidade estará disponível em breve no Axêi no Bairro. Estamos mapeando o pulso local!
+    </p>
+    <Link to="/" className="px-8 py-4 bg-primary text-white font-black text-sm rounded-2xl shadow-xl shadow-primary/20 flex items-center gap-2">
+      <ArrowLeft className="h-4 w-4" />
+      Voltar para o início
+    </Link>
   </div>
 );
