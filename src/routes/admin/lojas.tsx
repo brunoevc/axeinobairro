@@ -44,7 +44,7 @@ function AdminLojas() {
             Gerencie seus anúncios, promoções e veja seu desempenho.
           </p>
         </div>
-        <Button asChild className="rounded-2xl font-black gap-2 h-14 px-8 bg-violet-600 hover:bg-violet-700 shadow-xl shadow-violet-200 transition-all active:scale-95">
+        <Button asChild className="rounded-2xl font-black gap-2 h-14 px-8 bg-orange-600 hover:bg-orange-700 shadow-xl shadow-orange-200 transition-all active:scale-95">
           <Link to="/cadastro">
             <Plus className="h-5 w-5" />
             Cadastrar Nova Loja
@@ -55,7 +55,7 @@ function AdminLojas() {
       <div className="grid grid-cols-1 xl:grid-cols-2 gap-8">
         <div className="xl:col-span-2 flex items-center gap-3">
           <div className="p-2 bg-violet-100 rounded-lg">
-            <Store className="h-5 w-5 text-violet-600" />
+            <Store className="h-5 w-5 text-orange-600" />
           </div>
           <h2 className="text-xs font-black uppercase tracking-[0.3em] text-slate-400">
             Lojas Ativas ({merchantsList.length})
@@ -112,7 +112,7 @@ function AdminLojas() {
                 variant="outline" 
                 className="rounded-2xl h-14 text-sm font-black border-slate-200 flex items-center gap-2 bg-white hover:bg-slate-50 hover:text-violet-600 transition-all"
               >
-                <Link to="/negocios/$id" params={{ id: merchant.id }} className="flex items-center gap-2">
+                <Link to="/negocios/$id" params={{ id: merchant.id }} className="flex items-center gap-2 hover:text-orange-600">
                   <Eye className="h-5 w-5" />
                   Visualizar Página
                 </Link>
@@ -129,7 +129,7 @@ function AdminLojas() {
       </div>
 
       {/* Stats Summary */}
-      <section className="mt-8 p-10 md:p-14 bg-violet-600 rounded-[3.5rem] text-white relative overflow-hidden shadow-2xl shadow-violet-200">
+      <section className="mt-8 p-10 md:p-14 bg-orange-600 rounded-[3.5rem] text-white relative overflow-hidden shadow-2xl shadow-orange-200">
         <div className="absolute top-0 right-0 w-[30rem] h-[30rem] bg-white/5 rounded-full blur-[100px] -mr-40 -mt-40" />
         <div className="absolute bottom-0 left-0 w-[20rem] h-[20rem] bg-violet-400/20 rounded-full blur-[80px] -ml-20 -mb-20" />
         

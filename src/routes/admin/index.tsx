@@ -34,7 +34,7 @@ function AdminDashboard() {
       <div className="flex flex-col md:flex-row md:items-center justify-between gap-6">
         <div>
           <h1 className="text-4xl font-black text-slate-900 tracking-tighter leading-none mb-3">
-            Dashboard do <span className="text-violet-600">Marketplace</span>
+            Dashboard do <span className="text-orange-600">Marketplace</span>
           </h1>
           <p className="text-slate-500 font-medium text-lg">
             Métricas de engajamento e status operacional da rede.
@@ -153,7 +153,7 @@ function AdminDashboard() {
                 </p>
               </div>
               <div className="text-right">
-                <div className="inline-flex items-center px-4 py-1.5 rounded-full bg-violet-600 text-white text-[11px] font-black uppercase shadow-lg shadow-violet-200">
+                <div className="inline-flex items-center px-4 py-1.5 rounded-full bg-orange-600 text-white text-[11px] font-black uppercase shadow-lg shadow-orange-200">
                   {stats.totalContactAttempts > 0
                     ? Math.round((stats.totalWhatsappClicks / stats.totalContactAttempts) * 100)
                     : 0}% Conversão
