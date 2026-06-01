@@ -204,13 +204,13 @@ function ListingPage() {
       </header>
 
       <main className="max-w-7xl mx-auto px-6 py-12">
-        <div className="mb-8 flex items-center justify-between">
+        <div className="mb-8 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
           <p className="text-xs font-black text-slate-400 uppercase tracking-widest">
-            {filteredMerchants.length} {filteredMerchants.length === 1 ? 'resultado' : 'resultados'}
+            {filteredMerchants.length} {filteredMerchants.length === 1 ? 'resultado' : 'resultados'} encontrados
           </p>
           {coords && (
-             <div className="flex items-center gap-2 px-3 py-1 bg-orange-50 rounded-lg border border-orange-100">
-                <Navigation className="w-3 h-3 text-orange-600" />
+             <div className="flex items-center gap-2 px-3 py-1.5 bg-orange-50 rounded-xl border border-orange-100 shadow-sm animate-in fade-in slide-in-from-right-4">
+                <Navigation className="w-3.5 h-3.5 text-orange-600" />
                 <span className="text-[10px] font-black text-orange-600 uppercase tracking-widest">Ordenado por proximidade</span>
              </div>
           )}

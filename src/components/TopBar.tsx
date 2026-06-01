@@ -84,12 +84,8 @@ export function TopBar() {
           <div className="md:hidden flex flex-col items-end cursor-pointer" onClick={retry}>
              <div className="flex items-center gap-1 text-[10px] font-bold text-orange-600 uppercase">
                 <MapPin className="w-3 h-3" />
-                {loading ? (
-                   <div className="h-2 w-20 bg-slate-100 animate-pulse rounded" />
-                ) : (
-                   locationName.split(' - ')[0]
-                )}
-                {error && <RefreshCw className="w-2.5 h-2.5 ml-1 animate-spin-slow" />}
+                 {loading ? 'Buscando...' : locationName.split(' - ')[0]}
+                {error && <RefreshCw className="w-2.5 h-2.5 ml-1 animate-spin" />}
              </div>
              <div className="text-[10px] text-slate-400">{time.toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' })}</div>
           </div>
