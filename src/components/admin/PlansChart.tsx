@@ -87,6 +87,7 @@ export function PlansChart({ stats }: { stats: AdminStats | null }) {
             })}
         </div>
       </div>
+      </div>
     </div>
   );
 }
