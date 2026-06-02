@@ -1,4 +1,4 @@
-import { MapPin, Star, Bike, ChevronRight, TrendingUp, Navigation } from "lucide-react";
+import { MapPin, Star, Bike, ChevronRight, TrendingUp, Navigation, Tag } from "lucide-react";
 import type { Merchant } from "@/data/merchants";
 import { Button } from "@/components/ui/button";
 import { Link } from "@tanstack/react-router";

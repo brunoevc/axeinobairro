@@ -13,8 +13,10 @@ import {
   Tag,
   Navigation,
   TrendingUp,
-  Croissant
+  Croissant,
+  Search
 } from "lucide-react";
+
 import { merchants } from "@/data/merchants";
 import { Button } from "@/components/ui/button";
 import { PromotionBadge } from "@/components/MerchantCard";
