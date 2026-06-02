@@ -47,7 +47,7 @@ export function useAdminState() {
         m.id === merchantId
           ? {
               ...m,
-              status: "active" as const,
+              status: "verified" as const,
               approvedAt: new Date().toISOString(),
               approvedBy: "Auto-Admin",
               featured: true,
@@ -124,10 +124,11 @@ export function useAdminState() {
       const merchant = state.merchants.find((m) => m.id === merchantId);
       if (!merchant || merchant.status === "rejected" || merchant.status === "pending") return;
 
-      const newStatus = (merchant.status === "active" ? "inactive" : "active") as "active" | "inactive";
+      const newStatus: Merchant["status"] = (merchant.status === "verified" ? "pending" : "verified");
       const updatedMerchants = state.merchants.map((m) =>
         m.id === merchantId ? { ...m, status: newStatus } : m
       );
+
 
       const action: AdminAction = {
         id: `act-${Date.now()}`,

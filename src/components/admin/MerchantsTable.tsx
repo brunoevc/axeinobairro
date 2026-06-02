@@ -19,12 +19,14 @@ const planColors: Record<string, string> = {
   premium_partner: "bg-rose-100 text-rose-700 dark:bg-rose-900 dark:text-rose-300",
 };
 
-const statusLabels = {
+const statusLabels: Record<Merchant["status"], string> = {
   pending: "⏳ Pendente",
-  active: "✅ Ativo",
-  inactive: "⭐ Inativo",
+  verified: "✅ Verificado",
+  featured: "✨ Destaque",
+  partner: "🤝 Parceiro",
   rejected: "❌ Rejeitado",
 };
+
 
 type MerchantRowProps = {
   merchant: MerchantAdmin;
@@ -71,14 +73,13 @@ export function MerchantRow({
       <div className="flex flex-wrap gap-2 mb-4">
         <span
           className={`inline-block px-2 py-1 rounded text-xs font-medium ${
-            merchant.status === "active"
+            merchant.status === "verified" || merchant.status === "featured" || merchant.status === "partner"
               ? "bg-emerald-100 text-emerald-700 dark:bg-emerald-900 dark:text-emerald-300"
               : merchant.status === "pending"
                 ? "bg-amber-100 text-amber-700 dark:bg-amber-900 dark:text-amber-300"
-                : merchant.status === "inactive"
-                  ? "bg-slate-100 text-slate-700 dark:bg-slate-900 dark:text-slate-300"
-                  : "bg-rose-100 text-rose-700 dark:bg-rose-900 dark:text-rose-300"
+                : "bg-rose-100 text-rose-700 dark:bg-rose-900 dark:text-rose-300"
           }`}
+
         >
           {statusLabels[merchant.status]}
         </span>
@@ -104,7 +105,7 @@ export function MerchantRow({
             onClick={() => onToggleStatus(merchant.id)}
             className="text-xs"
           >
-            {merchant.status === "active" ? "⭐ Desativar" : "✅ Ativar"}
+            {merchant.status !== "pending" ? "⭐ Pendente" : "✅ Verificar"}
           </Button>
         )}
 
