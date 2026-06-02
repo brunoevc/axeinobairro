@@ -1,6 +1,7 @@
-import { PixCharge, TransactionStatus } from "@/types/payment";
+import { PixCharge, TransactionStatus, PixLink } from "@/types/payment";
 
 const STORAGE_KEY = "axei_pix_charges";
+const LINKS_KEY = "axei_pix_links";
 
 export const getPixCharges = (): PixCharge[] => {
   if (typeof window === "undefined") return [];
@@ -12,11 +13,21 @@ export const savePixCharges = (charges: PixCharge[]) => {
   localStorage.setItem(STORAGE_KEY, JSON.stringify(charges));
 };
 
+export const getPixLinks = (): PixLink[] => {
+  if (typeof window === "undefined") return [];
+  const stored = localStorage.getItem(LINKS_KEY);
+  return stored ? JSON.parse(stored) : [];
+};
+
+export const savePixLinks = (links: PixLink[]) => {
+  localStorage.setItem(LINKS_KEY, JSON.stringify(links));
+};
+
 export const createPixCharge = (charge: Omit<PixCharge, "id" | "createdAt" | "expiresAt" | "pixKey">): PixCharge => {
   const charges = getPixCharges();
   const id = `charge_${Math.random().toString(36).substr(2, 9)}`;
   const now = new Date();
-  const expires = new Date(now.getTime() + 60 * 60000); // 1 hour expiry for manual flow
+  const expires = new Date(now.getTime() + 60 * 60000);
 
   const newCharge: PixCharge = {
     ...charge,
@@ -30,18 +41,19 @@ export const createPixCharge = (charge: Omit<PixCharge, "id" | "createdAt" | "ex
   return newCharge;
 };
 
-export const getPixChargeById = (id: string): PixCharge | undefined => {
-  return getPixCharges().find(c => c.id === id);
-};
-
-export const updatePixStatus = (id: string, status: TransactionStatus) => {
+export const updatePixStatus = (id: string, status: TransactionStatus, receiptFilename?: string) => {
   const charges = getPixCharges();
   const updated = charges.map(c => 
     c.id === id ? { 
       ...c, 
       status, 
-      receiptSentAt: status === "comprovante_enviado" ? new Date().toISOString() : c.receiptSentAt 
+      receiptSentAt: status === "comprovante_enviado" ? new Date().toISOString() : c.receiptSentAt,
+      receiptFilename: receiptFilename || c.receiptFilename
     } : c
   );
   savePixCharges(updated);
+};
+
+export const cancelPixCharge = (id: string) => {
+  updatePixStatus(id, "cancelado");
 };
