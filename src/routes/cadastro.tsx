@@ -16,12 +16,14 @@ import {
   ChevronDown
 } from "lucide-react";
 import { useState } from "react";
-import { categories, neighborhoods } from "@/data/merchants";
+import { merchants, categories, neighborhoods } from "@/data/merchants";
 import { Button } from "@/components/ui/button";
 import { TopBar } from "@/components/TopBar";
 import { FloatingNav } from "@/components/FloatingNav";
 import { Logo } from "@/components/ui/Logo";
 import { ImageUploadPreview } from "@/components/ImageUploadPreview";
+import { toast } from "sonner";
+
 
 
 export const Route = createFileRoute("/cadastro")({
