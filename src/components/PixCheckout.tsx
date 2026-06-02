@@ -23,10 +23,13 @@ export function PixCheckout({ charge, onStatusUpdate }: Props) {
     setTimeout(() => setCopied(false), 2000);
   };
 
-  const handleSendReceipt = () => {
+  const handleSendReceipt = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+
     setIsSending(true);
     setTimeout(() => {
-      updatePixStatus(charge.id, "comprovante_enviado");
+      updatePixStatus(charge.id, "comprovante_enviado", file.name);
       toast.success("Comprovante enviado para análise!");
       setIsSending(false);
       onStatusUpdate?.();
@@ -90,18 +93,30 @@ export function PixCheckout({ charge, onStatusUpdate }: Props) {
               </div>
             </div>
 
-            <Button 
-              onClick={handleSendReceipt}
-              disabled={isSending}
-              className="w-full h-14 bg-slate-900 hover:bg-slate-800 text-white font-black rounded-2xl shadow-lg transition-all flex items-center justify-center gap-2"
-            >
-              {isSending ? "Enviando..." : (
-                <>
-                  <Send className="w-4 h-4" />
-                  Enviar Comprovante
-                </>
-              )}
-            </Button>
+            <div className="relative">
+              <input
+                type="file"
+                id="receipt-upload"
+                className="hidden"
+                accept="image/*,application/pdf"
+                onChange={handleSendReceipt}
+                disabled={isSending}
+              />
+              <Button 
+                asChild
+                disabled={isSending}
+                className="w-full h-14 bg-slate-900 hover:bg-slate-800 text-white font-black rounded-2xl shadow-lg transition-all flex items-center justify-center gap-2 cursor-pointer"
+              >
+                <label htmlFor="receipt-upload">
+                  {isSending ? "Enviando..." : (
+                    <>
+                      <Send className="w-4 h-4" />
+                      Enviar Comprovante
+                    </>
+                  )}
+                </label>
+              </Button>
+            </div>
           </div>
         )}
 
