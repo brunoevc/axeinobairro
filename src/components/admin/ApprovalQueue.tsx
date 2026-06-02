@@ -100,18 +100,18 @@ export function ApprovalQueue({
                   </div>
                   <div className="p-4 bg-white border border-slate-100 rounded-2xl shadow-sm">
                     <div className="flex items-center gap-2 text-[9px] font-black text-slate-400 uppercase tracking-[0.2em] mb-1">
-                       <Tag className="w-3 h-3" /> Plano
+                       <Tag className="w-3 h-3" /> Documento
                     </div>
-                    <p className="font-bold text-violet-600 text-xs">
-                      {merchant.plan === "free" ? "Grátis" : "Premium"}
+                    <p className="font-bold text-violet-600 text-xs truncate">
+                      {merchant.document || "Não informado"}
                     </p>
                   </div>
                   <div className="p-4 bg-white border border-slate-100 rounded-2xl shadow-sm">
                     <div className="flex items-center gap-2 text-[9px] font-black text-slate-400 uppercase tracking-[0.2em] mb-1">
-                       <ShieldCheck className="w-3 h-3" /> Delivery
+                       <ShieldCheck className="w-3 h-3" /> Responsável
                     </div>
-                    <p className="font-bold text-slate-900 text-xs">
-                      {merchant.delivery ? "Disponível" : "Não"}
+                    <p className="font-bold text-slate-900 text-xs truncate">
+                      {merchant.responsibleName || "Não informado"}
                     </p>
                   </div>
                   <div className="p-4 bg-white border border-slate-100 rounded-2xl shadow-sm">
@@ -119,10 +119,11 @@ export function ApprovalQueue({
                        <Clock className="w-3 h-3" /> Status
                     </div>
                     <p className="font-bold text-slate-900 text-xs">
-                      {merchant.isOpen ? "Aberto" : "Fechado"}
+                      {merchant.status}
                     </p>
                   </div>
                 </div>
+
               </div>
 
               <div className="lg:w-64 flex flex-col gap-3 lg:border-l lg:border-slate-50 lg:pl-10">

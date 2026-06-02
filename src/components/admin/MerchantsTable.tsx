@@ -34,7 +34,7 @@ type MerchantRowProps = {
   merchant: MerchantAdmin;
   onEdit: (merchant: MerchantAdmin) => void;
   onToggleStatus: (id: string) => void;
-  onChangePlan: (id: string, plan: NonNullable<MerchantAdmin["plan"]>) => void;
+  onChangePlan: (id: string, status: Merchant["status"]) => void;
 };
 
 export function MerchantRow({
@@ -119,24 +119,24 @@ export function MerchantRow({
             onClick={() => setPlanOpen(!planOpen)}
             className="text-xs flex items-center gap-1"
           >
-            📊 Plano
+            📊 Status
             <ChevronDown className="h-3 w-3" />
           </Button>
 
           {planOpen && (
             <div className="absolute top-full left-0 mt-1 bg-card border border-accent/20 rounded-lg shadow-lg z-10 min-w-[150px]">
-              {plans.map((plan) => (
+              {(["verified", "featured", "partner", "rejected"] as const).map((status) => (
                 <button
-                  key={plan}
+                  key={status}
                   onClick={() => {
-                    onChangePlan(merchant.id, plan);
+                    onChangePlan(merchant.id, status as any); // Reusing onChangePlan for status update in table logic for simplicity
                     setPlanOpen(false);
                   }}
                   className={`w-full text-left px-3 py-2 text-xs hover:bg-accent/10 first:rounded-t-lg last:rounded-b-lg transition-colors ${
-                    currentPlan === plan ? "bg-accent/20" : ""
+                    merchant.status === status ? "bg-accent/20" : ""
                   }`}
                 >
-                  {planLabels[plan]}
+                  {statusLabels[status]}
                 </button>
               ))}
             </div>
@@ -147,11 +147,13 @@ export function MerchantRow({
   );
 }
 
+
 type MerchantsTableProps = {
   merchants: MerchantAdmin[];
   onEdit: (merchant: MerchantAdmin) => void;
   onToggleStatus: (id: string) => void;
-  onChangePlan: (id: string, plan: NonNullable<MerchantAdmin["plan"]>) => void;
+  onChangePlan: (id: string, status: Merchant["status"]) => void;
+
   filterStatus?: MerchantAdmin["status"] | "all";
 };
 
