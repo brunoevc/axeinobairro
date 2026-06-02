@@ -288,9 +288,17 @@ function ListingPage() {
 
       <main className="max-w-7xl mx-auto px-6 py-12">
         <div className="mb-8 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
-          <p className="text-xs font-black text-slate-400 uppercase tracking-widest">
-            {filteredMerchants.length} {filteredMerchants.length === 1 ? 'resultado' : 'resultados'} encontrados
-          </p>
+          <div className="flex flex-col gap-1">
+            <p className="text-xs font-black text-slate-400 uppercase tracking-widest">
+              {filteredMerchants.length} {filteredMerchants.length === 1 ? 'resultado' : 'resultados'} encontrados
+            </p>
+            {locationLoading && coords && (
+              <div className="flex items-center gap-2 text-orange-500 animate-pulse">
+                <RefreshCw className="w-3 h-3 animate-spin" />
+                <span className="text-[10px] font-black uppercase tracking-widest">Atualizando localização...</span>
+              </div>
+            )}
+          </div>
           {coords && (
              <div className="flex items-center gap-2 px-3 py-1.5 bg-orange-50 rounded-xl border border-orange-100 shadow-sm animate-in fade-in slide-in-from-right-4">
                 <Navigation className="w-3.5 h-3.5 text-orange-600" />

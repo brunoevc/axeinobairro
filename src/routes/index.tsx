@@ -311,7 +311,15 @@ function Index() {
                 <Navigation className="w-8 h-8 text-orange-600" />
                 Mais próximos de você
               </h2>
-              <p className="text-slate-500 font-medium text-lg">Negócios que estão a poucos passos de distância</p>
+              <div className="flex items-center gap-3 mt-2">
+                <p className="text-slate-500 font-medium text-lg">Negócios que estão a poucos passos de distância</p>
+                {locationLoading && (
+                  <div className="flex items-center gap-2 px-2 py-1 bg-orange-50 rounded-lg animate-pulse">
+                    <RefreshCw className="w-3 h-3 text-orange-500 animate-spin" />
+                    <span className="text-[10px] font-black text-orange-600 uppercase tracking-widest">Atualizando GPS...</span>
+                  </div>
+                )}
+              </div>
             </div>
           </div>
 
