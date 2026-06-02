@@ -20,9 +20,8 @@ export const MerchantCard = memo(function MerchantCard({ merchant }: Props) {
   const { coords, getDistance, formatDistance } = useLocation();
   const [imageError, setImageError] = useState(false);
 
-  const waUrl = `https://wa.me/${merchant.whatsapp}?text=${encodeURIComponent(
-    `Olá ${merchant.name}! Vi seu perfil no Axêi no Bairro e gostaria de mais informações 👋`
-  )}`;
+  const waUrl = getWhatsAppUrl(merchant.whatsapp, merchant.name);
+
 
   const distance = coords 
     ? getDistance(coords.latitude, coords.longitude, merchant.latitude, merchant.longitude)
@@ -94,21 +93,25 @@ export const MerchantCard = memo(function MerchantCard({ merchant }: Props) {
 
         <div className="flex flex-wrap items-center gap-2 mb-6 mt-auto">
           {merchant.isOpen ? (
-            <div className="flex flex-col gap-1">
-              <span className="inline-flex items-center gap-1 rounded-full bg-emerald-50 px-2.5 py-1 text-[10px] font-bold text-emerald-600 border border-emerald-100">
-                <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
-                Aberto agora
+            <div className="flex items-center gap-1.5 rounded-full bg-emerald-50 px-2.5 py-1 text-[10px] font-bold text-emerald-600 border border-emerald-100">
+              <span className="relative flex h-2 w-2">
+                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+                <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
               </span>
-              <span className="text-[10px] font-bold text-slate-400 ml-1">
-                Fecha às {merchant.hours.split(' - ')[1]}
-              </span>
+              Aberto agora
+              {merchant.hours.includes('-') && (
+                <span className="font-medium text-emerald-500/80 border-l border-emerald-200 pl-1.5 ml-1.5">
+                  Fecha às {merchant.hours.split('-')[1].trim()}
+                </span>
+              )}
             </div>
           ) : (
-            <span className="inline-flex items-center gap-1 rounded-full bg-slate-50 px-2.5 py-1 text-[10px] font-bold text-slate-400 border border-slate-100">
+            <div className="inline-flex items-center gap-1 rounded-full bg-slate-100 px-2.5 py-1 text-[10px] font-bold text-slate-500 border border-slate-200">
               <Clock className="h-3 w-3" />
               Fechado
-            </span>
+            </div>
           )}
+
           {merchant.delivery && (
             <span className="inline-flex items-center gap-1 rounded-full bg-blue-50 px-2.5 py-1 text-[10px] font-bold text-blue-600 border border-blue-100">
               <Bike className="h-3 w-3" />
@@ -148,13 +151,24 @@ export const MerchantCard = memo(function MerchantCard({ merchant }: Props) {
           </Button>
           <Button
             asChild
-            className="flex-1 rounded-xl h-11 text-xs font-bold bg-emerald-600 hover:bg-emerald-700 text-white shadow-md shadow-emerald-100"
+            className={cn(
+              "flex-1 rounded-xl h-11 text-xs font-bold transition-all",
+              !waUrl 
+                ? "bg-slate-100 text-slate-400 cursor-not-allowed hover:bg-slate-100" 
+                : "bg-emerald-600 hover:bg-emerald-700 text-white shadow-md shadow-emerald-100"
+            )}
+            disabled={!waUrl}
           >
-            <a href={waUrl} target="_blank" rel="noopener noreferrer">
-              <MessageCircle className="h-4 w-4 mr-1.5" />
-              Chamar no WhatsApp
-            </a>
+            {waUrl ? (
+              <a href={waUrl} target="_blank" rel="noopener noreferrer">
+                <MessageCircle className="h-4 w-4 mr-1.5" />
+                Chamar no WhatsApp
+              </a>
+            ) : (
+              <span>WhatsApp indisponível</span>
+            )}
           </Button>
+
         </div>
       </div>
     </article>
