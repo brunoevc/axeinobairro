@@ -173,23 +173,15 @@ export function CatalogAdmin({ merchantId, onBack }: CatalogAdminProps) {
             </div>
 
             <div className="space-y-4">
-              <div>
-                <label className="text-xs font-black text-slate-900 uppercase tracking-widest mb-2 block">URL da Imagem</label>
-                <div className="flex gap-2">
-                  <Input 
-                    value={currentProduct.image}
-                    onChange={e => setCurrentProduct({...currentProduct, image: e.target.value})}
-                    placeholder="https://images.unsplash.com/..."
-                    className="rounded-xl border-slate-200"
-                  />
-                  <div className="w-12 h-12 bg-white rounded-xl border border-slate-200 flex items-center justify-center overflow-hidden flex-shrink-0">
-                    {currentProduct.image ? (
-                      <img src={currentProduct.image} alt="Preview" className="w-full h-full object-cover" />
-                    ) : (
-                      <ImageIcon className="w-6 h-6 text-slate-300" />
-                    )}
-                  </div>
-                </div>
+              <div className="md:col-span-2">
+                <ImageCropUpload
+                  label="Imagem do Produto"
+                  description="Use uma imagem clara que destaque o produto"
+                  recommendedSize="1080x1080 px • 1:1"
+                  aspectRatio={1}
+                  value={currentProduct.image || ""}
+                  onChange={base64 => setCurrentProduct({...currentProduct, image: base64})}
+                />
               </div>
 
               <div className="flex items-center gap-6 pt-4">
