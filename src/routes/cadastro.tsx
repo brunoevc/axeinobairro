@@ -429,7 +429,18 @@ function RegistrationPage() {
                 </div>
               </div>
 
-              <div className="pt-4 flex items-center gap-3 text-orange-200">
+                <div className="pt-4">
+                  <ImageCropUpload
+                    label="Imagem da Promoção"
+                    description="Destaque sua oferta visualmente"
+                    recommendedSize="1080x1080 px • 1:1"
+                    aspectRatio={1}
+                    value={formData.promoUrl}
+                    onChange={(base64) => setFormData({ ...formData, promoUrl: base64 })}
+                  />
+                </div>
+
+                <div className="pt-4 flex items-center gap-3 text-orange-200">
                  <ShieldCheck className="w-5 h-5 opacity-60" />
                  <p className="text-[11px] font-bold leading-relaxed">Sua promoção será destacada com um selo especial nos resultados de busca.</p>
               </div>
