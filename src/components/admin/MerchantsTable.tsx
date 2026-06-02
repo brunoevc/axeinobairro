@@ -100,7 +100,7 @@ export function MerchantRow({
           ✏️ Editar
         </Button>
 
-        {merchant.status !== "rejected" && merchant.status !== "pending" && (
+        {merchant.status !== "rejected" && (
           <Button
             variant="outline"
             size="sm"
@@ -110,6 +110,7 @@ export function MerchantRow({
             {merchant.status === "pending" ? "✅ Verificar" : "⏳ Pendente"}
           </Button>
         )}
+
 
         <div className="relative">
           <Button
