@@ -15,7 +15,7 @@ import {
   Rocket,
   ChevronDown
 } from "lucide-react";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { merchants, categories, neighborhoods } from "@/data/merchants";
 import { Button } from "@/components/ui/button";
 import { TopBar } from "@/components/TopBar";
