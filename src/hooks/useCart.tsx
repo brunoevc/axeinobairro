@@ -67,18 +67,10 @@ export const CartProvider: React.FC<{ children: React.ReactNode }> = ({ children
       return [...prev, { ...product, quantity: 1 }];
     });
     
-    trackEvent(product.merchantId, "view"); // Using existing trackEvent or custom
-    // We should probably add product_added to metrics
-    const events = JSON.parse(localStorage.getItem('axei_events') || '[]');
-    events.push({
-      type: 'product_added',
-      merchantId: product.merchantId,
-      productId: product.id,
-      timestamp: new Date().toISOString()
-    });
-    localStorage.setItem('axei_events', JSON.stringify(events));
+    trackEvent(product.merchantId, "product_added");
 
     toast.success(`${product.name} adicionado ao carrinho`);
+
   };
 
   const removeItem = (productId: string) => {

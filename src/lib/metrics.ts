@@ -10,7 +10,10 @@ export type EventType =
   | "route" 
   | "share" 
   | "report" 
-  | "search_appearance";
+  | "search_appearance"
+  | "product_added"
+  | "pedido_whatsapp";
+
 
 export const trackEvent = (merchantId: string, eventType: EventType) => {
   try {

@@ -27,16 +27,10 @@ export function CartDrawer({ isOpen, onClose, merchant }: CartDrawerProps) {
   const handleSendOrder = () => {
     if (!merchant) return;
     
-    // Track order event
-    const events = JSON.parse(localStorage.getItem('axei_events') || '[]');
-    events.push({
-      type: 'pedido_whatsapp',
-      merchantId: merchant.id,
-      timestamp: new Date().toISOString()
-    });
-    localStorage.setItem('axei_events', JSON.stringify(events));
+    trackEvent(merchant.id, "pedido_whatsapp");
 
     const url = getOrderWhatsAppUrl(merchant, items, notes);
+
     if (url) {
       window.open(url, '_blank');
     }
