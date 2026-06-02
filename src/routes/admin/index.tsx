@@ -199,14 +199,14 @@ function AdminDashboard() {
                   Taxa de Conversão
                 </p>
                 <p className="text-6xl font-black text-slate-900 tracking-tighter">
-                  {stats.totalContactAttempts}
+                  {state.merchants.reduce((acc, m) => acc + (m.views || 0), 0) > 0 
+                    ? Math.round((stats.totalWhatsappClicks / state.merchants.reduce((acc, m) => acc + (m.views || 0), 1)) * 100) 
+                    : 0}%
                 </p>
               </div>
               <div className="text-right">
                 <div className="inline-flex items-center px-4 py-1.5 rounded-full bg-orange-600 text-white text-[11px] font-black uppercase shadow-lg shadow-orange-200">
-                  {state.merchants.reduce((acc, m) => acc + (m.views || 0), 0) > 0 
-                    ? Math.round((stats.totalWhatsappClicks / state.merchants.reduce((acc, m) => acc + (m.views || 0), 1)) * 100) 
-                    : 0}% Conversão
+                  {stats.totalWhatsappClicks} contatos via WhatsApp
                 </div>
               </div>
             </div>
