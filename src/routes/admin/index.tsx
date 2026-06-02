@@ -91,11 +91,20 @@ function AdminDashboard() {
           </p>
         </div>
         
-        <div className="flex items-center gap-2 px-4 py-2 bg-emerald-50 rounded-2xl border border-emerald-100 shadow-sm">
-           <div className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
-           <span className="text-xs font-black text-emerald-600 uppercase tracking-widest">Sistema Online</span>
+        <div className="flex items-center gap-4">
+          <Button asChild className="rounded-2xl h-12 px-6 font-black gap-2 bg-slate-900 hover:bg-slate-800 shadow-xl shadow-slate-100 transition-all active:scale-95">
+            <Link to="/admin/leads">
+              <Users className="w-4 h-4 text-orange-500" />
+              Gestão de Leads (CRM)
+            </Link>
+          </Button>
+          <div className="flex items-center gap-2 px-4 py-2 bg-emerald-50 rounded-2xl border border-emerald-100 shadow-sm">
+             <div className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
+             <span className="text-xs font-black text-emerald-600 uppercase tracking-widest">Sistema Online</span>
+          </div>
         </div>
       </div>
+
 
       {/* Stats Grid */}
       <section>
