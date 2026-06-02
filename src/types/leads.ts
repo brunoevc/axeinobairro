@@ -6,10 +6,11 @@ export type Lead = {
   merchantId: string;
   customerName: string;
   customerPhone: string;
-  source: "whatsapp" | "pedido" | "share" | "promocao";
+  source: "whatsapp" | "pedido" | "share" | "promocao" | "order";
   status: LeadStatus;
   notes?: string;
   estimatedValue?: number;
   createdAt: string;
   updatedAt: string;
+  checkoutData?: any;
 };
