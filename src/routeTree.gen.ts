@@ -22,6 +22,7 @@ import { Route as NegociosIdRouteImport } from './routes/negocios/$id'
 import { Route as AdminPlanosRouteImport } from './routes/admin/planos'
 import { Route as AdminLojasRouteImport } from './routes/admin/lojas'
 import { Route as AdminLeadsRouteImport } from './routes/admin/leads'
+import { Route as AdminCampanhasRouteImport } from './routes/admin/campanhas'
 import { Route as AdminAprovacoesRouteImport } from './routes/admin/aprovacoes'
 
 const PerfilRoute = PerfilRouteImport.update({
@@ -89,6 +90,11 @@ const AdminLeadsRoute = AdminLeadsRouteImport.update({
   path: '/leads',
   getParentRoute: () => AdminRoute,
 } as any)
+const AdminCampanhasRoute = AdminCampanhasRouteImport.update({
+  id: '/campanhas',
+  path: '/campanhas',
+  getParentRoute: () => AdminRoute,
+} as any)
 const AdminAprovacoesRoute = AdminAprovacoesRouteImport.update({
   id: '/aprovacoes',
   path: '/aprovacoes',
@@ -104,6 +110,7 @@ export interface FileRoutesByFullPath {
   '/ofertas': typeof OfertasRoute
   '/perfil': typeof PerfilRoute
   '/admin/aprovacoes': typeof AdminAprovacoesRoute
+  '/admin/campanhas': typeof AdminCampanhasRoute
   '/admin/leads': typeof AdminLeadsRoute
   '/admin/lojas': typeof AdminLojasRoute
   '/admin/planos': typeof AdminPlanosRoute
@@ -118,6 +125,7 @@ export interface FileRoutesByTo {
   '/ofertas': typeof OfertasRoute
   '/perfil': typeof PerfilRoute
   '/admin/aprovacoes': typeof AdminAprovacoesRoute
+  '/admin/campanhas': typeof AdminCampanhasRoute
   '/admin/leads': typeof AdminLeadsRoute
   '/admin/lojas': typeof AdminLojasRoute
   '/admin/planos': typeof AdminPlanosRoute
@@ -135,6 +143,7 @@ export interface FileRoutesById {
   '/ofertas': typeof OfertasRoute
   '/perfil': typeof PerfilRoute
   '/admin/aprovacoes': typeof AdminAprovacoesRoute
+  '/admin/campanhas': typeof AdminCampanhasRoute
   '/admin/leads': typeof AdminLeadsRoute
   '/admin/lojas': typeof AdminLojasRoute
   '/admin/planos': typeof AdminPlanosRoute
@@ -153,6 +162,7 @@ export interface FileRouteTypes {
     | '/ofertas'
     | '/perfil'
     | '/admin/aprovacoes'
+    | '/admin/campanhas'
     | '/admin/leads'
     | '/admin/lojas'
     | '/admin/planos'
@@ -167,6 +177,7 @@ export interface FileRouteTypes {
     | '/ofertas'
     | '/perfil'
     | '/admin/aprovacoes'
+    | '/admin/campanhas'
     | '/admin/leads'
     | '/admin/lojas'
     | '/admin/planos'
@@ -183,6 +194,7 @@ export interface FileRouteTypes {
     | '/ofertas'
     | '/perfil'
     | '/admin/aprovacoes'
+    | '/admin/campanhas'
     | '/admin/leads'
     | '/admin/lojas'
     | '/admin/planos'
@@ -294,6 +306,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AdminLeadsRouteImport
       parentRoute: typeof AdminRoute
     }
+    '/admin/campanhas': {
+      id: '/admin/campanhas'
+      path: '/campanhas'
+      fullPath: '/admin/campanhas'
+      preLoaderRoute: typeof AdminCampanhasRouteImport
+      parentRoute: typeof AdminRoute
+    }
     '/admin/aprovacoes': {
       id: '/admin/aprovacoes'
       path: '/aprovacoes'
@@ -306,6 +325,7 @@ declare module '@tanstack/react-router' {
 
 interface AdminRouteChildren {
   AdminAprovacoesRoute: typeof AdminAprovacoesRoute
+  AdminCampanhasRoute: typeof AdminCampanhasRoute
   AdminLeadsRoute: typeof AdminLeadsRoute
   AdminLojasRoute: typeof AdminLojasRoute
   AdminPlanosRoute: typeof AdminPlanosRoute
@@ -314,6 +334,7 @@ interface AdminRouteChildren {
 
 const AdminRouteChildren: AdminRouteChildren = {
   AdminAprovacoesRoute: AdminAprovacoesRoute,
+  AdminCampanhasRoute: AdminCampanhasRoute,
   AdminLeadsRoute: AdminLeadsRoute,
   AdminLojasRoute: AdminLojasRoute,
   AdminPlanosRoute: AdminPlanosRoute,

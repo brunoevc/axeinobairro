@@ -109,7 +109,7 @@ export function MerchantEditForm({
                      <label className="block text-xs font-black text-slate-400 uppercase tracking-widest">
                        Exposição Comercial
                      </label>
-                     <span className="text-[10px] font-bold text-orange-500">Prioridade A > B > C</span>
+                     <span className="text-[10px] font-bold text-orange-500">Prioridade A &gt; B &gt; C</span>
                    </div>
                    <select
                      value={formData.exposureLevel}
