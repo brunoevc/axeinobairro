@@ -107,10 +107,8 @@ export function LocationProvider({ children }: { children: React.ReactNode }) {
     const { latitude, longitude, accuracy } = position.coords;
     
     setState(prev => {
-      // Don't update if manual location is set and it's not a fresh GPS request
       if (prev.manualNeighborhood) return prev;
 
-      // Check if coordinates changed significantly or accuracy improved
       if (prev.coords) {
         const dist = getDistance(prev.coords.latitude, prev.coords.longitude, latitude, longitude);
         if (dist < MIN_DISTANCE_CHANGE && (prev.accuracy && accuracy >= prev.accuracy)) {
@@ -187,7 +185,6 @@ export function LocationProvider({ children }: { children: React.ReactNode }) {
   const setManualLocation = useCallback((neighborhood: string, city: string) => {
     const locationName = `${neighborhood} - ${city}`;
     
-    // Stop watching GPS when manual location is selected
     if (watchId.current !== null) {
       navigator.geolocation.clearWatch(watchId.current);
       watchId.current = null;
@@ -206,12 +203,11 @@ export function LocationProvider({ children }: { children: React.ReactNode }) {
       manualNeighborhood: neighborhood,
       manualCity: city,
       locationName,
-      coords: null // Clear coords to prioritize neighborhood-based filtering if needed
+      coords: null
     });
   }, []);
 
   const retry = useCallback(() => {
-    // Clear manual location and restart GPS
     setState(prev => ({
       ...prev,
       manualNeighborhood: null,
@@ -252,8 +248,8 @@ export function LocationProvider({ children }: { children: React.ReactNode }) {
 
     const handleVisibilityChange = () => {
       if (document.visibilityState === "visible") {
-        const saved = localStorage.getItem(STORAGE_KEY);
-        const parsed = saved ? JSON.parse(saved) : null;
+        const savedStr = localStorage.getItem(STORAGE_KEY);
+        const parsed = savedStr ? JSON.parse(savedStr) : null;
         if (!parsed?.manualNeighborhood) {
            fetchLocation();
         }
