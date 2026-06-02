@@ -33,28 +33,35 @@ export const Route = createFileRoute("/cadastro")({
 function RegistrationPage() {
   const navigate = useNavigate();
   const [isSubmitted, setIsSubmitted] = useState(false);
-  const [formData, setFormData] = useState({
-    name: "",
-    category: "",
-    neighborhood: "",
-    address: "",
-    whatsapp: "",
-    instagram: "",
-    facebook: "",
-    description: "",
-    hours: "",
-    document: "", // CPF or CNPJ
-    responsibleName: "",
-    responsibleDeclaration: false,
-    image: "",
-    logoUrl: "",
-    coverUrl: "",
-    cardUrl: "",
-    promoUrl: "",
-    promoTitle: "",
-    promoDesc: "",
-    promoActive: false
+  const [formData, setFormData] = useState(() => {
+    const saved = localStorage.getItem("axei_cadastro_draft");
+    return saved ? JSON.parse(saved) : {
+      name: "",
+      category: "",
+      neighborhood: "",
+      address: "",
+      whatsapp: "",
+      instagram: "",
+      facebook: "",
+      description: "",
+      hours: "",
+      document: "", // CPF or CNPJ
+      responsibleName: "",
+      responsibleDeclaration: false,
+      image: "",
+      logoUrl: "",
+      coverUrl: "",
+      cardUrl: "",
+      promoUrl: "",
+      promoTitle: "",
+      promoDesc: "",
+      promoActive: false
+    };
   });
+
+  useEffect(() => {
+    localStorage.setItem("axei_cadastro_draft", JSON.stringify(formData));
+  }, [formData]);
 
 
   const handleSubmit = (e: React.FormEvent) => {
