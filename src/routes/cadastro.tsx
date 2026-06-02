@@ -329,31 +329,31 @@ function RegistrationPage() {
                 </div>
               </div>
               <div className="space-y-8">
-                <ImageUploadPreview
+                <ImageCropUpload
                   label="Logo da Loja"
                   description="Aparecerá no seu perfil e resultados"
                   recommendedSize="512x512 px • 1:1"
-                  aspectRatio="square"
+                  aspectRatio={1}
                   value={formData.logoUrl}
-                  onChange={(url) => setFormData({ ...formData, logoUrl: url })}
+                  onChange={(base64) => setFormData({ ...formData, logoUrl: base64 })}
                 />
 
-                <ImageUploadPreview
+                <ImageCropUpload
                   label="Imagem do Card"
                   description="Principal imagem na listagem de bairros"
                   recommendedSize="1200x900 px • 4:3"
-                  aspectRatio="card"
+                  aspectRatio={4/3}
                   value={formData.cardUrl}
-                  onChange={(url) => setFormData({ ...formData, cardUrl: url })}
+                  onChange={(base64) => setFormData({ ...formData, cardUrl: base64 })}
                 />
 
-                <ImageUploadPreview
+                <ImageCropUpload
                   label="Capa do Comércio"
                   description="Destaque no topo da sua página"
                   recommendedSize="1600x900 px • 16:9"
-                  aspectRatio="video"
+                  aspectRatio={16/9}
                   value={formData.coverUrl}
-                  onChange={(url) => setFormData({ ...formData, coverUrl: url })}
+                  onChange={(base64) => setFormData({ ...formData, coverUrl: base64 })}
                 />
               </div>
             </div>
