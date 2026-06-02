@@ -2,18 +2,16 @@ import { AdminStats } from "@/data/admin";
 
 const planLabels = {
   free: "Grátis",
-  assisted: "R$27",
-  local_featured: "R$47",
-  highlighted: "R$97",
-  premium_partner: "R$147",
+  essential: "R$29",
+  sales: "R$79",
+  pro: "R$149",
 };
 
 const planColors = {
   free: "bg-slate-400",
-  assisted: "bg-blue-400",
-  local_featured: "bg-emerald-500",
-  highlighted: "bg-violet-600",
-  premium_partner: "bg-amber-500",
+  essential: "bg-blue-400",
+  sales: "bg-emerald-500",
+  pro: "bg-amber-500",
 };
 
 const planBgColors = {
@@ -29,11 +27,10 @@ export function PlansChart({ stats }: { stats: AdminStats | null }) {
 
   const total = stats.totalMerchants;
   const plans = [
-    { key: "free" as const, name: "Grátis", count: stats.planDistribution.free },
-    { key: "assisted" as const, name: "Cadastro Assistido", count: stats.planDistribution.assisted },
-    { key: "local_featured" as const, name: "Destaque Local", count: stats.planDistribution.local_featured },
-    { key: "highlighted" as const, name: "Loja em Destaque", count: stats.planDistribution.highlighted },
-    { key: "premium_partner" as const, name: "Parceiro Premium", count: stats.planDistribution.premium_partner },
+    { key: "free" as const, name: "Presença Local", count: stats.planDistribution.free },
+    { key: "essential" as const, name: "Bairro Essencial", count: stats.planDistribution.essential },
+    { key: "sales" as const, name: "Bairro Vendas", count: stats.planDistribution.sales },
+    { key: "pro" as const, name: "Bairro Pro", count: stats.planDistribution.pro },
   ];
 
   return (
@@ -77,7 +74,7 @@ export function PlansChart({ stats }: { stats: AdminStats | null }) {
           {plans
             .filter((p) => p.key !== "free")
             .map((plan) => {
-              const revenue = plan.count * (plan.key === "assisted" ? 27 : plan.key === "local_featured" ? 47 : plan.key === "highlighted" ? 97 : 147);
+              const revenue = plan.count * (plan.key === "essential" ? 29 : plan.key === "sales" ? 79 : 149);
               return (
                 <div key={plan.key} className="bg-slate-50 border border-slate-100 rounded-2xl p-4 group hover:bg-white hover:shadow-md transition-all">
                   <p className="text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-1">{plan.name.split(' ')[0]}</p>

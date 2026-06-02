@@ -22,33 +22,26 @@ const planDetails = {
     icon: Zap,
     color: "bg-slate-50 text-slate-400 border-slate-100"
   },
-  assisted: {
-    name: "Cadastro Assistido",
-    price: "R$ 27",
-    description: "Seu perfil feito pela equipe Axêi",
+  essential: {
+    name: "Bairro Essencial",
+    price: "R$ 29",
+    description: "Destaque básico e perfil otimizado",
     icon: Target,
     color: "bg-blue-50 text-blue-600 border-blue-100"
   },
-  local_featured: {
-    name: "Destaque Local",
-    price: "R$ 47",
-    description: "Apareça em destaque no seu bairro e categoria",
+  sales: {
+    name: "Bairro Vendas",
+    price: "R$ 79",
+    description: "Prioridade em buscas e selo de verificado",
     icon: TrendingUp,
     color: "bg-emerald-50 text-emerald-600 border-emerald-100"
   },
-  highlighted: {
-    name: "Loja em Destaque",
-    price: "R$ 97",
-    description: "Prioridade máxima na listagem com banner",
+  pro: {
+    name: "Bairro Pro",
+    price: "R$ 149",
+    description: "Máxima exposição, suporte e analytics completo",
     icon: ShieldCheck,
     color: "bg-violet-50 text-violet-600 border-violet-100"
-  },
-  premium_partner: {
-    name: "Parceiro Premium",
-    price: "R$ 147",
-    description: "Máxima exposição com página completa",
-    icon: CreditCard,
-    color: "bg-amber-50 text-amber-600 border-amber-100"
   },
 };
 
@@ -65,16 +58,14 @@ function AdminPlans() {
 
   const planKeys: (keyof typeof planDetails)[] = [
     "free",
-    "assisted",
-    "local_featured",
-    "highlighted",
-    "premium_partner",
+    "essential",
+    "sales",
+    "pro",
   ];
 
-  const totalRevenue = stats.planRevenue.assisted +
-    stats.planRevenue.local_featured +
-    stats.planRevenue.highlighted +
-    stats.planRevenue.premium_partner;
+  const totalRevenue = stats.planRevenue.essential +
+    stats.planRevenue.sales +
+    stats.planRevenue.pro;
 
   const paidMerchants = state.merchants.filter((m) => m.plan !== "free").length;
   const conversionRate = Math.round((paidMerchants / (stats.totalMerchants || 1)) * 100);
@@ -212,7 +203,7 @@ function AdminPlans() {
                        <p className="text-slate-400 text-[10px] font-black uppercase tracking-widest mb-1">Impacto</p>
                        <div className="flex gap-1">
                           {[1,2,3,4,5].map(i => (
-                             <div key={i} className={`w-1.5 h-1.5 rounded-full ${i <= (key === 'free' ? 1 : key === 'assisted' ? 2 : 4) ? 'bg-violet-600' : 'bg-slate-100'}`} />
+                             <div key={i} className={`w-1.5 h-1.5 rounded-full ${i <= (key === 'free' ? 1 : key === 'essential' ? 2 : key === 'sales' ? 4 : 5) ? 'bg-violet-600' : 'bg-slate-100'}`} />
                           ))}
                        </div>
                     </div>

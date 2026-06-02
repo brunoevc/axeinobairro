@@ -1,5 +1,6 @@
 import { MessageCircle } from "lucide-react";
 import { cn, getWhatsAppUrl } from "@/lib/utils";
+import { trackEvent } from "@/lib/metrics";
 import { Button } from "@/components/ui/button";
 
 interface WhatsAppButtonProps {
@@ -40,7 +41,15 @@ export function WhatsAppButton({
         className
       )}
     >
-      <a href={waUrl} target="_blank" rel="noopener noreferrer">
+      <a 
+        href={waUrl} 
+        target="_blank" 
+        rel="noopener noreferrer"
+        onClick={() => {
+          // Extra tracking can be added here if merchantId was available
+          // But phone/merchantName are unique enough to identify if we pass ID
+        }}
+      >
         <MessageCircle className="h-4 w-4 mr-1.5" />
         {text}
       </a>

@@ -32,10 +32,21 @@ export type Merchant = {
     description: string;
     isActive: boolean;
   };
-  plan?: "free" | "assisted" | "local_featured" | "highlighted" | "premium_partner";
+  plan?: "free" | "essential" | "sales" | "pro";
+  planStatus?: "active" | "expired" | "pending";
+  planExpiry?: string;
   featured?: boolean;
+  isSponsored?: boolean;
   latitude: number;
   longitude: number;
+  // Metrics
+  views?: number;
+  whatsappClicks?: number;
+  instagramClicks?: number;
+  routeClicks?: number;
+  shareClicks?: number;
+  reportsCount?: number;
+  searchAppearances?: number;
   // Trust & Verification fields
   status: "pending" | "verified" | "featured" | "partner" | "rejected";
   document: string; // CPF or CNPJ

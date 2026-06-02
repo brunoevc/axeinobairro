@@ -7,18 +7,16 @@ import { Button } from "@/components/ui/button";
 
 const planLabels: Record<string, string> = {
   free: "Grátis",
-  assisted: "R$27",
-  local_featured: "R$47",
-  highlighted: "R$97",
-  premium_partner: "R$147",
+  essential: "R$29",
+  sales: "R$79",
+  pro: "R$149",
 };
 
 const planColors: Record<string, string> = {
   free: "bg-slate-100 text-slate-700 dark:bg-slate-900 dark:text-slate-300",
-  assisted: "bg-blue-100 text-blue-700 dark:bg-blue-900 dark:text-blue-300",
-  local_featured: "bg-accent/20 text-accent dark:bg-accent/30",
-  highlighted: "bg-purple-100 text-purple-700 dark:bg-purple-900 dark:text-purple-300",
-  premium_partner: "bg-rose-100 text-rose-700 dark:bg-rose-900 dark:text-rose-300",
+  essential: "bg-blue-100 text-blue-700 dark:bg-blue-900 dark:text-blue-300",
+  sales: "bg-accent/20 text-accent dark:bg-accent/30",
+  pro: "bg-rose-100 text-rose-700 dark:bg-rose-900 dark:text-rose-300",
 };
 
 const statusLabels: Record<Merchant["status"], string> = {
@@ -48,10 +46,9 @@ export function MerchantRow({
   
   const plans: NonNullable<MerchantAdmin["plan"]>[] = [
     "free",
-    "assisted",
-    "local_featured",
-    "highlighted",
-    "premium_partner",
+    "essential",
+    "sales",
+    "pro",
   ];
 
   return (
@@ -67,7 +64,8 @@ export function MerchantRow({
           </p>
         </div>
         <div className="text-right text-xs text-muted-foreground">
-          <p>{merchant.whatsappClicks || 0} cliques</p>
+          <p>{merchant.views || 0} views</p>
+          <p>{merchant.whatsappClicks || 0} wpp</p>
           <p>⭐ {merchant.rating}</p>
         </div>
       </div>
@@ -85,9 +83,14 @@ export function MerchantRow({
         >
           {statusLabels[merchant.status]}
         </span>
-        <span className={`inline-block px-2 py-1 rounded text-xs font-medium ${planColors[currentPlan]}`}>
+        <span className={`inline-block px-2 py-1 rounded text-xs font-black uppercase tracking-widest ${planColors[currentPlan]}`}>
           {planLabels[currentPlan]}
         </span>
+        {merchant.reportsCount && merchant.reportsCount > 0 ? (
+          <span className="inline-block px-2 py-1 rounded text-[10px] font-black uppercase bg-red-100 text-red-600 border border-red-200">
+            ⚠️ {merchant.reportsCount} Denúncias
+          </span>
+        ) : null}
       </div>
 
       <div className="flex flex-wrap gap-2">

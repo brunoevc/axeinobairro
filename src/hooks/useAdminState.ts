@@ -1,4 +1,5 @@
 import { useState, useEffect, useCallback } from "react";
+import { trackEvent } from "@/lib/metrics";
 import { MerchantAdmin, AdminAction, AdminState, AdminStats, calculateAdminStats, getInitialAdminState } from "@/data/admin";
 import { Merchant } from "@/data/merchants";
 
@@ -172,44 +173,12 @@ export function useAdminState() {
     [state, saveState]
   );
 
-  // Simular clique WhatsApp
+  // Simular clique WhatsApp (legacy support for component calls)
   const recordWhatsappClick = useCallback(
     (merchantId: string) => {
-      if (!state) return;
-
-      const merchant = state.merchants.find((m) => m.id === merchantId);
-      if (!merchant) return;
-
-      const updatedMerchants = state.merchants.map((m) =>
-        m.id === merchantId
-          ? {
-              ...m,
-              whatsappClicks: (m.whatsappClicks || 0) + 1,
-              contactAttempts: (m.contactAttempts || 0) + 1,
-              lastContactDate: new Date().toISOString(),
-            }
-          : m
-      );
-
-      const action: AdminAction = {
-        id: `act-${Date.now()}`,
-        type: "contact",
-        merchantId,
-        merchantName: merchant.name,
-        adminName: "System",
-        timestamp: new Date().toISOString(),
-        details: {},
-      };
-
-      const newState: AdminState = {
-        merchants: updatedMerchants,
-        actions: [action, ...state.actions],
-        lastUpdated: new Date().toISOString(),
-      };
-
-      saveState(newState);
+      trackEvent(merchantId, "whatsapp");
     },
-    [state, saveState]
+    []
   );
 
   // Editar merchant
