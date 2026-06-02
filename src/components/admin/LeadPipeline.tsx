@@ -126,7 +126,7 @@ export function LeadPipeline({ leads, onUpdate, merchants }: LeadPipelineProps) 
 
                       <div className="flex items-center justify-between gap-1 pt-3 border-t border-slate-50">
                         <p className="text-[9px] font-bold text-slate-300">
-                          {format(new Date(lead.createdAt), "dd MMM, HH:mm", { locale: pt_BR })}
+                          {format(new Date(lead.createdAt), "dd MMM, HH:mm", { locale: ptBR })}
                         </p>
                         <div className="flex gap-1">
                           {status !== "cliente" && (
