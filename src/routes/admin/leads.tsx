@@ -86,10 +86,10 @@ function AdminLeads() {
         <div className="flex items-center gap-3 bg-slate-50 p-1.5 rounded-2xl border border-slate-100 shadow-inner">
           <Button 
             variant={viewMode === "pipeline" ? "default" : "ghost"}
-            className={cn(
-              "rounded-xl h-11 px-6 font-black uppercase tracking-widest text-[10px]",
+            className={`rounded-xl h-11 px-6 font-black uppercase tracking-widest text-[10px] ${
               viewMode === "pipeline" ? "bg-slate-900 text-white shadow-lg" : "text-slate-400"
-            )}
+            }`}
+
             onClick={() => setViewMode("pipeline")}
           >
             <LayoutGrid className="w-4 h-4 mr-2" />
@@ -97,10 +97,10 @@ function AdminLeads() {
           </Button>
           <Button 
             variant={viewMode === "list" ? "default" : "ghost"}
-            className={cn(
-              "rounded-xl h-11 px-6 font-black uppercase tracking-widest text-[10px]",
+            className={`rounded-xl h-11 px-6 font-black uppercase tracking-widest text-[10px] ${
               viewMode === "list" ? "bg-slate-900 text-white shadow-lg" : "text-slate-400"
-            )}
+            }`}
+
             onClick={() => setViewMode("list")}
           >
             <List className="w-4 h-4 mr-2" />
@@ -148,10 +148,10 @@ function AdminLeads() {
       </section>
 
       {/* Main CRM Content */}
-      <section className={cn(
-        "bg-white border border-slate-100 rounded-[3rem] shadow-sm",
+      <section className={`bg-white border border-slate-100 rounded-[3rem] shadow-sm ${
         viewMode === "pipeline" ? "p-10 pb-2" : "p-10"
-      )}>
+      }`}>
+
         {viewMode === "pipeline" ? (
           <LeadPipeline 
             leads={leads} 
@@ -170,6 +170,3 @@ function AdminLeads() {
   );
 }
 
-function cn(...inputs: any[]) {
-  return inputs.filter(Boolean).join(" ");
-}
