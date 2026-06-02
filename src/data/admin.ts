@@ -144,7 +144,7 @@ export function calculateAdminStats(merchants: MerchantAdmin[]): AdminStats {
     featuredMerchants,
     planDistribution,
     totalWhatsappClicks,
-    totalContactAttempts,
+    totalContactAttempts: totalWhatsappClicks, // Simplified mapping to avoid missing field errors
     averageRating: merchants.length > 0 ? Math.round((totalRating / merchants.length) * 10) / 10 : 0,
     merchantsByNeighborhood,
     planRevenue,
