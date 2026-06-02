@@ -68,6 +68,7 @@ export const getPixLinkById = (id: string): PixLink | undefined => {
 
 export const createPixLink = (link: Omit<PixLink, "id" | "createdAt" | "active">): PixLink => {
   const links = getPixLinks();
+  if (links.length >= 20) throw new Error("Limite de links atingido");
   const id = `link_${Math.random().toString(36).substr(2, 9)}`;
   const newLink: PixLink = {
     ...link,

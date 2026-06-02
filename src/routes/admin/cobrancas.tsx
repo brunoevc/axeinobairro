@@ -1,238 +1,278 @@
 import { useState, useEffect } from "react";
-import { getPixCharges, createPixCharge, updatePixStatus } from "@/lib/payments";
+import { getPixCharges, createPixCharge, updatePixStatus, getPixLinks, createPixLink, savePixLinks } from "@/lib/payments";
 import { merchants } from "@/data/merchants";
-import { PixCharge, TransactionStatus } from "@/types/payment";
+import { PixCharge, TransactionStatus, PixLink, PixPurpose } from "@/types/payment";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Badge } from "@/components/ui/badge";
-import {
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableHeader,
-  TableRow,
-} from "@/components/ui/table";
-import {
-  Dialog,
-  DialogContent,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger,
-} from "@/components/ui/dialog";
-import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
-import { 
-  Plus, 
-  CheckCircle, 
-  XCircle, 
-  AlertTriangle, 
-  Copy, 
-  ExternalLink,
-  DollarSign,
-  FileSearch
-} from "lucide-react";
+import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
+import { Plus, Copy, ExternalLink, DollarSign, AlertTriangle, CheckCircle, XCircle, Trash2, Link as LinkIcon } from "lucide-react";
 import { toast } from "sonner";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
 export default function AdminCobrancas() {
   const [charges, setCharges] = useState<PixCharge[]>([]);
-  const [isDialogOpen, setIsDialogOpen] = useState(false);
-  const [formData, setFormData] = useState({
-    merchantId: merchants[0]?.id || "",
-    amount: "",
-    customerName: "",
-    description: ""
+  const [links, setLinks] = useState<PixLink[]>([]);
+  const [isChargeDialogOpen, setIsChargeDialogOpen] = useState(false);
+  const [isLinkDialogOpen, setIsLinkDialogOpen] = useState(false);
+  
+  // Charge Form
+  const [chargeForm, setChargeForm] = useState({ merchantId: merchants[0]?.id || "", amount: "", customerName: "" });
+  
+  // Link Form
+  const [linkForm, setLinkForm] = useState({ 
+    merchantId: merchants[0]?.id || "", 
+    title: "", 
+    purposes: [{ id: "1", name: "", fixedAmount: undefined, allowFreeValue: false }] as PixPurpose[]
   });
 
-  useEffect(() => {
-    setCharges(getPixCharges());
+  useEffect(() => { 
+    setCharges(getPixCharges()); 
+    setLinks(getPixLinks());
   }, []);
 
   const handleCreateCharge = () => {
-    if (!formData.amount || !formData.customerName) {
-      toast.error("Preencha o valor e nome do cliente");
-      return;
-    }
-
-    const merchant = merchants.find(m => m.id === formData.merchantId);
-    
+    if (!chargeForm.amount || !chargeForm.customerName) return toast.error("Preencha todos os campos");
     const newCharge = createPixCharge({
-      merchantId: formData.merchantId,
-      merchantName: merchant?.name || "Loja Parceira",
-      amount: parseFloat(formData.amount),
-      customerName: formData.customerName,
-      description: formData.description,
+      merchantId: chargeForm.merchantId,
+      merchantName: merchants.find(m => m.id === chargeForm.merchantId)?.name || "Loja",
+      amount: parseFloat(chargeForm.amount),
+      customerName: chargeForm.customerName,
       status: "aguardando_pagamento"
     });
-
     setCharges(getPixCharges());
-    setIsDialogOpen(false);
-    toast.success("Link de cobrança manual gerado!");
+    setIsChargeDialogOpen(false);
+    toast.success("Cobrança gerada!");
+    navigator.clipboard.writeText(`${window.location.origin}/checkout/pix/${newCharge.id}`);
+  };
+
+  const handleCreateLink = () => {
+    if (!linkForm.title || linkForm.purposes.some(p => !p.name)) return toast.error("Preencha o título e nomes das finalidades");
+    if (linkForm.purposes.some(p => !p.fixedAmount && !p.allowFreeValue)) return toast.error("Cada finalidade deve ter valor fixo ou permitir valor livre");
     
-    const url = `${window.location.origin}/checkout/pix/${newCharge.id}`;
-    navigator.clipboard.writeText(url);
-    toast.info("Link copiado para o clipboard");
+    const newLink = createPixLink({
+      merchantId: linkForm.merchantId,
+      merchantName: merchants.find(m => m.id === linkForm.merchantId)?.name || "Loja",
+      title: linkForm.title,
+      purposes: linkForm.purposes
+    });
+    
+    setLinks(getPixLinks());
+    setIsLinkDialogOpen(false);
+    toast.success("Link Recorrente gerado!");
+    navigator.clipboard.writeText(`${window.location.origin}/checkout/pix/${newLink.id}`);
   };
 
-  const handleStatusChange = (id: string, status: TransactionStatus) => {
-    updatePixStatus(id, status);
-    setCharges(getPixCharges());
-    toast.success(`Pagamento ${status.replace('_', ' ')} com sucesso!`);
+  const addPurpose = () => {
+    if (linkForm.purposes.length >= 5) return toast.error("Máximo de 5 finalidades atingido");
+    setLinkForm({
+      ...linkForm,
+      purposes: [...linkForm.purposes, { id: Math.random().toString(), name: "", fixedAmount: undefined, allowFreeValue: false }]
+    });
   };
 
-  const getStatusBadge = (status: TransactionStatus) => {
-    const config = {
-      aguardando_pagamento: "bg-orange-100 text-orange-700",
-      comprovante_enviado: "bg-blue-100 text-blue-700",
-      aprovado: "bg-green-100 text-green-700",
-      recusado: "bg-red-100 text-red-700",
-      cancelado: "bg-slate-100 text-slate-700"
-    };
-    return (
-      <Badge className={`rounded-lg px-2 py-0.5 text-[10px] font-black uppercase tracking-wider ${config[status]}`}>
-        {status.replace('_', ' ')}
-      </Badge>
-    );
+  const removePurpose = (id: string) => {
+    if (linkForm.purposes.length <= 1) return;
+    setLinkForm({ ...linkForm, purposes: linkForm.purposes.filter(p => p.id !== id) });
   };
 
   return (
-    <div className="p-4 md:p-8 max-w-6xl mx-auto pb-32">
-      <div className="flex flex-col gap-8">
-        <header className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
-          <div>
-            <h1 className="text-3xl font-black text-slate-900">Cobranças Manuais</h1>
-            <p className="text-slate-500 font-bold text-sm">Links para pagamento Pix e conferência de comprovante</p>
-          </div>
-          <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
-            <DialogTrigger asChild>
-              <Button className="bg-orange-600 hover:bg-orange-700 font-black rounded-2xl h-12 px-6 shadow-lg shadow-orange-100">
-                <Plus className="w-5 h-5 mr-2" />
-                Novo Link de Cobrança
-              </Button>
-            </DialogTrigger>
-            <DialogContent className="rounded-[2.5rem]">
-              <DialogHeader>
-                <DialogTitle className="text-2xl font-black">Cobrança Pix Manual</DialogTitle>
-              </DialogHeader>
-              <div className="space-y-6 py-4">
-                <div className="space-y-2">
-                  <Label className="font-bold uppercase text-[10px] tracking-widest text-slate-400">Valor do Pedido (R$)</Label>
-                  <div className="relative">
-                    <DollarSign className="absolute left-3 top-3 w-4 h-4 text-slate-400" />
-                    <Input 
-                      type="number" 
-                      placeholder="0.00" 
-                      className="pl-10 h-12 rounded-xl font-bold border-slate-200"
-                      value={formData.amount}
-                      onChange={e => setFormData({...formData, amount: e.target.value})}
-                    />
-                  </div>
-                </div>
-                <div className="space-y-2">
-                  <Label className="font-bold uppercase text-[10px] tracking-widest text-slate-400">Nome do Cliente</Label>
-                  <Input 
-                    placeholder="Ex: João Silva" 
-                    className="h-12 rounded-xl font-bold border-slate-200"
-                    value={formData.customerName}
-                    onChange={e => setFormData({...formData, customerName: e.target.value})}
-                  />
-                </div>
-                <Button onClick={handleCreateCharge} className="w-full bg-slate-900 hover:bg-slate-800 text-white font-black h-12 rounded-xl">
-                  Gerar e Copiar Link
-                </Button>
+    <div className="p-8 max-w-6xl mx-auto space-y-8 pb-32">
+      <header className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
+        <div>
+          <h1 className="text-3xl font-black text-slate-900">Gestão de Pix Manual</h1>
+          <p className="text-slate-500 font-bold text-sm">Cobranças diretas e Links de finalidades</p>
+        </div>
+        <div className="flex gap-3">
+          <Dialog open={isChargeDialogOpen} onOpenChange={setIsChargeDialogOpen}>
+            <DialogTrigger asChild><Button variant="outline" className="font-black rounded-2xl h-12 border-slate-200"><Plus className="w-4 h-4 mr-2"/>Cobrança Única</Button></DialogTrigger>
+            <DialogContent>
+              <DialogHeader><DialogTitle>Nova Cobrança Direta</DialogTitle></DialogHeader>
+              <div className="space-y-4 py-4">
+                <Input type="number" placeholder="Valor (R$)" value={chargeForm.amount} onChange={e => setChargeForm({...chargeForm, amount: e.target.value})} />
+                <Input placeholder="Nome do Cliente" value={chargeForm.customerName} onChange={e => setChargeForm({...chargeForm, customerName: e.target.value})} />
+                <Button onClick={handleCreateCharge} className="w-full h-12 font-black rounded-xl">Gerar e Copiar Link</Button>
               </div>
             </DialogContent>
           </Dialog>
-        </header>
 
-        <div className="bg-orange-50 border border-orange-100 p-4 rounded-[2rem] flex items-center gap-3">
-          <AlertTriangle className="w-6 h-6 text-orange-600 shrink-0" />
-          <p className="text-xs text-orange-800 font-black uppercase tracking-tight">
-            Ambiente de Simulação. Nenhum pagamento real será processado.
-          </p>
-        </div>
-
-        <div className="bg-white rounded-[2rem] border border-slate-100 overflow-hidden shadow-sm">
-          <Table>
-            <TableHeader className="bg-slate-50">
-              <TableRow className="hover:bg-transparent">
-                <TableHead className="font-black text-slate-900 uppercase text-[10px] tracking-widest">Cliente</TableHead>
-                <TableHead className="font-black text-slate-900 uppercase text-[10px] tracking-widest">Valor</TableHead>
-                <TableHead className="font-black text-slate-900 uppercase text-[10px] tracking-widest">Status</TableHead>
-                <TableHead className="font-black text-slate-900 uppercase text-[10px] tracking-widest">Ações</TableHead>
-              </TableRow>
-            </TableHeader>
-            <TableBody>
-              {charges.length === 0 ? (
-                <TableRow>
-                  <TableCell colSpan={4} className="text-center py-20 text-slate-400 font-bold">
-                    Nenhuma cobrança gerada.
-                  </TableCell>
-                </TableRow>
-              ) : (
-                [...charges].reverse().map((c) => (
-                  <TableRow key={c.id} className="group hover:bg-slate-50/50">
-                    <TableCell>
-                      <div className="font-bold text-slate-900">{c.customerName}</div>
-                      <div className="text-[10px] text-slate-400 font-bold uppercase tracking-tight">{c.id}</div>
-                    </TableCell>
-                    <TableCell className="font-black text-slate-700">R$ {c.amount.toFixed(2)}</TableCell>
-                    <TableCell>{getStatusBadge(c.status)}</TableCell>
-                    <TableCell className="text-right">
-                      <div className="flex justify-end gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
-                        <Button 
-                          variant="ghost" 
-                          size="icon" 
-                          onClick={() => {
-                            const url = `${window.location.origin}/checkout/pix/${c.id}`;
-                            navigator.clipboard.writeText(url);
-                            toast.success("Link copiado!");
+          <Dialog open={isLinkDialogOpen} onOpenChange={setIsLinkDialogOpen}>
+            <DialogTrigger asChild><Button className="bg-orange-600 hover:bg-orange-700 font-black rounded-2xl h-12 shadow-lg shadow-orange-100"><LinkIcon className="w-4 h-4 mr-2"/>Link Recorrente</Button></DialogTrigger>
+            <DialogContent className="max-w-xl">
+              <DialogHeader><DialogTitle>Novo Link por Finalidade</DialogTitle></DialogHeader>
+              <div className="space-y-6 py-4 max-h-[70vh] overflow-y-auto pr-2">
+                <div className="space-y-2">
+                  <Label className="font-bold text-[10px] uppercase tracking-widest text-slate-400">Título do Link (Ex: Dízimos e Ofertas)</Label>
+                  <Input placeholder="Título" value={linkForm.title} onChange={e => setLinkForm({...linkForm, title: e.target.value})} className="h-12 rounded-xl font-bold" />
+                </div>
+                
+                <div className="space-y-4">
+                  <div className="flex justify-between items-center">
+                    <Label className="font-bold text-[10px] uppercase tracking-widest text-slate-400">Finalidades (Máx 5)</Label>
+                    <Button variant="ghost" size="sm" onClick={addPurpose} className="text-orange-600 font-black h-8 text-[10px] uppercase tracking-wider">
+                      <Plus className="w-3 h-3 mr-1"/> Adicionar
+                    </Button>
+                  </div>
+                  
+                  {linkForm.purposes.map((p, idx) => (
+                    <div key={p.id} className="p-4 bg-slate-50 rounded-2xl space-y-3 relative group">
+                      <div className="flex gap-3">
+                        <Input 
+                          placeholder="Nome (Ex: Oferta)" 
+                          value={p.name} 
+                          onChange={e => {
+                            const newP = [...linkForm.purposes];
+                            newP[idx].name = e.target.value;
+                            setLinkForm({...linkForm, purposes: newP});
                           }}
-                          className="h-8 w-8 text-slate-400 hover:text-orange-600"
-                        >
-                          <Copy className="w-4 h-4" />
-                        </Button>
-                        <Button 
-                          variant="ghost" 
-                          size="icon" 
-                          asChild
-                          className="h-8 w-8 text-slate-400 hover:text-orange-600"
-                        >
-                          <a href={`/checkout/pix/${c.id}`} target="_blank" rel="noreferrer">
-                            <ExternalLink className="w-4 h-4" />
-                          </a>
-                        </Button>
-                        {c.status === 'comprovante_enviado' && (
-                          <>
-                            <Button 
-                              variant="ghost" 
-                              size="icon" 
-                              onClick={() => handleStatusChange(c.id, 'aprovado')}
-                              className="h-8 w-8 text-green-600 hover:bg-green-50"
-                              title="Aprovar Pagamento"
-                            >
-                              <CheckCircle className="w-4 h-4" />
-                            </Button>
-                            <Button 
-                              variant="ghost" 
-                              size="icon" 
-                              onClick={() => handleStatusChange(c.id, 'recusado')}
-                              className="h-8 w-8 text-red-600 hover:bg-red-50"
-                              title="Recusar"
-                            >
-                              <XCircle className="w-4 h-4" />
-                            </Button>
-                          </>
+                          className="h-10 rounded-lg font-bold bg-white"
+                        />
+                        {linkForm.purposes.length > 1 && (
+                          <Button variant="ghost" size="icon" onClick={() => removePurpose(p.id)} className="h-10 w-10 text-slate-400 hover:text-red-500"><Trash2 className="w-4 h-4"/></Button>
                         )}
                       </div>
-                    </TableCell>
-                  </TableRow>
-                ))
-              )}
-            </TableBody>
-          </Table>
+                      <div className="flex items-center gap-4">
+                        <div className="flex-1 flex items-center gap-2">
+                          <Input 
+                            type="number" 
+                            placeholder="Valor Fixo" 
+                            value={p.fixedAmount || ""} 
+                            onChange={e => {
+                              const newP = [...linkForm.purposes];
+                              newP[idx].fixedAmount = e.target.value ? parseFloat(e.target.value) : undefined;
+                              setLinkForm({...linkForm, purposes: newP});
+                            }}
+                            className="h-10 rounded-lg font-bold bg-white"
+                          />
+                        </div>
+                        <label className="flex items-center gap-2 cursor-pointer">
+                          <input 
+                            type="checkbox" 
+                            checked={p.allowFreeValue} 
+                            onChange={e => {
+                              const newP = [...linkForm.purposes];
+                              newP[idx].allowFreeValue = e.target.checked;
+                              setLinkForm({...linkForm, purposes: newP});
+                            }}
+                            className="w-4 h-4 accent-orange-600"
+                          />
+                          <span className="text-[10px] font-black uppercase text-slate-500">Valor Livre</span>
+                        </label>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+
+                <Button onClick={handleCreateLink} className="w-full h-14 bg-slate-900 font-black rounded-2xl mt-4">Criar Link por Finalidade</Button>
+              </div>
+            </DialogContent>
+          </Dialog>
         </div>
-      </div>
+      </header>
+
+      <Tabs defaultValue="charges" className="w-full">
+        <TabsList className="bg-slate-100 p-1 rounded-xl mb-6">
+          <TabsTrigger value="charges" className="rounded-lg font-black uppercase text-[10px] tracking-widest px-6">Cobranças Ativas</TabsTrigger>
+          <TabsTrigger value="links" className="rounded-lg font-black uppercase text-[10px] tracking-widest px-6">Links Recorrentes</TabsTrigger>
+        </TabsList>
+        
+        <TabsContent value="charges">
+          <div className="bg-white rounded-[2rem] border overflow-hidden">
+            <Table>
+              <TableHeader className="bg-slate-50">
+                <TableRow>
+                  <TableHead className="font-black uppercase text-[10px] tracking-widest px-6 py-4">Cliente / Finalidade</TableHead>
+                  <TableHead className="font-black uppercase text-[10px] tracking-widest px-6">Valor</TableHead>
+                  <TableHead className="font-black uppercase text-[10px] tracking-widest px-6">Status</TableHead>
+                  <TableHead className="font-black uppercase text-[10px] tracking-widest px-6 text-right">Ações</TableHead>
+                </TableRow>
+              </TableHeader>
+              <TableBody>
+                {charges.length === 0 ? (
+                  <TableRow><TableCell colSpan={4} className="text-center py-20 font-bold text-slate-400">Nenhuma cobrança encontrada</TableCell></TableRow>
+                ) : (
+                  [...charges].reverse().map(c => (
+                    <TableRow key={c.id} className="group hover:bg-slate-50">
+                      <TableCell className="px-6">
+                        <div className="font-black text-slate-900">{c.customerName}</div>
+                        <div className="text-[10px] text-slate-400 font-bold uppercase">{c.purposeName || "Cobrança Direta"}</div>
+                      </TableCell>
+                      <TableCell className="px-6 font-black text-slate-700">R$ {c.amount.toFixed(2)}</TableCell>
+                      <TableCell className="px-6">
+                        <Badge className={`uppercase text-[9px] font-black tracking-tighter ${
+                          c.status === 'aprovado' ? 'bg-green-100 text-green-700' : 
+                          c.status === 'comprovante_enviado' ? 'bg-blue-100 text-blue-700' :
+                          'bg-orange-100 text-orange-700'
+                        }`}>
+                          {c.status.replace('_', ' ')}
+                        </Badge>
+                      </TableCell>
+                      <TableCell className="px-6 text-right">
+                        <div className="flex justify-end gap-2">
+                          {(c.status === 'aguardando_pagamento' || c.status === 'comprovante_enviado') && (
+                            <Button variant="ghost" size="sm" onClick={() => { updatePixStatus(c.id, 'cancelado'); setCharges(getPixCharges()); }} className="text-red-500 h-8 font-black uppercase text-[9px]">Cancelar</Button>
+                          )}
+                          {c.status === 'comprovante_enviado' && (
+                            <Button variant="ghost" size="sm" onClick={() => { updatePixStatus(c.id, 'aprovado'); setCharges(getPixCharges()); }} className="text-green-600 h-8 font-black uppercase text-[9px]">Aprovar</Button>
+                          )}
+                        </div>
+                      </TableCell>
+                    </TableRow>
+                  ))
+                )}
+              </TableBody>
+            </Table>
+          </div>
+        </TabsContent>
+
+        <TabsContent value="links">
+           <div className="bg-white rounded-[2rem] border overflow-hidden">
+            <Table>
+              <TableHeader className="bg-slate-50">
+                <TableRow>
+                  <TableHead className="font-black uppercase text-[10px] tracking-widest px-6 py-4">Título do Link</TableHead>
+                  <TableHead className="font-black uppercase text-[10px] tracking-widest px-6">Finalidades</TableHead>
+                  <TableHead className="font-black uppercase text-[10px] tracking-widest px-6 text-right">Ações</TableHead>
+                </TableRow>
+              </TableHeader>
+              <TableBody>
+                {links.length === 0 ? (
+                  <TableRow><TableCell colSpan={3} className="text-center py-20 font-bold text-slate-400">Nenhum link recorrente criado</TableCell></TableRow>
+                ) : (
+                  links.map(l => (
+                    <TableRow key={l.id} className="group hover:bg-slate-50">
+                      <TableCell className="px-6">
+                        <div className="font-black text-slate-900">{l.title}</div>
+                        <div className="text-[10px] text-slate-400 font-bold uppercase">{l.id}</div>
+                      </TableCell>
+                      <TableCell className="px-6">
+                        <div className="flex flex-wrap gap-1">
+                          {l.purposes.map(p => <Badge key={p.id} variant="secondary" className="text-[9px] font-bold">{p.name}</Badge>)}
+                        </div>
+                      </TableCell>
+                      <TableCell className="px-6 text-right">
+                        <Button 
+                          variant="ghost" 
+                          size="sm" 
+                          onClick={() => {
+                            navigator.clipboard.writeText(`${window.location.origin}/checkout/pix/${l.id}`);
+                            toast.success("Link copiado!");
+                          }}
+                          className="h-8 font-black uppercase text-[9px]"
+                        >
+                          Copiar Link
+                        </Button>
+                      </TableCell>
+                    </TableRow>
+                  ))
+                )}
+              </TableBody>
+            </Table>
+          </div>
+        </TabsContent>
+      </Tabs>
     </div>
   );
 }
