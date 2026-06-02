@@ -65,8 +65,9 @@ export const trackEvent = (merchantId: string, eventType: EventType, metadata?: 
             merchantId, 
             customerName: "Cliente de Pedido", 
             customerPhone: "Não informado", 
-            source: "pedido",
-            estimatedValue: metadata?.estimatedValue 
+            source: "order",
+            estimatedValue: metadata?.estimatedValue,
+            checkoutData: (metadata as any)?.checkoutData
           });
         } else if (eventType === "share") {
           trackLead({ merchantId, customerName: "Divulgador da Loja", customerPhone: "Não informado", source: "share" });
