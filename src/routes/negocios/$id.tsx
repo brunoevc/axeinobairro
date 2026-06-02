@@ -310,12 +310,26 @@ function DetailPage() {
             </div>
 
             <div className="pt-4 flex flex-col gap-3">
-              <Button asChild className="w-full bg-emerald-600 hover:bg-emerald-700 text-white rounded-2xl h-14 font-black shadow-lg shadow-emerald-100">
-                <a href={waUrl} target="_blank" rel="noopener noreferrer">
-                  <MessageCircle className="w-5 h-5 mr-2" />
-                  Enviar Mensagem
-                </a>
+              <Button 
+                asChild={!!waUrl} 
+                className={cn(
+                  "w-full rounded-2xl h-14 font-black transition-all",
+                  !waUrl 
+                    ? "bg-slate-100 text-slate-400 cursor-not-allowed hover:bg-slate-100 shadow-none" 
+                    : "bg-emerald-600 hover:bg-emerald-700 text-white shadow-lg shadow-emerald-100"
+                )}
+                disabled={!waUrl}
+              >
+                {waUrl ? (
+                  <a href={waUrl} target="_blank" rel="noopener noreferrer">
+                    <MessageCircle className="w-5 h-5 mr-2" />
+                    Enviar Mensagem
+                  </a>
+                ) : (
+                  <span>WhatsApp indisponível</span>
+                )}
               </Button>
+
               <Button asChild variant="outline" className="w-full border-slate-200 rounded-2xl h-14 font-black text-slate-700 hover:bg-slate-50">
                 <a href={`https://instagram.com/${merchant.instagram.replace('@', '')}`} target="_blank" rel="noreferrer">
                   <InstagramIcon className="w-5 h-5 mr-2" />
