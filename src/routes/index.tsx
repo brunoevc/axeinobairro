@@ -15,7 +15,8 @@ import {
   Navigation,
   Croissant,
   Bike,
-  PawPrint
+  PawPrint,
+  RefreshCw
 } from "lucide-react";
 
 import { merchants, categories } from "@/data/merchants";
