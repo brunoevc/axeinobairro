@@ -94,10 +94,15 @@ export const MerchantCard = memo(function MerchantCard({ merchant }: Props) {
 
         <div className="flex flex-wrap items-center gap-2 mb-6 mt-auto">
           {merchant.isOpen ? (
-            <span className="inline-flex items-center gap-1 rounded-full bg-emerald-50 px-2.5 py-1 text-[10px] font-bold text-emerald-600 border border-emerald-100">
-              <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
-              Aberto
-            </span>
+            <div className="flex flex-col gap-1">
+              <span className="inline-flex items-center gap-1 rounded-full bg-emerald-50 px-2.5 py-1 text-[10px] font-bold text-emerald-600 border border-emerald-100">
+                <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
+                Aberto agora
+              </span>
+              <span className="text-[10px] font-bold text-slate-400 ml-1">
+                Fecha às {merchant.hours.split(' - ')[1]}
+              </span>
+            </div>
           ) : (
             <span className="inline-flex items-center gap-1 rounded-full bg-slate-50 px-2.5 py-1 text-[10px] font-bold text-slate-400 border border-slate-100">
               <Clock className="h-3 w-3" />
@@ -105,9 +110,27 @@ export const MerchantCard = memo(function MerchantCard({ merchant }: Props) {
             </span>
           )}
           {merchant.delivery && (
-            <span className="inline-flex items-center gap-1 rounded-full bg-orange-50 px-2.5 py-1 text-[10px] font-bold text-orange-600 border border-orange-100">
+            <span className="inline-flex items-center gap-1 rounded-full bg-blue-50 px-2.5 py-1 text-[10px] font-bold text-blue-600 border border-blue-100">
               <Bike className="h-3 w-3" />
-              Entrega
+              Entrega disponível
+            </span>
+          )}
+          {merchant.id === "1" && (
+            <span className="inline-flex items-center gap-1 rounded-full bg-orange-50 px-2.5 py-1 text-[10px] font-bold text-orange-600 border border-orange-100">
+              <Star className="h-3 w-3 fill-orange-500" />
+              Perto de você
+            </span>
+          )}
+          {merchant.id === "2" && (
+            <span className="inline-flex items-center gap-1 rounded-full bg-violet-50 px-2.5 py-1 text-[10px] font-bold text-violet-600 border border-violet-100">
+              <TrendingUp className="h-3 w-3" />
+              Popular hoje
+            </span>
+          )}
+          {merchant.neighborhood === "Centro" && (
+            <span className="inline-flex items-center gap-1 rounded-full bg-slate-50 px-2.5 py-1 text-[10px] font-bold text-slate-500 border border-slate-200">
+              <MapPin className="h-3 w-3" />
+              No Centro de Araruama
             </span>
           )}
         </div>
@@ -129,7 +152,7 @@ export const MerchantCard = memo(function MerchantCard({ merchant }: Props) {
           >
             <a href={waUrl} target="_blank" rel="noopener noreferrer">
               <MessageCircle className="h-4 w-4 mr-1.5" />
-              WhatsApp
+              Chamar no WhatsApp
             </a>
           </Button>
         </div>
