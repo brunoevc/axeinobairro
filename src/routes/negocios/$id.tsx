@@ -24,6 +24,8 @@ import { FloatingNav } from "@/components/FloatingNav";
 import { useLocation } from "@/hooks/useLocation";
 import { toast } from "sonner";
 import { useState } from "react";
+import { cn, getWhatsAppUrl } from "@/lib/utils";
+
 
 export const Route = createFileRoute("/negocios/$id")({
   component: DetailPage,
@@ -59,9 +61,8 @@ function DetailPage() {
     ? getDistance(coords.latitude, coords.longitude, merchant.latitude, merchant.longitude)
     : null;
 
-  const waUrl = `https://wa.me/${merchant.whatsapp}?text=${encodeURIComponent(
-    `Olá ${merchant.name}! Vi seu perfil no Axêi no Bairro e gostaria de mais informações 👋`
-  )}`;
+  const waUrl = getWhatsAppUrl(merchant.whatsapp, merchant.name);
+
 
   const mapsUrl = `https://www.google.com/maps/dir/?api=1&destination=${merchant.latitude},${merchant.longitude}`;
 
@@ -181,12 +182,26 @@ function DetailPage() {
                     </div>
 
                     <div className="hidden md:flex gap-4">
-                       <Button asChild className="bg-emerald-600 hover:bg-emerald-700 text-white rounded-2xl h-14 px-8 font-black shadow-xl shadow-emerald-900/20">
-                         <a href={waUrl} target="_blank" rel="noopener noreferrer">
-                           <MessageCircle className="w-5 h-5 mr-2" />
-                           Chamar no WhatsApp
-                         </a>
+                       <Button 
+                         asChild={!!waUrl} 
+                         className={cn(
+                           "rounded-2xl h-14 px-8 font-black transition-all",
+                           !waUrl 
+                             ? "bg-slate-100 text-slate-400 cursor-not-allowed hover:bg-slate-100 shadow-none" 
+                             : "bg-emerald-600 hover:bg-emerald-700 text-white shadow-xl shadow-emerald-900/20"
+                         )}
+                         disabled={!waUrl}
+                       >
+                         {waUrl ? (
+                           <a href={waUrl} target="_blank" rel="noopener noreferrer">
+                             <MessageCircle className="w-5 h-5 mr-2" />
+                             Chamar no WhatsApp
+                           </a>
+                         ) : (
+                           <span>WhatsApp indisponível</span>
+                         )}
                        </Button>
+
                     </div>
                   </div>
                 </div>
@@ -228,10 +243,30 @@ function DetailPage() {
               <div className="flex flex-col gap-1">
                  <span className="text-[10px] font-bold text-slate-400 uppercase">Status</span>
                  <div className="flex items-center gap-1.5">
-                   <span className={`w-2 h-2 rounded-full ${merchant.isOpen ? 'bg-emerald-500 animate-pulse' : 'bg-slate-300'}`} />
-                   <span className="text-sm font-bold text-slate-900">{merchant.isOpen ? 'Aberto' : 'Fechado'}</span>
+                   {merchant.isOpen ? (
+                     <>
+                       <span className="relative flex h-2 w-2">
+                         <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+                         <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
+                       </span>
+                       <span className="text-sm font-bold text-slate-900">
+                         Aberto agora
+                         {merchant.hours.includes('-') && (
+                           <span className="text-slate-400 font-medium ml-1">
+                             (Fecha às {merchant.hours.split('-')[1].trim()})
+                           </span>
+                         )}
+                       </span>
+                     </>
+                   ) : (
+                     <>
+                       <span className="w-2 h-2 rounded-full bg-slate-300" />
+                       <span className="text-sm font-bold text-slate-900">Fechado</span>
+                     </>
+                   )}
                  </div>
               </div>
+
               <div className="flex flex-col gap-1">
                  <span className="text-[10px] font-bold text-slate-400 uppercase">Entrega</span>
                  <span className="text-sm font-bold text-slate-900">{merchant.delivery ? 'Sim' : 'Não'}</span>
@@ -295,12 +330,26 @@ function DetailPage() {
             </div>
 
             <div className="pt-4 flex flex-col gap-3">
-              <Button asChild className="w-full bg-emerald-600 hover:bg-emerald-700 text-white rounded-2xl h-14 font-black shadow-lg shadow-emerald-100">
-                <a href={waUrl} target="_blank" rel="noopener noreferrer">
-                  <MessageCircle className="w-5 h-5 mr-2" />
-                  Enviar Mensagem
-                </a>
+              <Button 
+                asChild={!!waUrl} 
+                className={cn(
+                  "w-full rounded-2xl h-14 font-black transition-all",
+                  !waUrl 
+                    ? "bg-slate-100 text-slate-400 cursor-not-allowed hover:bg-slate-100 shadow-none" 
+                    : "bg-emerald-600 hover:bg-emerald-700 text-white shadow-lg shadow-emerald-100"
+                )}
+                disabled={!waUrl}
+              >
+                {waUrl ? (
+                  <a href={waUrl} target="_blank" rel="noopener noreferrer">
+                    <MessageCircle className="w-5 h-5 mr-2" />
+                    Enviar Mensagem
+                  </a>
+                ) : (
+                  <span>WhatsApp indisponível</span>
+                )}
               </Button>
+
               <Button asChild variant="outline" className="w-full border-slate-200 rounded-2xl h-14 font-black text-slate-700 hover:bg-slate-50">
                 <a href={`https://instagram.com/${merchant.instagram.replace('@', '')}`} target="_blank" rel="noreferrer">
                   <InstagramIcon className="w-5 h-5 mr-2" />

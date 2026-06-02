@@ -13,10 +13,11 @@ export function MerchantSkeleton() {
           <Skeleton className="h-6 w-12" />
         </div>
         <Skeleton className="h-10 w-full" />
-        <div className="flex gap-2">
-          <Skeleton className="h-4 w-16 rounded-full" />
-          <Skeleton className="h-4 w-16 rounded-full" />
+        <div className="flex flex-wrap gap-2">
+          <Skeleton className="h-6 w-24 rounded-full" />
+          <Skeleton className="h-6 w-32 rounded-full" />
         </div>
+
         <div className="flex gap-2 pt-2">
           <Skeleton className="h-11 flex-1 rounded-xl" />
           <Skeleton className="h-11 flex-1 rounded-xl" />
