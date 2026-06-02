@@ -10,6 +10,7 @@ export const getWhatsAppUrl = (phone: string, merchantName: string) => {
   if (!cleanPhone) return null;
   const formattedPhone = cleanPhone.startsWith("55") ? cleanPhone : `55${cleanPhone}`;
   const message = "Olá! Vi sua loja no Axêi no Bairro e gostaria de mais informações.";
-  return \`https://wa.me/\${formattedPhone}?text=\${encodeURIComponent(message)}\`;
+  return `https://wa.me/${formattedPhone}?text=${encodeURIComponent(message)}`;
 };
+
 
