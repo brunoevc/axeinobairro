@@ -107,7 +107,7 @@ export function LocationProvider({ children }: { children: React.ReactNode }) {
     const { latitude, longitude, accuracy } = position.coords;
     
     setState(prev => {
-      if (prev.manualNeighborhood) return prev;
+      if (prev.manualNeighborhood) return { ...prev, loading: false };
 
       if (prev.coords) {
         const dist = getDistance(prev.coords.latitude, prev.coords.longitude, latitude, longitude);
@@ -227,7 +227,7 @@ export function LocationProvider({ children }: { children: React.ReactNode }) {
       navigator.permissions.query({ name: "geolocation" as any }).then((status) => {
         setState((prev) => ({ ...prev, permissionStatus: status.state }));
         status.onchange = () => {
-          setState((prev) => ({ ...prev, permissionStatus: status.state }));
+          setState((prev) => ({ ...prev, permissionStatus: (status as any).state }));
         };
       });
     }
@@ -237,7 +237,7 @@ export function LocationProvider({ children }: { children: React.ReactNode }) {
       fetchLocation();
     } else {
       const parsed = JSON.parse(saved);
-      const isStale = Date.now() - parsed.timestamp > 1000 * 60 * 30;
+      const isStale = Date.now() - (parsed.timestamp || 0) > 1000 * 60 * 30;
       if (isStale && !parsed.manualNeighborhood) {
         fetchLocation();
       } else {
@@ -266,7 +266,7 @@ export function LocationProvider({ children }: { children: React.ReactNode }) {
     };
   }, [fetchLocation, startWatching]);
 
-  const value = {
+  const value: LocationContextType = {
     ...state,
     retry,
     setManualLocation,
