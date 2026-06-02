@@ -118,9 +118,10 @@ function AdminLojas() {
                   updateMerchantStatus(id, newStatus);
                 }
               }}
-              updateMerchantStatus(id, status as any);
+              onChangePlan={(id, status) => updateMerchantStatus(id, status)}
               filterStatus={activeTab === "todas" ? "all" : (activeTab as any)}
             />
+
           </div>
         </div>
       )}
