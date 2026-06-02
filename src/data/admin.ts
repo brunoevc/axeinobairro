@@ -1,7 +1,6 @@
 import { Merchant, merchants as baseMerchants } from "./merchants";
 
 export type MerchantAdmin = Merchant & {
-  status: "pending" | "active" | "inactive" | "rejected";
   approvedAt?: string;
   rejectedAt?: string;
   rejectionReason?: string;
@@ -14,8 +13,8 @@ export type MerchantAdmin = Merchant & {
   planChangedBy?: string;
   // Campos legados para compatibilidade UI
   emoji?: string;
-  plan?: "free" | "assisted" | "local_featured" | "highlighted" | "premium_partner";
 };
+
 
 export type AdminAction = {
   id: string;
@@ -64,7 +63,8 @@ export type AdminState = {
 
 export function initializeMerchantAdmin(merchant: Merchant): MerchantAdmin {
   const isNew = Math.random() > 0.7;
-  const status = isNew ? "pending" : "active";
+  const status: Merchant["status"] = isNew ? "pending" : "verified";
+
   const whatsappClicks = Math.floor(Math.random() * 150);
   const contactAttempts = Math.floor(Math.random() * 50);
 
@@ -73,8 +73,9 @@ export function initializeMerchantAdmin(merchant: Merchant): MerchantAdmin {
     status,
     emoji: "🏪", // Fallback para compatibilidade
     plan: merchant.plan || "free",
-    approvedAt: status === "active" ? new Date(Date.now() - Math.random() * 30 * 24 * 60 * 60 * 1000).toISOString() : undefined,
-    approvedBy: status === "active" ? "Auto-Admin" : undefined,
+    approvedAt: status !== "pending" ? new Date(Date.now() - Math.random() * 30 * 24 * 60 * 60 * 1000).toISOString() : undefined,
+    approvedBy: status !== "pending" ? "Auto-Admin" : undefined,
+
     notes: "",
     whatsappClicks,
     contactAttempts,
@@ -107,10 +108,11 @@ export function calculateAdminStats(merchants: MerchantAdmin[]): AdminStats {
     totalContactAttempts += m.contactAttempts || 0;
     totalRating += m.rating;
 
-    if (m.status === "active") activeMerchants++;
+    if (m.status !== "pending" && m.status !== "rejected") activeMerchants++;
     if (m.status === "pending") pendingMerchants++;
     if (m.status === "rejected") rejectedMerchants++;
-    if (m.featured && m.status === "active") featuredMerchants++;
+    if (m.featured && m.status !== "pending" && m.status !== "rejected") featuredMerchants++;
+
 
     const hood = m.neighborhood;
     merchantsByNeighborhood[hood] = (merchantsByNeighborhood[hood] || 0) + 1;

@@ -14,8 +14,10 @@ import {
   Navigation,
   TrendingUp,
   Croissant,
-  Search
+  Search,
+  AlertCircle
 } from "lucide-react";
+
 
 import { merchants } from "@/data/merchants";
 import { Button } from "@/components/ui/button";
@@ -255,7 +257,7 @@ function DetailPage() {
               <div className="flex flex-col gap-1">
                  <span className="text-[10px] font-bold text-slate-400 uppercase">Status</span>
                   <div className="flex items-center gap-1.5">
-                    <BusinessStatusBadge isOpen={merchant.isOpen} hours={merchant.hours} />
+                    <BusinessStatusBadge isOpen={merchant.isOpen} hours={merchant.hours} status={merchant.status} />
                   </div>
 
               </div>
@@ -339,6 +341,45 @@ function DetailPage() {
             </div>
           </div>
 
+          <div className="bg-white rounded-3xl p-6 border border-slate-100 shadow-sm space-y-4">
+            <h3 className="text-sm font-black text-slate-900 uppercase tracking-widest flex items-center gap-2">
+              <AlertCircle className="w-4 h-4 text-slate-400" />
+              Informar um problema
+            </h3>
+            <p className="text-xs font-medium text-slate-500 leading-relaxed">
+              Viu algo errado? Ajude-nos a manter a vizinhança atualizada informando problemas neste cadastro.
+            </p>
+            <div className="grid grid-cols-1 gap-2 pt-2">
+              {[
+                { id: 'wrong_phone', label: 'Telefone incorreto' },
+                { id: 'closed_permanently', label: 'Empresa fechada' },
+                { id: 'spam', label: 'Spam / Propaganda' },
+                { id: 'scam', label: 'Golpe / Fraude' },
+                { id: 'other', label: 'Outro motivo' }
+              ].map((reason) => (
+                <button
+                  key={reason.id}
+                  onClick={() => {
+                    const reports = JSON.parse(localStorage.getItem('axei_reports') || '[]');
+                    reports.push({
+                      id: `rep-${Date.now()}`,
+                      merchantId: merchant.id,
+                      merchantName: merchant.name,
+                      reasonId: reason.id,
+                      reasonLabel: reason.label,
+                      timestamp: new Date().toISOString()
+                    });
+                    localStorage.setItem('axei_reports', JSON.stringify(reports));
+                    toast.success("Obrigado! Sua denúncia foi recebida e será analisada.");
+                  }}
+                  className="w-full text-left px-4 py-3 bg-slate-50 hover:bg-slate-100 rounded-xl text-xs font-bold text-slate-600 transition-colors border border-slate-100"
+                >
+                  {reason.label}
+                </button>
+              ))}
+            </div>
+          </div>
+
           <div className="bg-orange-600 rounded-3xl p-8 text-white relative overflow-hidden">
              <div className="absolute -bottom-6 -right-6 w-32 h-32 bg-white/10 rounded-full blur-2xl" />
              <Smartphone className="w-8 h-8 mb-4 opacity-50" />
@@ -351,6 +392,7 @@ function DetailPage() {
                Compartilhar agora
              </Button>
           </div>
+
         </div>
       </main>
 

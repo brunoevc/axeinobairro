@@ -16,12 +16,14 @@ import {
   ChevronDown
 } from "lucide-react";
 import { useState } from "react";
-import { categories, neighborhoods } from "@/data/merchants";
+import { merchants, categories, neighborhoods } from "@/data/merchants";
 import { Button } from "@/components/ui/button";
 import { TopBar } from "@/components/TopBar";
 import { FloatingNav } from "@/components/FloatingNav";
 import { Logo } from "@/components/ui/Logo";
 import { ImageUploadPreview } from "@/components/ImageUploadPreview";
+import { toast } from "sonner";
+
 
 
 export const Route = createFileRoute("/cadastro")({
@@ -38,8 +40,12 @@ function RegistrationPage() {
     address: "",
     whatsapp: "",
     instagram: "",
+    facebook: "",
     description: "",
     hours: "",
+    document: "", // CPF or CNPJ
+    responsibleName: "",
+    responsibleDeclaration: false,
     image: "",
     logoUrl: "",
     coverUrl: "",
@@ -50,11 +56,21 @@ function RegistrationPage() {
     promoActive: false
   });
 
+
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
+    
+    // Check for duplicate document in existing merchants
+    const isDuplicate = merchants.some(m => m.document.replace(/\D/g, '') === formData.document.replace(/\D/g, ''));
+    if (isDuplicate) {
+      toast.error("Este CPF/CNPJ já possui uma loja cadastrada em nossa base.");
+      return;
+    }
+
     setIsSubmitted(true);
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
+
 
   if (isSubmitted) {
     return (
@@ -154,6 +170,32 @@ function RegistrationPage() {
                 onChange={(e) => setFormData({...formData, name: e.target.value})}
               />
             </div>
+            
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <div className="space-y-3">
+                <label className="text-sm font-black text-slate-700 ml-1">CPF ou CNPJ</label>
+                <input 
+                  required
+                  type="text" 
+                  placeholder="000.000.000-00"
+                  className="w-full bg-slate-50 border border-slate-200 rounded-2xl p-5 text-sm font-bold outline-none focus:ring-4 focus:ring-orange-500/5 focus:border-orange-600 focus:bg-white transition-all shadow-sm"
+                  value={formData.document}
+                  onChange={(e) => setFormData({...formData, document: e.target.value})}
+                />
+              </div>
+              <div className="space-y-3">
+                <label className="text-sm font-black text-slate-700 ml-1">Nome do Responsável</label>
+                <input 
+                  required
+                  type="text" 
+                  placeholder="Nome Completo"
+                  className="w-full bg-slate-50 border border-slate-200 rounded-2xl p-5 text-sm font-bold outline-none focus:ring-4 focus:ring-orange-500/5 focus:border-orange-600 focus:bg-white transition-all shadow-sm"
+                  value={formData.responsibleName}
+                  onChange={(e) => setFormData({...formData, responsibleName: e.target.value})}
+                />
+              </div>
+            </div>
+
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               <div className="space-y-3">
@@ -239,7 +281,18 @@ function RegistrationPage() {
                   />
                 </div>
               </div>
+              <div className="space-y-3">
+                <label className="text-sm font-black text-slate-700 ml-1">Facebook (opcional)</label>
+                <input 
+                  type="text" 
+                  placeholder="facebook.com/seunegocio"
+                  className="w-full bg-slate-50 border border-slate-200 rounded-2xl p-5 text-sm font-bold outline-none focus:border-orange-600 focus:bg-white transition-all shadow-sm"
+                  value={formData.facebook}
+                  onChange={(e) => setFormData({...formData, facebook: e.target.value})}
+                />
+              </div>
             </div>
+
           </section>
 
           {/* Sessão 3: Detalhes */}
@@ -304,7 +357,28 @@ function RegistrationPage() {
                 />
               </div>
             </div>
+
+            <div className="pt-6 border-t border-slate-50">
+              <label className="flex items-start gap-4 cursor-pointer group">
+                <div className="relative flex items-center mt-1">
+                  <input 
+                    required
+                    type="checkbox" 
+                    className="sr-only peer"
+                    checked={formData.responsibleDeclaration}
+                    onChange={(e) => setFormData({...formData, responsibleDeclaration: e.target.checked})}
+                  />
+                  <div className="w-6 h-6 bg-slate-100 border-2 border-slate-200 rounded-lg peer-checked:bg-orange-600 peer-checked:border-orange-600 transition-all flex items-center justify-center">
+                    <CheckCircle2 className="w-4 h-4 text-white opacity-0 peer-checked:opacity-100 transition-opacity" />
+                  </div>
+                </div>
+                <span className="text-sm font-bold text-slate-600 group-hover:text-slate-900 transition-colors">
+                  Declaro que sou responsável por esta empresa e que todas as informações prestadas são verdadeiras.
+                </span>
+              </label>
+            </div>
           </section>
+
 
           {/* Sessão 4: Promoção */}
           <section className="bg-orange-600 rounded-[2.5rem] p-8 md:p-12 text-white relative overflow-hidden shadow-xl shadow-orange-200">

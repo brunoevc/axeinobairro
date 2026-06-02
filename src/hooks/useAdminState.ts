@@ -1,5 +1,7 @@
 import { useState, useEffect, useCallback } from "react";
 import { MerchantAdmin, AdminAction, AdminState, AdminStats, calculateAdminStats, getInitialAdminState } from "@/data/admin";
+import { Merchant } from "@/data/merchants";
+
 
 const ADMIN_STATE_KEY = "axei-admin-state";
 
@@ -35,9 +37,9 @@ export function useAdminState() {
     setStats(calculateAdminStats(newState.merchants));
   }, []);
 
-  // Aprovar merchant
-  const approveMerchant = useCallback(
-    (merchantId: string) => {
+  // Atualizar status do merchant (approve/verify/highlight/partner/reject)
+  const updateMerchantStatus = useCallback(
+    (merchantId: string, newStatus: Merchant["status"], reason?: string) => {
       if (!state) return;
 
       const merchant = state.merchants.find((m) => m.id === merchantId);
@@ -47,22 +49,23 @@ export function useAdminState() {
         m.id === merchantId
           ? {
               ...m,
-              status: "active" as const,
-              approvedAt: new Date().toISOString(),
-              approvedBy: "Auto-Admin",
-              featured: true,
+              status: newStatus,
+              approvedAt: (newStatus !== "pending" && newStatus !== "rejected") ? new Date().toISOString() : m.approvedAt,
+              rejectedAt: newStatus === "rejected" ? new Date().toISOString() : m.rejectedAt,
+              rejectionReason: newStatus === "rejected" ? reason : m.rejectionReason,
+              featured: newStatus === "featured" || newStatus === "partner" ? true : m.featured,
             }
           : m
       );
 
       const action: AdminAction = {
         id: `act-${Date.now()}`,
-        type: "approve",
+        type: newStatus === "rejected" ? "reject" : "status_change",
         merchantId,
         merchantName: merchant.name,
         adminName: "Auto-Admin",
         timestamp: new Date().toISOString(),
-        details: { reason: "Aprovado via dashboard" },
+        details: { oldValue: merchant.status, newValue: newStatus, reason },
       };
 
       const newState: AdminState = {
@@ -76,79 +79,20 @@ export function useAdminState() {
     [state, saveState]
   );
 
-  // Rejeitar merchant
-  const rejectMerchant = useCallback(
-    (merchantId: string, reason: string) => {
-      if (!state) return;
-
-      const merchant = state.merchants.find((m) => m.id === merchantId);
-      if (!merchant) return;
-
-      const updatedMerchants = state.merchants.map((m) =>
-        m.id === merchantId
-          ? {
-              ...m,
-              status: "rejected" as const,
-              rejectedAt: new Date().toISOString(),
-              rejectionReason: reason,
-            }
-          : m
-      );
-
-      const action: AdminAction = {
-        id: `act-${Date.now()}`,
-        type: "reject",
-        merchantId,
-        merchantName: merchant.name,
-        adminName: "Auto-Admin",
-        timestamp: new Date().toISOString(),
-        details: { reason },
-      };
-
-      const newState: AdminState = {
-        merchants: updatedMerchants,
-        actions: [action, ...state.actions],
-        lastUpdated: new Date().toISOString(),
-      };
-
-      saveState(newState);
-    },
-    [state, saveState]
-  );
-
-  // Ativar/Desativar merchant
+  // Ativar/Desativar merchant (Toggle entre pending e verified como exemplo simplificado)
   const toggleMerchantStatus = useCallback(
     (merchantId: string) => {
       if (!state) return;
 
       const merchant = state.merchants.find((m) => m.id === merchantId);
-      if (!merchant || merchant.status === "rejected" || merchant.status === "pending") return;
+      if (!merchant) return;
 
-      const newStatus = (merchant.status === "active" ? "inactive" : "active") as "active" | "inactive";
-      const updatedMerchants = state.merchants.map((m) =>
-        m.id === merchantId ? { ...m, status: newStatus } : m
-      );
-
-      const action: AdminAction = {
-        id: `act-${Date.now()}`,
-        type: "status_change",
-        merchantId,
-        merchantName: merchant.name,
-        adminName: "Auto-Admin",
-        timestamp: new Date().toISOString(),
-        details: { oldValue: merchant.status, newValue: newStatus },
-      };
-
-      const newState: AdminState = {
-        merchants: updatedMerchants,
-        actions: [action, ...state.actions],
-        lastUpdated: new Date().toISOString(),
-      };
-
-      saveState(newState);
+      const newStatus: Merchant["status"] = (merchant.status === "pending" ? "verified" : "pending");
+      updateMerchantStatus(merchantId, newStatus);
     },
-    [state, saveState]
+    [state, updateMerchantStatus]
   );
+
 
   // Alterar plano
   const changePlan = useCallback(
@@ -292,8 +236,7 @@ export function useAdminState() {
     state,
     stats,
     loading,
-    approveMerchant,
-    rejectMerchant,
+    updateMerchantStatus,
     toggleMerchantStatus,
     changePlan,
     addNote,
@@ -301,3 +244,4 @@ export function useAdminState() {
     editMerchant,
   };
 }
+

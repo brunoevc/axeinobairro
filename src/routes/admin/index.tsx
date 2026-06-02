@@ -3,7 +3,7 @@ import { useAdminState } from "@/hooks/useAdminState";
 import { DashboardStats } from "@/components/admin/DashboardStats";
 import { PlansChart } from "@/components/admin/PlansChart";
 import { ActivityLog } from "@/components/admin/ActivityLog";
-import { ShieldCheck, Info, TrendingUp, BarChart3, Clock, Layout, Save, Lock, Mail, CheckCircle2 } from "lucide-react";
+import { ShieldCheck, Info, TrendingUp, BarChart3, Clock, Layout, Save, Lock, Mail, CheckCircle2, AlertCircle } from "lucide-react";
 import { ImageUploadPreview } from "@/components/ImageUploadPreview";
 import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
@@ -214,7 +214,64 @@ function AdminDashboard() {
         </div>
       </section>
 
+      {/* Reports Section */}
+      <section className="bg-white rounded-[2.5rem] p-10 border border-slate-100 shadow-sm">
+        <div className="flex items-center justify-between mb-8 border-b border-slate-50 pb-6">
+          <div className="flex items-center gap-3">
+             <div className="p-2 bg-red-50 rounded-xl text-red-600">
+                <AlertCircle className="w-5 h-5" />
+             </div>
+             <div>
+                <h3 className="text-xl font-black text-slate-900 tracking-tight">Denúncias e Problemas</h3>
+                <p className="text-xs text-slate-400 font-bold uppercase tracking-wider mt-1">Moderação de conteúdo reportado por usuários</p>
+             </div>
+          </div>
+        </div>
+
+        <div className="space-y-4">
+          {(() => {
+            const reports = JSON.parse(localStorage.getItem('axei_reports') || '[]');
+            if (reports.length === 0) {
+              return (
+                <div className="py-12 text-center">
+                  <p className="text-slate-400 font-bold">Nenhuma denúncia pendente.</p>
+                </div>
+              );
+            }
+            return reports.map((report: any) => (
+              <div key={report.id} className="flex items-center justify-between p-6 bg-slate-50 rounded-2xl border border-slate-100">
+                <div className="flex items-center gap-4">
+                  <div className="w-10 h-10 bg-red-100 rounded-full flex items-center justify-center text-red-600">
+                    <AlertCircle className="w-5 h-5" />
+                  </div>
+                  <div>
+                    <p className="text-sm font-black text-slate-900">{report.merchantName}</p>
+                    <p className="text-xs font-bold text-red-600 uppercase tracking-widest">{report.reasonLabel}</p>
+                  </div>
+                </div>
+                <div className="flex items-center gap-4">
+                   <p className="text-[10px] font-black text-slate-400 uppercase tracking-widest">{new Date(report.timestamp).toLocaleDateString()}</p>
+                   <Button 
+                    variant="ghost" 
+                    className="text-slate-400 hover:text-red-600"
+                    onClick={() => {
+                      const newReports = reports.filter((r: any) => r.id !== report.id);
+                      localStorage.setItem('axei_reports', JSON.stringify(newReports));
+                      toast.success("Denúncia arquivada.");
+                      window.location.reload();
+                    }}
+                   >
+                     Arquivar
+                   </Button>
+                </div>
+              </div>
+            ));
+          })()}
+        </div>
+      </section>
+
       {/* Visual Configuration Section */}
+
       <section className="bg-white rounded-[2.5rem] p-10 border border-slate-100 shadow-sm">
         <div className="flex items-center justify-between mb-8 border-b border-slate-50 pb-6">
           <div className="flex items-center gap-3">

@@ -6,6 +6,8 @@ import { MerchantEditForm } from "@/components/admin/MerchantEditForm";
 import { MerchantAdmin } from "@/data/admin";
 import { Button } from "@/components/ui/button";
 import { ArrowLeft, Clock, ShieldCheck, Filter, ChevronDown } from "lucide-react";
+import { toast } from "sonner";
+
 
 export const Route = createFileRoute("/admin/aprovacoes")({
   component: AdminApprovals,
@@ -20,8 +22,9 @@ export const Route = createFileRoute("/admin/aprovacoes")({
 type ViewMode = "queue" | "edit";
 
 function AdminApprovals() {
-  const { state, loading, approveMerchant, rejectMerchant, editMerchant } =
+  const { state, loading, updateMerchantStatus, editMerchant } =
     useAdminState();
+
 
   const [viewMode, setViewMode] = useState<ViewMode>("queue");
   const [selectedMerchant, setSelectedMerchant] = useState<MerchantAdmin | null>(
@@ -46,10 +49,12 @@ function AdminApprovals() {
   const handleSave = (updates: Partial<MerchantAdmin>) => {
     if (selectedMerchant) {
       editMerchant(selectedMerchant.id, updates);
+      toast.success("Estabelecimento atualizado.");
       setViewMode("queue");
       setSelectedMerchant(null);
     }
   };
+
 
   const handleCancel = () => {
     setViewMode("queue");
@@ -127,11 +132,12 @@ function AdminApprovals() {
           <div className="grid grid-cols-1 gap-8">
             <ApprovalQueue
               merchants={state.merchants}
-              onApprove={approveMerchant}
-              onReject={rejectMerchant}
+              onApprove={(id) => updateMerchantStatus(id, "verified")}
+              onReject={(id, reason) => updateMerchantStatus(id, "rejected", reason)}
               onEdit={handleEdit}
             />
           </div>
+
         </div>
       )}
     </div>

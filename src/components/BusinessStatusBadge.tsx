@@ -1,13 +1,38 @@
-import { Clock } from "lucide-react";
+import { Clock, ShieldCheck, Star, Users, AlertCircle } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { Merchant } from "@/data/merchants";
+
 
 interface BusinessStatusBadgeProps {
   isOpen: boolean;
   hours: string;
   className?: string;
+  status?: Merchant["status"];
+  showStatusOnly?: boolean;
 }
 
-export function BusinessStatusBadge({ isOpen, hours, className }: BusinessStatusBadgeProps) {
+
+export function BusinessStatusBadge({ isOpen, hours, className, status, showStatusOnly }: BusinessStatusBadgeProps) {
+  if (status && (showStatusOnly || status === "pending" || status === "rejected")) {
+    const statusConfig = {
+      pending: { label: "Em análise", icon: Clock, color: "bg-amber-50 text-amber-600 border-amber-100" },
+      verified: { label: "Verificado", icon: ShieldCheck, color: "bg-emerald-50 text-emerald-600 border-emerald-100" },
+      featured: { label: "Destaque", icon: Star, color: "bg-violet-50 text-violet-600 border-violet-100" },
+      partner: { label: "Parceiro", icon: Users, color: "bg-orange-50 text-orange-600 border-orange-100" },
+      rejected: { label: "Recusado", icon: AlertCircle, color: "bg-red-50 text-red-600 border-red-100" },
+    };
+
+    const config = statusConfig[status];
+    const Icon = config.icon;
+
+    return (
+      <div className={cn("inline-flex items-center gap-1.5 rounded-full px-2.5 py-1 text-[10px] font-black uppercase tracking-tight border", config.color, className)}>
+        <Icon className="h-3 w-3" />
+        {config.label}
+      </div>
+    );
+  }
+
   // Safe parsing of hours
   const closingTime = hours && hours.includes("-") 
     ? hours.split("-")[1].trim() 

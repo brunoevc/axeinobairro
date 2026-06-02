@@ -1,7 +1,9 @@
 import { useState } from "react";
 import { ChevronDown } from "lucide-react";
 import { MerchantAdmin } from "@/data/admin";
+import { Merchant } from "@/data/merchants";
 import { Button } from "@/components/ui/button";
+
 
 const planLabels: Record<string, string> = {
   free: "Grátis",
@@ -19,18 +21,20 @@ const planColors: Record<string, string> = {
   premium_partner: "bg-rose-100 text-rose-700 dark:bg-rose-900 dark:text-rose-300",
 };
 
-const statusLabels = {
+const statusLabels: Record<Merchant["status"], string> = {
   pending: "⏳ Pendente",
-  active: "✅ Ativo",
-  inactive: "⭐ Inativo",
+  verified: "✅ Verificado",
+  featured: "✨ Destaque",
+  partner: "🤝 Parceiro",
   rejected: "❌ Rejeitado",
 };
+
 
 type MerchantRowProps = {
   merchant: MerchantAdmin;
   onEdit: (merchant: MerchantAdmin) => void;
   onToggleStatus: (id: string) => void;
-  onChangePlan: (id: string, plan: NonNullable<MerchantAdmin["plan"]>) => void;
+  onChangePlan: (id: string, status: Merchant["status"]) => void;
 };
 
 export function MerchantRow({
@@ -71,14 +75,13 @@ export function MerchantRow({
       <div className="flex flex-wrap gap-2 mb-4">
         <span
           className={`inline-block px-2 py-1 rounded text-xs font-medium ${
-            merchant.status === "active"
+            merchant.status === "verified" || merchant.status === "featured" || merchant.status === "partner"
               ? "bg-emerald-100 text-emerald-700 dark:bg-emerald-900 dark:text-emerald-300"
               : merchant.status === "pending"
                 ? "bg-amber-100 text-amber-700 dark:bg-amber-900 dark:text-amber-300"
-                : merchant.status === "inactive"
-                  ? "bg-slate-100 text-slate-700 dark:bg-slate-900 dark:text-slate-300"
-                  : "bg-rose-100 text-rose-700 dark:bg-rose-900 dark:text-rose-300"
+                : "bg-rose-100 text-rose-700 dark:bg-rose-900 dark:text-rose-300"
           }`}
+
         >
           {statusLabels[merchant.status]}
         </span>
@@ -97,16 +100,17 @@ export function MerchantRow({
           ✏️ Editar
         </Button>
 
-        {merchant.status !== "rejected" && merchant.status !== "pending" && (
+        {merchant.status !== "rejected" && (
           <Button
             variant="outline"
             size="sm"
             onClick={() => onToggleStatus(merchant.id)}
             className="text-xs"
           >
-            {merchant.status === "active" ? "⭐ Desativar" : "✅ Ativar"}
+            {merchant.status === "pending" ? "✅ Verificar" : "⏳ Pendente"}
           </Button>
         )}
+
 
         <div className="relative">
           <Button
@@ -115,24 +119,24 @@ export function MerchantRow({
             onClick={() => setPlanOpen(!planOpen)}
             className="text-xs flex items-center gap-1"
           >
-            📊 Plano
+            📊 Status
             <ChevronDown className="h-3 w-3" />
           </Button>
 
           {planOpen && (
             <div className="absolute top-full left-0 mt-1 bg-card border border-accent/20 rounded-lg shadow-lg z-10 min-w-[150px]">
-              {plans.map((plan) => (
+              {(["verified", "featured", "partner", "rejected"] as const).map((status) => (
                 <button
-                  key={plan}
+                  key={status}
                   onClick={() => {
-                    onChangePlan(merchant.id, plan);
+                    onChangePlan(merchant.id, status as any); // Reusing onChangePlan for status update in table logic for simplicity
                     setPlanOpen(false);
                   }}
                   className={`w-full text-left px-3 py-2 text-xs hover:bg-accent/10 first:rounded-t-lg last:rounded-b-lg transition-colors ${
-                    currentPlan === plan ? "bg-accent/20" : ""
+                    merchant.status === status ? "bg-accent/20" : ""
                   }`}
                 >
-                  {planLabels[plan]}
+                  {statusLabels[status]}
                 </button>
               ))}
             </div>
@@ -143,11 +147,13 @@ export function MerchantRow({
   );
 }
 
+
 type MerchantsTableProps = {
   merchants: MerchantAdmin[];
   onEdit: (merchant: MerchantAdmin) => void;
   onToggleStatus: (id: string) => void;
-  onChangePlan: (id: string, plan: NonNullable<MerchantAdmin["plan"]>) => void;
+  onChangePlan: (id: string, status: Merchant["status"]) => void;
+
   filterStatus?: MerchantAdmin["status"] | "all";
 };
 

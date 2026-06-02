@@ -96,7 +96,7 @@ export const MerchantCard = memo(function MerchantCard({ merchant }: Props) {
         </p>
 
         <div className="flex flex-wrap items-center gap-2 mb-6 mt-auto">
-          <BusinessStatusBadge isOpen={merchant.isOpen} hours={merchant.hours} />
+          <BusinessStatusBadge isOpen={merchant.isOpen} hours={merchant.hours} status={merchant.status} />
 
 
           {merchant.delivery && (

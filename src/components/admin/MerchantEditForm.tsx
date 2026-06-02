@@ -154,15 +154,16 @@ export function MerchantEditForm({
               <div className="space-y-1">
                 <p className="text-[10px] font-bold text-slate-400 uppercase tracking-wider">Status Atual</p>
                 <div className="flex items-center gap-2">
-                   <div className={`w-2 h-2 rounded-full ${merchant.status === 'active' ? 'bg-emerald-500' : 'bg-amber-500'}`} />
+                   <div className={`w-2 h-2 rounded-full ${merchant.status !== 'pending' && merchant.status !== 'rejected' ? 'bg-emerald-500' : 'bg-amber-500'}`} />
                    <p className="font-black text-slate-900 text-sm">
-                    {merchant.status === "active" ? "Ativo" : merchant.status === "pending" ? "Pendente" : "Inativo"}
+                    {merchant.status}
                    </p>
+
                 </div>
               </div>
               <div className="space-y-1">
                 <p className="text-[10px] font-bold text-slate-400 uppercase tracking-wider">Plano</p>
-                <p className="font-black text-violet-600 text-sm uppercase tracking-widest">{merchant.plan === "free" ? "Grátis" : "Premium"}</p>
+                <p className="font-black text-violet-600 text-sm uppercase tracking-widest">{merchant.plan || "free"}</p>
               </div>
               <div className="space-y-1">
                 <p className="text-[10px] font-bold text-slate-400 uppercase tracking-wider">Total de Cliques</p>
