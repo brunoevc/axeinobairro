@@ -19,6 +19,7 @@ export type MerchantAdmin = Merchant & {
   planChangedAt?: string;
   planChangedBy?: string;
   emoji?: string;
+  exposureLevel?: "A" | "B" | "C" | "none";
 };
 
 
@@ -80,6 +81,7 @@ export function initializeMerchantAdmin(merchant: Merchant): MerchantAdmin {
   return {
     ...merchant,
     status,
+    exposureLevel: merchant.exposureLevel || "none",
     emoji: "🏪", // Fallback para compatibilidade
     plan: merchant.plan || "free",
     approvedAt: status !== "pending" ? new Date(Date.now() - Math.random() * 30 * 24 * 60 * 60 * 1000).toISOString() : undefined,

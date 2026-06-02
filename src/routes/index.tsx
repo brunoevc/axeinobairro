@@ -61,8 +61,28 @@ function Index() {
     }
   };
   
-  const featuredMerchants = merchants.filter(m => m.featured).slice(0, 3);
-  const promotionalMerchants = merchants.filter(m => m.promotion.isActive).slice(0, 4);
+  // Prioritized governance logic: A > B > C
+  const levelAMerchants = useMemo(() => merchants.filter(m => m.exposureLevel === 'A'), []);
+  const levelBMerchants = useMemo(() => 
+    merchants.filter(m => m.exposureLevel === 'B' && !levelAMerchants.some(a => a.id === m.id)), 
+    [levelAMerchants]
+  );
+  const levelCMerchants = useMemo(() => 
+    merchants.filter(m => m.exposureLevel === 'C' && !levelAMerchants.some(a => a.id === m.id) && !levelBMerchants.some(b => b.id === m.id)), 
+    [levelAMerchants, levelBMerchants]
+  );
+
+  const featuredMerchants = useMemo(() => {
+    // If we have level A, use them, otherwise fallback to legacy featured
+    if (levelAMerchants.length > 0) return levelAMerchants.slice(0, 3);
+    return merchants.filter(m => m.featured).slice(0, 3);
+  }, [levelAMerchants]);
+
+  const promotionalMerchants = useMemo(() => {
+    // Priority B merchants for this section
+    if (levelBMerchants.length > 0) return levelBMerchants.slice(0, 4);
+    return merchants.filter(m => m.promotion.isActive).slice(0, 4);
+  }, [levelBMerchants]);
 
   const nearbyMerchants = useMemo(() => {
     // We want the listing to update reactively, but we also want a smooth transition
@@ -273,8 +293,12 @@ function Index() {
             <div className="inline-flex items-center gap-2 px-2 py-0.5 rounded-md bg-violet-50 text-violet-600 text-[10px] font-black uppercase tracking-widest mb-4 border border-violet-100">
               Popular hoje
             </div>
-            <h2 className="text-4xl font-black text-slate-900 tracking-tighter">Mais procurados do bairro</h2>
-            <p className="text-slate-500 font-medium text-lg mt-2">Destaques que a vizinhança está amando em Araruama</p>
+            <h2 className="text-4xl font-black text-slate-900 tracking-tighter">
+              {levelAMerchants.length > 0 ? "Destaques Principais" : "Mais procurados do bairro"}
+            </h2>
+            <p className="text-slate-500 font-medium text-lg mt-2">
+              {levelAMerchants.length > 0 ? "As melhores oportunidades selecionadas para você" : "Destaques que a vizinhança está amando em Araruama"}
+            </p>
           </div>
           <Button 
             variant="ghost"
@@ -371,8 +395,12 @@ function Index() {
                 <Tag className="h-3 w-3" />
                 Economia Real no Bairro
               </div>
-              <h2 className="text-4xl md:text-6xl font-black text-white tracking-tighter">Ofertas perto de você</h2>
-              <p className="text-orange-100 font-medium text-xl mt-4">Economize comprando no comércio local de Araruama</p>
+              <h2 className="text-4xl md:text-6xl font-black text-white tracking-tighter">
+                {levelBMerchants.length > 0 ? "Impulsos Comerciais" : "Ofertas perto de você"}
+              </h2>
+              <p className="text-orange-100 font-medium text-xl mt-4">
+                {levelBMerchants.length > 0 ? "Novidades e impulsos dos lojistas locais" : "Economize comprando no comércio local de Araruama"}
+              </p>
             </div>
             <Button 
               variant="outline"
@@ -393,6 +421,26 @@ function Index() {
           </div>
         </div>
       </section>
+
+      {/* Promoções Comuns (Level C) */}
+      {levelCMerchants.length > 0 && (
+        <section className="max-w-7xl mx-auto px-6 mt-24 pb-20">
+          <div className="flex flex-col md:flex-row md:items-end justify-between mb-12 gap-4">
+            <div>
+              <div className="inline-flex items-center gap-2 px-2 py-0.5 rounded-md bg-orange-50 text-orange-600 text-[10px] font-black uppercase tracking-widest mb-4 border border-orange-100">
+                Promoção Comum
+              </div>
+              <h2 className="text-4xl font-black text-slate-900 tracking-tighter">Mais Promoções</h2>
+              <p className="text-slate-500 font-medium text-lg mt-2">Confira outras ofertas imperdíveis no bairro</p>
+            </div>
+          </div>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+            {levelCMerchants.map((merchant) => (
+              <MerchantCard key={merchant.id} merchant={merchant} />
+            ))}
+          </div>
+        </section>
+      )}
 
       <footer className="bg-slate-900 text-white py-20 px-6 mt-20">
         <div className="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center gap-12">
