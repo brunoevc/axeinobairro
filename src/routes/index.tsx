@@ -15,9 +15,9 @@ import {
   Navigation,
   Croissant,
   Bike,
-  PawPrint,
-  MessageCircle
+  PawPrint
 } from "lucide-react";
+
 import { merchants, categories } from "@/data/merchants";
 import { MerchantCard } from "@/components/MerchantCard";
 import { MerchantSkeleton } from "@/components/MerchantSkeleton";
