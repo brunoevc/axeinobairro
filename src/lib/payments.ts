@@ -54,6 +54,6 @@ export const updatePixStatus = (id: string, status: TransactionStatus, receiptFi
   savePixCharges(updated);
 };
 
-export const cancelPixCharge = (id: string) => {
-  updatePixStatus(id, "cancelado");
+export const getPixChargeById = (id: string): PixCharge | undefined => {
+  return getPixCharges().find(c => c.id === id);
 };
