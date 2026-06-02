@@ -237,6 +237,45 @@ function DetailPage() {
 
       <main className="max-w-7xl mx-auto px-6 mt-16 md:mt-24 grid grid-cols-1 lg:grid-cols-3 gap-8">
         <div className="lg:col-span-2 space-y-8">
+          {/* Catalog Section */}
+          <section id="catalog" className="scroll-mt-24">
+            <div className="flex items-center justify-between mb-8">
+              <h2 className="text-3xl font-black text-slate-900 tracking-tighter flex items-center gap-3">
+                <ShoppingBag className="w-8 h-8 text-orange-600" />
+                Produtos da Loja
+              </h2>
+            </div>
+
+            {products.length > 0 ? (
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                {products.map((product) => (
+                  <ProductCard 
+                    key={product.id} 
+                    product={product} 
+                    onAdd={(p) => {
+                      if (cartMerchantId && cartMerchantId !== merchant.id) {
+                        if (window.confirm("Seu carrinho possui itens de outra loja. Deseja limpar o carrinho e adicionar este produto?")) {
+                          clearCart();
+                          addItem(p);
+                        }
+                      } else {
+                        addItem(p);
+                      }
+                    }} 
+                  />
+                ))}
+              </div>
+            ) : (
+              <div className="bg-white rounded-3xl p-12 text-center border border-slate-100 shadow-sm">
+                <div className="w-16 h-16 bg-slate-50 rounded-full flex items-center justify-center mx-auto mb-4">
+                  <Search className="w-8 h-8 text-slate-300" />
+                </div>
+                <h3 className="text-lg font-black text-slate-900 mb-1">Catálogo em breve</h3>
+                <p className="text-slate-500 font-medium">Esta loja ainda não cadastrou produtos para venda online.</p>
+              </div>
+            )}
+          </section>
+
           {/* Promotion Highlight */}
           {merchant.promotion.isActive && (
             <section className="bg-orange-50 border border-orange-100 rounded-3xl p-8 relative overflow-hidden group">
@@ -288,6 +327,7 @@ function DetailPage() {
             </div>
           </section>
         </div>
+
 
         {/* Sidebar Info */}
         <div className="space-y-6">
@@ -407,7 +447,14 @@ function DetailPage() {
         </div>
       </main>
 
+      <FloatingCart onClick={() => setIsCartOpen(true)} />
+      <CartDrawer 
+        isOpen={isCartOpen} 
+        onClose={() => setIsCartOpen(false)} 
+        merchant={merchant} 
+      />
       <FloatingNav />
     </div>
   );
 }
+
