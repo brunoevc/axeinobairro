@@ -1,7 +1,7 @@
 import { clsx, type ClassValue } from "clsx";
 import { twMerge } from "tailwind-merge";
 import { Merchant } from "@/data/merchants";
-import { CartItem } from "@/hooks/useCart";
+import { CartItem, CheckoutData } from "@/hooks/useCart";
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
@@ -16,30 +16,65 @@ export const getWhatsAppUrl = (phone: string, merchantName: string) => {
   return `https://wa.me/${formattedPhone}?text=${encodeURIComponent(message)}`;
 };
 
-export const getOrderWhatsAppUrl = (merchant: Merchant, cartItems: CartItem[], notes: string) => {
+export const getOrderWhatsAppUrl = (
+  merchant: Merchant, 
+  cartItems: CartItem[], 
+  notes: string,
+  checkoutData: CheckoutData
+) => {
   if (!merchant.whatsapp) return null;
   const cleanPhone = merchant.whatsapp.replace(/\D/g, "");
   const formattedPhone = cleanPhone.startsWith("55") ? cleanPhone : `55${cleanPhone}`;
   
   const itemsText = cartItems.map(item => 
-    `- ${item.quantity}x ${item.name} — R$ ${(item.price * item.quantity).toFixed(2).replace('.', ',')}`
+    `• ${item.quantity}x ${item.name} — R$ ${(item.price * item.quantity).toFixed(2).replace('.', ',')}`
   ).join('\n');
   
   const total = cartItems.reduce((sum, item) => sum + item.price * item.quantity, 0);
+  const formattedTotal = total.toFixed(2).replace('.', ',');
   
-  let message = `Olá! Vim pelo Axêi no Bairro e gostaria de fazer este pedido:\n\n`;
-  message += `*Itens:*\n${itemsText}\n\n`;
+  let message = `Olá! Vim pelo Axêi no Bairro e gostaria de fazer este pedido.\n\n`;
   
-  if (notes) {
-    message += `*Observação:*\n${notes}\n\n`;
+  message += `🛒 ITENS:\n${itemsText}\n\n`;
+  
+  message += `💰 Total estimado:\nR$ ${formattedTotal}\n\n`;
+  
+  message += `👤 Cliente:\nNome: ${checkoutData.customerName}\nTelefone: ${checkoutData.customerPhone}\n\n`;
+  
+  const orderTypeLabel = checkoutData.orderType === 'entrega' ? 'Entrega' : 'Retirada';
+  message += `🚚 Tipo de pedido:\n${orderTypeLabel}\n\n`;
+  
+  if (checkoutData.orderType === 'entrega') {
+    message += `📍 Endereço de entrega:\nRua: ${checkoutData.address}\nBairro: ${checkoutData.neighborhood}\n`;
+    if (checkoutData.referencePoint) {
+      message += `Referência: ${checkoutData.referencePoint}\n`;
+    }
+    if (checkoutData.deliveryLocationShared) {
+      message += `(Localização via GPS enviada abaixo)\n`;
+    }
+    message += `\n`;
   }
   
-  message += `*Total estimado: R$ ${total.toFixed(2).replace('.', ',')}*\n\n`;
-  message += `Aguardar confirmação de disponibilidade, entrega e forma de pagamento.`;
+  const paymentLabels = {
+    pix: 'Pix',
+    dinheiro: 'Dinheiro',
+    cartao: 'Cartão'
+  };
+  message += `💳 Forma de pagamento:\n${paymentLabels[checkoutData.paymentMethod]}\n\n`;
+  
+  if (checkoutData.paymentMethod === 'dinheiro' && checkoutData.changeFor) {
+    message += `💵 Troco:\nTroco para R$ ${checkoutData.changeFor}\n\n`;
+  }
+  
+  if (checkoutData.paymentMethod === 'pix') {
+    message += `📲 Pix:\nPor favor, envie a chave Pix para pagamento. Enviarei o comprovante após realizar o pagamento.\n\n`;
+  }
+  
+  if (notes) {
+    message += `📝 Observações:\n${notes}\n\n`;
+  }
+  
+  message += `Aguardar confirmação de disponibilidade, entrega, prazo e forma de pagamento.`;
   
   return `https://wa.me/${formattedPhone}?text=${encodeURIComponent(message)}`;
 };
-
-
-
-

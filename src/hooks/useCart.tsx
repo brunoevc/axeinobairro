@@ -5,19 +5,45 @@ import { toast } from 'sonner';
 import { trackEvent } from '@/lib/metrics';
 
 export interface CartItem extends Product {
-
   quantity: number;
 }
+
+export interface CheckoutData {
+  customerName: string;
+  customerPhone: string;
+  orderType: 'retirada' | 'entrega';
+  address: string;
+  neighborhood: string;
+  referencePoint: string;
+  paymentMethod: 'pix' | 'dinheiro' | 'cartao';
+  changeFor: string;
+  pixReceiptInstruction: boolean;
+  deliveryLocationShared?: boolean;
+}
+
+const DEFAULT_CHECKOUT_DATA: CheckoutData = {
+  customerName: '',
+  customerPhone: '',
+  orderType: 'retirada',
+  address: '',
+  neighborhood: '',
+  referencePoint: '',
+  paymentMethod: 'pix',
+  changeFor: '',
+  pixReceiptInstruction: true,
+};
 
 interface CartContextType {
   items: CartItem[];
   merchantId: string | null;
   notes: string;
+  checkoutData: CheckoutData;
   addItem: (product: Product) => void;
   removeItem: (productId: string) => void;
   updateQuantity: (productId: string, delta: number) => void;
   clearCart: () => void;
   setNotes: (notes: string) => void;
+  setCheckoutData: (data: Partial<CheckoutData>) => void;
   getTotal: () => number;
   getItemsCount: () => number;
 }
@@ -30,6 +56,7 @@ export const CartProvider: React.FC<{ children: React.ReactNode }> = ({ children
   const [items, setItems] = useState<CartItem[]>([]);
   const [merchantId, setMerchantId] = useState<string | null>(null);
   const [notes, setNotes] = useState('');
+  const [checkoutData, setCheckoutDataState] = useState<CheckoutData>(DEFAULT_CHECKOUT_DATA);
 
   useEffect(() => {
     const saved = localStorage.getItem(CART_STORAGE_KEY);
@@ -39,6 +66,9 @@ export const CartProvider: React.FC<{ children: React.ReactNode }> = ({ children
         setItems(parsed.items || []);
         setMerchantId(parsed.merchantId || null);
         setNotes(parsed.notes || '');
+        if (parsed.checkoutData) {
+          setCheckoutDataState(prev => ({ ...prev, ...parsed.checkoutData }));
+        }
       } catch (e) {
         console.error('Failed to parse cart', e);
       }
@@ -46,13 +76,11 @@ export const CartProvider: React.FC<{ children: React.ReactNode }> = ({ children
   }, []);
 
   useEffect(() => {
-    localStorage.setItem(CART_STORAGE_KEY, JSON.stringify({ items, merchantId, notes }));
-  }, [items, merchantId, notes]);
+    localStorage.setItem(CART_STORAGE_KEY, JSON.stringify({ items, merchantId, notes, checkoutData }));
+  }, [items, merchantId, notes, checkoutData]);
 
   const addItem = (product: Product) => {
     if (merchantId && merchantId !== product.merchantId) {
-      // Logic for changing merchant would be handled in the UI before calling this
-      // or we can force reset here for simplicity if needed
       return;
     }
 
@@ -69,9 +97,7 @@ export const CartProvider: React.FC<{ children: React.ReactNode }> = ({ children
     });
     
     trackEvent(product.merchantId, "product_added");
-
     toast.success(`${product.name} adicionado ao carrinho`);
-
   };
 
   const removeItem = (productId: string) => {
@@ -100,13 +126,28 @@ export const CartProvider: React.FC<{ children: React.ReactNode }> = ({ children
     setNotes('');
   };
 
+  const setCheckoutData = (data: Partial<CheckoutData>) => {
+    setCheckoutDataState(prev => ({ ...prev, ...data }));
+  };
+
   const getTotal = () => items.reduce((sum, item) => sum + item.price * item.quantity, 0);
 
   const getItemsCount = () => items.reduce((sum, item) => sum + item.quantity, 0);
 
   return (
     <CartContext.Provider value={{
-      items, merchantId, notes, addItem, removeItem, updateQuantity, clearCart, setNotes, getTotal, getItemsCount
+      items, 
+      merchantId, 
+      notes, 
+      checkoutData,
+      addItem, 
+      removeItem, 
+      updateQuantity, 
+      clearCart, 
+      setNotes, 
+      setCheckoutData,
+      getTotal, 
+      getItemsCount
     }}>
       {children}
     </CartContext.Provider>
