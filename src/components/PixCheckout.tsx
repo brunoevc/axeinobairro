@@ -47,17 +47,25 @@ export function PixCheckout({ charge }: Props) {
         {charge.status === "pendente" && (
           <div className="space-y-6">
             <div className="bg-slate-50 p-6 rounded-3xl flex items-center justify-center border-2 border-dashed border-slate-200">
-              {/* QR Code Placeholder - Mock visual */}
-              <div className="w-48 h-48 bg-white p-2 rounded-xl relative">
-                <img 
-                  src="https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=AXEI_SIMULADO_MOCK_PAYMENT" 
-                  alt="QR Code Mock" 
-                  className="w-full h-full opacity-50 grayscale"
-                />
-                <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
-                  <Badge variant="outline" className="bg-white/90 backdrop-blur-sm border-orange-200 text-orange-600 font-black px-4 py-2 text-[10px] uppercase shadow-lg">
-                    Simulado
-                  </Badge>
+              {/* QR Code Mock local via SVG inline - Sem requisição externa */}
+              <div className="w-48 h-48 bg-white p-4 rounded-xl relative flex items-center justify-center border border-slate-100 shadow-inner">
+                <svg
+                  viewBox="0 0 100 100"
+                  className="w-full h-full text-slate-200 opacity-50"
+                  fill="currentColor"
+                >
+                  <path d="M0 0h40v40H0zM60 0h40v40H60zM0 60h40v40H0zM60 60h10v10H60zM70 70h10v10H70zM80 60h10v10H80zM90 70h10v10H90zM60 80h10v10H60zM80 80h10v10H80zM70 90h10v10H70zM90 90h10v10H90z" />
+                  <path d="M10 10h20v20H10zM70 10h20v20H70zM10 70h20v20H10z" />
+                </svg>
+                <div className="absolute inset-0 flex flex-col items-center justify-center pointer-events-none p-4">
+                  <div className="bg-white/95 backdrop-blur-sm border border-orange-200 p-3 rounded-2xl shadow-xl flex flex-col items-center gap-1">
+                    <span className="text-orange-600 font-black text-[10px] uppercase tracking-tighter text-center">
+                      QR CODE SIMULADO
+                    </span>
+                    <span className="text-slate-400 font-bold text-[8px] uppercase text-center leading-none">
+                      Ambiente de Teste
+                    </span>
+                  </div>
                 </div>
               </div>
             </div>
