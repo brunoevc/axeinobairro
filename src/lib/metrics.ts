@@ -1,5 +1,5 @@
-
 import { MerchantAdmin, AdminState } from "@/data/admin";
+import { trackLead } from "@/lib/leads";
 
 const ADMIN_STATE_KEY = "axei-admin-state";
 
@@ -14,8 +14,13 @@ export type EventType =
   | "product_added"
   | "pedido_whatsapp";
 
+interface TrackEventMetadata {
+  estimatedValue?: number;
+}
 
-export const trackEvent = (merchantId: string, eventType: EventType) => {
+
+
+export const trackEvent = (merchantId: string, eventType: EventType, metadata?: TrackEventMetadata) => {
   try {
     const stored = localStorage.getItem(ADMIN_STATE_KEY);
     if (!stored) return;
