@@ -1,5 +1,7 @@
 import { useState, useEffect, useCallback } from "react";
 import { MerchantAdmin, AdminAction, AdminState, AdminStats, calculateAdminStats, getInitialAdminState } from "@/data/admin";
+import { Merchant } from "@/data/merchants";
+
 
 const ADMIN_STATE_KEY = "axei-admin-state";
 

@@ -1,7 +1,9 @@
 import { useState } from "react";
 import { ChevronDown } from "lucide-react";
 import { MerchantAdmin } from "@/data/admin";
+import { Merchant } from "@/data/merchants";
 import { Button } from "@/components/ui/button";
+
 
 const planLabels: Record<string, string> = {
   free: "Grátis",
@@ -105,7 +107,7 @@ export function MerchantRow({
             onClick={() => onToggleStatus(merchant.id)}
             className="text-xs"
           >
-            {merchant.status !== "pending" ? "⭐ Pendente" : "✅ Verificar"}
+            {merchant.status === "pending" ? "✅ Verificar" : "⏳ Pendente"}
           </Button>
         )}
 
