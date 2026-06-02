@@ -58,11 +58,15 @@ export const getMerchantAvailability = (merchantId: string): BusinessAvailabilit
 
 export const generateTimeSlots = (date: string, duration: number = 60) => {
   const slots = [];
-  let current = new Date(`${date}T09:00:00`);
-  const end = new Date(`${date}T18:00:00`);
+  // Use a fixed base date to avoid local timezone shifts during slot generation
+  const baseDate = "2024-01-01"; 
+  let current = new Date(`${baseDate}T09:00:00`);
+  const end = new Date(`${baseDate}T18:00:00`);
 
   while (current < end) {
-    slots.push(current.toLocaleTimeString("pt-BR", { hour: "2-digit", minute: "2-digit" }));
+    const hours = String(current.getHours()).padStart(2, '0');
+    const minutes = String(current.getMinutes()).padStart(2, '0');
+    slots.push(`${hours}:${minutes}`);
     current = new Date(current.getTime() + duration * 60000);
   }
   return slots;
