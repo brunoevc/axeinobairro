@@ -1,9 +1,12 @@
 import { useParams } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
-import { PixCharge } from "@/types/payment";
-import { getPixChargeById } from "@/lib/payments";
+import { PixCharge, PixLink, PixPurpose } from "@/types/payment";
+import { getPixChargeById, getPixLinkById, createPixCharge } from "@/lib/payments";
 import { PixCheckout } from "@/components/PixCheckout";
-import { AlertTriangle } from "lucide-react";
+import { DollarSign } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { toast } from "sonner";
 
 export default function CheckoutPix() {
   const { id } = useParams({ from: "/checkout/pix/$id" });
@@ -48,7 +51,10 @@ export default function CheckoutPix() {
 
   const handleCustomAmountPay = () => {
     const amount = parseFloat(customAmount);
-    if (!amount || amount <= 0) return toast.error("Informe um valor maior que zero");
+    if (!amount || amount <= 0) {
+      toast.error("Informe um valor maior que zero");
+      return;
+    }
     const newCharge = createPixCharge({
       merchantId: pixLink!.merchantId,
       merchantName: pixLink!.merchantName,
@@ -99,7 +105,7 @@ export default function CheckoutPix() {
                   <DollarSign className="absolute left-4 top-4 w-5 h-5 text-slate-400" />
                   <Input type="number" placeholder="0.00" value={customAmount} onChange={e => setCustomAmount(e.target.value)} className="h-14 pl-12 rounded-2xl font-black text-lg" />
                 </div>
-                <Button onClick={handleCustomAmountPay} className="w-full h-14 bg-slate-900 font-black rounded-2xl">Pagar com Pix</Button>
+                <Button onClick={handleCustomAmountPay} className="w-full h-14 bg-slate-900 font-black rounded-2xl text-white">Pagar com Pix</Button>
                 <Button variant="ghost" onClick={() => setSelectedPurpose(null)} className="w-full">Voltar</Button>
               </div>
             )}
