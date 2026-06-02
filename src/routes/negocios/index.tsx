@@ -314,8 +314,9 @@ function ListingPage() {
             </div>
             <h3 className="text-3xl font-black text-slate-900 mb-2 tracking-tighter">Ops! Nenhum negócio encontrado</h3>
             <p className="text-slate-500 font-medium max-w-sm mx-auto mb-10 leading-relaxed">
-              Não encontramos resultados para sua busca. Experimente mudar os termos ou remover os filtros aplicados.
+              Não encontramos resultados para sua busca ou para os filtros aplicados no momento.
             </p>
+
 
             <Button 
               onClick={clearFilters}
