@@ -17,6 +17,7 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { toast } from "sonner";
 import { cn } from "@/lib/utils";
+import { ImageCropUpload } from "../ImageCropUpload";
 
 interface CatalogAdminProps {
   merchantId: string;
