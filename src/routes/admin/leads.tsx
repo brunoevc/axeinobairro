@@ -21,16 +21,29 @@ import { Button } from "@/components/ui/button";
 
 export const Route = createFileRoute("/admin/leads")({
   component: AdminLeads,
+  validateSearch: (search: Record<string, unknown>) => {
+    return {
+      merchantId: (search.merchantId as string) || undefined,
+    };
+  },
 });
 
 function AdminLeads() {
   const { state, loading } = useAdminState();
+  const { merchantId } = Route.useSearch();
   const [leads, setLeads] = useState<Lead[]>([]);
+
   const [viewMode, setViewMode] = useState<"pipeline" | "list">("pipeline");
 
   const loadLeads = () => {
-    setLeads(getLeads());
+    const allLeads = getLeads();
+    if (merchantId) {
+      setLeads(allLeads.filter(l => l.merchantId === merchantId));
+    } else {
+      setLeads(allLeads);
+    }
   };
+
 
   useEffect(() => {
     loadLeads();
