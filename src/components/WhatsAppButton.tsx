@@ -4,6 +4,7 @@ import { trackEvent } from "@/lib/metrics";
 import { Button } from "@/components/ui/button";
 
 interface WhatsAppButtonProps {
+  merchantId?: string;
   phone: string;
   merchantName: string;
   className?: string;
@@ -11,8 +12,11 @@ interface WhatsAppButtonProps {
   text?: string;
 }
 
+
 export function WhatsAppButton({ 
+  merchantId,
   phone, 
+
   merchantName, 
   className, 
   variant = "default",
@@ -46,9 +50,11 @@ export function WhatsAppButton({
         target="_blank" 
         rel="noopener noreferrer"
         onClick={() => {
-          // Extra tracking can be added here if merchantId was available
-          // But phone/merchantName are unique enough to identify if we pass ID
+          if (merchantId) {
+            trackEvent(merchantId, "whatsapp");
+          }
         }}
+
       >
         <MessageCircle className="h-4 w-4 mr-1.5" />
         {text}
