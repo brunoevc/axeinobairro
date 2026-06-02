@@ -5,6 +5,7 @@ import { toast } from 'sonner';
 import { trackEvent } from '@/lib/metrics';
 
 export interface CartItem extends Product {
+
   quantity: number;
 }
 

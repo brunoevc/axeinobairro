@@ -11,7 +11,9 @@ import { useCart } from "@/hooks/useCart";
 import { Merchant } from "@/data/merchants";
 import { Minus, Plus, Trash2, MessageCircle, AlertCircle } from "lucide-react";
 import { getOrderWhatsAppUrl } from "@/lib/utils";
+import { trackEvent } from "@/lib/metrics";
 import { Textarea } from "@/components/ui/textarea";
+
 
 interface CartDrawerProps {
   isOpen: boolean;
