@@ -92,7 +92,7 @@ export function initializeMerchantAdmin(merchant: Merchant): MerchantAdmin {
     reportsCount: Math.random() > 0.9 ? Math.floor(Math.random() * 3) : 0,
     planExpiry: new Date(Date.now() + 30 * 24 * 60 * 60 * 1000).toISOString(),
     planStatus: "active",
-    lastContactDate: contactAttempts > 0 ? new Date(Date.now() - Math.random() * 7 * 24 * 60 * 60 * 1000).toISOString() : undefined,
+    lastContactDate: whatsappClicks > 0 ? new Date(Date.now() - Math.random() * 7 * 24 * 60 * 60 * 1000).toISOString() : undefined,
   };
 }
 

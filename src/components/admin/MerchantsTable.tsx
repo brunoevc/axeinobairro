@@ -64,7 +64,8 @@ export function MerchantRow({
           </p>
         </div>
         <div className="text-right text-xs text-muted-foreground">
-          <p>{merchant.whatsappClicks || 0} cliques</p>
+          <p>{merchant.views || 0} views</p>
+          <p>{merchant.whatsappClicks || 0} wpp</p>
           <p>⭐ {merchant.rating}</p>
         </div>
       </div>
@@ -82,9 +83,14 @@ export function MerchantRow({
         >
           {statusLabels[merchant.status]}
         </span>
-        <span className={`inline-block px-2 py-1 rounded text-xs font-medium ${planColors[currentPlan]}`}>
+        <span className={`inline-block px-2 py-1 rounded text-xs font-black uppercase tracking-widest ${planColors[currentPlan]}`}>
           {planLabels[currentPlan]}
         </span>
+        {merchant.reportsCount && merchant.reportsCount > 0 ? (
+          <span className="inline-block px-2 py-1 rounded text-[10px] font-black uppercase bg-red-100 text-red-600 border border-red-200">
+            ⚠️ {merchant.reportsCount} Denúncias
+          </span>
+        ) : null}
       </div>
 
       <div className="flex flex-wrap gap-2">

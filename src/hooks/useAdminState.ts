@@ -1,4 +1,5 @@
 import { useState, useEffect, useCallback } from "react";
+import { trackEvent } from "@/lib/metrics";
 import { MerchantAdmin, AdminAction, AdminState, AdminStats, calculateAdminStats, getInitialAdminState } from "@/data/admin";
 import { Merchant } from "@/data/merchants";
 
