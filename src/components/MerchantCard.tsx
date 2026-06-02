@@ -4,6 +4,8 @@ import { Button } from "@/components/ui/button";
 import { Link } from "@tanstack/react-router";
 import { useLocation } from "@/hooks/useLocation";
 import { useState, memo } from "react";
+import { cn, getWhatsAppUrl } from "@/lib/utils";
+
 
 type Props = { merchant: Merchant };
 

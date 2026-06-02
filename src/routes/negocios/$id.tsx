@@ -24,6 +24,8 @@ import { FloatingNav } from "@/components/FloatingNav";
 import { useLocation } from "@/hooks/useLocation";
 import { toast } from "sonner";
 import { useState } from "react";
+import { cn, getWhatsAppUrl } from "@/lib/utils";
+
 
 export const Route = createFileRoute("/negocios/$id")({
   component: DetailPage,
