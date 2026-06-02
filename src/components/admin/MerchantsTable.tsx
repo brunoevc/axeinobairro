@@ -69,8 +69,12 @@ export function MerchantRow({
         <div className="text-right text-xs text-muted-foreground">
           <p>{merchant.views || 0} views</p>
           <p>{merchant.whatsappClicks || 0} wpp</p>
+          {merchant.pedidoWhatsapp && merchant.pedidoWhatsapp > 0 ? (
+            <p className="text-emerald-600 font-bold">🛒 {merchant.pedidoWhatsapp} pedidos</p>
+          ) : null}
           <p>⭐ {merchant.rating}</p>
         </div>
+
       </div>
 
       <div className="flex flex-wrap gap-2 mb-4">
