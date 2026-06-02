@@ -1,4 +1,9 @@
-export type TransactionStatus = "pendente" | "pago" | "expirado" | "cancelado";
+export type TransactionStatus = 
+  | "aguardando_pagamento" 
+  | "comprovante_enviado" 
+  | "aprovado" 
+  | "recusado" 
+  | "cancelado";
 
 export interface PixCharge {
   id: string;
@@ -11,4 +16,5 @@ export interface PixCharge {
   pixKey: string; // Mock key
   createdAt: string;
   expiresAt: string;
+  receiptSentAt?: string;
 }

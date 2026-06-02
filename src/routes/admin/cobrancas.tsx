@@ -24,13 +24,13 @@ import {
 import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
 import { 
   Plus, 
-  Link as LinkIcon, 
   CheckCircle, 
   XCircle, 
   AlertTriangle, 
   Copy, 
   ExternalLink,
-  DollarSign
+  DollarSign,
+  FileSearch
 } from "lucide-react";
 import { toast } from "sonner";
 
@@ -62,14 +62,13 @@ export default function AdminCobrancas() {
       amount: parseFloat(formData.amount),
       customerName: formData.customerName,
       description: formData.description,
-      status: "pendente"
+      status: "aguardando_pagamento"
     });
 
     setCharges(getPixCharges());
     setIsDialogOpen(false);
-    toast.success("Link de cobrança gerado!");
+    toast.success("Link de cobrança manual gerado!");
     
-    // Auto copy link to clipboard
     const url = `${window.location.origin}/checkout/pix/${newCharge.id}`;
     navigator.clipboard.writeText(url);
     toast.info("Link copiado para o clipboard");
@@ -78,7 +77,22 @@ export default function AdminCobrancas() {
   const handleStatusChange = (id: string, status: TransactionStatus) => {
     updatePixStatus(id, status);
     setCharges(getPixCharges());
-    toast.success(`Status alterado para ${status}`);
+    toast.success(`Pagamento ${status.replace('_', ' ')} com sucesso!`);
+  };
+
+  const getStatusBadge = (status: TransactionStatus) => {
+    const config = {
+      aguardando_pagamento: "bg-orange-100 text-orange-700",
+      comprovante_enviado: "bg-blue-100 text-blue-700",
+      aprovado: "bg-green-100 text-green-700",
+      recusado: "bg-red-100 text-red-700",
+      cancelado: "bg-slate-100 text-slate-700"
+    };
+    return (
+      <Badge className={`rounded-lg px-2 py-0.5 text-[10px] font-black uppercase tracking-wider ${config[status]}`}>
+        {status.replace('_', ' ')}
+      </Badge>
+    );
   };
 
   return (
@@ -86,23 +100,23 @@ export default function AdminCobrancas() {
       <div className="flex flex-col gap-8">
         <header className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
           <div>
-            <h1 className="text-3xl font-black text-slate-900">Cobranças Pix</h1>
-            <p className="text-slate-500 font-bold">Simulação de links de pagamento</p>
+            <h1 className="text-3xl font-black text-slate-900">Cobranças Manuais</h1>
+            <p className="text-slate-500 font-bold text-sm">Links para pagamento Pix e conferência de comprovante</p>
           </div>
           <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
             <DialogTrigger asChild>
               <Button className="bg-orange-600 hover:bg-orange-700 font-black rounded-2xl h-12 px-6 shadow-lg shadow-orange-100">
                 <Plus className="w-5 h-5 mr-2" />
-                Nova Cobrança
+                Novo Link de Cobrança
               </Button>
             </DialogTrigger>
             <DialogContent className="rounded-[2.5rem]">
               <DialogHeader>
-                <DialogTitle className="text-2xl font-black">Gerar Link de Cobrança</DialogTitle>
+                <DialogTitle className="text-2xl font-black">Cobrança Pix Manual</DialogTitle>
               </DialogHeader>
               <div className="space-y-6 py-4">
                 <div className="space-y-2">
-                  <Label className="font-bold uppercase text-[10px] tracking-widest text-slate-400">Valor (R$)</Label>
+                  <Label className="font-bold uppercase text-[10px] tracking-widest text-slate-400">Valor do Pedido (R$)</Label>
                   <div className="relative">
                     <DollarSign className="absolute left-3 top-3 w-4 h-4 text-slate-400" />
                     <Input 
@@ -123,7 +137,7 @@ export default function AdminCobrancas() {
                     onChange={e => setFormData({...formData, customerName: e.target.value})}
                   />
                 </div>
-                <Button onClick={handleCreateCharge} className="w-full bg-orange-600 hover:bg-orange-700 font-black h-12 rounded-xl">
+                <Button onClick={handleCreateCharge} className="w-full bg-slate-900 hover:bg-slate-800 text-white font-black h-12 rounded-xl">
                   Gerar e Copiar Link
                 </Button>
               </div>
@@ -133,10 +147,9 @@ export default function AdminCobrancas() {
 
         <div className="bg-orange-50 border border-orange-100 p-4 rounded-[2rem] flex items-center gap-3">
           <AlertTriangle className="w-6 h-6 text-orange-600 shrink-0" />
-          <div>
-            <p className="text-sm text-orange-800 font-black uppercase tracking-tight">Ambiente de Simulação</p>
-            <p className="text-xs text-orange-700 font-medium">Nenhum pagamento real será processado. Utilize apenas para testes de fluxo.</p>
-          </div>
+          <p className="text-xs text-orange-800 font-black uppercase tracking-tight">
+            Ambiente de Simulação. Nenhum pagamento real será processado.
+          </p>
         </div>
 
         <div className="bg-white rounded-[2rem] border border-slate-100 overflow-hidden shadow-sm">
@@ -146,15 +159,14 @@ export default function AdminCobrancas() {
                 <TableHead className="font-black text-slate-900 uppercase text-[10px] tracking-widest">Cliente</TableHead>
                 <TableHead className="font-black text-slate-900 uppercase text-[10px] tracking-widest">Valor</TableHead>
                 <TableHead className="font-black text-slate-900 uppercase text-[10px] tracking-widest">Status</TableHead>
-                <TableHead className="font-black text-slate-900 uppercase text-[10px] tracking-widest">Data</TableHead>
-                <TableHead className="text-right font-black text-slate-900 uppercase text-[10px] tracking-widest">Ações</TableHead>
+                <TableHead className="font-black text-slate-900 uppercase text-[10px] tracking-widest">Ações</TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>
               {charges.length === 0 ? (
                 <TableRow>
-                  <TableCell colSpan={5} className="text-center py-20 text-slate-400 font-bold">
-                    Nenhuma cobrança gerada ainda.
+                  <TableCell colSpan={4} className="text-center py-20 text-slate-400 font-bold">
+                    Nenhuma cobrança gerada.
                   </TableCell>
                 </TableRow>
               ) : (
@@ -165,17 +177,7 @@ export default function AdminCobrancas() {
                       <div className="text-[10px] text-slate-400 font-bold uppercase tracking-tight">{c.id}</div>
                     </TableCell>
                     <TableCell className="font-black text-slate-700">R$ {c.amount.toFixed(2)}</TableCell>
-                    <TableCell>
-                      <Badge className={`rounded-lg px-2 py-0.5 text-[10px] font-black uppercase tracking-wider ${
-                        c.status === 'pago' ? 'bg-green-100 text-green-700' :
-                        c.status === 'cancelado' ? 'bg-red-100 text-red-700' : 'bg-orange-100 text-orange-700'
-                      }`}>
-                        {c.status}
-                      </Badge>
-                    </TableCell>
-                    <TableCell className="text-xs font-bold text-slate-500">
-                      {new Date(c.createdAt).toLocaleDateString('pt-BR')}
-                    </TableCell>
+                    <TableCell>{getStatusBadge(c.status)}</TableCell>
                     <TableCell className="text-right">
                       <div className="flex justify-end gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
                         <Button 
@@ -187,7 +189,6 @@ export default function AdminCobrancas() {
                             toast.success("Link copiado!");
                           }}
                           className="h-8 w-8 text-slate-400 hover:text-orange-600"
-                          title="Copiar Link"
                         >
                           <Copy className="w-4 h-4" />
                         </Button>
@@ -196,22 +197,32 @@ export default function AdminCobrancas() {
                           size="icon" 
                           asChild
                           className="h-8 w-8 text-slate-400 hover:text-orange-600"
-                          title="Ver Checkout"
                         >
                           <a href={`/checkout/pix/${c.id}`} target="_blank" rel="noreferrer">
                             <ExternalLink className="w-4 h-4" />
                           </a>
                         </Button>
-                        {c.status === 'pendente' && (
-                          <Button 
-                            variant="ghost" 
-                            size="icon" 
-                            onClick={() => handleStatusChange(c.id, 'pago')}
-                            className="h-8 w-8 text-green-600 hover:bg-green-50"
-                            title="Marcar como Pago"
-                          >
-                            <CheckCircle className="w-4 h-4" />
-                          </Button>
+                        {c.status === 'comprovante_enviado' && (
+                          <>
+                            <Button 
+                              variant="ghost" 
+                              size="icon" 
+                              onClick={() => handleStatusChange(c.id, 'aprovado')}
+                              className="h-8 w-8 text-green-600 hover:bg-green-50"
+                              title="Aprovar Pagamento"
+                            >
+                              <CheckCircle className="w-4 h-4" />
+                            </Button>
+                            <Button 
+                              variant="ghost" 
+                              size="icon" 
+                              onClick={() => handleStatusChange(c.id, 'recusado')}
+                              className="h-8 w-8 text-red-600 hover:bg-red-50"
+                              title="Recusar"
+                            >
+                              <XCircle className="w-4 h-4" />
+                            </Button>
+                          </>
                         )}
                       </div>
                     </TableCell>
