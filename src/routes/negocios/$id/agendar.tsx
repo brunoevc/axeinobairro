@@ -89,7 +89,7 @@ export default function Agendar() {
                 selected={date}
                 onSelect={setDate}
                 className="rounded-md"
-                disabled={(date) => date < new Date(new Date().setHours(0,0,0,0))}
+                disabled={(date: Date) => date < new Date(new Date().setHours(0,0,0,0))}
               />
             </CardContent>
           </Card>
