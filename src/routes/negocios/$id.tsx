@@ -15,22 +15,29 @@ import {
   TrendingUp,
   Croissant,
   Search,
-  AlertCircle
+  AlertCircle,
+  ShoppingBag
 } from "lucide-react";
 
 
 import { merchants } from "@/data/merchants";
+import { getProductsByMerchant } from "@/data/products";
 import { Button } from "@/components/ui/button";
 import { PromotionBadge } from "@/components/MerchantCard";
 import { TopBar } from "@/components/TopBar";
 import { FloatingNav } from "@/components/FloatingNav";
 import { useLocation } from "@/hooks/useLocation";
+import { useCart } from "@/hooks/useCart";
 import { toast } from "sonner";
 import { useState, useEffect } from "react";
 import { cn } from "@/lib/utils";
 import { WhatsAppButton } from "@/components/WhatsAppButton";
 import { BusinessStatusBadge } from "@/components/BusinessStatusBadge";
 import { MerchantDetailsSkeleton } from "@/components/MerchantDetailsSkeleton";
+import { ProductCard } from "@/components/ProductCard";
+import { CartDrawer } from "@/components/CartDrawer";
+import { FloatingCart } from "@/components/FloatingCart";
+
 
 
 
@@ -42,16 +49,20 @@ function DetailPage() {
   const { id } = Route.useParams();
   const navigate = useNavigate();
   const { coords, getDistance, formatDistance } = useLocation();
+  const { addItem, merchantId: cartMerchantId, clearCart } = useCart();
   const [coverError, setCoverError] = useState(false);
   const [logoError, setLogoError] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
+  const [isCartOpen, setIsCartOpen] = useState(false);
   
   const merchant = merchants.find((m) => m.id === id);
+  const products = merchant ? getProductsByMerchant(merchant.id) : [];
 
   useEffect(() => {
     const timer = setTimeout(() => setIsLoading(false), 600);
     return () => clearTimeout(timer);
   }, [id]);
+
 
   if (isLoading) {
     return (
