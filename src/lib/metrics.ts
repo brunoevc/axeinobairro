@@ -53,6 +53,22 @@ export const trackEvent = (merchantId: string, eventType: EventType, metadata?: 
           case "pedido_whatsapp": metrics.pedidoWhatsapp++; break;
         }
 
+        // Lead Tracking Integration
+        if (eventType === "whatsapp") {
+          trackLead({ merchantId, customerName: "Interessado no WhatsApp", customerPhone: "Não informado", source: "whatsapp" });
+        } else if (eventType === "pedido_whatsapp") {
+          trackLead({ 
+            merchantId, 
+            customerName: "Cliente de Pedido", 
+            customerPhone: "Não informado", 
+            source: "pedido",
+            estimatedValue: metadata?.estimatedValue 
+          });
+        } else if (eventType === "share") {
+          trackLead({ merchantId, customerName: "Divulgador da Loja", customerPhone: "Não informado", source: "share" });
+        }
+
+
 
         return { ...m, ...metrics };
       }
