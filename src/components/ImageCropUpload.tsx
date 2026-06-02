@@ -86,6 +86,7 @@ export function ImageCropUpload({
         setImage(null);
         toast.success("Imagem atualizada!");
       } catch (e) {
+        console.error("Storage error:", e);
         toast.error("Não foi possível salvar esta imagem. Tente uma imagem menor.");
       }
     } catch (e) {
