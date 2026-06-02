@@ -222,10 +222,12 @@ function DetailPage() {
 
                     <div className="hidden md:flex gap-4">
                        <WhatsAppButton 
+                         merchantId={merchant.id}
                          phone={merchant.whatsapp} 
                          merchantName={merchant.name} 
                          className="h-14 px-8 shadow-xl shadow-emerald-900/20"
                        />
+
                     </div>
 
                   </div>
@@ -377,10 +379,12 @@ function DetailPage() {
 
             <div className="pt-4 flex flex-col gap-3">
               <WhatsAppButton 
+                merchantId={merchant.id}
                 phone={merchant.whatsapp} 
                 merchantName={merchant.name} 
                 className="w-full h-14"
               />
+
 
 
               <Button asChild variant="outline" className="w-full border-slate-200 rounded-2xl h-14 font-black text-slate-700 hover:bg-slate-50">
