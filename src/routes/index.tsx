@@ -282,11 +282,18 @@ function Index() {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           {isLoading 
             ? [...Array(3)].map((_, i) => <MerchantSkeleton key={i} />)
-            : featuredMerchants.map((merchant) => (
-              <MerchantCard key={merchant.id} merchant={merchant} />
-            ))
+            : featuredMerchants.length > 0 ? (
+                featuredMerchants.map((merchant) => (
+                  <MerchantCard key={merchant.id} merchant={merchant} />
+                ))
+              ) : (
+                <div className="col-span-full py-12 text-center bg-white rounded-3xl border border-slate-100">
+                  <p className="text-slate-400 font-bold">Nenhum destaque disponível no momento.</p>
+                </div>
+              )
           }
         </div>
+
       </section>
 
       {/* Nearby Businesses */}

@@ -1,4 +1,4 @@
-import { MessageCircle, Clock, MapPin } from "lucide-react";
+import { MessageCircle } from "lucide-react";
 import { cn, getWhatsAppUrl } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 
@@ -21,7 +21,10 @@ export function WhatsAppButton({
 
   if (!waUrl) {
     return (
-      <div className={cn("text-center py-2 text-xs font-bold text-slate-400 bg-slate-100 rounded-xl", className)}>
+      <div className={cn(
+        "flex items-center justify-center px-4 py-2 text-xs font-bold text-slate-400 bg-slate-100 rounded-xl border border-slate-200 cursor-not-allowed h-11", 
+        className
+      )}>
         WhatsApp indisponível
       </div>
     );
