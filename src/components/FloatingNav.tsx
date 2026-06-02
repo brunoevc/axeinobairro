@@ -30,12 +30,19 @@ export const FloatingNav = memo(function FloatingNav() {
       </Link>
       
       <Link 
+        to="/noticias" 
+        className={`flex flex-col items-center gap-1 p-2 transition-all ${isActive('/noticias') ? 'text-orange-600 scale-110' : 'text-slate-400'}`}
+      >
+        <span className="text-[10px] font-bold">News</span>
+      </Link>
+      <Link 
         to="/cadastro" 
         className={`flex flex-col items-center gap-1 p-2 transition-all ${isActive('/cadastro') ? 'text-orange-600 scale-110' : 'text-slate-400'}`}
       >
         <PlusCircle className="w-5 h-5" />
         <span className="text-[10px] font-bold">Anunciar</span>
       </Link>
+
     </nav>
   );
 });
