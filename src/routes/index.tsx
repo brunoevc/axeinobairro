@@ -12,7 +12,11 @@ import {
   Clock,
   ShieldCheck,
   Zap,
-  Navigation
+  Navigation,
+  Croissant,
+  Bike,
+  PawPrint,
+  MessageCircle
 } from "lucide-react";
 import { merchants, categories } from "@/data/merchants";
 import { MerchantCard } from "@/components/MerchantCard";
@@ -82,14 +86,14 @@ function Index() {
           <div className="flex-1 text-center md:text-left">
             <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-orange-50 text-orange-600 text-[10px] font-black uppercase tracking-widest mb-6 border border-orange-100 shadow-sm">
               <TrendingUp className="h-3 w-3" />
-              Encontre. Conecte. Fortaleça o comércio local.
+              +10 negócios em Araruama
             </div>
             <h1 className="text-4xl md:text-7xl font-black tracking-tighter text-slate-900 mb-6 leading-[0.9]">
-              Conecte-se com o <br className="hidden md:block" />
-              <span className="text-orange-600">Bairro</span>
+              Encontre comércios, <br className="hidden md:block" />
+              <span className="text-orange-600">serviços e promoções</span>
             </h1>
             <p className="text-slate-500 text-lg md:text-xl font-medium mb-10 leading-relaxed max-w-xl mx-auto md:mx-0">
-              O marketplace onde você encontra padarias, restaurantes, serviços e ofertas exclusivas pertinho de você. Tudo via WhatsApp.
+              O Axêi no Bairro conecta você aos negócios locais mais próximos, com ofertas, rotas e contato direto pelo WhatsApp.
             </p>
             
             <div className="flex flex-col gap-6">
@@ -115,7 +119,7 @@ function Index() {
                   onClick={() => navigate({ to: '/negocios' })}
                   className="h-16 px-10 bg-orange-600 hover:bg-orange-700 text-white rounded-2xl font-black shadow-xl shadow-orange-200 transition-all active:scale-95 text-lg group"
                 >
-                  Explorar Negócios
+                  Ver negócios
                   <ChevronRight className="ml-2 h-5 w-5 transition-transform group-hover:translate-x-1" />
                 </Button>
                 <Button 
@@ -123,7 +127,7 @@ function Index() {
                   onClick={() => navigate({ to: '/cadastro' })}
                   className="h-16 px-10 bg-white border-slate-200 text-slate-700 rounded-2xl font-black hover:bg-slate-50 transition-all active:scale-95 text-lg"
                 >
-                  Anunciar minha loja
+                  Cadastrar minha loja
                 </Button>
               </div>
             </div>
@@ -168,6 +172,52 @@ function Index() {
         </div>
       </section>
 
+      {/* Acontecendo Agora */}
+      <section className="max-w-7xl mx-auto px-6 mt-12 mb-12">
+        <div className="flex items-center gap-2 mb-6">
+          <div className="h-2 w-2 rounded-full bg-emerald-500 animate-ping" />
+          <h2 className="text-sm font-black uppercase tracking-widest text-slate-400">Acontecendo Agora</h2>
+        </div>
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+          <div className="bg-white border border-slate-100 p-4 rounded-2xl flex items-center gap-4 shadow-sm hover:shadow-md transition-all group">
+            <div className="w-12 h-12 bg-orange-50 rounded-xl flex items-center justify-center text-orange-600 group-hover:bg-orange-600 group-hover:text-white transition-colors">
+              <Croissant className="w-6 h-6" />
+            </div>
+            <div>
+              <div className="text-sm font-black text-slate-900 leading-none mb-1">Padaria aberta agora</div>
+              <div className="text-[10px] font-bold text-slate-400 uppercase tracking-tight">Pão quentinho em Rio do Limão</div>
+            </div>
+          </div>
+          <div className="bg-white border border-slate-100 p-4 rounded-2xl flex items-center gap-4 shadow-sm hover:shadow-md transition-all group">
+            <div className="w-12 h-12 bg-emerald-50 rounded-xl flex items-center justify-center text-emerald-600 group-hover:bg-emerald-600 group-hover:text-white transition-colors">
+              <Tag className="w-6 h-6" />
+            </div>
+            <div>
+              <div className="text-sm font-black text-slate-900 leading-none mb-1">Promoção ativa perto de você</div>
+              <div className="text-[10px] font-bold text-slate-400 uppercase tracking-tight">50% OFF em Cantina da Nonna</div>
+            </div>
+          </div>
+          <div className="bg-white border border-slate-100 p-4 rounded-2xl flex items-center gap-4 shadow-sm hover:shadow-md transition-all group">
+            <div className="w-12 h-12 bg-blue-50 rounded-xl flex items-center justify-center text-blue-600 group-hover:bg-blue-600 group-hover:text-white transition-colors">
+              <Bike className="w-6 h-6" />
+            </div>
+            <div>
+              <div className="text-sm font-black text-slate-900 leading-none mb-1">Entrega disponível</div>
+              <div className="text-[10px] font-bold text-slate-400 uppercase tracking-tight">PetShop Amigo Fiel com delivery</div>
+            </div>
+          </div>
+          <div className="bg-white border border-slate-100 p-4 rounded-2xl flex items-center gap-4 shadow-sm hover:shadow-md transition-all group">
+            <div className="w-12 h-12 bg-violet-50 rounded-xl flex items-center justify-center text-violet-600 group-hover:bg-violet-600 group-hover:text-white transition-colors">
+              <PawPrint className="w-6 h-6" />
+            </div>
+            <div>
+              <div className="text-sm font-black text-slate-900 leading-none mb-1">Pet shop em destaque</div>
+              <div className="text-[10px] font-bold text-slate-400 uppercase tracking-tight">Banho & Tosa hoje no Centro</div>
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* Category Grid */}
       <section className="max-w-7xl mx-auto px-6 -mt-10 relative z-20">
         <div className="bg-white border border-slate-100 rounded-[2.5rem] p-8 shadow-2xl shadow-slate-200/50">
@@ -199,12 +249,15 @@ function Index() {
         </div>
       </section>
 
-      {/* Featured Businesses */}
-      <section className="max-w-7xl mx-auto px-6 mt-20">
-        <div className="flex flex-col md:flex-row md:items-end justify-between mb-10 gap-4">
+      {/* Mais procurados do bairro */}
+      <section className="max-w-7xl mx-auto px-6 mt-24">
+        <div className="flex flex-col md:flex-row md:items-end justify-between mb-12 gap-4">
           <div>
-            <h2 className="text-3xl font-black text-slate-900 tracking-tighter">Negócios em Destaque</h2>
-            <p className="text-slate-500 font-medium text-lg">Os estabelecimentos mais bem avaliados pela comunidade</p>
+            <div className="inline-flex items-center gap-2 px-2 py-0.5 rounded-md bg-violet-50 text-violet-600 text-[10px] font-black uppercase tracking-widest mb-4 border border-violet-100">
+              Popular hoje
+            </div>
+            <h2 className="text-4xl font-black text-slate-900 tracking-tighter">Mais procurados do bairro</h2>
+            <p className="text-slate-500 font-medium text-lg mt-2">Destaques que a vizinhança está amando em Araruama</p>
           </div>
           <Button 
             variant="ghost"
@@ -284,10 +337,10 @@ function Index() {
             <div>
               <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-white/10 text-white text-[10px] font-black uppercase tracking-[0.2em] mb-4 border border-white/20">
                 <Tag className="h-3 w-3" />
-                Economia Real
+                Economia Real no Bairro
               </div>
-              <h2 className="text-4xl md:text-5xl font-black text-white tracking-tighter">Ofertas do Bairro</h2>
-              <p className="text-orange-100 font-medium text-lg mt-2">Aproveite descontos exclusivos que você só encontra aqui</p>
+              <h2 className="text-4xl md:text-6xl font-black text-white tracking-tighter">Ofertas perto de você</h2>
+              <p className="text-orange-100 font-medium text-xl mt-4">Economize comprando no comércio local de Araruama</p>
             </div>
             <Button 
               variant="outline"
