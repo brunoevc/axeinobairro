@@ -21,7 +21,7 @@ import { Button } from "@/components/ui/button";
 import { TopBar } from "@/components/TopBar";
 import { FloatingNav } from "@/components/FloatingNav";
 import { Logo } from "@/components/ui/Logo";
-import { ImageUploadPreview } from "@/components/ImageUploadPreview";
+import { ImageCropUpload } from "@/components/ImageCropUpload";
 import { toast } from "sonner";
 
 
