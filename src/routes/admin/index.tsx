@@ -99,7 +99,7 @@ function AdminDashboard() {
 
       {/* Stats Grid */}
       <section>
-        <DashboardStats stats={stats} />
+        <DashboardStats stats={stats} state={state} />
       </section>
 
       {/* Plans and Activity */}

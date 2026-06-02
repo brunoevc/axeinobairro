@@ -117,7 +117,7 @@ export function calculateAdminStats(merchants: MerchantAdmin[]): AdminStats {
     const plan = m.plan || "free";
     planDistribution[plan]++;
     totalWhatsappClicks += m.whatsappClicks || 0;
-    totalContactAttempts += m.contactAttempts || 0;
+    // Removed contactAttempts loop logic as it's no longer in the schema
     totalRating += m.rating;
 
     if (m.status !== "pending" && m.status !== "rejected") activeMerchants++;
