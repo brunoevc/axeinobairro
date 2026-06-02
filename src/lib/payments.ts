@@ -57,3 +57,24 @@ export const updatePixStatus = (id: string, status: TransactionStatus, receiptFi
 export const getPixChargeById = (id: string): PixCharge | undefined => {
   return getPixCharges().find(c => c.id === id);
 };
+
+export const cancelPixCharge = (id: string) => {
+  updatePixStatus(id, "cancelado");
+};
+
+export const getPixLinkById = (id: string): PixLink | undefined => {
+  return getPixLinks().find(l => l.id === id);
+};
+
+export const createPixLink = (link: Omit<PixLink, "id" | "createdAt" | "active">): PixLink => {
+  const links = getPixLinks();
+  const id = `link_${Math.random().toString(36).substr(2, 9)}`;
+  const newLink: PixLink = {
+    ...link,
+    id,
+    active: true,
+    createdAt: new Date().toISOString()
+  };
+  savePixLinks([...links, newLink]);
+  return newLink;
+};
