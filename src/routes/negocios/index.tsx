@@ -308,14 +308,15 @@ function ListingPage() {
             ))}
           </div>
         ) : (
-          <div className="flex flex-col items-center justify-center py-32 text-center bg-white rounded-[3rem] border border-slate-100 shadow-sm">
-            <div className="w-24 h-24 bg-slate-50 rounded-full flex items-center justify-center mb-6 border border-slate-100">
-              <Search className="h-10 w-10 text-slate-300" />
+          <div className="flex flex-col items-center justify-center py-32 text-center bg-white rounded-[3rem] border border-slate-100 shadow-sm px-6">
+            <div className="w-24 h-24 bg-orange-50 rounded-full flex items-center justify-center mb-6 border border-orange-100">
+              <Search className="h-10 w-10 text-orange-600" />
             </div>
-            <h3 className="text-2xl font-black text-slate-900 mb-2">Ops! Nenhum negócio encontrado</h3>
+            <h3 className="text-3xl font-black text-slate-900 mb-2 tracking-tighter">Ops! Nenhum negócio encontrado</h3>
             <p className="text-slate-500 font-medium max-w-sm mx-auto mb-10 leading-relaxed">
-              Não encontramos resultados para sua busca. Experimente mudar os termos ou remover os filtros.
+              Não encontramos resultados para sua busca. Experimente mudar os termos ou remover os filtros aplicados.
             </p>
+
             <Button 
               onClick={clearFilters}
               className="bg-orange-600 hover:bg-orange-700 text-white rounded-2xl h-14 px-8 font-black shadow-xl shadow-orange-200 active:scale-95 transition-all"

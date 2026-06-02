@@ -15,9 +15,9 @@ import {
   Navigation,
   Croissant,
   Bike,
-  PawPrint,
-  MessageCircle
+  PawPrint
 } from "lucide-react";
+
 import { merchants, categories } from "@/data/merchants";
 import { MerchantCard } from "@/components/MerchantCard";
 import { MerchantSkeleton } from "@/components/MerchantSkeleton";
@@ -132,11 +132,12 @@ function Index() {
                 <Button 
                   variant="link"
                   onClick={() => navigate({ to: '/negocios', search: { bairro: 'Centro' } })}
-                  className="h-16 px-4 text-orange-600 font-bold hover:no-underline hover:text-orange-700 transition-all active:scale-95 text-base"
+                  className="h-16 px-4 text-orange-600 font-black hover:no-underline hover:text-orange-700 transition-all active:scale-95 text-base"
                 >
                   Ver negócios no Centro de Araruama
-                  <ArrowRight className="ml-1 h-4 w-4" />
+                  <ArrowRight className="ml-2 h-4 w-4" />
                 </Button>
+
 
               </div>
             </div>

@@ -4,18 +4,19 @@ import {
   MapPin, 
   Clock, 
   Instagram as InstagramIcon, 
-  MessageCircle, 
   Share2, 
   Star,
-  CheckCircle2,
   AlertTriangle,
   ChevronRight,
   ShieldCheck,
   Smartphone,
   Tag,
   Navigation,
-  TrendingUp
+  TrendingUp,
+  Croissant,
+  Search
 } from "lucide-react";
+
 import { merchants } from "@/data/merchants";
 import { Button } from "@/components/ui/button";
 import { PromotionBadge } from "@/components/MerchantCard";
@@ -23,8 +24,12 @@ import { TopBar } from "@/components/TopBar";
 import { FloatingNav } from "@/components/FloatingNav";
 import { useLocation } from "@/hooks/useLocation";
 import { toast } from "sonner";
-import { useState } from "react";
-import { cn, getWhatsAppUrl } from "@/lib/utils";
+import { useState, useEffect } from "react";
+import { cn } from "@/lib/utils";
+import { WhatsAppButton } from "@/components/WhatsAppButton";
+import { BusinessStatusBadge } from "@/components/BusinessStatusBadge";
+import { MerchantDetailsSkeleton } from "@/components/MerchantDetailsSkeleton";
+
 
 
 export const Route = createFileRoute("/negocios/$id")({
@@ -37,23 +42,43 @@ function DetailPage() {
   const { coords, getDistance, formatDistance } = useLocation();
   const [coverError, setCoverError] = useState(false);
   const [logoError, setLogoError] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
   
   const merchant = merchants.find((m) => m.id === id);
+
+  useEffect(() => {
+    const timer = setTimeout(() => setIsLoading(false), 600);
+    return () => clearTimeout(timer);
+  }, [id]);
+
+  if (isLoading) {
+    return (
+      <div className="min-h-screen bg-slate-50 pb-32">
+        <TopBar />
+        <MerchantDetailsSkeleton />
+      </div>
+    );
+  }
+
 
   if (!merchant) {
     return (
       <div className="min-h-screen bg-slate-50 flex flex-col items-center justify-center p-6 text-center">
-        <div className="w-20 h-20 bg-red-100 rounded-full flex items-center justify-center mb-6">
-          <AlertTriangle className="h-10 w-10 text-red-600" />
+        <div className="w-24 h-24 bg-orange-50 rounded-full flex items-center justify-center mb-6 border border-orange-100">
+          <Search className="h-10 w-10 text-orange-600" />
         </div>
-        <h1 className="text-2xl font-black text-slate-900 mb-2">Negócio não encontrado</h1>
-        <p className="text-slate-500 mb-8 max-w-xs leading-relaxed">
-          O estabelecimento que você está procurando não existe ou foi removido.
+        <h1 className="text-3xl font-black text-slate-900 mb-2 tracking-tighter">Negócio não encontrado</h1>
+        <p className="text-slate-500 mb-10 max-w-sm font-medium leading-relaxed">
+          Ops! Não conseguimos localizar esse estabelecimento. Ele pode ter sido removido ou o link está incorreto.
         </p>
-        <Button onClick={() => navigate({ to: '/negocios' })} className="bg-orange-600 hover:bg-orange-700 rounded-2xl h-14 px-8 font-bold text-white shadow-lg shadow-orange-200 transition-all active:scale-95">
-          Voltar para a lista
+        <Button 
+          onClick={() => navigate({ to: '/negocios' })} 
+          className="bg-orange-600 hover:bg-orange-700 rounded-2xl h-14 px-10 font-black text-white shadow-xl shadow-orange-200 transition-all active:scale-95"
+        >
+          Ver todos os negócios
         </Button>
       </div>
+
     );
   }
 
@@ -61,7 +86,8 @@ function DetailPage() {
     ? getDistance(coords.latitude, coords.longitude, merchant.latitude, merchant.longitude)
     : null;
 
-  const waUrl = getWhatsAppUrl(merchant.whatsapp, merchant.name);
+  // WhatsApp link handled by WhatsAppButton component
+
 
 
   const mapsUrl = `https://www.google.com/maps/dir/?api=1&destination=${merchant.latitude},${merchant.longitude}`;
@@ -182,27 +208,13 @@ function DetailPage() {
                     </div>
 
                     <div className="hidden md:flex gap-4">
-                       <Button 
-                         asChild={!!waUrl} 
-                         className={cn(
-                           "rounded-2xl h-14 px-8 font-black transition-all",
-                           !waUrl 
-                             ? "bg-slate-100 text-slate-400 cursor-not-allowed hover:bg-slate-100 shadow-none" 
-                             : "bg-emerald-600 hover:bg-emerald-700 text-white shadow-xl shadow-emerald-900/20"
-                         )}
-                         disabled={!waUrl}
-                       >
-                         {waUrl ? (
-                           <a href={waUrl} target="_blank" rel="noopener noreferrer">
-                             <MessageCircle className="w-5 h-5 mr-2" />
-                             Chamar no WhatsApp
-                           </a>
-                         ) : (
-                           <span>WhatsApp indisponível</span>
-                         )}
-                       </Button>
-
+                       <WhatsAppButton 
+                         phone={merchant.whatsapp} 
+                         merchantName={merchant.name} 
+                         className="h-14 px-8 shadow-xl shadow-emerald-900/20"
+                       />
                     </div>
+
                   </div>
                 </div>
             </div>
@@ -242,29 +254,10 @@ function DetailPage() {
             <div className="mt-8 pt-8 border-t border-slate-50 grid grid-cols-2 md:grid-cols-4 gap-6">
               <div className="flex flex-col gap-1">
                  <span className="text-[10px] font-bold text-slate-400 uppercase">Status</span>
-                 <div className="flex items-center gap-1.5">
-                   {merchant.isOpen ? (
-                     <>
-                       <span className="relative flex h-2 w-2">
-                         <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
-                         <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
-                       </span>
-                       <span className="text-sm font-bold text-slate-900">
-                         Aberto agora
-                         {merchant.hours.includes('-') && (
-                           <span className="text-slate-400 font-medium ml-1">
-                             (Fecha às {merchant.hours.split('-')[1].trim()})
-                           </span>
-                         )}
-                       </span>
-                     </>
-                   ) : (
-                     <>
-                       <span className="w-2 h-2 rounded-full bg-slate-300" />
-                       <span className="text-sm font-bold text-slate-900">Fechado</span>
-                     </>
-                   )}
-                 </div>
+                  <div className="flex items-center gap-1.5">
+                    <BusinessStatusBadge isOpen={merchant.isOpen} hours={merchant.hours} />
+                  </div>
+
               </div>
 
               <div className="flex flex-col gap-1">
@@ -330,25 +323,12 @@ function DetailPage() {
             </div>
 
             <div className="pt-4 flex flex-col gap-3">
-              <Button 
-                asChild={!!waUrl} 
-                className={cn(
-                  "w-full rounded-2xl h-14 font-black transition-all",
-                  !waUrl 
-                    ? "bg-slate-100 text-slate-400 cursor-not-allowed hover:bg-slate-100 shadow-none" 
-                    : "bg-emerald-600 hover:bg-emerald-700 text-white shadow-lg shadow-emerald-100"
-                )}
-                disabled={!waUrl}
-              >
-                {waUrl ? (
-                  <a href={waUrl} target="_blank" rel="noopener noreferrer">
-                    <MessageCircle className="w-5 h-5 mr-2" />
-                    Enviar Mensagem
-                  </a>
-                ) : (
-                  <span>WhatsApp indisponível</span>
-                )}
-              </Button>
+              <WhatsAppButton 
+                phone={merchant.whatsapp} 
+                merchantName={merchant.name} 
+                className="w-full h-14"
+              />
+
 
               <Button asChild variant="outline" className="w-full border-slate-200 rounded-2xl h-14 font-black text-slate-700 hover:bg-slate-50">
                 <a href={`https://instagram.com/${merchant.instagram.replace('@', '')}`} target="_blank" rel="noreferrer">
