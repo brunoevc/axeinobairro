@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback } from "react";
+import React, { createContext, useContext, useState, useEffect, useCallback, useRef } from "react";
 
 export type Coords = {
   latitude: number;
@@ -16,15 +16,23 @@ export type LocationState = {
   manualCity: string | null;
 };
 
-// Araruama Central
 const DEFAULT_COORDS = { latitude: -22.8732, longitude: -42.3431 };
 const DEFAULT_CITY = "Araruama/RJ";
 const DEFAULT_NEIGHBORHOOD = "Centro";
 const DEFAULT_LOCATION_NAME = `${DEFAULT_NEIGHBORHOOD} - ${DEFAULT_CITY}`;
-
 const STORAGE_KEY = "axei_location_data";
+const MIN_DISTANCE_CHANGE = 0.05; // 50 meters
 
-export function useLocation() {
+type LocationContextType = LocationState & {
+  retry: () => void;
+  setManualLocation: (neighborhood: string, city: string) => void;
+  getDistance: (lat1: number, lon1: number, lat2: number, lon2: number) => number;
+  formatDistance: (km: number) => string;
+};
+
+const LocationContext = createContext<LocationContextType | undefined>(undefined);
+
+export function LocationProvider({ children }: { children: React.ReactNode }) {
   const [state, setState] = useState<LocationState>(() => {
     try {
       const saved = localStorage.getItem(STORAGE_KEY);
@@ -57,6 +65,8 @@ export function useLocation() {
     };
   });
 
+  const watchId = useRef<number | null>(null);
+
   const getDistance = useCallback((lat1: number, lon1: number, lat2: number, lon2: number) => {
     const R = 6371;
     const dLat = (lat2 - lat1) * (Math.PI / 180);
@@ -79,33 +89,62 @@ export function useLocation() {
     return `${km.toFixed(1)}km`;
   }, []);
 
-  const setManualLocation = useCallback((neighborhood: string, city: string) => {
-    const locationName = `${neighborhood} - ${city}`;
-    setState(prev => ({
-      ...prev,
-      manualNeighborhood: neighborhood,
-      manualCity: city,
-      locationName,
-      loading: false
-    }));
-
+  const updateStoredLocation = (newState: Partial<LocationState>) => {
     try {
       const saved = localStorage.getItem(STORAGE_KEY);
       const parsed = saved ? JSON.parse(saved) : {};
       localStorage.setItem(STORAGE_KEY, JSON.stringify({
         ...parsed,
-        manualNeighborhood: neighborhood,
-        manualCity: city,
-        locationName,
+        ...newState,
         timestamp: Date.now()
       }));
     } catch (e) {
-      console.error("Error saving manual location", e);
+      console.error("Error saving location", e);
     }
-  }, []);
+  };
+
+  const handlePositionUpdate = useCallback((position: GeolocationPosition) => {
+    const { latitude, longitude, accuracy } = position.coords;
+    
+    setState(prev => {
+      if (prev.manualNeighborhood) return { ...prev, loading: false };
+
+      if (prev.coords) {
+        const dist = getDistance(prev.coords.latitude, prev.coords.longitude, latitude, longitude);
+        if (dist < MIN_DISTANCE_CHANGE && (prev.accuracy && accuracy >= prev.accuracy)) {
+          return { ...prev, loading: false };
+        }
+      }
+
+      const newState = {
+        coords: { latitude, longitude },
+        accuracy,
+        loading: false,
+        error: null,
+        locationName: prev.manualNeighborhood 
+          ? `${prev.manualNeighborhood} - ${prev.manualCity}` 
+          : DEFAULT_LOCATION_NAME,
+      };
+
+      updateStoredLocation(newState);
+      return { ...prev, ...newState };
+    });
+  }, [getDistance]);
+
+  const startWatching = useCallback(() => {
+    if (watchId.current !== null) return;
+    if (!("geolocation" in navigator)) return;
+
+    watchId.current = navigator.geolocation.watchPosition(
+      handlePositionUpdate,
+      (error) => {
+        console.error("GPS Watch error", error);
+      },
+      { enableHighAccuracy: true, timeout: 10000, maximumAge: 30000 }
+    );
+  }, [handlePositionUpdate]);
 
   const fetchLocation = useCallback((isRetry = false) => {
-    // If we have manual location and it's not a retry, skip auto-fetching GPS
     if (state.manualNeighborhood && !isRetry) {
       setState(prev => ({ ...prev, loading: false }));
       return;
@@ -123,41 +162,10 @@ export function useLocation() {
       return;
     }
 
-    const options = {
-      enableHighAccuracy: true,
-      timeout: 10000,
-      maximumAge: isRetry ? 0 : 60000,
-    };
-
     navigator.geolocation.getCurrentPosition(
       (position) => {
-        const newState = {
-          coords: {
-            latitude: position.coords.latitude,
-            longitude: position.coords.longitude,
-          },
-          loading: false,
-          error: null,
-          locationName: state.manualNeighborhood 
-            ? `${state.manualNeighborhood} - ${state.manualCity}` 
-            : DEFAULT_LOCATION_NAME,
-          accuracy: position.coords.accuracy,
-        };
-
-        setState((prev) => ({ ...prev, ...newState }));
-        
-        try {
-          const saved = localStorage.getItem(STORAGE_KEY);
-          const parsed = saved ? JSON.parse(saved) : {};
-          localStorage.setItem(STORAGE_KEY, JSON.stringify({
-            ...parsed,
-            coords: newState.coords,
-            accuracy: newState.accuracy,
-            timestamp: Date.now()
-          }));
-        } catch (e) {
-          console.error("Error saving location", e);
-        }
+        handlePositionUpdate(position);
+        if (!state.manualNeighborhood) startWatching();
       },
       (error) => {
         let errorMsg = "Erro ao buscar GPS";
@@ -166,20 +174,60 @@ export function useLocation() {
         setState((prev) => ({
           ...prev,
           loading: false,
-          error: state.manualNeighborhood ? null : errorMsg,
+          error: prev.manualNeighborhood ? null : errorMsg,
           coords: prev.coords || DEFAULT_COORDS,
         }));
       },
-      options
+      { enableHighAccuracy: true, timeout: 10000, maximumAge: isRetry ? 0 : 60000 }
     );
-  }, [state.manualNeighborhood, state.manualCity]);
+  }, [state.manualNeighborhood, handlePositionUpdate, startWatching]);
+
+  const setManualLocation = useCallback((neighborhood: string, city: string) => {
+    const locationName = `${neighborhood} - ${city}`;
+    
+    if (watchId.current !== null) {
+      navigator.geolocation.clearWatch(watchId.current);
+      watchId.current = null;
+    }
+
+    setState(prev => ({
+      ...prev,
+      manualNeighborhood: neighborhood,
+      manualCity: city,
+      locationName,
+      loading: false,
+      error: null
+    }));
+
+    updateStoredLocation({
+      manualNeighborhood: neighborhood,
+      manualCity: city,
+      locationName,
+      coords: null
+    });
+  }, []);
+
+  const retry = useCallback(() => {
+    setState(prev => ({
+      ...prev,
+      manualNeighborhood: null,
+      manualCity: null,
+      locationName: DEFAULT_LOCATION_NAME
+    }));
+    updateStoredLocation({
+      manualNeighborhood: null,
+      manualCity: null,
+      locationName: DEFAULT_LOCATION_NAME
+    });
+    fetchLocation(true);
+  }, [fetchLocation]);
 
   useEffect(() => {
     if ("permissions" in navigator) {
       navigator.permissions.query({ name: "geolocation" as any }).then((status) => {
         setState((prev) => ({ ...prev, permissionStatus: status.state }));
         status.onchange = () => {
-          setState((prev) => ({ ...prev, permissionStatus: status.state }));
+          setState((prev) => ({ ...prev, permissionStatus: (status as any).state }));
         };
       });
     }
@@ -189,17 +237,54 @@ export function useLocation() {
       fetchLocation();
     } else {
       const parsed = JSON.parse(saved);
-      const isStale = Date.now() - parsed.timestamp > 1000 * 60 * 30;
-      if (isStale && !parsed.manualNeighborhood) fetchLocation();
-      else setState(prev => ({ ...prev, loading: false }));
+      const isStale = Date.now() - (parsed.timestamp || 0) > 1000 * 60 * 30;
+      if (isStale && !parsed.manualNeighborhood) {
+        fetchLocation();
+      } else {
+        setState(prev => ({ ...prev, loading: false }));
+        if (!parsed.manualNeighborhood) startWatching();
+      }
     }
-  }, [fetchLocation]);
 
-  return {
+    const handleVisibilityChange = () => {
+      if (document.visibilityState === "visible") {
+        const savedStr = localStorage.getItem(STORAGE_KEY);
+        const parsed = savedStr ? JSON.parse(savedStr) : null;
+        if (!parsed?.manualNeighborhood) {
+           fetchLocation();
+        }
+      }
+    };
+
+    window.addEventListener("visibilitychange", handleVisibilityChange);
+
+    return () => {
+      if (watchId.current !== null) {
+        navigator.geolocation.clearWatch(watchId.current);
+      }
+      window.removeEventListener("visibilitychange", handleVisibilityChange);
+    };
+  }, [fetchLocation, startWatching]);
+
+  const value: LocationContextType = {
     ...state,
-    retry: () => fetchLocation(true),
+    retry,
     setManualLocation,
     getDistance,
     formatDistance,
   };
+
+  return (
+    <LocationContext.Provider value={value}>
+      {children}
+    </LocationContext.Provider>
+  );
+}
+
+export function useLocation() {
+  const context = useContext(LocationContext);
+  if (context === undefined) {
+    throw new Error("useLocation must be used within a LocationProvider");
+  }
+  return context;
 }

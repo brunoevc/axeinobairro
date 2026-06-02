@@ -101,6 +101,10 @@ function ListingPage() {
 
   const { coords, getDistance, loading: locationLoading } = useLocation();
 
+  // If location is loading and we have no coords, we want to show a skeleton state
+  // This is handled by isInitialLoading OR locationLoading if it's the first time
+  const showSkeletons = isInitialLoading || (locationLoading && !coords);
+
   useEffect(() => {
     // Simulate a brief loading for a more "premium" feel with skeletons
     const timer = setTimeout(() => setIsInitialLoading(false), 800);
@@ -284,9 +288,17 @@ function ListingPage() {
 
       <main className="max-w-7xl mx-auto px-6 py-12">
         <div className="mb-8 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
-          <p className="text-xs font-black text-slate-400 uppercase tracking-widest">
-            {filteredMerchants.length} {filteredMerchants.length === 1 ? 'resultado' : 'resultados'} encontrados
-          </p>
+          <div className="flex flex-col gap-1">
+            <p className="text-xs font-black text-slate-400 uppercase tracking-widest">
+              {filteredMerchants.length} {filteredMerchants.length === 1 ? 'resultado' : 'resultados'} encontrados
+            </p>
+            {locationLoading && coords && (
+              <div className="flex items-center gap-2 text-orange-500 animate-pulse">
+                <RefreshCw className="w-3 h-3 animate-spin" />
+                <span className="text-[10px] font-black uppercase tracking-widest">Atualizando localização...</span>
+              </div>
+            )}
+          </div>
           {coords && (
              <div className="flex items-center gap-2 px-3 py-1.5 bg-orange-50 rounded-xl border border-orange-100 shadow-sm animate-in fade-in slide-in-from-right-4">
                 <Navigation className="w-3.5 h-3.5 text-orange-600" />
@@ -295,7 +307,7 @@ function ListingPage() {
           )}
         </div>
 
-        {isInitialLoading ? (
+        {showSkeletons ? (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
             {[...Array(8)].map((_, i) => (
               <MerchantSkeleton key={i} />

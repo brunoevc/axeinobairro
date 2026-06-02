@@ -42,7 +42,7 @@ export const Route = createFileRoute("/")({
 
 function Index() {
   const navigate = useNavigate();
-  const { coords, getDistance } = useLocation();
+  const { coords, getDistance, loading: locationLoading } = useLocation();
   const [searchTerm, setSearchTerm] = useState("");
   const [isLoading, setIsLoading] = useState(true);
 
@@ -64,7 +64,13 @@ function Index() {
   const promotionalMerchants = merchants.filter(m => m.promotion.isActive).slice(0, 4);
 
   const nearbyMerchants = useMemo(() => {
+    // We want the listing to update reactively, but we also want a smooth transition
+    // If location is loading and we don't have coords yet, return empty
+    if (!coords && locationLoading) return [];
+    
+    // Even if no coords (GPS denied), we don't show "nearby" 
     if (!coords) return [];
+
     return [...merchants]
       .map(m => ({
         ...m,
@@ -72,7 +78,7 @@ function Index() {
       }))
       .sort((a, b) => a.distance - b.distance)
       .slice(0, 3);
-  }, [coords, getDistance]);
+  }, [coords, getDistance, locationLoading]);
 
   return (
     <div className="min-h-screen bg-slate-50 pb-24 font-sans selection:bg-violet-100">
@@ -305,7 +311,15 @@ function Index() {
                 <Navigation className="w-8 h-8 text-orange-600" />
                 Mais próximos de você
               </h2>
-              <p className="text-slate-500 font-medium text-lg">Negócios que estão a poucos passos de distância</p>
+              <div className="flex items-center gap-3 mt-2">
+                <p className="text-slate-500 font-medium text-lg">Negócios que estão a poucos passos de distância</p>
+                {locationLoading && (
+                  <div className="flex items-center gap-2 px-2 py-1 bg-orange-50 rounded-lg animate-pulse">
+                    <RefreshCw className="w-3 h-3 text-orange-500 animate-spin" />
+                    <span className="text-[10px] font-black text-orange-600 uppercase tracking-widest">Atualizando GPS...</span>
+                  </div>
+                )}
+              </div>
             </div>
           </div>
 
