@@ -295,8 +295,7 @@ export function useAdminState() {
     state,
     stats,
     loading,
-    approveMerchant,
-    rejectMerchant,
+    updateMerchantStatus,
     toggleMerchantStatus,
     changePlan,
     addNote,
@@ -304,3 +303,4 @@ export function useAdminState() {
     editMerchant,
   };
 }
+
