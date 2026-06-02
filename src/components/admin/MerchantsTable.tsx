@@ -33,6 +33,7 @@ type MerchantRowProps = {
   onEdit: (merchant: MerchantAdmin) => void;
   onToggleStatus: (id: string) => void;
   onChangePlan: (id: string, status: Merchant["status"]) => void;
+  onManageCatalog?: (merchantId: string) => void;
 };
 
 export function MerchantRow({
@@ -40,7 +41,9 @@ export function MerchantRow({
   onEdit,
   onToggleStatus,
   onChangePlan,
+  onManageCatalog,
 }: MerchantRowProps) {
+
   const [planOpen, setPlanOpen] = useState(false);
   const currentPlan = merchant.plan || "free";
   
@@ -103,6 +106,16 @@ export function MerchantRow({
           ✏️ Editar
         </Button>
 
+        <Button
+          variant="outline"
+          size="sm"
+          onClick={() => onManageCatalog?.(merchant.id)}
+          className="text-xs bg-orange-50 text-orange-600 border-orange-100 hover:bg-orange-600 hover:text-white transition-all"
+        >
+          🍔 Catálogo
+        </Button>
+
+
         {merchant.status !== "rejected" && (
           <Button
             variant="outline"
@@ -156,9 +169,10 @@ type MerchantsTableProps = {
   onEdit: (merchant: MerchantAdmin) => void;
   onToggleStatus: (id: string) => void;
   onChangePlan: (id: string, status: Merchant["status"]) => void;
-
+  onManageCatalog?: (merchantId: string) => void;
   filterStatus?: MerchantAdmin["status"] | "all";
 };
+
 
 export function MerchantsTable({
   merchants,
@@ -189,7 +203,9 @@ export function MerchantsTable({
           onEdit={onEdit}
           onToggleStatus={onToggleStatus}
           onChangePlan={onChangePlan}
+          onManageCatalog={onManageCatalog}
         />
+
       ))}
     </div>
   );
