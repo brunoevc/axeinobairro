@@ -3,6 +3,8 @@ import { Product } from "@/data/products";
 import { Button } from "@/components/ui/button";
 import { Plus, Tag } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { trackEvent } from "@/lib/metrics";
+
 
 interface ProductCardProps {
   product: Product;
@@ -55,7 +57,11 @@ export function ProductCard({ product, onAdd, disabled }: ProductCardProps) {
           
           <Button 
             size="sm"
-            onClick={() => onAdd(product)}
+            onClick={() => {
+              onAdd(product);
+              trackEvent(product.merchantId, "promocao"); // Tracking as a general interest/promotion click
+            }}
+
             disabled={!product.isAvailable || disabled}
             className="rounded-xl h-10 px-4 bg-orange-600 hover:bg-orange-700 text-white font-black shadow-lg shadow-orange-100 active:scale-95 transition-all"
           >

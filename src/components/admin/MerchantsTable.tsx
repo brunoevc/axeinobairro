@@ -1,5 +1,7 @@
 import { useState } from "react";
-import { ChevronDown } from "lucide-react";
+import { ChevronDown, MessageSquare } from "lucide-react";
+import { Link } from "@tanstack/react-router";
+
 import { MerchantAdmin } from "@/data/admin";
 import { Merchant } from "@/data/merchants";
 import { Button } from "@/components/ui/button";
@@ -109,6 +111,17 @@ export function MerchantRow({
         >
           ✏️ Editar
         </Button>
+        <Button
+          asChild
+          variant="outline"
+          size="sm"
+          className="text-xs"
+        >
+          <Link to="/admin/leads" search={{ merchantId: merchant.id }}>
+            👥 Leads
+          </Link>
+        </Button>
+
 
         <Button
           variant="outline"

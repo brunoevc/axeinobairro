@@ -1,5 +1,5 @@
-
 import { MerchantAdmin, AdminState } from "@/data/admin";
+import { trackLead } from "@/lib/leads";
 
 const ADMIN_STATE_KEY = "axei-admin-state";
 
@@ -12,10 +12,17 @@ export type EventType =
   | "report" 
   | "search_appearance"
   | "product_added"
-  | "pedido_whatsapp";
+  | "pedido_whatsapp"
+  | "promocao";
 
 
-export const trackEvent = (merchantId: string, eventType: EventType) => {
+interface TrackEventMetadata {
+  estimatedValue?: number;
+}
+
+
+
+export const trackEvent = (merchantId: string, eventType: EventType, metadata?: TrackEventMetadata) => {
   try {
     const stored = localStorage.getItem(ADMIN_STATE_KEY);
     if (!stored) return;
@@ -46,7 +53,28 @@ export const trackEvent = (merchantId: string, eventType: EventType) => {
           case "search_appearance": metrics.searchAppearances++; break;
           case "product_added": metrics.productAdded++; break;
           case "pedido_whatsapp": metrics.pedidoWhatsapp++; break;
+          case "promocao": break; // No specific metric field yet, just for lead tracking
         }
+
+
+        // Lead Tracking Integration
+        if (eventType === "whatsapp") {
+          trackLead({ merchantId, customerName: "Interessado no WhatsApp", customerPhone: "Não informado", source: "whatsapp" });
+        } else if (eventType === "pedido_whatsapp") {
+          trackLead({ 
+            merchantId, 
+            customerName: "Cliente de Pedido", 
+            customerPhone: "Não informado", 
+            source: "pedido",
+            estimatedValue: metadata?.estimatedValue 
+          });
+        } else if (eventType === "share") {
+          trackLead({ merchantId, customerName: "Divulgador da Loja", customerPhone: "Não informado", source: "share" });
+        } else if (eventType === "promocao") {
+          trackLead({ merchantId, customerName: "Interessado em Produto", customerPhone: "Não informado", source: "promocao" });
+        }
+
+
 
 
         return { ...m, ...metrics };

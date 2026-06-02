@@ -29,7 +29,7 @@ export function CartDrawer({ isOpen, onClose, merchant }: CartDrawerProps) {
   const handleSendOrder = () => {
     if (!merchant) return;
     
-    trackEvent(merchant.id, "pedido_whatsapp");
+    trackEvent(merchant.id, "pedido_whatsapp", { estimatedValue: total });
 
     const url = getOrderWhatsAppUrl(merchant, items, notes);
 
