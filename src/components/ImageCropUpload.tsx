@@ -318,8 +318,8 @@ async function getCroppedImg(imageSrc: string, pixelCrop: Area): Promise<string>
   // If the resulting image is still too large for localStorage, 
   // we might need more aggressive compression or downscaling.
   
-  // Max dimension 1200px for performance/storage
-  const maxDim = 1200;
+  // Max dimension 800px for performance/storage efficiency
+  const maxDim = 800;
   if (canvas.width > maxDim || canvas.height > maxDim) {
     const scale = maxDim / Math.max(canvas.width, canvas.height);
     const scaledCanvas = document.createElement("canvas");
@@ -328,11 +328,11 @@ async function getCroppedImg(imageSrc: string, pixelCrop: Area): Promise<string>
     const sCtx = scaledCanvas.getContext("2d");
     if (sCtx) {
       sCtx.drawImage(canvas, 0, 0, scaledCanvas.width, scaledCanvas.height);
-      return scaledCanvas.toDataURL("image/jpeg", 0.7); // 70% quality JPEG
+      return scaledCanvas.toDataURL("image/jpeg", 0.6); // 60% quality JPEG
     }
   }
 
-  return canvas.toDataURL("image/jpeg", 0.8); // 80% quality JPEG
+  return canvas.toDataURL("image/jpeg", 0.7); // 70% quality JPEG
 }
 
 function createImage(url: string): Promise<HTMLImageElement> {
