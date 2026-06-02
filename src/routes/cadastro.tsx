@@ -21,7 +21,7 @@ import { Button } from "@/components/ui/button";
 import { TopBar } from "@/components/TopBar";
 import { FloatingNav } from "@/components/FloatingNav";
 import { Logo } from "@/components/ui/Logo";
-import { ImageUploadPreview } from "@/components/ImageUploadPreview";
+import { ImageCropUpload } from "@/components/ImageCropUpload";
 import { toast } from "sonner";
 
 
@@ -329,31 +329,31 @@ function RegistrationPage() {
                 </div>
               </div>
               <div className="space-y-8">
-                <ImageUploadPreview
+                <ImageCropUpload
                   label="Logo da Loja"
                   description="Aparecerá no seu perfil e resultados"
                   recommendedSize="512x512 px • 1:1"
-                  aspectRatio="square"
+                  aspectRatio={1}
                   value={formData.logoUrl}
-                  onChange={(url) => setFormData({ ...formData, logoUrl: url })}
+                  onChange={(base64) => setFormData({ ...formData, logoUrl: base64 })}
                 />
 
-                <ImageUploadPreview
+                <ImageCropUpload
                   label="Imagem do Card"
                   description="Principal imagem na listagem de bairros"
                   recommendedSize="1200x900 px • 4:3"
-                  aspectRatio="card"
+                  aspectRatio={4/3}
                   value={formData.cardUrl}
-                  onChange={(url) => setFormData({ ...formData, cardUrl: url })}
+                  onChange={(base64) => setFormData({ ...formData, cardUrl: base64 })}
                 />
 
-                <ImageUploadPreview
+                <ImageCropUpload
                   label="Capa do Comércio"
                   description="Destaque no topo da sua página"
                   recommendedSize="1600x900 px • 16:9"
-                  aspectRatio="video"
+                  aspectRatio={16/9}
                   value={formData.coverUrl}
-                  onChange={(url) => setFormData({ ...formData, coverUrl: url })}
+                  onChange={(base64) => setFormData({ ...formData, coverUrl: base64 })}
                 />
               </div>
             </div>
@@ -429,7 +429,18 @@ function RegistrationPage() {
                 </div>
               </div>
 
-              <div className="pt-4 flex items-center gap-3 text-orange-200">
+                <div className="pt-4">
+                  <ImageCropUpload
+                    label="Imagem da Promoção"
+                    description="Destaque sua oferta visualmente"
+                    recommendedSize="1080x1080 px • 1:1"
+                    aspectRatio={1}
+                    value={formData.promoUrl}
+                    onChange={(base64) => setFormData({ ...formData, promoUrl: base64 })}
+                  />
+                </div>
+
+                <div className="pt-4 flex items-center gap-3 text-orange-200">
                  <ShieldCheck className="w-5 h-5 opacity-60" />
                  <p className="text-[11px] font-bold leading-relaxed">Sua promoção será destacada com um selo especial nos resultados de busca.</p>
               </div>

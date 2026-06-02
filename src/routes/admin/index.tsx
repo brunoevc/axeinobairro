@@ -4,7 +4,7 @@ import { DashboardStats } from "@/components/admin/DashboardStats";
 import { PlansChart } from "@/components/admin/PlansChart";
 import { ActivityLog } from "@/components/admin/ActivityLog";
 import { ShieldCheck, Info, TrendingUp, BarChart3, Clock, Layout, Save, Lock, Mail, CheckCircle2, AlertCircle, Users } from "lucide-react";
-import { ImageUploadPreview } from "@/components/ImageUploadPreview";
+import { ImageCropUpload } from "@/components/ImageCropUpload";
 import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { toast } from "sonner";
@@ -302,11 +302,11 @@ function AdminDashboard() {
         </div>
 
         <div className="max-w-4xl">
-          <ImageUploadPreview
+          <ImageCropUpload
             label="Logo da Plataforma (Horizontal)"
             description="Substitui o texto 'Axêi no Bairro' no TopBar e Footer"
-            recommendedSize="1200x400 px • PNG transparente"
-            aspectRatio="horizontal"
+            recommendedSize="1200x400 px • 3:1"
+            aspectRatio={3}
             value={platformLogo}
             onChange={setPlatformLogo}
           />
