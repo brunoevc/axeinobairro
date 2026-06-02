@@ -10,7 +10,10 @@ export type EventType =
   | "route" 
   | "share" 
   | "report" 
-  | "search_appearance";
+  | "search_appearance"
+  | "product_added"
+  | "pedido_whatsapp";
+
 
 export const trackEvent = (merchantId: string, eventType: EventType) => {
   try {
@@ -28,7 +31,10 @@ export const trackEvent = (merchantId: string, eventType: EventType) => {
           shareClicks: m.shareClicks || 0,
           reportsCount: m.reportsCount || 0,
           searchAppearances: m.searchAppearances || 0,
+          productAdded: m.productAdded || 0,
+          pedidoWhatsapp: m.pedidoWhatsapp || 0,
         };
+
 
         switch (eventType) {
           case "view": metrics.views++; break;
@@ -38,7 +44,10 @@ export const trackEvent = (merchantId: string, eventType: EventType) => {
           case "share": metrics.shareClicks++; break;
           case "report": metrics.reportsCount++; break;
           case "search_appearance": metrics.searchAppearances++; break;
+          case "product_added": metrics.productAdded++; break;
+          case "pedido_whatsapp": metrics.pedidoWhatsapp++; break;
         }
+
 
         return { ...m, ...metrics };
       }

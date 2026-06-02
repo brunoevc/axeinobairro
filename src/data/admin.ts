@@ -13,11 +13,14 @@ export type MerchantAdmin = Merchant & {
   reportsCount?: number;
   searchAppearances?: number;
   views?: number;
+  productAdded?: number;
+  pedidoWhatsapp?: number;
   lastContactDate?: string;
   planChangedAt?: string;
   planChangedBy?: string;
   emoji?: string;
 };
+
 
 
 export type AdminAction = {

@@ -13,13 +13,16 @@ import {
   ChevronRight,
   AlertCircle,
   Clock,
-  Filter
+  Filter,
+  ShoppingBag
 } from "lucide-react";
 import { useAdminState } from "@/hooks/useAdminState";
 import { MerchantsTable } from "@/components/admin/MerchantsTable";
 import { MerchantEditForm } from "@/components/admin/MerchantEditForm";
+import { CatalogAdmin } from "@/components/admin/CatalogAdmin";
 import { MerchantAdmin } from "@/data/admin";
 import { Button } from "@/components/ui/button";
+
 
 export const Route = createFileRoute("/admin/lojas")({
   component: AdminLojas,
@@ -28,8 +31,9 @@ export const Route = createFileRoute("/admin/lojas")({
 function AdminLojas() {
   const { state, loading, updateMerchantStatus, changePlan, editMerchant } = useAdminState();
   const [activeTab, setActiveTab] = useState("todas");
-  const [viewMode, setViewMode] = useState<"table" | "edit">("table");
+  const [viewMode, setViewMode] = useState<"table" | "edit" | "catalog">("table");
   const [selectedMerchant, setSelectedMerchant] = useState<MerchantAdmin | null>(null);
+
 
   if (loading || !state) {
     return (
@@ -89,7 +93,15 @@ function AdminLojas() {
             onCancel={() => setViewMode("table")}
           />
         </div>
+      ) : viewMode === "catalog" && selectedMerchant ? (
+        <div className="bg-white rounded-[3rem] border border-slate-100 shadow-xl p-10">
+          <CatalogAdmin
+            merchantId={selectedMerchant.id}
+            onBack={() => setViewMode("table")}
+          />
+        </div>
       ) : (
+
         <div className="space-y-8">
           <div className="flex flex-wrap gap-2">
             {tabs.map((tab) => (
@@ -125,8 +137,16 @@ function AdminLojas() {
                    updateMerchantStatus(id, status);
                 }
               }}
+              onManageCatalog={(id) => {
+                const m = state.merchants.find(m => m.id === id);
+                if (m) {
+                  setSelectedMerchant(m);
+                  setViewMode("catalog");
+                }
+              }}
               filterStatus={activeTab === "todas" ? "all" : (activeTab as any)}
             />
+
 
           </div>
         </div>

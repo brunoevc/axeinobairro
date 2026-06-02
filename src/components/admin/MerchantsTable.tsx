@@ -33,6 +33,7 @@ type MerchantRowProps = {
   onEdit: (merchant: MerchantAdmin) => void;
   onToggleStatus: (id: string) => void;
   onChangePlan: (id: string, status: Merchant["status"]) => void;
+  onManageCatalog?: (merchantId: string) => void;
 };
 
 export function MerchantRow({
@@ -40,7 +41,9 @@ export function MerchantRow({
   onEdit,
   onToggleStatus,
   onChangePlan,
+  onManageCatalog,
 }: MerchantRowProps) {
+
   const [planOpen, setPlanOpen] = useState(false);
   const currentPlan = merchant.plan || "free";
   
@@ -66,8 +69,12 @@ export function MerchantRow({
         <div className="text-right text-xs text-muted-foreground">
           <p>{merchant.views || 0} views</p>
           <p>{merchant.whatsappClicks || 0} wpp</p>
+          {merchant.pedidoWhatsapp && merchant.pedidoWhatsapp > 0 ? (
+            <p className="text-emerald-600 font-bold">🛒 {merchant.pedidoWhatsapp} pedidos</p>
+          ) : null}
           <p>⭐ {merchant.rating}</p>
         </div>
+
       </div>
 
       <div className="flex flex-wrap gap-2 mb-4">
@@ -102,6 +109,16 @@ export function MerchantRow({
         >
           ✏️ Editar
         </Button>
+
+        <Button
+          variant="outline"
+          size="sm"
+          onClick={() => onManageCatalog?.(merchant.id)}
+          className="text-xs bg-orange-50 text-orange-600 border-orange-100 hover:bg-orange-600 hover:text-white transition-all"
+        >
+          🍔 Catálogo
+        </Button>
+
 
         {merchant.status !== "rejected" && (
           <Button
@@ -156,17 +173,20 @@ type MerchantsTableProps = {
   onEdit: (merchant: MerchantAdmin) => void;
   onToggleStatus: (id: string) => void;
   onChangePlan: (id: string, status: Merchant["status"]) => void;
-
+  onManageCatalog?: (merchantId: string) => void;
   filterStatus?: MerchantAdmin["status"] | "all";
 };
+
 
 export function MerchantsTable({
   merchants,
   onEdit,
   onToggleStatus,
   onChangePlan,
+  onManageCatalog,
   filterStatus = "all",
 }: MerchantsTableProps) {
+
   const filtered =
     filterStatus === "all"
       ? merchants
@@ -189,7 +209,9 @@ export function MerchantsTable({
           onEdit={onEdit}
           onToggleStatus={onToggleStatus}
           onChangePlan={onChangePlan}
+          onManageCatalog={onManageCatalog}
         />
+
       ))}
     </div>
   );
