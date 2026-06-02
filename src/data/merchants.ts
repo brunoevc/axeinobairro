@@ -36,7 +36,14 @@ export type Merchant = {
   featured?: boolean;
   latitude: number;
   longitude: number;
+  // Trust & Verification fields
+  status: "pending" | "verified" | "featured" | "partner" | "rejected";
+  document: string; // CPF or CNPJ
+  facebook?: string;
+  responsibleName?: string;
+  createdAt: string;
 };
+
 
 export const categories = [
   { slug: "padaria", label: "Padaria", icon: Croissant },
@@ -89,7 +96,11 @@ export const merchants: Merchant[] = [
     featured: true,
     latitude: -22.8735,
     longitude: -42.3435,
+    status: "partner",
+    document: "12345678000199",
+    createdAt: new Date().toISOString(),
   },
+
   {
     id: "2",
     name: "Padaria Pão de Mel",
@@ -113,7 +124,11 @@ export const merchants: Merchant[] = [
     featured: true,
     latitude: -22.8750,
     longitude: -42.3460,
+    status: "verified",
+    document: "98765432100",
+    createdAt: new Date().toISOString(),
   },
+
   {
     id: "3",
     name: "Mecânica Rápida",
@@ -136,7 +151,11 @@ export const merchants: Merchant[] = [
     },
     latitude: -22.8710,
     longitude: -42.3380,
+    status: "pending",
+    document: "11122233344",
+    createdAt: new Date().toISOString(),
   },
+
   {
     id: "4",
     name: "PetShop Amigo Fiel",
@@ -160,7 +179,11 @@ export const merchants: Merchant[] = [
     featured: true,
     latitude: -22.8820,
     longitude: -42.3550,
+    status: "featured",
+    document: "55566677788",
+    createdAt: new Date().toISOString(),
   },
+
   {
     id: "5",
     name: "Farmácia Boa Saúde",
@@ -183,7 +206,11 @@ export const merchants: Merchant[] = [
     },
     latitude: -22.8730,
     longitude: -42.3440,
+    status: "verified",
+    document: "11111111111",
+    createdAt: new Date().toISOString(),
   },
+
   {
     id: "6",
     name: "Hortifruti da Terra",
@@ -206,7 +233,11 @@ export const merchants: Merchant[] = [
     },
     latitude: -22.8700,
     longitude: -42.3480,
+    status: "verified",
+    document: "22222222222",
+    createdAt: new Date().toISOString(),
   },
+
   {
     id: "7",
     name: "Barbearia Estilo",
@@ -229,7 +260,11 @@ export const merchants: Merchant[] = [
     },
     latitude: -22.8780,
     longitude: -42.3500,
+    status: "verified",
+    document: "33333333333",
+    createdAt: new Date().toISOString(),
   },
+
   {
     id: "8",
     name: "Boutique Fashion",
@@ -252,7 +287,11 @@ export const merchants: Merchant[] = [
     },
     latitude: -22.8755,
     longitude: -42.3465,
+    status: "verified",
+    document: "44444444444",
+    createdAt: new Date().toISOString(),
   },
+
   {
     id: "9",
     name: "Peixaria Mar Azul",
@@ -275,7 +314,11 @@ export const merchants: Merchant[] = [
     },
     latitude: -22.8745,
     longitude: -42.3430,
+    status: "verified",
+    document: "55555555555",
+    createdAt: new Date().toISOString(),
   },
+
   {
     id: "10",
     name: "Clínica Sorriso",
@@ -298,5 +341,9 @@ export const merchants: Merchant[] = [
     },
     latitude: -22.8715,
     longitude: -42.3385,
+    status: "verified",
+    document: "66666666666",
+    createdAt: new Date().toISOString(),
   },
+
 ];
