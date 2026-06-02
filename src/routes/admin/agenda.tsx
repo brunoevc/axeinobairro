@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { useNavigate } from "@tanstack/react-router";
 import { getAppointments, updateAppointmentStatus, saveAppointments } from "@/lib/scheduling";
 import { merchants } from "@/data/merchants";
 import { Appointment } from "@/types/scheduling";
@@ -13,11 +14,12 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
-import { Calendar, Clock, User, Phone, CheckCircle, XCircle, Trash2, Info } from "lucide-react";
+import { Calendar, Clock, User, Phone, CheckCircle, XCircle, Trash2, Info, RefreshCw } from "lucide-react";
 import { toast } from "sonner";
 
 export default function AdminAgenda() {
   const [appointments, setAppointments] = useState<Appointment[]>([]);
+  const navigate = useNavigate();
 
   useEffect(() => {
     setAppointments(getAppointments());
@@ -27,6 +29,23 @@ export default function AdminAgenda() {
     updateAppointmentStatus(id, status);
     setAppointments(getAppointments());
     toast.success(`Agendamento ${status === 'confirmed' ? 'confirmado' : 'cancelado'}`);
+  };
+
+  const handleReschedule = (app: Appointment) => {
+    // 1. Cancela o atual
+    handleStatusChange(app.id, 'cancelled');
+    
+    // 2. Redireciona com query params
+    navigate({ 
+      to: "/negocios/$id/agendar", 
+      params: { id: app.merchantId },
+      search: {
+        name: app.customerName,
+        phone: app.customerPhone
+      }
+    });
+    
+    toast.info("Redirecionando para novo agendamento...");
   };
 
   const handleDelete = (id: string) => {
@@ -158,6 +177,17 @@ export default function AdminAgenda() {
                             className="h-8 w-8 text-green-600 hover:bg-green-50"
                           >
                             <CheckCircle className="w-4 h-4" />
+                          </Button>
+                        )}
+                        {app.status !== 'cancelled' && (
+                          <Button 
+                            variant="ghost" 
+                            size="icon" 
+                            onClick={() => handleReschedule(app)}
+                            className="h-8 w-8 text-blue-600 hover:bg-blue-50"
+                            title="Reagendar"
+                          >
+                            <RefreshCw className="w-4 h-4" />
                           </Button>
                         )}
                         {app.status !== 'cancelled' && (

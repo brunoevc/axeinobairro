@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { useParams, useNavigate } from "@tanstack/react-router";
+import { useParams, useNavigate, useSearch } from "@tanstack/react-router";
 import { merchants } from "@/data/merchants";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -13,12 +13,13 @@ import { Calendar as CalendarIcon, Clock, User, Phone, AlertTriangle } from "luc
 export default function Agendar() {
   const { id } = useParams({ from: "/negocios/$id/agendar" });
   const navigate = useNavigate();
+  const search = useSearch({ strict: false }) as any;
   const merchant = merchants.find(m => m.id === id);
   
   const [date, setDate] = useState<Date | undefined>(new Date());
   const [selectedSlot, setSelectedSlot] = useState<string>("");
-  const [customerName, setCustomerName] = useState("");
-  const [customerPhone, setCustomerPhone] = useState("");
+  const [customerName, setCustomerName] = useState(search.name || "");
+  const [customerPhone, setCustomerPhone] = useState(search.phone || "");
   const [existingApps, setExistingApps] = useState<string[]>([]);
 
   useEffect(() => {
@@ -38,6 +39,13 @@ export default function Agendar() {
     }
 
     try {
+      // Cálculo de endTime baseado em duração fixa de 60min por enquanto (mock)
+      const [hours, minutes] = selectedSlot.split(":").map(Number);
+      const endTotalMinutes = hours * 60 + minutes + 60;
+      const endHours = Math.floor(endTotalMinutes / 60);
+      const endMinutes = endTotalMinutes % 60;
+      const endTime = `${String(endHours).padStart(2, "0")}:${String(endMinutes).padStart(2, "0")}`;
+
       createAppointment({
         merchantId: id as string,
         customerName,
@@ -46,7 +54,7 @@ export default function Agendar() {
         serviceName: "Atendimento Geral",
         date: date.toISOString().split("T")[0],
         startTime: selectedSlot,
-        endTime: selectedSlot, // simplified
+        endTime,
         status: "pending"
       });
       toast.success("Agendamento solicitado com sucesso!");
