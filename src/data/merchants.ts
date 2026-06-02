@@ -49,6 +49,7 @@ export type Merchant = {
   searchAppearances?: number;
   // Trust & Verification fields
   status: "pending" | "verified" | "featured" | "partner" | "rejected";
+  exposureLevel?: "A" | "B" | "C" | "none";
   document: string; // CPF or CNPJ
   facebook?: string;
   responsibleName?: string;

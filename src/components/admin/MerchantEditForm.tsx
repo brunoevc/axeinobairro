@@ -21,6 +21,7 @@ export function MerchantEditForm({
     whatsapp: merchant.whatsapp,
     neighborhood: merchant.neighborhood,
     notes: merchant.notes || "",
+    exposureLevel: merchant.exposureLevel || "none",
   });
 
   const [isSaving, setIsSaving] = useState(false);
@@ -102,7 +103,32 @@ export function MerchantEditForm({
                     />
                   </div>
                 </div>
-             </div>
+                 {/* Exposição Comercial */}
+                 <div className="space-y-3">
+                   <div className="flex items-center justify-between ml-1">
+                     <label className="block text-xs font-black text-slate-400 uppercase tracking-widest">
+                       Exposição Comercial
+                     </label>
+                     <span className="text-[10px] font-bold text-orange-500">Prioridade A > B > C</span>
+                   </div>
+                   <select
+                     value={formData.exposureLevel}
+                     onChange={(e) =>
+                       setFormData({ ...formData, exposureLevel: e.target.value as any })
+                     }
+                     className="w-full rounded-2xl border border-slate-100 bg-slate-50 px-5 py-4 text-sm font-bold text-slate-900 outline-none focus:ring-4 focus:ring-violet-500/5 focus:border-violet-600 focus:bg-white transition-all shadow-sm appearance-none"
+                   >
+                     <option value="none">Sem exposição</option>
+                     <option value="A">Destaque Principal (Área Premium)</option>
+                     <option value="B">Impulso Comercial (Bloco Secundário)</option>
+                     <option value="C">Promoção Comum (Cards Normais)</option>
+                   </select>
+                   <p className="text-[10px] text-slate-400 font-medium px-1">
+                     <Info className="w-3 h-3 inline mr-1 mb-0.5" />
+                     Uma loja só pode ocupar um tipo de exposição por vez.
+                   </p>
+                 </div>
+              </div>
 
              <div className="space-y-8">
                 {/* Descrição */}

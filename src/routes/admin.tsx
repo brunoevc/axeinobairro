@@ -1,5 +1,5 @@
 import { createFileRoute, useNavigate, Outlet, Link, redirect } from "@tanstack/react-router";
-import { LayoutDashboard, Store, CheckCircle, CreditCard, ArrowLeft, LogOut, ShieldCheck, User } from "lucide-react";
+import { LayoutDashboard, Store, CheckCircle, CreditCard, ArrowLeft, LogOut, ShieldCheck, User, Megaphone } from "lucide-react";
 import { Logo } from "@/components/ui/Logo";
 import { useAtom } from "jotai";
 import { isAuthenticatedAtom, authUserAtom } from "@/hooks/useAuth";
@@ -121,6 +121,15 @@ function AdminLayout() {
           >
             <CreditCard className="h-5 w-5" />
             <span>Planos</span>
+          </Link>
+          <Link 
+            to="/admin/campanhas" 
+            activeProps={{ className: "bg-orange-600 text-white shadow-lg shadow-orange-200" }}
+            inactiveProps={{ className: "text-slate-500 hover:bg-slate-50 hover:text-slate-900" }}
+            className="flex items-center gap-3 px-5 py-4 rounded-2xl text-sm font-bold transition-all shrink-0 md:shrink"
+          >
+            <Megaphone className="h-5 w-5" />
+            <span>Campanhas</span>
           </Link>
         </nav>
 

@@ -61,8 +61,28 @@ function Index() {
     }
   };
   
-  const featuredMerchants = merchants.filter(m => m.featured).slice(0, 3);
-  const promotionalMerchants = merchants.filter(m => m.promotion.isActive).slice(0, 4);
+  // Prioritized governance logic: A > B > C
+  const levelAMerchants = useMemo(() => merchants.filter(m => m.exposureLevel === 'A'), []);
+  const levelBMerchants = useMemo(() => 
+    merchants.filter(m => m.exposureLevel === 'B' && !levelAMerchants.some(a => a.id === m.id)), 
+    [levelAMerchants]
+  );
+  const levelCMerchants = useMemo(() => 
+    merchants.filter(m => m.exposureLevel === 'C' && !levelAMerchants.some(a => a.id === m.id) && !levelBMerchants.some(b => b.id === m.id)), 
+    [levelAMerchants, levelBMerchants]
+  );
+
+  const featuredMerchants = useMemo(() => {
+    // If we have level A, use them, otherwise fallback to legacy featured
+    if (levelAMerchants.length > 0) return levelAMerchants.slice(0, 3);
+    return merchants.filter(m => m.featured).slice(0, 3);
+  }, [levelAMerchants]);
+
+  const promotionalMerchants = useMemo(() => {
+    // Priority B merchants for this section
+    if (levelBMerchants.length > 0) return levelBMerchants.slice(0, 4);
+    return merchants.filter(m => m.promotion.isActive).slice(0, 4);
+  }, [levelBMerchants]);
 
   const nearbyMerchants = useMemo(() => {
     // We want the listing to update reactively, but we also want a smooth transition

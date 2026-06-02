@@ -15,7 +15,8 @@ import {
   Download,
   Filter,
   TrendingUp,
-  Target
+  Target,
+  Megaphone
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
@@ -151,6 +152,42 @@ function AdminLeads() {
       <section className={`bg-white border border-slate-100 rounded-[3rem] shadow-sm ${
         viewMode === "pipeline" ? "p-10 pb-2" : "p-10"
       }`}>
+        {/* Campaign Interaction History (Mock Integration) */}
+        <div className="px-10 mb-8">
+          <div className="flex items-center gap-3 mb-6">
+            <Megaphone className="w-5 h-5 text-orange-600" />
+            <h3 className="text-lg font-black text-slate-900 tracking-tight">Histórico de Campanhas Impactadas</h3>
+          </div>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+             <div className="p-6 bg-slate-50 rounded-2xl border border-slate-100">
+               <div className="flex items-center justify-between mb-4">
+                  <span className="text-[10px] font-black text-slate-400 uppercase tracking-widest">Campanha Ativa</span>
+                  <div className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
+               </div>
+               <p className="text-sm font-black text-slate-900 mb-2">Semana do Consumidor</p>
+               <div className="flex gap-2">
+                 <Button size="sm" variant="outline" className="h-7 text-[9px] font-black uppercase tracking-widest px-2 bg-white">Recebeu</Button>
+                 <Button size="sm" variant="outline" className="h-7 text-[9px] font-black uppercase tracking-widest px-2 bg-white">Respondeu</Button>
+               </div>
+             </div>
+             <div className="p-6 bg-slate-50 rounded-2xl border border-slate-100 opacity-60">
+               <div className="flex items-center justify-between mb-4">
+                  <span className="text-[10px] font-black text-slate-400 uppercase tracking-widest">Encerrada</span>
+               </div>
+               <p className="text-sm font-black text-slate-900 mb-2">Combo Inauguração</p>
+               <span className="text-[9px] font-black text-red-600 uppercase tracking-widest">Ignorou</span>
+             </div>
+             <div className="p-6 bg-orange-50 rounded-2xl border border-orange-100">
+                <div className="flex items-center gap-3 mb-2">
+                   <TrendingUp className="w-4 h-4 text-orange-600" />
+                   <p className="text-sm font-black text-orange-900">Taxa de Resposta</p>
+                </div>
+                <p className="text-2xl font-black text-orange-600">12%</p>
+                <p className="text-[10px] font-medium text-orange-700 mt-1">Impacto das campanhas nos leads</p>
+             </div>
+          </div>
+        </div>
+
 
         {viewMode === "pipeline" ? (
           <LeadPipeline 
