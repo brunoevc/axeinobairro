@@ -16,7 +16,7 @@ export const createPixCharge = (charge: Omit<PixCharge, "id" | "createdAt" | "ex
   const charges = getPixCharges();
   const id = `charge_${Math.random().toString(36).substr(2, 9)}`;
   const now = new Date();
-  const expires = new Date(now.getTime() + 30 * 60000); // 30 mins expiry
+  const expires = new Date(now.getTime() + 60 * 60000); // 1 hour expiry for manual flow
 
   const newCharge: PixCharge = {
     ...charge,
@@ -36,6 +36,12 @@ export const getPixChargeById = (id: string): PixCharge | undefined => {
 
 export const updatePixStatus = (id: string, status: TransactionStatus) => {
   const charges = getPixCharges();
-  const updated = charges.map(c => c.id === id ? { ...c, status } : c);
+  const updated = charges.map(c => 
+    c.id === id ? { 
+      ...c, 
+      status, 
+      receiptSentAt: status === "comprovante_enviado" ? new Date().toISOString() : c.receiptSentAt 
+    } : c
+  );
   savePixCharges(updated);
 };
