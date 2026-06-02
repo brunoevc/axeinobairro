@@ -82,14 +82,14 @@ function Index() {
           <div className="flex-1 text-center md:text-left">
             <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-orange-50 text-orange-600 text-[10px] font-black uppercase tracking-widest mb-6 border border-orange-100 shadow-sm">
               <TrendingUp className="h-3 w-3" />
-              Encontre. Conecte. Fortaleça o comércio local.
+              +10 negócios em Araruama
             </div>
             <h1 className="text-4xl md:text-7xl font-black tracking-tighter text-slate-900 mb-6 leading-[0.9]">
-              Conecte-se com o <br className="hidden md:block" />
-              <span className="text-orange-600">Bairro</span>
+              Encontre comércios, <br className="hidden md:block" />
+              <span className="text-orange-600">serviços e promoções</span>
             </h1>
             <p className="text-slate-500 text-lg md:text-xl font-medium mb-10 leading-relaxed max-w-xl mx-auto md:mx-0">
-              O marketplace onde você encontra padarias, restaurantes, serviços e ofertas exclusivas pertinho de você. Tudo via WhatsApp.
+              O Axêi no Bairro conecta você aos negócios locais mais próximos, com ofertas, rotas e contato direto pelo WhatsApp.
             </p>
             
             <div className="flex flex-col gap-6">
@@ -115,7 +115,7 @@ function Index() {
                   onClick={() => navigate({ to: '/negocios' })}
                   className="h-16 px-10 bg-orange-600 hover:bg-orange-700 text-white rounded-2xl font-black shadow-xl shadow-orange-200 transition-all active:scale-95 text-lg group"
                 >
-                  Explorar Negócios
+                  Ver negócios
                   <ChevronRight className="ml-2 h-5 w-5 transition-transform group-hover:translate-x-1" />
                 </Button>
                 <Button 
@@ -123,7 +123,7 @@ function Index() {
                   onClick={() => navigate({ to: '/cadastro' })}
                   className="h-16 px-10 bg-white border-slate-200 text-slate-700 rounded-2xl font-black hover:bg-slate-50 transition-all active:scale-95 text-lg"
                 >
-                  Anunciar minha loja
+                  Cadastrar minha loja
                 </Button>
               </div>
             </div>
