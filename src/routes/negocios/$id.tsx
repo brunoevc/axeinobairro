@@ -59,9 +59,8 @@ function DetailPage() {
     ? getDistance(coords.latitude, coords.longitude, merchant.latitude, merchant.longitude)
     : null;
 
-  const waUrl = `https://wa.me/${merchant.whatsapp}?text=${encodeURIComponent(
-    `Olá ${merchant.name}! Vi seu perfil no Axêi no Bairro e gostaria de mais informações 👋`
-  )}`;
+  const waUrl = getWhatsAppUrl(merchant.whatsapp, merchant.name);
+
 
   const mapsUrl = `https://www.google.com/maps/dir/?api=1&destination=${merchant.latitude},${merchant.longitude}`;
 
@@ -181,12 +180,26 @@ function DetailPage() {
                     </div>
 
                     <div className="hidden md:flex gap-4">
-                       <Button asChild className="bg-emerald-600 hover:bg-emerald-700 text-white rounded-2xl h-14 px-8 font-black shadow-xl shadow-emerald-900/20">
-                         <a href={waUrl} target="_blank" rel="noopener noreferrer">
-                           <MessageCircle className="w-5 h-5 mr-2" />
-                           Chamar no WhatsApp
-                         </a>
+                       <Button 
+                         asChild={!!waUrl} 
+                         className={cn(
+                           "rounded-2xl h-14 px-8 font-black transition-all",
+                           !waUrl 
+                             ? "bg-slate-100 text-slate-400 cursor-not-allowed hover:bg-slate-100 shadow-none" 
+                             : "bg-emerald-600 hover:bg-emerald-700 text-white shadow-xl shadow-emerald-900/20"
+                         )}
+                         disabled={!waUrl}
+                       >
+                         {waUrl ? (
+                           <a href={waUrl} target="_blank" rel="noopener noreferrer">
+                             <MessageCircle className="w-5 h-5 mr-2" />
+                             Chamar no WhatsApp
+                           </a>
+                         ) : (
+                           <span>WhatsApp indisponível</span>
+                         )}
                        </Button>
+
                     </div>
                   </div>
                 </div>

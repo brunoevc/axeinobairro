@@ -129,6 +129,15 @@ function Index() {
                 >
                   Cadastrar minha loja
                 </Button>
+                <Button 
+                  variant="link"
+                  onClick={() => navigate({ to: '/negocios', search: { bairro: 'Centro' } })}
+                  className="h-16 px-4 text-orange-600 font-bold hover:no-underline hover:text-orange-700 transition-all active:scale-95 text-base"
+                >
+                  Ver negócios no Centro de Araruama
+                  <ArrowRight className="ml-1 h-4 w-4" />
+                </Button>
+
               </div>
             </div>
           </div>
