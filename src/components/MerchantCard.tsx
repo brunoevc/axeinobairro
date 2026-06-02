@@ -1,13 +1,14 @@
-import { MapPin, Star, Bike, MessageCircle, Clock, Tag, ChevronRight, User, Navigation, TrendingUp } from "lucide-react";
+import { MapPin, Star, Bike, ChevronRight, TrendingUp, Navigation } from "lucide-react";
 import type { Merchant } from "@/data/merchants";
 import { Button } from "@/components/ui/button";
 import { Link } from "@tanstack/react-router";
 import { useLocation } from "@/hooks/useLocation";
 import { useState, memo } from "react";
-import { cn, getWhatsAppUrl } from "@/lib/utils";
-
+import { WhatsAppButton } from "./WhatsAppButton";
+import { BusinessStatusBadge } from "./BusinessStatusBadge";
 
 type Props = { merchant: Merchant };
+
 
 export function PromotionBadge() {
   return (
@@ -22,7 +23,8 @@ export const MerchantCard = memo(function MerchantCard({ merchant }: Props) {
   const { coords, getDistance, formatDistance } = useLocation();
   const [imageError, setImageError] = useState(false);
 
-  const waUrl = getWhatsAppUrl(merchant.whatsapp, merchant.name);
+  // WhatsApp and status logic removed in favor of dedicated components
+
 
 
   const distance = coords 
@@ -94,25 +96,8 @@ export const MerchantCard = memo(function MerchantCard({ merchant }: Props) {
         </p>
 
         <div className="flex flex-wrap items-center gap-2 mb-6 mt-auto">
-          {merchant.isOpen ? (
-            <div className="flex items-center gap-1.5 rounded-full bg-emerald-50 px-2.5 py-1 text-[10px] font-bold text-emerald-600 border border-emerald-100">
-              <span className="relative flex h-2 w-2">
-                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
-                <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
-              </span>
-              Aberto agora
-              {merchant.hours.includes('-') && (
-                <span className="font-medium text-emerald-500/80 border-l border-emerald-200 pl-1.5 ml-1.5">
-                  Fecha às {merchant.hours.split('-')[1].trim()}
-                </span>
-              )}
-            </div>
-          ) : (
-            <div className="inline-flex items-center gap-1 rounded-full bg-slate-100 px-2.5 py-1 text-[10px] font-bold text-slate-500 border border-slate-200">
-              <Clock className="h-3 w-3" />
-              Fechado
-            </div>
-          )}
+          <BusinessStatusBadge isOpen={merchant.isOpen} hours={merchant.hours} />
+
 
           {merchant.delivery && (
             <span className="inline-flex items-center gap-1 rounded-full bg-blue-50 px-2.5 py-1 text-[10px] font-bold text-blue-600 border border-blue-100">
@@ -151,25 +136,12 @@ export const MerchantCard = memo(function MerchantCard({ merchant }: Props) {
               <ChevronRight className="w-3 h-3 ml-1 transition-transform group-hover/btn:translate-x-0.5" />
             </Link>
           </Button>
-          <Button
-            asChild
-            className={cn(
-              "flex-1 rounded-xl h-11 text-xs font-bold transition-all",
-              !waUrl 
-                ? "bg-slate-100 text-slate-400 cursor-not-allowed hover:bg-slate-100" 
-                : "bg-emerald-600 hover:bg-emerald-700 text-white shadow-md shadow-emerald-100"
-            )}
-            disabled={!waUrl}
-          >
-            {waUrl ? (
-              <a href={waUrl} target="_blank" rel="noopener noreferrer">
-                <MessageCircle className="h-4 w-4 mr-1.5" />
-                Chamar no WhatsApp
-              </a>
-            ) : (
-              <span>WhatsApp indisponível</span>
-            )}
-          </Button>
+          <WhatsAppButton 
+            phone={merchant.whatsapp} 
+            merchantName={merchant.name} 
+            className="flex-1"
+          />
+
 
         </div>
       </div>
