@@ -302,11 +302,11 @@ function AdminDashboard() {
         </div>
 
         <div className="max-w-4xl">
-          <ImageUploadPreview
+          <ImageCropUpload
             label="Logo da Plataforma (Horizontal)"
             description="Substitui o texto 'Axêi no Bairro' no TopBar e Footer"
-            recommendedSize="1200x400 px • PNG transparente"
-            aspectRatio="horizontal"
+            recommendedSize="1200x400 px • 3:1"
+            aspectRatio={3}
             value={platformLogo}
             onChange={setPlatformLogo}
           />
