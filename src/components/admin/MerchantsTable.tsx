@@ -179,8 +179,10 @@ export function MerchantsTable({
   onEdit,
   onToggleStatus,
   onChangePlan,
+  onManageCatalog,
   filterStatus = "all",
 }: MerchantsTableProps) {
+
   const filtered =
     filterStatus === "all"
       ? merchants
