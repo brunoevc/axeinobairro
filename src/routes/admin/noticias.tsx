@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { getNews, saveNews, trackNewsInteraction } from "@/lib/news";
+import { getNews, saveNews } from "@/lib/news";
 import { merchants } from "@/data/merchants";
 import { NewsItem } from "@/types/news";
 import { Button } from "@/components/ui/button";

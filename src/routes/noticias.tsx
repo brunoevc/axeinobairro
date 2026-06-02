@@ -4,6 +4,7 @@ import { getNews, trackNewsInteraction } from "@/lib/news";
 import { merchants } from "@/data/merchants";
 import { NewsItem } from "@/types/news";
 import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
 import { Calendar, ChevronRight, Share2, Tag } from "lucide-react";
 
 export default function Notícias() {
