@@ -1,5 +1,6 @@
 import { createFileRoute, useNavigate } from "@tanstack/react-router";
-import { merchants } from "@/data/merchants";
+import { merchants, getMerchantPublicPath } from "@/data/merchants";
+
 import { useState, useEffect } from "react";
 import { TopBar } from "@/components/TopBar";
 import { MerchantDetailsSkeleton } from "@/components/MerchantDetailsSkeleton";
@@ -21,9 +22,10 @@ function DetailPage() {
   useEffect(() => {
     // If merchant has a slug, redirect to the professional URL
     if (merchant?.slug) {
-      navigate({ to: "/loja/$slug", params: { slug: merchant.slug }, replace: true });
+      navigate({ to: getMerchantPublicPath(merchant), replace: true });
       return;
     }
+
     const timer = setTimeout(() => setIsLoading(false), 600);
     return () => clearTimeout(timer);
   }, [id, merchant, navigate]);

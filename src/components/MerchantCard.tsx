@@ -1,7 +1,9 @@
 import { MapPin, Star, Bike, ChevronRight, TrendingUp, Navigation, Tag } from "lucide-react";
 import type { Merchant } from "@/data/merchants";
+import { getMerchantPublicPath } from "@/data/merchants";
 import { Button } from "@/components/ui/button";
 import { Link } from "@tanstack/react-router";
+
 import { useLocation } from "@/hooks/useLocation";
 import { useState, memo } from "react";
 import { WhatsAppButton } from "./WhatsAppButton";
@@ -132,9 +134,9 @@ export const MerchantCard = memo(function MerchantCard({ merchant }: Props) {
             className="flex-1 rounded-xl h-11 text-xs font-bold border-slate-200 hover:bg-slate-50 hover:text-orange-600 group/btn"
           >
             <Link 
-              to={merchant.slug ? "/loja/$slug" : "/negocios/$id"} 
-              params={merchant.slug ? { slug: merchant.slug } : { id: merchant.id }}
+              to={getMerchantPublicPath(merchant)}
             >
+
               Ver Detalhes
               <ChevronRight className="w-3 h-3 ml-1 transition-transform group-hover/btn:translate-x-0.5" />
             </Link>

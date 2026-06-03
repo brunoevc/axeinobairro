@@ -12,6 +12,18 @@ import {
   Leaf
 } from "lucide-react";
 
+/**
+ * Helper to get the public path for a merchant.
+ * Prioritizes slug-based professional URLs.
+ */
+export const getMerchantPublicPath = (merchant: { id: string, slug?: string }): string => {
+  if (merchant.slug && merchant.slug.trim() !== "") {
+    return `/loja/${merchant.slug}`;
+  }
+  return `/negocios/${merchant.id}`;
+};
+
+
 export type Merchant = {
   id: string;
   name: string;

@@ -1,5 +1,5 @@
 import { createFileRoute, useNavigate } from "@tanstack/react-router";
-import { merchants } from "@/data/merchants";
+import { merchants, getMerchantPublicPath } from "@/data/merchants";
 import { useEffect, useState } from "react";
 import { MerchantDetailsSkeleton } from "@/components/MerchantDetailsSkeleton";
 import { TopBar } from "@/components/TopBar";
@@ -34,10 +34,11 @@ function SlugDetailPage() {
     // If not found by slug, maybe it was a raw ID? Try finding by ID
     const merchantById = merchants.find((m) => m.id === slug);
     if (merchantById && merchantById.slug) {
-      // Redirect to correct slug if it exists
-      navigate({ to: "/loja/$slug", params: { slug: merchantById.slug }, replace: true });
+      // Redirect to correct slug path
+      navigate({ to: getMerchantPublicPath(merchantById), replace: true });
       return null;
     }
+
     
     // Truly not found
     navigate({ to: "/negocios" });
