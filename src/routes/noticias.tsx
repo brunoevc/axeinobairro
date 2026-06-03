@@ -1,5 +1,9 @@
+import { createFileRoute, Link } from "@tanstack/react-router";
 import { useState, useEffect, useMemo } from "react";
-import { Link } from "@tanstack/react-router";
+
+export const Route = createFileRoute("/noticias")({
+  component: Notícias,
+});
 import { getNews, trackNewsInteraction } from "@/lib/news";
 import { getMerchantPublicPath } from "@/data/merchants";
 import { merchantsRepository } from "@/repositories/merchantsRepository";
