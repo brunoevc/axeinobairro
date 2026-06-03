@@ -79,8 +79,8 @@ export default function Notícias() {
                   <div className="flex flex-wrap items-center gap-4">
                     <Link 
                       to={getMerchantPublicPath(merchants.find(m => m.id === item.merchantId) || { id: item.merchantId })}
-
                       className="bg-white text-slate-900 px-8 py-4 rounded-2xl font-black text-sm hover:bg-orange-600 hover:text-white transition-all transform hover:-translate-y-1 shadow-lg flex items-center gap-2"
+
                       onClick={() => trackNewsInteraction(item.id, "click")}
                     >
                       Ver {getMerchantName(item.merchantId)}
@@ -121,8 +121,8 @@ export default function Notícias() {
                     <p className="text-sm text-slate-500 mb-6 line-clamp-2">{item.summary}</p>
                     <Link 
                       to={getMerchantPublicPath(merchants.find(m => m.id === item.merchantId) || { id: item.merchantId })}
-
                       className="inline-flex items-center text-orange-600 font-black text-xs uppercase tracking-wider group-hover:gap-2 transition-all"
+
                       onClick={() => trackNewsInteraction(item.id, "click")}
                     >
                       Ver {getMerchantName(item.merchantId)}
@@ -147,8 +147,8 @@ export default function Notícias() {
                   <p className="text-sm text-slate-500 mb-4 line-clamp-1">{item.summary}</p>
                   <Link 
                     to={getMerchantPublicPath(merchants.find(m => m.id === item.merchantId) || { id: item.merchantId })}
-
                     className="text-xs font-black text-slate-400 uppercase tracking-widest hover:text-orange-600 transition-colors"
+
                     onClick={() => trackNewsInteraction(item.id, "click")}
                   >
                     Parceiro: {getMerchantName(item.merchantId)}

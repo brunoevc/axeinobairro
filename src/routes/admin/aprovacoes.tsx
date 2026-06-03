@@ -98,9 +98,11 @@ function AdminApprovals() {
           <div className="bg-white rounded-[3rem] border border-slate-100 shadow-xl shadow-slate-200/50 p-2 overflow-hidden">
              <MerchantEditForm
                merchant={selectedMerchant}
+               allMerchants={state.merchants}
                onSave={handleSave}
                onCancel={handleCancel}
              />
+
           </div>
         </div>
       ) : (

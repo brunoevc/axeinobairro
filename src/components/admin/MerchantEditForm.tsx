@@ -29,7 +29,6 @@ export function MerchantEditForm({
     slug: merchant.slug || "",
   });
 
-
   const [isSaving, setIsSaving] = useState(false);
   const [copied, setCopied] = useState(false);
 
@@ -39,6 +38,9 @@ export function MerchantEditForm({
       setFormData(prev => ({ ...prev, slug: generateSlug(formData.name) }));
     }
   }, []);
+
+  const slugIsValid = isValidSlug(formData.slug);
+  const slugIsUnique = isSlugUnique(formData.slug, merchant.id, allMerchants);
 
   const handleCopyLink = () => {
     const url = `${window.location.origin}/loja/${formData.slug || merchant.id}`;
@@ -51,15 +53,21 @@ export function MerchantEditForm({
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
 
-    if (formData.slug && !isValidSlug(formData.slug)) {
+    if (!formData.slug) {
+      toast.error("O slug é obrigatório para uma URL profissional.");
+      return;
+    }
+
+    if (!slugIsValid) {
       toast.error("O slug contém caracteres inválidos. Use apenas letras minúsculas, números e hifens.");
       return;
     }
 
-    // Get merchants from localStorage/context to check uniqueness
-    // In this mock, we'll assume we have access to the full list from localState or just trust the admin
-    // For a real check, we'd need the merchants list passed as a prop
-    
+    if (!slugIsUnique) {
+      toast.error("Este slug já está sendo usado por outro estabelecimento.");
+      return;
+    }
+
     setIsSaving(true);
 
     setTimeout(() => {
@@ -152,7 +160,6 @@ export function MerchantEditForm({
                     )}
                   </div>
                 </div>
-
 
                 {/* Bairro */}
                 <div className="space-y-3">
