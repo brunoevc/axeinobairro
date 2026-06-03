@@ -186,17 +186,33 @@ export function useAdminState() {
     (merchantId: string, updates: Partial<MerchantAdmin>) => {
       if (!state) return;
 
+      const merchant = state.merchants.find((m) => m.id === merchantId);
+      if (!merchant) return;
+
       const updatedMerchants = state.merchants.map((m) =>
         m.id === merchantId ? { ...m, ...updates } : m
       );
 
+      const action: AdminAction = {
+        id: `act-${Date.now()}`,
+        type: "status_change", // Reusing status_change for general edits
+        merchantId,
+        merchantName: merchant.name,
+        adminName: "Auto-Admin",
+        timestamp: new Date().toISOString(),
+        details: { reason: "Dados do estabelecimento atualizados" },
+      };
+
       const newState: AdminState = {
         merchants: updatedMerchants,
-        actions: state.actions,
+        actions: [action, ...state.actions],
         lastUpdated: new Date().toISOString(),
       };
 
       saveState(newState);
+
+      // Also update the source of truth in merchants.ts (simulated by localStorage if it was reactive)
+      // Since merchants.ts is static, this edit only persists in the admin state (localStorage)
     },
     [state, saveState]
   );
