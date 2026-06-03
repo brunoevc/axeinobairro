@@ -1,7 +1,9 @@
 import { useState, useEffect, useMemo } from "react";
 import { Link } from "@tanstack/react-router";
 import { getNews, trackNewsInteraction } from "@/lib/news";
-import { merchants, getMerchantPublicPath } from "@/data/merchants";
+import { getMerchantPublicPath } from "@/data/merchants";
+import { merchantsRepository } from "@/repositories/merchantsRepository";
+
 
 import { NewsItem } from "@/types/news";
 import { Badge } from "@/components/ui/badge";
@@ -42,7 +44,7 @@ export default function Notícias() {
   const subFeatured = news.filter(n => n.exposureLevel === "B");
   const others = news.filter(n => n.exposureLevel === "C");
 
-  const getMerchantName = (id: string) => merchants.find(m => m.id === id)?.name || "Loja Parceira";
+  const getMerchantName = (id: string) => merchantsRepository.getById(id)?.name || "Loja Parceira";
 
   return (
     <div className="max-w-7xl mx-auto px-4 py-8 pb-32">
@@ -79,7 +81,8 @@ export default function Notícias() {
                   </p>
                   <div className="flex flex-wrap items-center gap-4">
                     <Link 
-                      to={getMerchantPublicPath(merchants.find(m => m.id === item.merchantId) || { id: item.merchantId })}
+                      to={getMerchantPublicPath(merchantsRepository.getById(item.merchantId) || { id: item.merchantId })}
+
                       className="bg-white text-slate-900 px-8 py-4 rounded-2xl font-black text-sm hover:bg-orange-600 hover:text-white transition-all transform hover:-translate-y-1 shadow-lg flex items-center gap-2"
 
                       onClick={() => trackNewsInteraction(item.id, "click")}
@@ -121,7 +124,8 @@ export default function Notícias() {
                     <h3 className="text-xl font-black text-slate-900 mb-3 group-hover:text-orange-600 transition-colors">{item.title}</h3>
                     <p className="text-sm text-slate-500 mb-6 line-clamp-2">{item.summary}</p>
                     <Link 
-                      to={getMerchantPublicPath(merchants.find(m => m.id === item.merchantId) || { id: item.merchantId })}
+                      to={getMerchantPublicPath(merchantsRepository.getById(item.merchantId) || { id: item.merchantId })}
+
                       className="inline-flex items-center text-orange-600 font-black text-xs uppercase tracking-wider group-hover:gap-2 transition-all"
 
                       onClick={() => trackNewsInteraction(item.id, "click")}
@@ -147,7 +151,7 @@ export default function Notícias() {
                   <h3 className="font-bold text-lg text-slate-900 mb-2 group-hover:text-orange-600 transition-colors">{item.title}</h3>
                   <p className="text-sm text-slate-500 mb-4 line-clamp-1">{item.summary}</p>
                   <Link 
-                    to={getMerchantPublicPath(merchants.find(m => m.id === item.merchantId) || { id: item.merchantId })}
+                    to={getMerchantPublicPath(merchantsRepository.getById(item.merchantId) || { id: item.merchantId })}
                     className="text-xs font-black text-slate-400 uppercase tracking-widest hover:text-orange-600 transition-colors"
 
                     onClick={() => trackNewsInteraction(item.id, "click")}

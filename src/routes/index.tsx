@@ -19,7 +19,9 @@ import {
   RefreshCw
 } from "lucide-react";
 
-import { merchants, categories } from "@/data/merchants";
+import { categories } from "@/data/merchants";
+import { merchantsRepository } from "@/repositories/merchantsRepository";
+
 import { MerchantCard } from "@/components/MerchantCard";
 import { MerchantSkeleton } from "@/components/MerchantSkeleton";
 import { TopBar } from "@/components/TopBar";
@@ -44,7 +46,9 @@ export const Route = createFileRoute("/")({
 function Index() {
   const navigate = useNavigate();
   const { coords, getDistance, loading: locationLoading } = useLocation();
+  const merchants = useMemo(() => merchantsRepository.getAll(), []);
   const [searchTerm, setSearchTerm] = useState("");
+
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {

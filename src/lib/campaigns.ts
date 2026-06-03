@@ -1,25 +1,14 @@
-
 import { Campaign } from "@/types/campaigns";
-
-const CAMPAIGNS_KEY = "axei_campaigns";
+import { campaignsRepository } from "@/repositories/campaignsRepository";
 
 export const getCampaigns = (): Campaign[] => {
-  const stored = localStorage.getItem(CAMPAIGNS_KEY);
-  return stored ? JSON.parse(stored) : [];
+  return campaignsRepository.getAll();
 };
 
 export const saveCampaign = (campaign: Campaign) => {
-  const campaigns = getCampaigns();
-  const index = campaigns.findIndex(c => c.id === campaign.id);
-  
-  if (index !== -1) {
-    campaigns[index] = campaign;
-  } else {
-    campaigns.push(campaign);
-  }
-  
-  localStorage.setItem(CAMPAIGNS_KEY, JSON.stringify(campaigns));
+  campaignsRepository.save(campaign);
 };
+
 
 export const canCreateCampaign = (merchantId: string): { can: boolean; reason?: string } => {
   const campaigns = getCampaigns().filter(c => c.merchantId === merchantId);

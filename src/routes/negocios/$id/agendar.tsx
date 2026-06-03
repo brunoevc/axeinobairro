@@ -1,7 +1,10 @@
 import { useState, useEffect } from "react";
-import { useParams, useNavigate, useSearch } from "@tanstack/react-router";
-import { merchants } from "@/data/merchants";
+import { useParams, useNavigate, useSearch, Link } from "@tanstack/react-router";
+import { getMerchantPublicPath } from "@/data/merchants";
+import { merchantsRepository } from "@/repositories/merchantsRepository";
+
 import { Button } from "@/components/ui/button";
+
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Calendar } from "@/components/ui/calendar";
@@ -14,7 +17,7 @@ export default function Agendar() {
   const { id } = useParams({ from: "/negocios/$id/agendar" });
   const navigate = useNavigate();
   const search = useSearch({ strict: false }) as any;
-  const merchant = merchants.find(m => m.id === id);
+  const merchant = merchantsRepository.getById(id || "");
   
   const [date, setDate] = useState<Date | undefined>(new Date());
   const [selectedSlot, setSelectedSlot] = useState<string>("");
@@ -58,8 +61,10 @@ export default function Agendar() {
         status: "pending"
       });
       toast.success("Agendamento solicitado com sucesso!");
-      navigate({ to: "/negocios/$id", params: { id: id as string } });
+      navigate({ to: getMerchantPublicPath(merchant as { id: string, slug?: string }), replace: true });
     } catch (error: any) {
+
+
       toast.error(error.message);
     }
   };
@@ -73,8 +78,11 @@ export default function Agendar() {
       <div className="flex flex-col gap-6">
         <header>
           <h1 className="text-3xl font-black text-slate-900">Agendar horário</h1>
-          <p className="text-slate-500 font-bold">{merchant.name}</p>
+          <Link to={getMerchantPublicPath(merchant)} className="hover:underline">
+            <p className="text-slate-500 font-bold">{merchant.name}</p>
+          </Link>
         </header>
+
 
         <div className="bg-orange-50 border border-orange-100 p-4 rounded-2xl flex items-start gap-3 mb-4">
           <AlertTriangle className="w-5 h-5 text-orange-600 shrink-0 mt-0.5" />

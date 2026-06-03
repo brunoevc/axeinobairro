@@ -1,5 +1,9 @@
 import { createFileRoute, useNavigate } from "@tanstack/react-router";
-import { merchants, getMerchantPublicPath } from "@/data/merchants";
+import { getMerchantPublicPath } from "@/data/merchants";
+import { merchantsRepository } from "@/repositories/merchantsRepository";
+import { isValidSlug } from "@/lib/slugs";
+
+
 
 import { useState, useEffect } from "react";
 import { TopBar } from "@/components/TopBar";
@@ -17,14 +21,15 @@ function DetailPage() {
   const navigate = useNavigate();
   const [isLoading, setIsLoading] = useState(true);
   
-  const merchant = merchants.find((m) => m.id === id);
+  const merchant = merchantsRepository.getById(id);
 
   useEffect(() => {
-    // If merchant has a slug, redirect to the professional URL
-    if (merchant?.slug) {
+    // If merchant has a VALID slug, redirect to the professional URL
+    if (merchant?.slug && isValidSlug(merchant.slug)) {
       navigate({ to: getMerchantPublicPath(merchant), replace: true });
       return;
     }
+
 
     const timer = setTimeout(() => setIsLoading(false), 600);
     return () => clearTimeout(timer);
