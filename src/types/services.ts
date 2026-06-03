@@ -24,6 +24,9 @@ export interface ServiceProvider {
   isAvailable: boolean;
   rating?: number;
   photo?: string;
+  verified?: boolean;
+  priceNote?: string;
+  serviceArea?: string[];
   createdAt: string;
   updatedAt: string;
 }
