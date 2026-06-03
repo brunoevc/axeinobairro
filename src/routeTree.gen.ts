@@ -19,6 +19,7 @@ import { Route as IndexRouteImport } from './routes/index'
 import { Route as NegociosIndexRouteImport } from './routes/negocios/index'
 import { Route as AdminIndexRouteImport } from './routes/admin/index'
 import { Route as NegociosIdRouteImport } from './routes/negocios/$id'
+import { Route as LojaSlugRouteImport } from './routes/loja/$slug'
 import { Route as AdminPlanosRouteImport } from './routes/admin/planos'
 import { Route as AdminLojasRouteImport } from './routes/admin/lojas'
 import { Route as AdminLeadsRouteImport } from './routes/admin/leads'
@@ -75,6 +76,11 @@ const NegociosIdRoute = NegociosIdRouteImport.update({
   path: '/$id',
   getParentRoute: () => NegociosRoute,
 } as any)
+const LojaSlugRoute = LojaSlugRouteImport.update({
+  id: '/loja/$slug',
+  path: '/loja/$slug',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const AdminPlanosRoute = AdminPlanosRouteImport.update({
   id: '/planos',
   path: '/planos',
@@ -114,6 +120,7 @@ export interface FileRoutesByFullPath {
   '/admin/leads': typeof AdminLeadsRoute
   '/admin/lojas': typeof AdminLojasRoute
   '/admin/planos': typeof AdminPlanosRoute
+  '/loja/$slug': typeof LojaSlugRoute
   '/negocios/$id': typeof NegociosIdRoute
   '/admin/': typeof AdminIndexRoute
   '/negocios/': typeof NegociosIndexRoute
@@ -129,6 +136,7 @@ export interface FileRoutesByTo {
   '/admin/leads': typeof AdminLeadsRoute
   '/admin/lojas': typeof AdminLojasRoute
   '/admin/planos': typeof AdminPlanosRoute
+  '/loja/$slug': typeof LojaSlugRoute
   '/negocios/$id': typeof NegociosIdRoute
   '/admin': typeof AdminIndexRoute
   '/negocios': typeof NegociosIndexRoute
@@ -147,6 +155,7 @@ export interface FileRoutesById {
   '/admin/leads': typeof AdminLeadsRoute
   '/admin/lojas': typeof AdminLojasRoute
   '/admin/planos': typeof AdminPlanosRoute
+  '/loja/$slug': typeof LojaSlugRoute
   '/negocios/$id': typeof NegociosIdRoute
   '/admin/': typeof AdminIndexRoute
   '/negocios/': typeof NegociosIndexRoute
@@ -166,6 +175,7 @@ export interface FileRouteTypes {
     | '/admin/leads'
     | '/admin/lojas'
     | '/admin/planos'
+    | '/loja/$slug'
     | '/negocios/$id'
     | '/admin/'
     | '/negocios/'
@@ -181,6 +191,7 @@ export interface FileRouteTypes {
     | '/admin/leads'
     | '/admin/lojas'
     | '/admin/planos'
+    | '/loja/$slug'
     | '/negocios/$id'
     | '/admin'
     | '/negocios'
@@ -198,6 +209,7 @@ export interface FileRouteTypes {
     | '/admin/leads'
     | '/admin/lojas'
     | '/admin/planos'
+    | '/loja/$slug'
     | '/negocios/$id'
     | '/admin/'
     | '/negocios/'
@@ -211,6 +223,7 @@ export interface RootRouteChildren {
   NegociosRoute: typeof NegociosRouteWithChildren
   OfertasRoute: typeof OfertasRoute
   PerfilRoute: typeof PerfilRoute
+  LojaSlugRoute: typeof LojaSlugRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -284,6 +297,13 @@ declare module '@tanstack/react-router' {
       fullPath: '/negocios/$id'
       preLoaderRoute: typeof NegociosIdRouteImport
       parentRoute: typeof NegociosRoute
+    }
+    '/loja/$slug': {
+      id: '/loja/$slug'
+      path: '/loja/$slug'
+      fullPath: '/loja/$slug'
+      preLoaderRoute: typeof LojaSlugRouteImport
+      parentRoute: typeof rootRouteImport
     }
     '/admin/planos': {
       id: '/admin/planos'
@@ -365,6 +385,7 @@ const rootRouteChildren: RootRouteChildren = {
   NegociosRoute: NegociosRouteWithChildren,
   OfertasRoute: OfertasRoute,
   PerfilRoute: PerfilRoute,
+  LojaSlugRoute: LojaSlugRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

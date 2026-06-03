@@ -54,6 +54,7 @@ export type Merchant = {
   facebook?: string;
   responsibleName?: string;
   createdAt: string;
+  slug?: string;
 };
 
 
@@ -112,6 +113,7 @@ export const merchants: Merchant[] = [
     status: "partner",
     document: "12345678000199",
     createdAt: new Date().toISOString(),
+    slug: "cantina-da-nonna",
   },
 
   {
@@ -141,6 +143,7 @@ export const merchants: Merchant[] = [
     status: "verified",
     document: "98765432100",
     createdAt: new Date().toISOString(),
+    slug: "padaria-pao-de-mel",
   },
 
   {
@@ -168,6 +171,7 @@ export const merchants: Merchant[] = [
     status: "pending",
     document: "11122233344",
     createdAt: new Date().toISOString(),
+    slug: "mecanica-rapida",
   },
 
   {
@@ -197,6 +201,7 @@ export const merchants: Merchant[] = [
     status: "featured",
     document: "55566677788",
     createdAt: new Date().toISOString(),
+    slug: "petshop-amigo-fiel",
   },
 
   {
@@ -224,6 +229,7 @@ export const merchants: Merchant[] = [
     status: "verified",
     document: "11111111111",
     createdAt: new Date().toISOString(),
+    slug: "farmacia-boa-saude",
   },
 
   {
@@ -251,6 +257,7 @@ export const merchants: Merchant[] = [
     status: "verified",
     document: "22222222222",
     createdAt: new Date().toISOString(),
+    slug: "hortifruti-da-terra",
   },
 
   {
@@ -278,6 +285,7 @@ export const merchants: Merchant[] = [
     status: "verified",
     document: "33333333333",
     createdAt: new Date().toISOString(),
+    slug: "barbearia-estilo",
   },
 
   {
@@ -305,6 +313,7 @@ export const merchants: Merchant[] = [
     status: "verified",
     document: "44444444444",
     createdAt: new Date().toISOString(),
+    slug: "boutique-fashion",
   },
 
   {
@@ -332,6 +341,7 @@ export const merchants: Merchant[] = [
     status: "verified",
     document: "55555555555",
     createdAt: new Date().toISOString(),
+    slug: "peixaria-mar-azul",
   },
 
   {
@@ -359,6 +369,7 @@ export const merchants: Merchant[] = [
     status: "verified",
     document: "66666666666",
     createdAt: new Date().toISOString(),
+    slug: "clinica-sorriso",
   },
 
 ];

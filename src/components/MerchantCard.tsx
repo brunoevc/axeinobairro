@@ -131,7 +131,10 @@ export const MerchantCard = memo(function MerchantCard({ merchant }: Props) {
             variant="outline"
             className="flex-1 rounded-xl h-11 text-xs font-bold border-slate-200 hover:bg-slate-50 hover:text-orange-600 group/btn"
           >
-            <Link to="/negocios/$id" params={{ id: merchant.id }}>
+            <Link 
+              to={merchant.slug ? "/loja/$slug" : "/negocios/$id"} 
+              params={merchant.slug ? { slug: merchant.slug } : { id: merchant.id }}
+            >
               Ver Detalhes
               <ChevronRight className="w-3 h-3 ml-1 transition-transform group-hover/btn:translate-x-0.5" />
             </Link>
