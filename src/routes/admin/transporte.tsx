@@ -4,9 +4,11 @@ import { RideDriver, ServiceType, AvailabilityStatus, RideRoute } from "@/types/
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { Badge } from "@/components/ui/badge";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
+
 import { Pencil, Trash2, Plus, Phone, Car, MapPin } from "lucide-react";
 import { toast } from "sonner";
 
