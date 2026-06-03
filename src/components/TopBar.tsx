@@ -57,6 +57,8 @@ export const TopBar = memo(function TopBar() {
             <nav className="hidden lg:flex items-center gap-6">
               <Link to="/" className="text-sm font-semibold text-slate-600 hover:text-orange-600 transition-colors">Início</Link>
               <Link to="/negocios" className="text-sm font-semibold text-slate-600 hover:text-orange-600 transition-colors">Negócios</Link>
+              <Link to="/servicos" className="text-sm font-semibold text-slate-600 hover:text-orange-600 transition-colors">Serviços</Link>
+              <Link to="/transporte" className="text-sm font-semibold text-slate-600 hover:text-orange-600 transition-colors">Transporte</Link>
               <Link to="/noticias" className="text-sm font-semibold text-slate-600 hover:text-orange-600 transition-colors">Notícias</Link>
               <Link to="/cadastro" className="text-sm font-semibold text-slate-600 hover:text-orange-600 transition-colors">Cadastro</Link>
 

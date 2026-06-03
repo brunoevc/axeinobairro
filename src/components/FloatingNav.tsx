@@ -1,4 +1,4 @@
-import { Home, Search, PlusCircle, Car } from "lucide-react";
+import { Home, Search, PlusCircle, Car, Wrench } from "lucide-react";
 import { Link, useLocation } from "@tanstack/react-router";
 import { memo } from "react";
 
@@ -37,7 +37,16 @@ export const FloatingNav = memo(function FloatingNav() {
       </Link>
 
       <Link 
+        to="/servicos" 
+        className={`flex flex-col items-center gap-1 p-2 transition-all ${isActive('/servicos') ? 'text-orange-600 scale-110' : 'text-slate-400'}`}
+      >
+        <Wrench className="w-5 h-5" />
+        <span className="text-[10px] font-bold">Serviços</span>
+      </Link>
+
+      <Link 
         to="/transporte" 
+
         className={`flex flex-col items-center gap-1 p-2 transition-all ${isActive('/transporte') ? 'text-orange-600 scale-110' : 'text-slate-400'}`}
       >
         <Car className="w-5 h-5" />
