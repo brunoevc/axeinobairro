@@ -59,8 +59,9 @@ export default function Agendar() {
         status: "pending"
       });
       toast.success("Agendamento solicitado com sucesso!");
-      navigate({ to: getMerchantPublicPath(merchant), replace: true });
+      navigate({ to: getMerchantPublicPath(merchant as { id: string, slug?: string }), replace: true });
     } catch (error: any) {
+
 
       toast.error(error.message);
     }
