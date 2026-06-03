@@ -1,7 +1,8 @@
 import { useState, useEffect, useMemo } from "react";
 import { Link } from "@tanstack/react-router";
 import { getNews, trackNewsInteraction } from "@/lib/news";
-import { merchants } from "@/data/merchants";
+import { merchants, getMerchantPublicPath } from "@/data/merchants";
+
 import { NewsItem } from "@/types/news";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
