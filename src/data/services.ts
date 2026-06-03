@@ -1,0 +1,40 @@
+import { ServiceProvider } from "@/types/services";
+
+export const initialServices: ServiceProvider[] = [
+  {
+    id: '1',
+    name: 'João Eletricista',
+    category: 'eletricista',
+    phone: '21999887766',
+    neighborhood: 'Centro',
+    description: 'Instalações, reparos e manutenção elétrica residencial.',
+    isAvailable: true,
+    rating: 4.8,
+    createdAt: new Date().toISOString(),
+    updatedAt: new Date().toISOString(),
+  },
+  {
+    id: '2',
+    name: 'Maria Diarista',
+    category: 'diarista',
+    phone: '21988776655',
+    neighborhood: 'Parque Hotel',
+    description: 'Limpeza profissional e organizada para sua casa.',
+    isAvailable: true,
+    rating: 4.9,
+    createdAt: new Date().toISOString(),
+    updatedAt: new Date().toISOString(),
+  },
+  {
+    id: '3',
+    name: 'Carlos Encanador',
+    category: 'encanador',
+    phone: '21977665544',
+    neighborhood: 'Rio do Limão',
+    description: 'Reparo de vazamentos e instalações hidráulicas.',
+    isAvailable: false,
+    rating: 4.7,
+    createdAt: new Date().toISOString(),
+    updatedAt: new Date().toISOString(),
+  },
+];
