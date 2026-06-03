@@ -3,7 +3,7 @@ import { useAdminState } from "@/hooks/useAdminState";
 import { DashboardStats } from "@/components/admin/DashboardStats";
 import { PlansChart } from "@/components/admin/PlansChart";
 import { ActivityLog } from "@/components/admin/ActivityLog";
-import { ShieldCheck, Info, TrendingUp, BarChart3, Clock, Layout, Save, Lock, Mail, CheckCircle2, AlertCircle, Users } from "lucide-react";
+import { ShieldCheck, Info, TrendingUp, BarChart3, Clock, Layout, Save, Lock, Mail, CheckCircle2, AlertCircle, Users, Car } from "lucide-react";
 import { ImageCropUpload } from "@/components/ImageCropUpload";
 import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
@@ -98,6 +98,13 @@ function AdminDashboard() {
               Gestão de Leads (CRM)
             </Link>
           </Button>
+          <Button asChild className="rounded-2xl h-12 px-6 font-black gap-2 bg-slate-900 hover:bg-slate-800 shadow-xl shadow-slate-100 transition-all active:scale-95">
+            <Link to="/admin/transporte">
+              <Car className="w-4 h-4 text-orange-500" />
+              Gestão de Transporte
+            </Link>
+          </Button>
+
           <div className="flex items-center gap-2 px-4 py-2 bg-emerald-50 rounded-2xl border border-emerald-100 shadow-sm">
              <div className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
              <span className="text-xs font-black text-emerald-600 uppercase tracking-widest">Sistema Online</span>
