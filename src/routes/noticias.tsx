@@ -1,7 +1,8 @@
 import { useState, useEffect, useMemo } from "react";
 import { Link } from "@tanstack/react-router";
 import { getNews, trackNewsInteraction } from "@/lib/news";
-import { merchants } from "@/data/merchants";
+import { merchants, getMerchantPublicPath } from "@/data/merchants";
+
 import { NewsItem } from "@/types/news";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -78,9 +79,9 @@ export default function Notícias() {
                   </p>
                   <div className="flex flex-wrap items-center gap-4">
                     <Link 
-                      to={merchants.find(m => m.id === item.merchantId)?.slug ? "/loja/$slug" : "/negocios/$id"}
-                      params={merchants.find(m => m.id === item.merchantId)?.slug ? { slug: merchants.find(m => m.id === item.merchantId)!.slug! } : { id: item.merchantId }}
+                      to={getMerchantPublicPath(merchants.find(m => m.id === item.merchantId) || { id: item.merchantId })}
                       className="bg-white text-slate-900 px-8 py-4 rounded-2xl font-black text-sm hover:bg-orange-600 hover:text-white transition-all transform hover:-translate-y-1 shadow-lg flex items-center gap-2"
+
                       onClick={() => trackNewsInteraction(item.id, "click")}
                     >
                       Ver {getMerchantName(item.merchantId)}
@@ -120,9 +121,9 @@ export default function Notícias() {
                     <h3 className="text-xl font-black text-slate-900 mb-3 group-hover:text-orange-600 transition-colors">{item.title}</h3>
                     <p className="text-sm text-slate-500 mb-6 line-clamp-2">{item.summary}</p>
                     <Link 
-                      to={merchants.find(m => m.id === item.merchantId)?.slug ? "/loja/$slug" : "/negocios/$id"}
-                      params={merchants.find(m => m.id === item.merchantId)?.slug ? { slug: merchants.find(m => m.id === item.merchantId)!.slug! } : { id: item.merchantId }}
+                      to={getMerchantPublicPath(merchants.find(m => m.id === item.merchantId) || { id: item.merchantId })}
                       className="inline-flex items-center text-orange-600 font-black text-xs uppercase tracking-wider group-hover:gap-2 transition-all"
+
                       onClick={() => trackNewsInteraction(item.id, "click")}
                     >
                       Ver {getMerchantName(item.merchantId)}
@@ -146,9 +147,9 @@ export default function Notícias() {
                   <h3 className="font-bold text-lg text-slate-900 mb-2 group-hover:text-orange-600 transition-colors">{item.title}</h3>
                   <p className="text-sm text-slate-500 mb-4 line-clamp-1">{item.summary}</p>
                   <Link 
-                    to={merchants.find(m => m.id === item.merchantId)?.slug ? "/loja/$slug" : "/negocios/$id"}
-                    params={merchants.find(m => m.id === item.merchantId)?.slug ? { slug: merchants.find(m => m.id === item.merchantId)!.slug! } : { id: item.merchantId }}
+                    to={getMerchantPublicPath(merchants.find(m => m.id === item.merchantId) || { id: item.merchantId })}
                     className="text-xs font-black text-slate-400 uppercase tracking-widest hover:text-orange-600 transition-colors"
+
                     onClick={() => trackNewsInteraction(item.id, "click")}
                   >
                     Parceiro: {getMerchantName(item.merchantId)}

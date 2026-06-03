@@ -89,9 +89,11 @@ function AdminLojas() {
         <div className="bg-white rounded-[3rem] border border-slate-100 shadow-xl p-2 overflow-hidden">
           <MerchantEditForm
             merchant={selectedMerchant}
+            allMerchants={state.merchants}
             onSave={handleSave}
             onCancel={() => setViewMode("table")}
           />
+
         </div>
       ) : viewMode === "catalog" && selectedMerchant ? (
         <div className="bg-white rounded-[3rem] border border-slate-100 shadow-xl p-10">

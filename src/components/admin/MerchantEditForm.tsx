@@ -8,12 +8,14 @@ import React from "react";
 
 type MerchantEditFormProps = {
   merchant: MerchantAdmin;
+  allMerchants: MerchantAdmin[];
   onSave: (updated: Partial<MerchantAdmin>) => void;
   onCancel: () => void;
 };
 
 export function MerchantEditForm({
   merchant,
+  allMerchants,
   onSave,
   onCancel,
 }: MerchantEditFormProps) {
@@ -37,6 +39,9 @@ export function MerchantEditForm({
     }
   }, []);
 
+  const slugIsValid = isValidSlug(formData.slug);
+  const slugIsUnique = isSlugUnique(formData.slug, merchant.id, allMerchants);
+
   const handleCopyLink = () => {
     const url = `${window.location.origin}/loja/${formData.slug || merchant.id}`;
     navigator.clipboard.writeText(url);
@@ -48,15 +53,21 @@ export function MerchantEditForm({
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
 
-    if (formData.slug && !isValidSlug(formData.slug)) {
+    if (!formData.slug) {
+      toast.error("O slug é obrigatório para uma URL profissional.");
+      return;
+    }
+
+    if (!slugIsValid) {
       toast.error("O slug contém caracteres inválidos. Use apenas letras minúsculas, números e hifens.");
       return;
     }
 
-    // Get merchants from localStorage/context to check uniqueness
-    // In this mock, we'll assume we have access to the full list from localState or just trust the admin
-    // For a real check, we'd need the merchants list passed as a prop
-    
+    if (!slugIsUnique) {
+      toast.error("Este slug já está sendo usado por outro estabelecimento.");
+      return;
+    }
+
     setIsSaving(true);
 
     setTimeout(() => {
@@ -99,33 +110,54 @@ export function MerchantEditForm({
 
                 {/* Slug / URL Profissional */}
                 <div className="space-y-3">
-                  <label className="block text-xs font-black text-slate-400 uppercase tracking-widest ml-1">
-                    URL Personalizada (Slug)
-                  </label>
+                  <div className="flex items-center justify-between ml-1">
+                    <label className="block text-xs font-black text-slate-400 uppercase tracking-widest">
+                      URL Personalizada (Slug)
+                    </label>
+                    {formData.slug && (
+                      <span className={`text-[10px] font-bold uppercase ${!slugIsValid || !slugIsUnique ? 'text-red-500' : 'text-emerald-500'}`}>
+                        {!slugIsValid ? "Inválido" : !slugIsUnique ? "Duplicado" : "Disponível"}
+                      </span>
+                    )}
+                  </div>
                   <div className="relative group">
-                    <Globe className="absolute left-5 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400 group-focus-within:text-violet-600" />
+                    <Globe className={`absolute left-5 top-1/2 -translate-y-1/2 w-4 h-4 transition-colors ${!slugIsValid || !slugIsUnique ? 'text-red-400' : 'text-slate-400 group-focus-within:text-violet-600'}`} />
                     <input
                       type="text"
                       value={formData.slug}
                       onChange={(e) =>
-                        setFormData({ ...formData, slug: e.target.value.toLowerCase().replace(/\s+/g, "-") })
+                        setFormData({ ...formData, slug: e.target.value.toLowerCase().trim().replace(/\s+/g, "-") })
                       }
                       placeholder="ex: cantina-da-nonna"
-                      className="w-full rounded-2xl border border-slate-100 bg-slate-50 px-5 pl-12 py-4 text-sm font-bold text-slate-900 outline-none focus:ring-4 focus:ring-violet-500/5 focus:border-violet-600 focus:bg-white transition-all shadow-sm"
+                      className={`w-full rounded-2xl border bg-slate-50 px-5 pl-12 py-4 text-sm font-bold text-slate-900 outline-none focus:ring-4 transition-all shadow-sm ${
+                        !slugIsValid || !slugIsUnique 
+                          ? 'border-red-100 focus:ring-red-500/5 focus:border-red-600 focus:bg-red-50/30' 
+                          : 'border-slate-100 focus:ring-violet-500/5 focus:border-violet-600 focus:bg-white'
+                      }`}
                     />
                   </div>
-                  <div className="flex items-center justify-between px-1">
-                    <p className="text-[10px] text-slate-400 font-medium">
-                      axeinobairro.com.br/loja/{formData.slug || "..."}
-                    </p>
-                    <button 
-                      type="button"
-                      onClick={handleCopyLink}
-                      className="text-[10px] font-black text-violet-600 uppercase flex items-center gap-1 hover:underline"
-                    >
-                      {copied ? <Check className="w-3 h-3" /> : <Copy className="w-3 h-3" />}
-                      {copied ? "Copiado!" : "Copiar Link"}
-                    </button>
+                  <div className="flex flex-col gap-1.5 px-1">
+                    <div className="flex items-center justify-between">
+                      <p className="text-[10px] text-slate-400 font-medium">
+                        axeinobairro.com.br/loja/{formData.slug || "..."}
+                      </p>
+                      <button 
+                        type="button"
+                        onClick={handleCopyLink}
+                        className="text-[10px] font-black text-violet-600 uppercase flex items-center gap-1 hover:underline"
+                      >
+                        {copied ? <Check className="w-3 h-3" /> : <Copy className="w-3 h-3" />}
+                        {copied ? "Copiado!" : "Copiar Link"}
+                      </button>
+                    </div>
+                    {formData.slug && (
+                      <div className="p-2 bg-slate-50 rounded-lg border border-slate-100/50">
+                        <p className="text-[9px] font-bold text-slate-400 uppercase tracking-tight">Preview do Subdomínio (Futuro):</p>
+                        <p className="text-[11px] font-black text-orange-600">
+                          {formData.slug}.axeinobairro.com.br
+                        </p>
+                      </div>
+                    )}
                   </div>
                 </div>
 
