@@ -1,5 +1,7 @@
 import { createFileRoute, useNavigate } from "@tanstack/react-router";
-import { merchants, getMerchantPublicPath } from "@/data/merchants";
+import { getMerchantPublicPath } from "@/data/merchants";
+import { merchantsRepository } from "@/repositories/merchantsRepository";
+
 import { useEffect, useState } from "react";
 import { MerchantDetailsSkeleton } from "@/components/MerchantDetailsSkeleton";
 import { TopBar } from "@/components/TopBar";
@@ -18,7 +20,7 @@ function SlugDetailPage() {
   const navigate = useNavigate();
   const [isLoading, setIsLoading] = useState(true);
   
-  const merchant = merchants.find((m) => m.slug === slug);
+  const merchant = merchantsRepository.getBySlug(slug);
 
   useEffect(() => {
     const timer = setTimeout(() => setIsLoading(false), 600);
@@ -36,7 +38,7 @@ function SlugDetailPage() {
 
   if (!merchant) {
     // If not found by slug, maybe it was a raw ID? Try finding by ID
-    const merchantById = merchants.find((m) => m.id === slug);
+    const merchantById = merchantsRepository.getById(slug);
     if (merchantById) {
       // If we found it by ID, and it has a slug, redirect to the correct slug path
       // If it doesn't have a slug, we still allow viewing it here as a fallback or redirect back to negocios

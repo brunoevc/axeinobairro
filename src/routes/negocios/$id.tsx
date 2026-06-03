@@ -1,6 +1,8 @@
 import { createFileRoute, useNavigate } from "@tanstack/react-router";
-import { merchants, getMerchantPublicPath } from "@/data/merchants";
+import { getMerchantPublicPath } from "@/data/merchants";
+import { merchantsRepository } from "@/repositories/merchantsRepository";
 import { isValidSlug } from "@/lib/slugs";
+
 
 
 import { useState, useEffect } from "react";
@@ -19,7 +21,7 @@ function DetailPage() {
   const navigate = useNavigate();
   const [isLoading, setIsLoading] = useState(true);
   
-  const merchant = merchants.find((m) => m.id === id);
+  const merchant = merchantsRepository.getById(id);
 
   useEffect(() => {
     // If merchant has a VALID slug, redirect to the professional URL

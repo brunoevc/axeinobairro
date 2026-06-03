@@ -1,6 +1,8 @@
 import { useState, useEffect } from "react";
 import { useParams, useNavigate, useSearch, Link } from "@tanstack/react-router";
-import { merchants, getMerchantPublicPath } from "@/data/merchants";
+import { getMerchantPublicPath } from "@/data/merchants";
+import { merchantsRepository } from "@/repositories/merchantsRepository";
+
 import { Button } from "@/components/ui/button";
 
 import { Input } from "@/components/ui/input";
@@ -15,7 +17,7 @@ export default function Agendar() {
   const { id } = useParams({ from: "/negocios/$id/agendar" });
   const navigate = useNavigate();
   const search = useSearch({ strict: false }) as any;
-  const merchant = merchants.find(m => m.id === id);
+  const merchant = merchantsRepository.getById(id || "");
   
   const [date, setDate] = useState<Date | undefined>(new Date());
   const [selectedSlot, setSelectedSlot] = useState<string>("");
