@@ -2,7 +2,8 @@ import { useState, useEffect } from "react";
 import { MerchantAdmin } from "@/data/admin";
 import { Button } from "@/components/ui/button";
 import { Store, MapPin, MessageCircle, FileText, Save, X, Info, Globe, Copy, Check } from "lucide-react";
-import { generateSlug, isValidSlug, isSlugUnique } from "@/lib/slugs";
+import { generateSlug, isValidSlug, isSlugUnique, RESERVED_SLUGS } from "@/lib/slugs";
+
 import { toast } from "sonner";
 import React from "react";
 
@@ -59,7 +60,7 @@ export function MerchantEditForm({
     }
 
     if (!slugIsValid) {
-      toast.error("O slug contém caracteres inválidos. Use apenas letras minúsculas, números e hifens.");
+      toast.error("O slug é inválido ou reservado. Use apenas letras minúsculas, números e hifens (não no início ou fim).");
       return;
     }
 
@@ -67,6 +68,7 @@ export function MerchantEditForm({
       toast.error("Este slug já está sendo usado por outro estabelecimento.");
       return;
     }
+
 
     setIsSaving(true);
 
@@ -116,10 +118,15 @@ export function MerchantEditForm({
                     </label>
                     {formData.slug && (
                       <span className={`text-[10px] font-bold uppercase ${!slugIsValid || !slugIsUnique ? 'text-red-500' : 'text-emerald-500'}`}>
-                        {!slugIsValid ? "Inválido" : !slugIsUnique ? "Duplicado" : "Disponível"}
+                        {RESERVED_SLUGS.includes(formData.slug.toLowerCase()) 
+                          ? "Reservado" 
+                          : !slugIsValid ? "Inválido" 
+                          : !slugIsUnique ? "Duplicado" 
+                          : "Disponível"}
                       </span>
                     )}
                   </div>
+
                   <div className="relative group">
                     <Globe className={`absolute left-5 top-1/2 -translate-y-1/2 w-4 h-4 transition-colors ${!slugIsValid || !slugIsUnique ? 'text-red-400' : 'text-slate-400 group-focus-within:text-violet-600'}`} />
                     <input

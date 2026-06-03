@@ -11,17 +11,10 @@ import {
   Fish,
   Leaf
 } from "lucide-react";
+import { getMerchantPublicPath } from "@/lib/slugs";
 
-/**
- * Helper to get the public path for a merchant.
- * Prioritizes slug-based professional URLs.
- */
-export const getMerchantPublicPath = (merchant: { id: string, slug?: string }): string => {
-  if (merchant.slug && merchant.slug.trim() !== "") {
-    return `/loja/${merchant.slug}`;
-  }
-  return `/negocios/${merchant.id}`;
-};
+export { getMerchantPublicPath };
+
 
 
 export type Merchant = {
@@ -67,6 +60,8 @@ export type Merchant = {
   responsibleName?: string;
   createdAt: string;
   slug?: string;
+  customDomain?: string;
+  canonicalUrl?: string;
 };
 
 
