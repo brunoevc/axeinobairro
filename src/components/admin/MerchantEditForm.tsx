@@ -1,7 +1,9 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { MerchantAdmin } from "@/data/admin";
 import { Button } from "@/components/ui/button";
-import { Store, MapPin, MessageCircle, FileText, Save, X, Info } from "lucide-react";
+import { Store, MapPin, MessageCircle, FileText, Save, X, Info, Globe, Copy, Check } from "lucide-react";
+import { generateSlug, isValidSlug, isSlugUnique } from "@/lib/slugs";
+import { toast } from "sonner";
 import React from "react";
 
 type MerchantEditFormProps = {
@@ -22,17 +24,45 @@ export function MerchantEditForm({
     neighborhood: merchant.neighborhood,
     notes: merchant.notes || "",
     exposureLevel: merchant.exposureLevel || "none",
+    slug: merchant.slug || "",
   });
 
   const [isSaving, setIsSaving] = useState(false);
+  const [copied, setCopied] = useState(false);
+
+  // Auto-generate slug if it's empty and name is provided
+  useEffect(() => {
+    if (!formData.slug && formData.name) {
+      setFormData(prev => ({ ...prev, slug: generateSlug(formData.name) }));
+    }
+  }, []);
+
+  const handleCopyLink = () => {
+    const url = `${window.location.origin}/loja/${formData.slug || merchant.id}`;
+    navigator.clipboard.writeText(url);
+    setCopied(true);
+    toast.success("Link da loja copiado!");
+    setTimeout(() => setCopied(false), 2000);
+  };
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
+
+    if (formData.slug && !isValidSlug(formData.slug)) {
+      toast.error("O slug contém caracteres inválidos. Use apenas letras minúsculas, números e hifens.");
+      return;
+    }
+
+    // Get merchants from localStorage/context to check uniqueness
+    // In this mock, we'll assume we have access to the full list from localState or just trust the admin
+    // For a real check, we'd need the merchants list passed as a prop
+    
     setIsSaving(true);
 
     setTimeout(() => {
       onSave(formData);
       setIsSaving(false);
+      toast.success("Estabelecimento atualizado com sucesso!");
     }, 300);
   };
 
@@ -65,6 +95,38 @@ export function MerchantEditForm({
                     }
                     className="w-full rounded-2xl border border-slate-100 bg-slate-50 px-5 py-4 text-sm font-bold text-slate-900 outline-none focus:ring-4 focus:ring-violet-500/5 focus:border-violet-600 focus:bg-white transition-all shadow-sm"
                   />
+                </div>
+
+                {/* Slug / URL Profissional */}
+                <div className="space-y-3">
+                  <label className="block text-xs font-black text-slate-400 uppercase tracking-widest ml-1">
+                    URL Personalizada (Slug)
+                  </label>
+                  <div className="relative group">
+                    <Globe className="absolute left-5 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400 group-focus-within:text-violet-600" />
+                    <input
+                      type="text"
+                      value={formData.slug}
+                      onChange={(e) =>
+                        setFormData({ ...formData, slug: e.target.value.toLowerCase().replace(/\s+/g, "-") })
+                      }
+                      placeholder="ex: cantina-da-nonna"
+                      className="w-full rounded-2xl border border-slate-100 bg-slate-50 px-5 pl-12 py-4 text-sm font-bold text-slate-900 outline-none focus:ring-4 focus:ring-violet-500/5 focus:border-violet-600 focus:bg-white transition-all shadow-sm"
+                    />
+                  </div>
+                  <div className="flex items-center justify-between px-1">
+                    <p className="text-[10px] text-slate-400 font-medium">
+                      axeinobairro.com.br/loja/{formData.slug || "..."}
+                    </p>
+                    <button 
+                      type="button"
+                      onClick={handleCopyLink}
+                      className="text-[10px] font-black text-violet-600 uppercase flex items-center gap-1 hover:underline"
+                    >
+                      {copied ? <Check className="w-3 h-3" /> : <Copy className="w-3 h-3" />}
+                      {copied ? "Copiado!" : "Copiar Link"}
+                    </button>
+                  </div>
                 </div>
 
                 {/* Bairro */}
