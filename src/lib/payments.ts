@@ -6,7 +6,7 @@ export const getPixCharges = (): PixCharge[] => {
 };
 
 export const savePixCharges = (charges: PixCharge[]) => {
-  // compatibility
+  // compatibility with legacy code if any
   localStorage.setItem("axei_pix_charges", JSON.stringify(charges));
 };
 
@@ -15,41 +15,29 @@ export const getPixLinks = (): PixLink[] => {
 };
 
 export const savePixLinks = (links: PixLink[]) => {
-  // compatibility
+  // compatibility with legacy code if any
   localStorage.setItem("axei_pix_links", JSON.stringify(links));
 };
 
-
 export const createPixCharge = (charge: Omit<PixCharge, "id" | "createdAt" | "expiresAt" | "pixKey">): PixCharge => {
-  const id = `charge_${Math.random().toString(36).substr(2, 9)}`;
-
-  const id = `charge_${Math.random().toString(36).substr(2, 9)}`;
+  const chargeId = `charge_${Math.random().toString(36).substr(2, 9)}`;
   const now = new Date();
   const expires = new Date(now.getTime() + 60 * 60000);
 
   const newCharge: PixCharge = {
     ...charge,
-    id,
+    id: chargeId,
     createdAt: now.toISOString(),
     expiresAt: expires.toISOString(),
     pixKey: "00020126330014BR.GOV.BCB.PIX0111MOCKKEY1235204000053039865802BR5913AXEI_SIMULADO6008ARARUAMA62070503***6304E2D5",
   };
 
-  savePixCharges([...charges, newCharge]);
+  paymentsRepository.saveCharge(newCharge);
   return newCharge;
 };
 
 export const updatePixStatus = (id: string, status: TransactionStatus, receiptFilename?: string) => {
-  const charges = getPixCharges();
-  const updated = charges.map(c => 
-    c.id === id ? { 
-      ...c, 
-      status, 
-      receiptSentAt: status === "comprovante_enviado" ? new Date().toISOString() : c.receiptSentAt,
-      receiptFilename: receiptFilename || c.receiptFilename
-    } : c
-  );
-  savePixCharges(updated);
+  paymentsRepository.updateChargeStatus(id, status, receiptFilename);
 };
 
 export const getPixChargeById = (id: string): PixCharge | undefined => {
@@ -68,10 +56,10 @@ export const createPixLink = (link: Omit<PixLink, "id" | "createdAt" | "active">
   const links = paymentsRepository.getLinks();
 
   if (links.length >= 20) throw new Error("Limite de links atingido");
-  const id = `link_${Math.random().toString(36).substr(2, 9)}`;
+  const linkId = `link_${Math.random().toString(36).substr(2, 9)}`;
   const newLink: PixLink = {
     ...link,
-    id,
+    id: linkId,
     active: true,
     createdAt: new Date().toISOString()
   };
