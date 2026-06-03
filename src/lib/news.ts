@@ -1,26 +1,15 @@
 import { NewsItem } from "@/types/news";
-
-const STORAGE_KEY = "axei_news_data";
+import { newsRepository } from "@/repositories/newsRepository";
 
 export const getNews = (): NewsItem[] => {
-  const data = localStorage.getItem(STORAGE_KEY);
-  return data ? JSON.parse(data) : [];
+  return newsRepository.getAll();
 };
 
 export const saveNews = (news: NewsItem[]) => {
-  localStorage.setItem(STORAGE_KEY, JSON.stringify(news));
+  newsRepository.saveAll(news);
 };
 
 export const trackNewsInteraction = (id: string, type: "view" | "click") => {
-  const news = getNews();
-  const updated = news.map(item => {
-    if (item.id === id) {
-      return {
-        ...item,
-        [type === "view" ? "views" : "clicks"]: (item[type === "view" ? "views" : "clicks"] || 0) + 1
-      };
-    }
-    return item;
-  });
-  saveNews(updated);
+  newsRepository.updateInteraction(id, type === "view" ? "views" : "clicks");
 };
+

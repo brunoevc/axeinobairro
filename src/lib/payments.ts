@@ -1,30 +1,28 @@
 import { PixCharge, TransactionStatus, PixLink } from "@/types/payment";
-
-const STORAGE_KEY = "axei_pix_charges";
-const LINKS_KEY = "axei_pix_links";
+import { paymentsRepository } from "@/repositories/paymentsRepository";
 
 export const getPixCharges = (): PixCharge[] => {
-  if (typeof window === "undefined") return [];
-  const stored = localStorage.getItem(STORAGE_KEY);
-  return stored ? JSON.parse(stored) : [];
+  return paymentsRepository.getCharges();
 };
 
 export const savePixCharges = (charges: PixCharge[]) => {
-  localStorage.setItem(STORAGE_KEY, JSON.stringify(charges));
+  // compatibility
+  localStorage.setItem("axei_pix_charges", JSON.stringify(charges));
 };
 
 export const getPixLinks = (): PixLink[] => {
-  if (typeof window === "undefined") return [];
-  const stored = localStorage.getItem(LINKS_KEY);
-  return stored ? JSON.parse(stored) : [];
+  return paymentsRepository.getLinks();
 };
 
 export const savePixLinks = (links: PixLink[]) => {
-  localStorage.setItem(LINKS_KEY, JSON.stringify(links));
+  // compatibility
+  localStorage.setItem("axei_pix_links", JSON.stringify(links));
 };
 
+
 export const createPixCharge = (charge: Omit<PixCharge, "id" | "createdAt" | "expiresAt" | "pixKey">): PixCharge => {
-  const charges = getPixCharges();
+  const id = `charge_${Math.random().toString(36).substr(2, 9)}`;
+
   const id = `charge_${Math.random().toString(36).substr(2, 9)}`;
   const now = new Date();
   const expires = new Date(now.getTime() + 60 * 60000);
@@ -67,7 +65,8 @@ export const getPixLinkById = (id: string): PixLink | undefined => {
 };
 
 export const createPixLink = (link: Omit<PixLink, "id" | "createdAt" | "active">): PixLink => {
-  const links = getPixLinks();
+  const links = paymentsRepository.getLinks();
+
   if (links.length >= 20) throw new Error("Limite de links atingido");
   const id = `link_${Math.random().toString(36).substr(2, 9)}`;
   const newLink: PixLink = {
@@ -76,6 +75,6 @@ export const createPixLink = (link: Omit<PixLink, "id" | "createdAt" | "active">
     active: true,
     createdAt: new Date().toISOString()
   };
-  savePixLinks([...links, newLink]);
+  paymentsRepository.saveLink(newLink);
   return newLink;
 };

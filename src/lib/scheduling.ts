@@ -1,19 +1,19 @@
 import { Appointment, BusinessAvailability } from "@/types/scheduling";
-
-const STORAGE_KEY = "axei_appointments";
+import { schedulingRepository } from "@/repositories/schedulingRepository";
 
 export const getAppointments = (): Appointment[] => {
-  if (typeof window === "undefined") return [];
-  const stored = localStorage.getItem(STORAGE_KEY);
-  return stored ? JSON.parse(stored) : [];
+  return schedulingRepository.getAll();
 };
 
 export const saveAppointments = (appointments: Appointment[]) => {
-  localStorage.setItem(STORAGE_KEY, JSON.stringify(appointments));
+  // This is kept for compatibility if needed, but repository handles single save
+  localStorage.setItem("axei_appointments", JSON.stringify(appointments));
 };
 
+
 export const createAppointment = (appointment: Omit<Appointment, "id" | "createdAt">): Appointment => {
-  const appointments = getAppointments();
+  const appointments = schedulingRepository.getAll();
+
   
   // Basic conflict check
   const hasConflict = appointments.some(app => 
@@ -33,17 +33,14 @@ export const createAppointment = (appointment: Omit<Appointment, "id" | "created
     createdAt: new Date().toISOString(),
   };
 
-  saveAppointments([...appointments, newAppointment]);
+  schedulingRepository.save(newAppointment);
   return newAppointment;
 };
 
 export const updateAppointmentStatus = (id: string, status: Appointment["status"]) => {
-  const appointments = getAppointments();
-  const updated = appointments.map(app => 
-    app.id === id ? { ...app, status } : app
-  );
-  saveAppointments(updated);
+  schedulingRepository.updateStatus(id, status);
 };
+
 
 export const getMerchantAvailability = (merchantId: string): BusinessAvailability[] => {
   // Default mock availability: Mon-Fri, 09:00 - 18:00
