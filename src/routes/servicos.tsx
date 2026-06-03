@@ -11,7 +11,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Card, CardContent } from "@/components/ui/card";
-import { MessageSquare, ShieldAlert, Search, Filter, Star, MapPin, Briefcase } from "lucide-react";
+import { MessageSquare, ShieldAlert, Search, Filter, Star, MapPin, Briefcase, CheckCircle2 } from "lucide-react";
 import { neighborhoods } from "@/data/merchants";
 
 const categories: ServiceCategory[] = [
@@ -31,12 +31,17 @@ export default function Servicos() {
   useEffect(() => {
     let filtered = servicesRepository.getAll();
 
-    if (filters.neighborhood !== "all") {
-      filtered = filtered.filter(s => s.neighborhood === filters.neighborhood);
-    }
     if (filters.category !== "all") {
       filtered = filtered.filter(s => s.category === filters.category);
     }
+    
+    if (filters.neighborhood !== "all") {
+      filtered = filtered.filter(s => 
+        s.neighborhood === filters.neighborhood || 
+        (s.serviceArea && s.serviceArea.includes(filters.neighborhood))
+      );
+    }
+    
     if (filters.onlyAvailable) {
       filtered = filtered.filter(s => s.isAvailable);
     }
@@ -58,12 +63,17 @@ export default function Servicos() {
         <p className="text-slate-500 mt-4 font-medium">Encontre os melhores profissionais da sua região.</p>
       </header>
 
-      <div className="bg-slate-900 text-white p-4 rounded-2xl mb-8 flex items-start gap-3 border-l-4 border-orange-600 shadow-xl">
-        <ShieldAlert className="w-6 h-6 text-orange-600 shrink-0 mt-1" />
-        <p className="text-sm font-medium">
-          <span className="font-black uppercase text-orange-600 mr-2">Aviso:</span>
-          O Axéí no Bairro apenas conecta moradores e profissionais. Negocie valores, prazos e condições diretamente com o prestador.
-        </p>
+      <div className="bg-slate-900 text-white p-6 rounded-3xl mb-12 flex items-start gap-4 border-l-8 border-orange-600 shadow-2xl relative overflow-hidden group">
+        <div className="absolute top-0 right-0 p-4 opacity-10 group-hover:scale-110 transition-transform">
+          <ShieldAlert className="w-24 h-24 text-orange-600" />
+        </div>
+        <ShieldAlert className="w-8 h-8 text-orange-600 shrink-0 mt-1" />
+        <div className="relative z-10">
+          <p className="text-base font-bold leading-relaxed">
+            <span className="font-black uppercase text-orange-600 mr-2 tracking-wider">Aviso de Segurança:</span>
+            O Axéí no Bairro conecta moradores e profissionais locais. Negocie valores, prazos e condições diretamente com o prestador. Recomendamos solicitar referências para serviços em sua residência.
+          </p>
+        </div>
       </div>
 
       <section className="bg-white p-6 rounded-3xl border border-slate-100 shadow-sm mb-12">
@@ -112,11 +122,19 @@ export default function Servicos() {
             <Card key={provider.id} className="rounded-3xl border-slate-100 hover:shadow-xl transition-all duration-300 group overflow-hidden">
               <CardContent className="p-6">
                 <div className="flex justify-between items-start mb-4">
-                  <div className="flex items-center gap-2">
-                    <span className={`w-3 h-3 rounded-full ${provider.isAvailable ? 'bg-green-500' : 'bg-slate-300'}`} />
-                    <span className="text-[10px] font-black uppercase text-slate-400 tracking-wider">
-                      {provider.isAvailable ? "Disponível" : "Indisponível"}
-                    </span>
+                  <div className="flex flex-col gap-1.5">
+                    <div className="flex items-center gap-2">
+                      <span className={`w-3 h-3 rounded-full ${provider.isAvailable ? 'bg-green-500' : 'bg-slate-300'}`} />
+                      <span className="text-[10px] font-black uppercase text-slate-400 tracking-wider">
+                        {provider.isAvailable ? "Disponível" : "Indisponível"}
+                      </span>
+                    </div>
+                    {provider.verified && (
+                      <div className="flex items-center gap-1 text-blue-600">
+                        <CheckCircle2 className="w-3.5 h-3.5 fill-current" />
+                        <span className="text-[10px] font-black uppercase tracking-wider">Verificado</span>
+                      </div>
+                    )}
                   </div>
                   <Badge variant="outline" className="text-[10px] font-bold uppercase py-1 border-slate-200 capitalize">
                     {provider.category}
@@ -137,9 +155,22 @@ export default function Servicos() {
                 </div>
 
                 <div className="space-y-3 mb-8">
-                  <div className="text-xs flex items-center gap-2 text-slate-600 bg-slate-50 p-3 rounded-xl font-bold">
-                    <MapPin className="w-3 h-3 text-orange-600" />
-                    {provider.neighborhood}
+                  <div className="text-xs flex flex-col gap-2 bg-slate-50 p-3 rounded-xl font-bold">
+                    <div className="flex items-center gap-2 text-slate-600">
+                      <MapPin className="w-3 h-3 text-orange-600" />
+                      {provider.neighborhood}
+                      {provider.serviceArea && provider.serviceArea.length > 0 && (
+                        <span className="text-[10px] text-slate-400 font-normal">
+                          + {provider.serviceArea.join(', ')}
+                        </span>
+                      )}
+                    </div>
+                    {provider.priceNote && (
+                      <div className="text-orange-600 flex items-center gap-2 border-t border-slate-100 pt-2">
+                        <span className="text-[10px] uppercase font-black">Preço:</span>
+                        <span className="text-xs">{provider.priceNote}</span>
+                      </div>
+                    )}
                   </div>
                   <p className="text-sm text-slate-500 line-clamp-2">
                     {provider.description}
