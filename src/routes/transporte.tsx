@@ -1,4 +1,9 @@
+import { createFileRoute } from "@tanstack/react-router";
 import { useState, useEffect } from "react";
+
+export const Route = createFileRoute("/transporte")({
+  component: Transporte,
+});
 import { ridesRepository, normalizePhone } from "@/repositories/ridesRepository";
 import { RideDriver, ServiceType, AvailabilityStatus } from "@/types/rides";
 import { Badge } from "@/components/ui/badge";

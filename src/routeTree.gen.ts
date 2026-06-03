@@ -9,6 +9,8 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as TransporteRouteImport } from './routes/transporte'
+import { Route as ServicosRouteImport } from './routes/servicos'
 import { Route as PerfilRouteImport } from './routes/perfil'
 import { Route as OfertasRouteImport } from './routes/ofertas'
 import { Route as NegociosRouteImport } from './routes/negocios'
@@ -20,12 +22,24 @@ import { Route as NegociosIndexRouteImport } from './routes/negocios/index'
 import { Route as AdminIndexRouteImport } from './routes/admin/index'
 import { Route as NegociosIdRouteImport } from './routes/negocios/$id'
 import { Route as LojaSlugRouteImport } from './routes/loja/$slug'
+import { Route as AdminTransporteRouteImport } from './routes/admin/transporte'
+import { Route as AdminServicosRouteImport } from './routes/admin/servicos'
 import { Route as AdminPlanosRouteImport } from './routes/admin/planos'
 import { Route as AdminLojasRouteImport } from './routes/admin/lojas'
 import { Route as AdminLeadsRouteImport } from './routes/admin/leads'
 import { Route as AdminCampanhasRouteImport } from './routes/admin/campanhas'
 import { Route as AdminAprovacoesRouteImport } from './routes/admin/aprovacoes'
 
+const TransporteRoute = TransporteRouteImport.update({
+  id: '/transporte',
+  path: '/transporte',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ServicosRoute = ServicosRouteImport.update({
+  id: '/servicos',
+  path: '/servicos',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const PerfilRoute = PerfilRouteImport.update({
   id: '/perfil',
   path: '/perfil',
@@ -81,6 +95,16 @@ const LojaSlugRoute = LojaSlugRouteImport.update({
   path: '/loja/$slug',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AdminTransporteRoute = AdminTransporteRouteImport.update({
+  id: '/transporte',
+  path: '/transporte',
+  getParentRoute: () => AdminRoute,
+} as any)
+const AdminServicosRoute = AdminServicosRouteImport.update({
+  id: '/servicos',
+  path: '/servicos',
+  getParentRoute: () => AdminRoute,
+} as any)
 const AdminPlanosRoute = AdminPlanosRouteImport.update({
   id: '/planos',
   path: '/planos',
@@ -115,11 +139,15 @@ export interface FileRoutesByFullPath {
   '/negocios': typeof NegociosRouteWithChildren
   '/ofertas': typeof OfertasRoute
   '/perfil': typeof PerfilRoute
+  '/servicos': typeof ServicosRoute
+  '/transporte': typeof TransporteRoute
   '/admin/aprovacoes': typeof AdminAprovacoesRoute
   '/admin/campanhas': typeof AdminCampanhasRoute
   '/admin/leads': typeof AdminLeadsRoute
   '/admin/lojas': typeof AdminLojasRoute
   '/admin/planos': typeof AdminPlanosRoute
+  '/admin/servicos': typeof AdminServicosRoute
+  '/admin/transporte': typeof AdminTransporteRoute
   '/loja/$slug': typeof LojaSlugRoute
   '/negocios/$id': typeof NegociosIdRoute
   '/admin/': typeof AdminIndexRoute
@@ -131,11 +159,15 @@ export interface FileRoutesByTo {
   '/login': typeof LoginRoute
   '/ofertas': typeof OfertasRoute
   '/perfil': typeof PerfilRoute
+  '/servicos': typeof ServicosRoute
+  '/transporte': typeof TransporteRoute
   '/admin/aprovacoes': typeof AdminAprovacoesRoute
   '/admin/campanhas': typeof AdminCampanhasRoute
   '/admin/leads': typeof AdminLeadsRoute
   '/admin/lojas': typeof AdminLojasRoute
   '/admin/planos': typeof AdminPlanosRoute
+  '/admin/servicos': typeof AdminServicosRoute
+  '/admin/transporte': typeof AdminTransporteRoute
   '/loja/$slug': typeof LojaSlugRoute
   '/negocios/$id': typeof NegociosIdRoute
   '/admin': typeof AdminIndexRoute
@@ -150,11 +182,15 @@ export interface FileRoutesById {
   '/negocios': typeof NegociosRouteWithChildren
   '/ofertas': typeof OfertasRoute
   '/perfil': typeof PerfilRoute
+  '/servicos': typeof ServicosRoute
+  '/transporte': typeof TransporteRoute
   '/admin/aprovacoes': typeof AdminAprovacoesRoute
   '/admin/campanhas': typeof AdminCampanhasRoute
   '/admin/leads': typeof AdminLeadsRoute
   '/admin/lojas': typeof AdminLojasRoute
   '/admin/planos': typeof AdminPlanosRoute
+  '/admin/servicos': typeof AdminServicosRoute
+  '/admin/transporte': typeof AdminTransporteRoute
   '/loja/$slug': typeof LojaSlugRoute
   '/negocios/$id': typeof NegociosIdRoute
   '/admin/': typeof AdminIndexRoute
@@ -170,11 +206,15 @@ export interface FileRouteTypes {
     | '/negocios'
     | '/ofertas'
     | '/perfil'
+    | '/servicos'
+    | '/transporte'
     | '/admin/aprovacoes'
     | '/admin/campanhas'
     | '/admin/leads'
     | '/admin/lojas'
     | '/admin/planos'
+    | '/admin/servicos'
+    | '/admin/transporte'
     | '/loja/$slug'
     | '/negocios/$id'
     | '/admin/'
@@ -186,11 +226,15 @@ export interface FileRouteTypes {
     | '/login'
     | '/ofertas'
     | '/perfil'
+    | '/servicos'
+    | '/transporte'
     | '/admin/aprovacoes'
     | '/admin/campanhas'
     | '/admin/leads'
     | '/admin/lojas'
     | '/admin/planos'
+    | '/admin/servicos'
+    | '/admin/transporte'
     | '/loja/$slug'
     | '/negocios/$id'
     | '/admin'
@@ -204,11 +248,15 @@ export interface FileRouteTypes {
     | '/negocios'
     | '/ofertas'
     | '/perfil'
+    | '/servicos'
+    | '/transporte'
     | '/admin/aprovacoes'
     | '/admin/campanhas'
     | '/admin/leads'
     | '/admin/lojas'
     | '/admin/planos'
+    | '/admin/servicos'
+    | '/admin/transporte'
     | '/loja/$slug'
     | '/negocios/$id'
     | '/admin/'
@@ -223,11 +271,27 @@ export interface RootRouteChildren {
   NegociosRoute: typeof NegociosRouteWithChildren
   OfertasRoute: typeof OfertasRoute
   PerfilRoute: typeof PerfilRoute
+  ServicosRoute: typeof ServicosRoute
+  TransporteRoute: typeof TransporteRoute
   LojaSlugRoute: typeof LojaSlugRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/transporte': {
+      id: '/transporte'
+      path: '/transporte'
+      fullPath: '/transporte'
+      preLoaderRoute: typeof TransporteRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/servicos': {
+      id: '/servicos'
+      path: '/servicos'
+      fullPath: '/servicos'
+      preLoaderRoute: typeof ServicosRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/perfil': {
       id: '/perfil'
       path: '/perfil'
@@ -305,6 +369,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof LojaSlugRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/admin/transporte': {
+      id: '/admin/transporte'
+      path: '/transporte'
+      fullPath: '/admin/transporte'
+      preLoaderRoute: typeof AdminTransporteRouteImport
+      parentRoute: typeof AdminRoute
+    }
+    '/admin/servicos': {
+      id: '/admin/servicos'
+      path: '/servicos'
+      fullPath: '/admin/servicos'
+      preLoaderRoute: typeof AdminServicosRouteImport
+      parentRoute: typeof AdminRoute
+    }
     '/admin/planos': {
       id: '/admin/planos'
       path: '/planos'
@@ -349,6 +427,8 @@ interface AdminRouteChildren {
   AdminLeadsRoute: typeof AdminLeadsRoute
   AdminLojasRoute: typeof AdminLojasRoute
   AdminPlanosRoute: typeof AdminPlanosRoute
+  AdminServicosRoute: typeof AdminServicosRoute
+  AdminTransporteRoute: typeof AdminTransporteRoute
   AdminIndexRoute: typeof AdminIndexRoute
 }
 
@@ -358,6 +438,8 @@ const AdminRouteChildren: AdminRouteChildren = {
   AdminLeadsRoute: AdminLeadsRoute,
   AdminLojasRoute: AdminLojasRoute,
   AdminPlanosRoute: AdminPlanosRoute,
+  AdminServicosRoute: AdminServicosRoute,
+  AdminTransporteRoute: AdminTransporteRoute,
   AdminIndexRoute: AdminIndexRoute,
 }
 
@@ -385,6 +467,8 @@ const rootRouteChildren: RootRouteChildren = {
   NegociosRoute: NegociosRouteWithChildren,
   OfertasRoute: OfertasRoute,
   PerfilRoute: PerfilRoute,
+  ServicosRoute: ServicosRoute,
+  TransporteRoute: TransporteRoute,
   LojaSlugRoute: LojaSlugRoute,
 }
 export const routeTree = rootRouteImport

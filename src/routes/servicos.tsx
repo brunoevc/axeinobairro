@@ -1,4 +1,9 @@
+import { createFileRoute } from "@tanstack/react-router";
 import { useState, useEffect } from "react";
+
+export const Route = createFileRoute("/servicos")({
+  component: Servicos,
+});
 import { servicesRepository } from "@/repositories/servicesRepository";
 import { ServiceProvider, ServiceCategory } from "@/types/services";
 import { Badge } from "@/components/ui/badge";
