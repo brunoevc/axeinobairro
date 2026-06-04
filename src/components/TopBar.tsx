@@ -123,6 +123,7 @@ export const TopBar = memo(function TopBar() {
                 <Link to="/negocios" className="text-sm font-semibold text-slate-600 hover:text-orange-600 transition-colors">Negócios</Link>
                 <Link to="/servicos" className="text-sm font-semibold text-slate-600 hover:text-orange-600 transition-colors">Serviços</Link>
                 <Link to="/transporte" className="text-sm font-semibold text-slate-600 hover:text-orange-600 transition-colors">Transporte</Link>
+                <Link to="/representantes" className="text-sm font-semibold text-slate-600 hover:text-orange-600 transition-colors">Representantes</Link>
                 <Link to="/noticias" className="text-sm font-semibold text-slate-600 hover:text-orange-600 transition-colors">Notícias</Link>
                 <Link to="/cadastro" className="text-sm font-semibold text-slate-600 hover:text-orange-600 transition-colors">Cadastro</Link>
                 {IS_ADMIN_ENABLED && (

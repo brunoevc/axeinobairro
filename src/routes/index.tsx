@@ -652,15 +652,20 @@ function Index() {
              <div className="flex flex-col gap-4 text-center md:text-left">
                 <span className="text-[10px] font-black uppercase tracking-widest text-slate-500">Plataforma</span>
                 <Link to="/negocios" className="text-sm font-bold text-slate-300 hover:text-orange-500 transition-colors">Ver Negócios</Link>
+                <Link to="/servicos" className="text-sm font-bold text-slate-300 hover:text-orange-500 transition-colors">Serviços</Link>
+                <Link to="/transporte" className="text-sm font-bold text-slate-300 hover:text-orange-500 transition-colors">Transporte</Link>
+                <Link to="/representantes" className="text-sm font-bold text-slate-300 hover:text-orange-500 transition-colors">Representantes</Link>
+                <Link to="/noticias" className="text-sm font-bold text-slate-300 hover:text-orange-500 transition-colors">Notícias Locais</Link>
                 <Link to="/cadastro" className="text-sm font-bold text-slate-300 hover:text-orange-500 transition-colors">Cadastrar Loja</Link>
                 {IS_ADMIN_ENABLED && (
-                  <Link to="/admin" className="text-sm font-bold text-slate-300 hover:text-orange-500 transition-colors flex items-center gap-1.5">
-                    <Lock className="w-3 h-3" />
-                    Admin
-                  </Link>
+                  <>
+                    <Link to="/admin" className="text-sm font-bold text-slate-300 hover:text-orange-500 transition-colors flex items-center gap-1.5">
+                      <Lock className="w-3 h-3" />
+                      Admin
+                    </Link>
+                    <Link to="/admin/representantes" className="text-sm font-bold text-slate-400 hover:text-orange-500 transition-colors">Admin Representantes</Link>
+                  </>
                 )}
-
-
              </div>
              <div className="flex flex-col gap-4 text-center md:text-left">
                 <span className="text-[10px] font-black uppercase tracking-widest text-slate-500">Suporte</span>
