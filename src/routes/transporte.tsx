@@ -1,5 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef, useMemo, useCallback } from "react";
 
 export const Route = createFileRoute("/transporte")({
   component: Transporte,
@@ -11,6 +11,7 @@ import { reviewsRepository } from "@/repositories/reviewsRepository";
 import { RideDriver, ServiceType, AvailabilityStatus } from "@/types/rides";
 import { ReviewSection } from "@/components/ReviewSection";
 import { LocalTransportMap } from "@/components/LocalTransportMap";
+import { ListingSkeleton } from "@/components/ListingSkeleton";
 import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
 import { Star, Car, Truck, Bike, Users, MessageSquare, ShieldAlert, Search, Filter } from "lucide-react";
 
@@ -43,22 +44,33 @@ export default function Transporte() {
     serviceType: "all",
     status: "all",
   });
+  const [isLoading, setIsLoading] = useState(true);
 
   const cardRefs = useRef<Record<string, HTMLDivElement | null>>({});
 
   useEffect(() => {
-    const filtered = ridesRepository.filter({
-      origin: filters.origin || undefined,
-      destination: filters.destination || undefined,
-      serviceType: filters.serviceType === "all" ? undefined : filters.serviceType,
-      status: filters.status === "all" ? undefined : filters.status,
-    });
+    setIsLoading(true);
+    const timer = setTimeout(() => {
+      const filtered = ridesRepository.filter({
+        origin: filters.origin || undefined,
+        destination: filters.destination || undefined,
+        serviceType: filters.serviceType === "all" ? undefined : filters.serviceType,
+        status: filters.status === "all" ? undefined : filters.status,
+      });
 
-    // Phase 8.7: Apply Boosts via central repository
-    const sorted = localBoostsRepository.sortByBoost(filtered, 'transporte', 'id');
-    setRides(sorted);
+      const sorted = localBoostsRepository.sortByBoost(filtered, 'transporte', 'id');
+      setRides(sorted);
+      setIsLoading(false);
+    }, 400);
 
+    return () => clearTimeout(timer);
   }, [filters]);
+
+  useEffect(() => {
+    const timer = setTimeout(() => setIsLoading(false), 800);
+    return () => clearTimeout(timer);
+  }, []);
+
 
   const handleSelectDriver = (driverId: string) => {
     setSelectedDriverId(driverId);
@@ -174,7 +186,12 @@ export default function Transporte() {
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-        {rides.length > 0 ? (
+        {isLoading ? (
+          <div className="col-span-full">
+            <ListingSkeleton type="ride" count={6} />
+          </div>
+        ) : rides.length > 0 ? (
+
           rides.map((driver) => {
             const activeBoost = localBoostsRepository.getActiveBoostForTarget('transporte', driver.id);
             const isBoosted = !!activeBoost;
