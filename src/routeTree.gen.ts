@@ -18,6 +18,7 @@ import { Route as OfertasRouteImport } from './routes/ofertas'
 import { Route as NoticiasRouteImport } from './routes/noticias'
 import { Route as NegociosRouteImport } from './routes/negocios'
 import { Route as LoginRouteImport } from './routes/login'
+import { Route as ComunidadesRouteImport } from './routes/comunidades'
 import { Route as ComoFuncionaRouteImport } from './routes/como-funciona'
 import { Route as CadastroRouteImport } from './routes/cadastro'
 import { Route as AnuncieRouteImport } from './routes/anuncie'
@@ -87,6 +88,11 @@ const NegociosRoute = NegociosRouteImport.update({
 const LoginRoute = LoginRouteImport.update({
   id: '/login',
   path: '/login',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ComunidadesRoute = ComunidadesRouteImport.update({
+  id: '/comunidades',
+  path: '/comunidades',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ComoFuncionaRoute = ComoFuncionaRouteImport.update({
@@ -221,6 +227,7 @@ export interface FileRoutesByFullPath {
   '/anuncie': typeof AnuncieRoute
   '/cadastro': typeof CadastroRoute
   '/como-funciona': typeof ComoFuncionaRoute
+  '/comunidades': typeof ComunidadesRoute
   '/login': typeof LoginRoute
   '/negocios': typeof NegociosRouteWithChildren
   '/noticias': typeof NoticiasRoute
@@ -256,6 +263,7 @@ export interface FileRoutesByTo {
   '/anuncie': typeof AnuncieRoute
   '/cadastro': typeof CadastroRoute
   '/como-funciona': typeof ComoFuncionaRoute
+  '/comunidades': typeof ComunidadesRoute
   '/login': typeof LoginRoute
   '/noticias': typeof NoticiasRoute
   '/ofertas': typeof OfertasRoute
@@ -292,6 +300,7 @@ export interface FileRoutesById {
   '/anuncie': typeof AnuncieRoute
   '/cadastro': typeof CadastroRoute
   '/como-funciona': typeof ComoFuncionaRoute
+  '/comunidades': typeof ComunidadesRoute
   '/login': typeof LoginRoute
   '/negocios': typeof NegociosRouteWithChildren
   '/noticias': typeof NoticiasRoute
@@ -330,6 +339,7 @@ export interface FileRouteTypes {
     | '/anuncie'
     | '/cadastro'
     | '/como-funciona'
+    | '/comunidades'
     | '/login'
     | '/negocios'
     | '/noticias'
@@ -365,6 +375,7 @@ export interface FileRouteTypes {
     | '/anuncie'
     | '/cadastro'
     | '/como-funciona'
+    | '/comunidades'
     | '/login'
     | '/noticias'
     | '/ofertas'
@@ -400,6 +411,7 @@ export interface FileRouteTypes {
     | '/anuncie'
     | '/cadastro'
     | '/como-funciona'
+    | '/comunidades'
     | '/login'
     | '/negocios'
     | '/noticias'
@@ -437,6 +449,7 @@ export interface RootRouteChildren {
   AnuncieRoute: typeof AnuncieRoute
   CadastroRoute: typeof CadastroRoute
   ComoFuncionaRoute: typeof ComoFuncionaRoute
+  ComunidadesRoute: typeof ComunidadesRoute
   LoginRoute: typeof LoginRoute
   NegociosRoute: typeof NegociosRouteWithChildren
   NoticiasRoute: typeof NoticiasRoute
@@ -512,6 +525,13 @@ declare module '@tanstack/react-router' {
       path: '/login'
       fullPath: '/login'
       preLoaderRoute: typeof LoginRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/comunidades': {
+      id: '/comunidades'
+      path: '/comunidades'
+      fullPath: '/comunidades'
+      preLoaderRoute: typeof ComunidadesRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/como-funciona': {
@@ -763,6 +783,7 @@ const rootRouteChildren: RootRouteChildren = {
   AnuncieRoute: AnuncieRoute,
   CadastroRoute: CadastroRoute,
   ComoFuncionaRoute: ComoFuncionaRoute,
+  ComunidadesRoute: ComunidadesRoute,
   LoginRoute: LoginRoute,
   NegociosRoute: NegociosRouteWithChildren,
   NoticiasRoute: NoticiasRoute,
