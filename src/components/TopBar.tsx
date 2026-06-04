@@ -127,12 +127,15 @@ export const TopBar = memo(function TopBar() {
                 <Link to="/representantes" className="text-sm font-semibold text-slate-600 hover:text-orange-600 transition-colors">Representantes</Link>
                 <Link to="/anuncie" className="text-sm font-bold text-orange-600 hover:text-orange-700 transition-colors px-4 py-2 bg-orange-50 rounded-xl">Anuncie</Link>
 
-                {IS_ADMIN_ENABLED && (
-                  <Link to="/admin" className="text-sm font-semibold text-slate-400 hover:text-orange-600 transition-colors flex items-center gap-1">
-                    <Lock className="w-3 h-3" />
-                    Admin
+                <div className="flex items-center gap-4 pl-4 border-l border-slate-100">
+                  <Link 
+                    to={localStorage.getItem("axei_auth_status") === "true" ? "/painel" : "/login"} 
+                    className="text-sm font-bold text-slate-900 hover:text-orange-600 transition-colors"
+                  >
+                    {localStorage.getItem("axei_auth_status") === "true" ? "Meu Painel" : "Entrar"}
                   </Link>
-                )}
+                </div>
+
 
               </nav>
             )}
