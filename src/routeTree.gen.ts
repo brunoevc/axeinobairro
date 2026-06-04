@@ -795,7 +795,6 @@ const rootRouteChildren: RootRouteChildren = {
   TransporteRoute: TransporteRoute,
   LojaSlugRoute: LojaSlugRoute,
 }
-
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
