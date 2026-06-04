@@ -13,6 +13,7 @@ import { Route as TransporteRouteImport } from './routes/transporte'
 import { Route as ServicosRouteImport } from './routes/servicos'
 import { Route as RepresentantesRouteImport } from './routes/representantes'
 import { Route as PerfilRouteImport } from './routes/perfil'
+import { Route as PainelRouteImport } from './routes/painel'
 import { Route as OfertasRouteImport } from './routes/ofertas'
 import { Route as NoticiasRouteImport } from './routes/noticias'
 import { Route as NegociosRouteImport } from './routes/negocios'
@@ -24,6 +25,7 @@ import { Route as AdminRouteImport } from './routes/admin'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as NegociosIndexRouteImport } from './routes/negocios/index'
 import { Route as AdminIndexRouteImport } from './routes/admin/index'
+import { Route as PainelLojistaRouteImport } from './routes/painel/lojista'
 import { Route as NegociosIdRouteImport } from './routes/negocios/$id'
 import { Route as LojaSlugRouteImport } from './routes/loja/$slug'
 import { Route as AdminTransporteRouteImport } from './routes/admin/transporte'
@@ -55,6 +57,11 @@ const RepresentantesRoute = RepresentantesRouteImport.update({
 const PerfilRoute = PerfilRouteImport.update({
   id: '/perfil',
   path: '/perfil',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const PainelRoute = PainelRouteImport.update({
+  id: '/painel',
+  path: '/painel',
   getParentRoute: () => rootRouteImport,
 } as any)
 const OfertasRoute = OfertasRouteImport.update({
@@ -111,6 +118,11 @@ const AdminIndexRoute = AdminIndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => AdminRoute,
+} as any)
+const PainelLojistaRoute = PainelLojistaRouteImport.update({
+  id: '/lojista',
+  path: '/lojista',
+  getParentRoute: () => PainelRoute,
 } as any)
 const NegociosIdRoute = NegociosIdRouteImport.update({
   id: '/$id',
@@ -183,6 +195,7 @@ export interface FileRoutesByFullPath {
   '/negocios': typeof NegociosRouteWithChildren
   '/noticias': typeof NoticiasRoute
   '/ofertas': typeof OfertasRoute
+  '/painel': typeof PainelRouteWithChildren
   '/perfil': typeof PerfilRoute
   '/representantes': typeof RepresentantesRoute
   '/servicos': typeof ServicosRoute
@@ -199,6 +212,7 @@ export interface FileRoutesByFullPath {
   '/admin/transporte': typeof AdminTransporteRoute
   '/loja/$slug': typeof LojaSlugRoute
   '/negocios/$id': typeof NegociosIdRoute
+  '/painel/lojista': typeof PainelLojistaRoute
   '/admin/': typeof AdminIndexRoute
   '/negocios/': typeof NegociosIndexRoute
 }
@@ -210,6 +224,7 @@ export interface FileRoutesByTo {
   '/login': typeof LoginRoute
   '/noticias': typeof NoticiasRoute
   '/ofertas': typeof OfertasRoute
+  '/painel': typeof PainelRouteWithChildren
   '/perfil': typeof PerfilRoute
   '/representantes': typeof RepresentantesRoute
   '/servicos': typeof ServicosRoute
@@ -226,6 +241,7 @@ export interface FileRoutesByTo {
   '/admin/transporte': typeof AdminTransporteRoute
   '/loja/$slug': typeof LojaSlugRoute
   '/negocios/$id': typeof NegociosIdRoute
+  '/painel/lojista': typeof PainelLojistaRoute
   '/admin': typeof AdminIndexRoute
   '/negocios': typeof NegociosIndexRoute
 }
@@ -240,6 +256,7 @@ export interface FileRoutesById {
   '/negocios': typeof NegociosRouteWithChildren
   '/noticias': typeof NoticiasRoute
   '/ofertas': typeof OfertasRoute
+  '/painel': typeof PainelRouteWithChildren
   '/perfil': typeof PerfilRoute
   '/representantes': typeof RepresentantesRoute
   '/servicos': typeof ServicosRoute
@@ -256,6 +273,7 @@ export interface FileRoutesById {
   '/admin/transporte': typeof AdminTransporteRoute
   '/loja/$slug': typeof LojaSlugRoute
   '/negocios/$id': typeof NegociosIdRoute
+  '/painel/lojista': typeof PainelLojistaRoute
   '/admin/': typeof AdminIndexRoute
   '/negocios/': typeof NegociosIndexRoute
 }
@@ -271,6 +289,7 @@ export interface FileRouteTypes {
     | '/negocios'
     | '/noticias'
     | '/ofertas'
+    | '/painel'
     | '/perfil'
     | '/representantes'
     | '/servicos'
@@ -287,6 +306,7 @@ export interface FileRouteTypes {
     | '/admin/transporte'
     | '/loja/$slug'
     | '/negocios/$id'
+    | '/painel/lojista'
     | '/admin/'
     | '/negocios/'
   fileRoutesByTo: FileRoutesByTo
@@ -298,6 +318,7 @@ export interface FileRouteTypes {
     | '/login'
     | '/noticias'
     | '/ofertas'
+    | '/painel'
     | '/perfil'
     | '/representantes'
     | '/servicos'
@@ -314,6 +335,7 @@ export interface FileRouteTypes {
     | '/admin/transporte'
     | '/loja/$slug'
     | '/negocios/$id'
+    | '/painel/lojista'
     | '/admin'
     | '/negocios'
   id:
@@ -327,6 +349,7 @@ export interface FileRouteTypes {
     | '/negocios'
     | '/noticias'
     | '/ofertas'
+    | '/painel'
     | '/perfil'
     | '/representantes'
     | '/servicos'
@@ -343,6 +366,7 @@ export interface FileRouteTypes {
     | '/admin/transporte'
     | '/loja/$slug'
     | '/negocios/$id'
+    | '/painel/lojista'
     | '/admin/'
     | '/negocios/'
   fileRoutesById: FileRoutesById
@@ -357,6 +381,7 @@ export interface RootRouteChildren {
   NegociosRoute: typeof NegociosRouteWithChildren
   NoticiasRoute: typeof NoticiasRoute
   OfertasRoute: typeof OfertasRoute
+  PainelRoute: typeof PainelRouteWithChildren
   PerfilRoute: typeof PerfilRoute
   RepresentantesRoute: typeof RepresentantesRoute
   ServicosRoute: typeof ServicosRoute
@@ -392,6 +417,13 @@ declare module '@tanstack/react-router' {
       path: '/perfil'
       fullPath: '/perfil'
       preLoaderRoute: typeof PerfilRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/painel': {
+      id: '/painel'
+      path: '/painel'
+      fullPath: '/painel'
+      preLoaderRoute: typeof PainelRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/ofertas': {
@@ -470,6 +502,13 @@ declare module '@tanstack/react-router' {
       fullPath: '/admin/'
       preLoaderRoute: typeof AdminIndexRouteImport
       parentRoute: typeof AdminRoute
+    }
+    '/painel/lojista': {
+      id: '/painel/lojista'
+      path: '/lojista'
+      fullPath: '/painel/lojista'
+      preLoaderRoute: typeof PainelLojistaRouteImport
+      parentRoute: typeof PainelRoute
     }
     '/negocios/$id': {
       id: '/negocios/$id'
@@ -602,6 +641,17 @@ const NegociosRouteWithChildren = NegociosRoute._addFileChildren(
   NegociosRouteChildren,
 )
 
+interface PainelRouteChildren {
+  PainelLojistaRoute: typeof PainelLojistaRoute
+}
+
+const PainelRouteChildren: PainelRouteChildren = {
+  PainelLojistaRoute: PainelLojistaRoute,
+}
+
+const PainelRouteWithChildren =
+  PainelRoute._addFileChildren(PainelRouteChildren)
+
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AdminRoute: AdminRouteWithChildren,
@@ -612,6 +662,7 @@ const rootRouteChildren: RootRouteChildren = {
   NegociosRoute: NegociosRouteWithChildren,
   NoticiasRoute: NoticiasRoute,
   OfertasRoute: OfertasRoute,
+  PainelRoute: PainelRouteWithChildren,
   PerfilRoute: PerfilRoute,
   RepresentantesRoute: RepresentantesRoute,
   ServicosRoute: ServicosRoute,
