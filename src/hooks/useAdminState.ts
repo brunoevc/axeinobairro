@@ -1,8 +1,8 @@
 import { useState, useEffect, useCallback } from "react";
 import { trackEvent } from "@/lib/metrics";
-import { MerchantAdmin, AdminAction, AdminState, AdminStats, calculateAdminStats, getInitialAdminState } from "@/data/admin";
+import { MerchantAdmin, AdminAction, AdminState, AdminStats, calculateAdminStats, initializeMerchantAdmin } from "@/data/admin";
 import { Merchant } from "@/data/merchants";
-
+import { merchantsRepository } from "@/repositories/merchantsRepository";
 
 const ADMIN_STATE_KEY = "axei-admin-state";
 
@@ -11,19 +11,38 @@ export function useAdminState() {
   const [stats, setStats] = useState<AdminStats | null>(null);
   const [loading, setLoading] = useState(true);
 
-  // Inicializar estado do localStorage
+  // Inicializar estado do localStorage e sincronizar com o repositório
   useEffect(() => {
     const stored = localStorage.getItem(ADMIN_STATE_KEY);
+    const repoMerchants = merchantsRepository.getAll();
+    
     let initialState: AdminState;
 
     if (stored) {
       try {
         initialState = JSON.parse(stored);
+        
+        // Sincronizar com repositório para garantir que dados recentes (Home/Cadastro) estejam aqui
+        // Mas mantendo metadados administrativos se existirem
+        const syncedMerchants = repoMerchants.map(rm => {
+          const adminData = initialState.merchants.find(am => am.id === rm.id);
+          return adminData ? { ...rm, ...adminData } : initializeMerchantAdmin(rm);
+        });
+        
+        initialState.merchants = syncedMerchants;
       } catch {
-        initialState = getInitialAdminState();
+        initialState = {
+          merchants: repoMerchants.map(initializeMerchantAdmin),
+          actions: [],
+          lastUpdated: new Date().toISOString()
+        };
       }
     } else {
-      initialState = getInitialAdminState();
+      initialState = {
+        merchants: repoMerchants.map(initializeMerchantAdmin),
+        actions: [],
+        lastUpdated: new Date().toISOString()
+      };
     }
 
     setState(initialState);
@@ -31,14 +50,28 @@ export function useAdminState() {
     setLoading(false);
   }, []);
 
-  // Persistir estado
+  // Persistir estado e atualizar repositório como fonte de verdade
   const saveState = useCallback((newState: AdminState) => {
     localStorage.setItem(ADMIN_STATE_KEY, JSON.stringify(newState));
     setState(newState);
     setStats(calculateAdminStats(newState.merchants));
+    
+    // Sincronizar dados públicos para o repositório
+    newState.merchants.forEach(m => {
+      // Extrair apenas campos do Merchant para o repositório público
+      const { 
+        approvedAt, rejectedAt, rejectionReason, approvedBy, notes, 
+        whatsappClicks, instagramClicks, routeClicks, shareClicks, 
+        reportsCount, searchAppearances, views, productAdded, 
+        pedidoWhatsapp, lastContactDate, planChangedAt, planChangedBy, 
+        emoji, ...publicMerchant 
+      } = m;
+      
+      merchantsRepository.save(publicMerchant as Merchant);
+    });
   }, []);
 
-  // Atualizar status do merchant (approve/verify/highlight/partner/reject)
+  // Atualizar status do merchant
   const updateMerchantStatus = useCallback(
     (merchantId: string, newStatus: Merchant["status"], reason?: string) => {
       if (!state) return;
@@ -55,6 +88,7 @@ export function useAdminState() {
               rejectedAt: newStatus === "rejected" ? new Date().toISOString() : m.rejectedAt,
               rejectionReason: newStatus === "rejected" ? reason : m.rejectionReason,
               featured: newStatus === "featured" || newStatus === "partner" ? true : m.featured,
+              exposureLevel: newStatus === "featured" ? "A" : (newStatus === "partner" ? "B" : m.exposureLevel)
             }
           : m
       );
@@ -80,7 +114,7 @@ export function useAdminState() {
     [state, saveState]
   );
 
-  // Ativar/Desativar merchant (Toggle entre pending e verified como exemplo simplificado)
+  // Ativar/Desativar merchant
   const toggleMerchantStatus = useCallback(
     (merchantId: string) => {
       if (!state) return;
@@ -110,6 +144,8 @@ export function useAdminState() {
               plan: newPlan,
               planChangedAt: new Date().toISOString(),
               planChangedBy: "Auto-Admin",
+              // Sincronizar nível de exposição com o plano se necessário
+              exposureLevel: newPlan === "pro" ? "A" : (newPlan === "sales" ? "B" : m.exposureLevel)
             }
           : m
       );
@@ -173,7 +209,7 @@ export function useAdminState() {
     [state, saveState]
   );
 
-  // Simular clique WhatsApp (legacy support for component calls)
+  // Simular clique WhatsApp
   const recordWhatsappClick = useCallback(
     (merchantId: string) => {
       trackEvent(merchantId, "whatsapp");
@@ -195,7 +231,7 @@ export function useAdminState() {
 
       const action: AdminAction = {
         id: `act-${Date.now()}`,
-        type: "status_change", // Reusing status_change for general edits
+        type: "status_change",
         merchantId,
         merchantName: merchant.name,
         adminName: "Auto-Admin",
@@ -210,9 +246,6 @@ export function useAdminState() {
       };
 
       saveState(newState);
-
-      // Also update the source of truth in merchants.ts (simulated by localStorage if it was reactive)
-      // Since merchants.ts is static, this edit only persists in the admin state (localStorage)
     },
     [state, saveState]
   );
@@ -229,4 +262,5 @@ export function useAdminState() {
     editMerchant,
   };
 }
+
 
