@@ -74,10 +74,11 @@ export const getOrderWhatsAppUrl = (
   
   if (checkoutData.paymentMethod === 'pix') {
     if (merchant.pixConfig?.enabled) {
-      message += `📲 Pix Disponível:\nChave: ${merchant.pixConfig.key}\nTitular: ${merchant.pixConfig.owner}\n\n`;
+      message += `📲 Pix Disponível:\nChave: ${merchant.pixConfig.key}\nTitular: ${merchant.pixConfig.holderName}\n\n`;
     } else {
       message += `📲 Pix:\nPor favor, envie a chave Pix para pagamento. Enviarei o comprovante após realizar o pagamento.\n\n`;
     }
+
 
   }
   
