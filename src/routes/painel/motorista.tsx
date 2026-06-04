@@ -15,7 +15,8 @@ function MotoristaPanel() {
 
   const handleSavePix = (config: any) => {
     if (ride) {
-      ridesRepository.update(ride.id, { pixConfig: config });
+      const updatedRide = { ...ride, pixConfig: config };
+      ridesRepository.save(updatedRide);
       if (authUser) {
         setAuthUser({ ...authUser, pixConfig: config });
       }
