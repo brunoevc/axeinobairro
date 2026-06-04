@@ -31,8 +31,11 @@ export function ApprovalQueue({
   const [selectedId, setSelectedId] = useState<string | null>(null);
   const [rejectReason, setRejectReason] = useState("");
   const [actionType, setActionType] = useState<"approve" | "reject" | null>(null);
+  const [, updateState] = useState<{}>();
+  const forceUpdate = useCallback(() => updateState({}), []);
 
   if (pending.length === 0) {
+
     return (
       <div className="rounded-[3rem] bg-white p-20 border border-slate-100 text-center shadow-sm">
         <div className="w-24 h-24 bg-emerald-50 rounded-full flex items-center justify-center mx-auto mb-8 border border-emerald-100">
