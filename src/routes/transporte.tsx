@@ -5,7 +5,10 @@ export const Route = createFileRoute("/transporte")({
   component: Transporte,
 });
 import { ridesRepository, normalizePhone } from "@/repositories/ridesRepository";
+import { localBoostsRepository } from "@/repositories/localBoostsRepository";
 import { RideDriver, ServiceType, AvailabilityStatus } from "@/types/rides";
+import { Star } from "lucide-react";
+
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -42,8 +45,24 @@ export default function Transporte() {
       serviceType: filters.serviceType === "all" ? undefined : filters.serviceType,
       status: filters.status === "all" ? undefined : filters.status,
     });
+
+    // Phase 8.3: Apply Boosts
+    const activeBoosts = localBoostsRepository.getActiveBoostsByType('transporte');
+    const levelWeight = { 'A': 3, 'B': 2, 'C': 1, 'none': 0 };
+
+    filtered.sort((a, b) => {
+      const boostA = activeBoosts.find(boost => boost.targetId === a.id);
+      const boostB = activeBoosts.find(boost => boost.targetId === b.id);
+      
+      const weightA = boostA ? levelWeight[boostA.level] : levelWeight.none;
+      const weightB = boostB ? levelWeight[boostB.level] : levelWeight.none;
+
+      return weightB - weightA;
+    });
+
     setRides(filtered);
   }, [filters]);
+
 
   const handleWhatsApp = (driver: RideDriver) => {
     const phone = normalizePhone(driver.phone);
@@ -121,9 +140,23 @@ export default function Transporte() {
       {/* LISTA DE MOTORISTAS */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         {rides.length > 0 ? (
-          rides.map((driver) => (
-            <Card key={driver.id} className="rounded-3xl border-slate-100 hover:shadow-xl transition-all duration-300 group overflow-hidden">
-              <CardContent className="p-6">
+          rides.map((driver) => {
+            const activeBoost = localBoostsRepository.getActiveBoostForTarget('transporte', driver.id);
+            const isBoosted = !!activeBoost;
+
+            return (
+              <Card 
+                key={driver.id} 
+                className={`rounded-3xl border-slate-100 hover:shadow-xl transition-all duration-300 group overflow-hidden relative ${isBoosted ? 'border-2 border-orange-200' : ''}`}
+              >
+                {isBoosted && (
+                  <div className="absolute top-4 right-4 z-10 bg-orange-600 text-white text-[10px] font-black px-2 py-1 rounded-full shadow-lg flex items-center gap-1 border border-white uppercase tracking-wider">
+                    <Star className="w-3 h-3 fill-white" />
+                    Destaque
+                  </div>
+                )}
+                <CardContent className="p-6">
+
                 <div className="flex justify-between items-start mb-4">
                   <div className="flex items-center gap-2">
                     <span className={`w-3 h-3 rounded-full ${statusConfig[driver.availabilityStatus].color}`} />
@@ -173,7 +206,9 @@ export default function Transporte() {
                 </Button>
               </CardContent>
             </Card>
-          ))
+          );
+        })
+
         ) : (
           <div className="col-span-full py-20 text-center">
             <div className="bg-slate-50 w-20 h-20 rounded-full flex items-center justify-center mx-auto mb-6">

@@ -5,7 +5,9 @@ export const Route = createFileRoute("/servicos")({
   component: Servicos,
 });
 import { servicesRepository } from "@/repositories/servicesRepository";
+import { localBoostsRepository } from "@/repositories/localBoostsRepository";
 import { ServiceProvider, ServiceCategory } from "@/types/services";
+
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -46,8 +48,23 @@ export default function Servicos() {
       filtered = filtered.filter(s => s.isAvailable);
     }
 
+    // Phase 8.3: Apply Boosts
+    const activeBoosts = localBoostsRepository.getActiveBoostsByType('servico');
+    const levelWeight = { 'A': 3, 'B': 2, 'C': 1, 'none': 0 };
+
+    filtered.sort((a, b) => {
+      const boostA = activeBoosts.find(boost => boost.targetId === a.id);
+      const boostB = activeBoosts.find(boost => boost.targetId === b.id);
+      
+      const weightA = boostA ? levelWeight[boostA.level] : levelWeight.none;
+      const weightB = boostB ? levelWeight[boostB.level] : levelWeight.none;
+
+      return weightB - weightA;
+    });
+
     setServices(filtered);
   }, [filters]);
+
 
   const handleWhatsApp = (provider: ServiceProvider) => {
     const message = "Olá, encontrei seu anúncio no Axéí no Bairro e gostaria de solicitar um orçamento.";
@@ -118,9 +135,23 @@ export default function Servicos() {
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         {services.length > 0 ? (
-          services.map((provider) => (
-            <Card key={provider.id} className="rounded-3xl border-slate-100 hover:shadow-xl transition-all duration-300 group overflow-hidden">
-              <CardContent className="p-6">
+          services.map((provider) => {
+            const activeBoost = localBoostsRepository.getActiveBoostForTarget('servico', provider.id);
+            const isBoosted = !!activeBoost;
+
+            return (
+              <Card 
+                key={provider.id} 
+                className={`rounded-3xl border-slate-100 hover:shadow-xl transition-all duration-300 group overflow-hidden relative ${isBoosted ? 'border-2 border-orange-200' : ''}`}
+              >
+                {isBoosted && (
+                  <div className="absolute top-4 right-4 z-10 bg-orange-600 text-white text-[10px] font-black px-2 py-1 rounded-full shadow-lg flex items-center gap-1 border border-white uppercase tracking-wider">
+                    <Star className="w-3 h-3 fill-white" />
+                    Destaque
+                  </div>
+                )}
+                <CardContent className="p-6">
+
                 <div className="flex justify-between items-start mb-4">
                   <div className="flex flex-col gap-1.5">
                     <div className="flex items-center gap-2">
@@ -186,7 +217,9 @@ export default function Servicos() {
                 </Button>
               </CardContent>
             </Card>
-          ))
+          );
+        })
+
         ) : (
           <div className="col-span-full py-20 text-center">
             <div className="bg-slate-50 w-20 h-20 rounded-full flex items-center justify-center mx-auto mb-6">
