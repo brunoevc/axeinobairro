@@ -152,6 +152,7 @@ export function ApprovalQueue({
                   <CheckCircle2 className="w-5 h-5" />
                   Aprovar Agora
                 </Button>
+
                 <div className="grid grid-cols-2 gap-3">
                   <Button
                     variant="outline"
@@ -173,7 +174,75 @@ export function ApprovalQueue({
                     <span className="text-[9px] uppercase tracking-widest">Editar</span>
                   </Button>
                 </div>
+
+                <div className="grid grid-cols-2 gap-3">
+                   <div className="relative">
+                      <Button
+                        variant="outline"
+                        onClick={() => {
+                          // Simplificando o controle de dropdown no ApprovalQueue
+                          const current = (window as any)._statusOpen === merchant.id ? null : merchant.id;
+                          (window as any)._statusOpen = current;
+                          (window as any)._planOpen = null;
+                          forceUpdate();
+                        }}
+                        className="w-full rounded-2xl h-12 text-[10px] font-black uppercase tracking-widest border-slate-100 hover:bg-slate-50 active:scale-95 transition-all"
+                      >
+                        Status <ChevronDown className="h-3 w-3 ml-1" />
+                      </Button>
+                      {(window as any)._statusOpen === merchant.id && (
+                        <div className="absolute bottom-full left-0 mb-2 bg-white border border-slate-100 rounded-xl shadow-xl z-50 min-w-[150px] overflow-hidden">
+                          {(["pending", "verified", "featured", "partner", "rejected"] as const).map((s) => (
+                            <button
+                              key={s}
+                              onClick={() => {
+                                onChangeStatus(merchant.id, s);
+                                (window as any)._statusOpen = null;
+                                forceUpdate();
+                              }}
+                              className="w-full text-left px-4 py-3 text-[10px] font-black uppercase tracking-widest hover:bg-slate-50 transition-colors border-b border-slate-50 last:border-0"
+                            >
+                              {s}
+                            </button>
+                          ))}
+                        </div>
+                      )}
+                   </div>
+
+                   <div className="relative">
+                      <Button
+                        variant="outline"
+                        onClick={() => {
+                          const current = (window as any)._planOpen === merchant.id ? null : merchant.id;
+                          (window as any)._planOpen = current;
+                          (window as any)._statusOpen = null;
+                          forceUpdate();
+                        }}
+                        className="w-full rounded-2xl h-12 text-[10px] font-black uppercase tracking-widest border-slate-100 hover:bg-slate-50 active:scale-95 transition-all"
+                      >
+                        Plano <ChevronDown className="h-3 w-3 ml-1" />
+                      </Button>
+                      {(window as any)._planOpen === merchant.id && (
+                        <div className="absolute bottom-full right-0 mb-2 bg-white border border-slate-100 rounded-xl shadow-xl z-50 min-w-[150px] overflow-hidden">
+                          {(["free", "essential", "sales", "pro"] as const).map((p) => (
+                            <button
+                              key={p}
+                              onClick={() => {
+                                onChangePlan(merchant.id, p);
+                                (window as any)._planOpen = null;
+                                forceUpdate();
+                              }}
+                              className="w-full text-left px-4 py-3 text-[10px] font-black uppercase tracking-widest hover:bg-slate-50 transition-colors border-b border-slate-50 last:border-0"
+                            >
+                              {p}
+                            </button>
+                          ))}
+                        </div>
+                      )}
+                   </div>
+                </div>
               </div>
+
             </div>
           </div>
         ))}
