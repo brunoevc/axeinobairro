@@ -123,28 +123,37 @@ function Profile() {
           </div>
         </section>
 
+        <section className="bg-white border border-slate-100 rounded-[2.5rem] p-10 shadow-sm">
+           <div className="flex items-center justify-between mb-8">
+              <h3 className="text-xl font-black text-slate-900 tracking-tight italic">Personalizar minha experiência</h3>
+              <Zap className="w-5 h-5 text-orange-600" />
+           </div>
+           <p className="text-slate-500 font-medium mb-8 text-sm uppercase tracking-wider leading-relaxed">
+              Escolha seus bairros e interesses para que possamos mostrar o que há de mais relevante para você.
+           </p>
+           <div className="space-y-6">
+              <div className="flex flex-wrap gap-2">
+                 {['negocios', 'servicos', 'transporte', 'noticias', 'eventos_religiosos', 'esportes'].map(interest => (
+                    <button 
+                      key={interest}
+                      className={`px-4 py-2 rounded-xl text-[10px] font-black uppercase tracking-widest border transition-all ${
+                        authUser?.interests?.includes(interest) 
+                        ? 'bg-orange-600 border-orange-600 text-white shadow-lg shadow-orange-100' 
+                        : 'bg-slate-50 border-slate-100 text-slate-400 hover:border-orange-200 hover:text-orange-600'
+                      }`}
+                    >
+                       {interest.replace('_', ' ')}
+                    </button>
+                 ))}
+              </div>
+              <p className="text-[10px] font-black text-slate-400 uppercase tracking-widest text-center italic mt-4">
+                 Configurações de persistência real virão com o Supabase Auth.
+              </p>
+           </div>
+        </section>
+
         {!isAuthenticated ? (
-           <section>
-             <div className="bg-slate-900 rounded-[3rem] p-10 text-white relative overflow-hidden shadow-2xl">
-               <div className="absolute top-0 right-0 w-64 h-64 bg-orange-600/20 rounded-full blur-3xl -mr-32 -mt-32" />
-               <div className="relative z-10 flex flex-col items-center text-center">
-                  <div className="w-16 h-16 bg-white/10 rounded-2xl flex items-center justify-center mb-6">
-                     <Store className="h-8 w-8 text-violet-400" />
-                  </div>
-                  <h3 className="text-2xl font-black mb-2 tracking-tighter leading-tight">Acesse sua conta</h3>
-                  <p className="text-slate-400 font-medium mb-8 max-w-sm">
-                    Entre para gerenciar seu negócio ou favoritos.
-                  </p>
-                  <button 
-                    onClick={() => navigate({ to: '/login' })}
-                    className="w-full py-5 bg-orange-600 text-white font-black text-sm rounded-2xl shadow-xl active:scale-95 transition-all"
-                  >
-                    Fazer Login
-                  </button>
-               </div>
-             </div>
-           </section>
-        ) : (
+
            <div className="pt-4 flex justify-center">
               <button 
                 onClick={handleLogout}
