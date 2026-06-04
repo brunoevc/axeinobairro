@@ -1,5 +1,5 @@
 import { createFileRoute, useNavigate, Link } from "@tanstack/react-router";
-import { useState, useMemo, useEffect } from "react";
+import { useState, useMemo, useEffect, useCallback } from "react";
 import { 
   ArrowLeft, 
   Search, 
@@ -11,13 +11,16 @@ import {
   Settings2,
   ChevronDown,
   Navigation,
-  RefreshCw
+  RefreshCw,
+  Briefcase,
+  Car
 } from "lucide-react";
 import { categories, neighborhoods } from "@/data/merchants";
 import { merchantsRepository } from "@/repositories/merchantsRepository";
 import { localBoostsRepository } from "@/repositories/localBoostsRepository";
 import { MerchantCard } from "@/components/MerchantCard";
 import { MerchantSkeleton } from "@/components/MerchantSkeleton";
+import { ListingSkeleton } from "@/components/ListingSkeleton";
 import { z } from "zod";
 import { TopBar } from "@/components/TopBar";
 import { FloatingNav } from "@/components/FloatingNav";
@@ -43,15 +46,16 @@ function ListingPage() {
   const [selectedCategory, setSelectedCategory] = useState(searchParams.categoria || "all");
   const [selectedNeighborhood, setSelectedNeighborhood] = useState(searchParams.bairro || "all");
   const [isInitialLoading, setIsInitialLoading] = useState(true);
+  const [isFiltering, setIsFiltering] = useState(false);
 
   // Helper function to normalize strings for search (remove accents)
-  const normalizeString = (str: string) => {
+  const normalizeString = useCallback((str: string) => {
     return str
       .normalize("NFD")
       .replace(/[\u0300-\u036f]/g, "")
       .toLowerCase()
       .trim();
-  };
+  }, []);
 
   // Synchronize internal state when URL parameters change (e.g. back/forward button)
   useEffect(() => {
@@ -94,7 +98,9 @@ function ListingPage() {
       }
 
       if (changed) {
+        setIsFiltering(true);
         navigate({ to: '/negocios', search: nextSearch, replace: true });
+        setTimeout(() => setIsFiltering(false), 300);
       }
     }, 400);
 
@@ -105,13 +111,14 @@ function ListingPage() {
 
   // If location is loading and we have no coords, we want to show a skeleton state
   // This is handled by isInitialLoading OR locationLoading if it's the first time
-  const showSkeletons = isInitialLoading || (locationLoading && !coords);
+  const showSkeletons = isInitialLoading || (locationLoading && !coords) || isFiltering;
 
   useEffect(() => {
     // Simulate a brief loading for a more "premium" feel with skeletons
     const timer = setTimeout(() => setIsInitialLoading(false), 800);
     return () => clearTimeout(timer);
   }, []);
+
 
   const filteredMerchants = useMemo(() => {
     let list = merchantsRepository.getAll();
@@ -320,10 +327,8 @@ function ListingPage() {
         </div>
 
         {showSkeletons ? (
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
-            {[...Array(8)].map((_, i) => (
-              <MerchantSkeleton key={i} />
-            ))}
+          <div className="col-span-full">
+            <ListingSkeleton count={8} />
           </div>
         ) : filteredMerchants.length > 0 ? (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">

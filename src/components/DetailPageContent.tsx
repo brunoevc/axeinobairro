@@ -13,7 +13,8 @@ import {
   Search,
   AlertCircle,
   ShoppingBag,
-  Clock
+  Clock,
+  Copy
 } from "lucide-react";
 import { Merchant } from "@/data/merchants";
 import { getProductsByMerchant } from "@/data/products";
@@ -24,7 +25,7 @@ import { FloatingNav } from "@/components/FloatingNav";
 import { useLocation } from "@/hooks/useLocation";
 import { useCart } from "@/hooks/useCart";
 import { toast } from "sonner";
-import { useState } from "react";
+import { useState, useCallback } from "react";
 import { WhatsAppButton } from "@/components/WhatsAppButton";
 import { BusinessStatusBadge } from "@/components/BusinessStatusBadge";
 import { ProductCard } from "@/components/ProductCard";
@@ -32,6 +33,7 @@ import { CartDrawer } from "@/components/CartDrawer";
 import { FloatingCart } from "@/components/FloatingCart";
 import { ReviewSection } from "@/components/ReviewSection";
 import { reviewsRepository } from "@/repositories/reviewsRepository";
+
 
 interface DetailPageContentProps {
   merchant: Merchant;
@@ -43,6 +45,14 @@ export function DetailPageContent({ merchant }: DetailPageContentProps) {
   const [coverError, setCoverError] = useState(false);
   const [logoError, setLogoError] = useState(false);
   const [isCartOpen, setIsCartOpen] = useState(false);
+  
+  const handleCopy = useCallback((text: string, label: string) => {
+    navigator.clipboard.writeText(text);
+    toast.success(`${label} copiado!`, {
+      className: "font-black uppercase text-[10px] tracking-widest",
+    });
+  }, []);
+
   
   const products = getProductsByMerchant(merchant.id);
 
@@ -298,7 +308,13 @@ export function DetailPageContent({ merchant }: DetailPageContentProps) {
                 </div>
                 <div>
                   <p className="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-1">Endereço</p>
-                  <p className="text-sm font-bold text-slate-900 leading-tight">{merchant.address}</p>
+                  <p className="text-sm font-bold text-slate-900 leading-tight flex items-center gap-2">
+                    {merchant.address}
+                    <button onClick={() => handleCopy(merchant.address, "Endereço")} className="p-1 hover:bg-white rounded shadow-sm text-slate-400 hover:text-orange-600 transition-all">
+                      <Copy className="w-3 h-3" />
+                    </button>
+                  </p>
+
                   <p className="text-xs font-bold text-orange-600 mt-1">{merchant.neighborhood}</p>
                   <Button asChild variant="link" className="text-orange-600 h-auto p-0 font-bold text-xs mt-2">
                     <a href={mapsUrl} target="_blank" rel="noopener noreferrer" className="flex items-center gap-1">
@@ -314,7 +330,13 @@ export function DetailPageContent({ merchant }: DetailPageContentProps) {
                 </div>
                 <div>
                   <p className="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-1">Instagram</p>
-                  <p className="text-sm font-bold text-slate-900 leading-none">{merchant.instagram}</p>
+                  <p className="text-sm font-bold text-slate-900 leading-none flex items-center gap-2">
+                    {merchant.instagram}
+                    <button onClick={() => handleCopy(merchant.instagram, "Instagram")} className="p-1 hover:bg-white rounded shadow-sm text-slate-400 hover:text-orange-600 transition-all">
+                      <Copy className="w-3 h-3" />
+                    </button>
+                  </p>
+
                   <a href={`https://instagram.com/${merchant.instagram.replace('@', '')}`} target="_blank" rel="noreferrer" className="text-xs font-bold text-orange-600 mt-1 inline-flex items-center gap-1">
                     Ver perfil <ChevronRight className="w-3 h-3" />
                   </a>
