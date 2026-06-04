@@ -38,7 +38,9 @@ export const Route = createFileRoute("/painel")({
           motorista: '/painel/motorista',
           representante: '/painel/representante',
           morador: '/painel/morador',
+          lider_comunidade: '/painel/comunidade',
         };
+
         
         const targetPath = rolePaths[authUser.role];
         if (targetPath) {
