@@ -7,9 +7,13 @@ export interface AuthUser {
   name: string;
   email: string;
   role: UserRole;
+  neighborhood?: string;
+  interests?: string[];
+  faithCommunity?: string;
   avatar?: string;
   provider: "local" | "google";
 }
+
 
 // Mock user session
 export const isAuthenticatedAtom = atomWithStorage<boolean>("axei_auth_status", false);
