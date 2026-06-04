@@ -30,6 +30,8 @@ import { BusinessStatusBadge } from "@/components/BusinessStatusBadge";
 import { ProductCard } from "@/components/ProductCard";
 import { CartDrawer } from "@/components/CartDrawer";
 import { FloatingCart } from "@/components/FloatingCart";
+import { ReviewSection } from "@/components/ReviewSection";
+import { reviewsRepository } from "@/repositories/reviewsRepository";
 
 interface DetailPageContentProps {
   merchant: Merchant;
@@ -150,7 +152,10 @@ export function DetailPageContent({ merchant }: DetailPageContentProps) {
                         <div className="flex items-center gap-1.5">
                           <div className="flex items-center gap-0.5 bg-white/10 backdrop-blur-sm px-2 py-0.5 rounded-lg border border-white/20">
                             <Star className="h-3.5 w-3.5 fill-yellow-400 text-yellow-400" />
-                            {merchant.rating.toFixed(1)}
+                            {(() => {
+                              const { average, total } = reviewsRepository.getAverageRating('loja', merchant.id);
+                              return total > 0 ? average : 'Novo';
+                            })()}
                           </div>
                           {distance !== null && (
                             <div className="flex items-center gap-1 bg-orange-600 px-2 py-0.5 rounded-lg shadow-lg">
