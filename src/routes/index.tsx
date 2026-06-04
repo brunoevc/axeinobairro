@@ -23,7 +23,8 @@ import {
    ArrowLeft,
    ShoppingBag,
    Wrench,
-   Newspaper
+   Newspaper,
+   Users
  } from "lucide-react";
 
 
