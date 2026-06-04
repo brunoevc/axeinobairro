@@ -110,6 +110,12 @@ function AdminDashboard() {
               Gestão de Serviços
             </Link>
           </Button>
+          <Button asChild className="rounded-2xl h-12 px-6 font-black gap-2 bg-slate-900 hover:bg-slate-800 shadow-xl shadow-slate-100 transition-all active:scale-95">
+            <Link to="/admin/avaliacoes">
+              <MessageSquare className="w-4 h-4 text-orange-500" />
+              Gestão de Avaliações
+            </Link>
+          </Button>
 
           <div className="flex items-center gap-2 px-4 py-2 bg-emerald-50 rounded-2xl border border-emerald-100 shadow-sm">
              <div className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
