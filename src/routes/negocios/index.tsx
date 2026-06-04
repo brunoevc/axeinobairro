@@ -327,10 +327,8 @@ function ListingPage() {
         </div>
 
         {showSkeletons ? (
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
-            {[...Array(8)].map((_, i) => (
-              <MerchantSkeleton key={i} />
-            ))}
+          <div className="col-span-full">
+            <ListingSkeleton count={8} />
           </div>
         ) : filteredMerchants.length > 0 ? (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
