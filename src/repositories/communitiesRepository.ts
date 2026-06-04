@@ -33,9 +33,18 @@ export const communitiesRepository = {
   getById: (id: string): Community | undefined => communitiesRepository.getAll().find(c => c.id === id),
   getByType: (type: string): Community[] => communitiesRepository.getAll().filter(c => c.type === type),
   getByNeighborhood: (neighborhood: string): Community[] => communitiesRepository.getAll().filter(c => c.neighborhood === neighborhood),
-  create: (community: Community) => {
+  save: (community: Community) => {
     const list = communitiesRepository.getAll();
-    list.push(community);
+    const index = list.findIndex(c => c.id === community.id);
+    if (index !== -1) {
+      list[index] = community;
+    } else {
+      list.push(community);
+    }
     storage.set(STORAGE_KEY, list);
+  },
+  create: (community: Community) => {
+    communitiesRepository.save(community);
   }
 };
+
