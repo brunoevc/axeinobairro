@@ -89,10 +89,19 @@ export const MerchantCard = memo(function MerchantCard({ merchant }: Props) {
               </span>
             </div>
           </div>
-          <div className="flex items-center gap-1 rounded-lg bg-slate-50 px-2 py-1 text-xs font-bold text-slate-900 border border-slate-100">
+          <div className="flex items-center gap-1.5 rounded-lg bg-slate-50 px-2 py-1 text-xs font-bold text-slate-900 border border-slate-100">
             <Star className="h-3 w-3 fill-orange-500 text-orange-500" />
-            {merchant.rating.toFixed(1)}
+            {(() => {
+              const { average, total } = reviewsRepository.getAverageRating('loja', merchant.id);
+              return (
+                <div className="flex items-center gap-1">
+                  <span>{total > 0 ? average.toFixed(1) : merchant.rating.toFixed(1)}</span>
+                  {total > 0 && <span className="text-[10px] text-slate-400 font-medium">({total})</span>}
+                </div>
+              );
+            })()}
           </div>
+
         </div>
 
         <p className="line-clamp-2 text-sm text-slate-500 leading-relaxed mb-4 min-h-[2.5rem]">
