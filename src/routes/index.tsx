@@ -29,6 +29,8 @@ import { merchantsRepository } from "@/repositories/merchantsRepository";
 import { servicesRepository } from "@/repositories/servicesRepository";
 import { ridesRepository } from "@/repositories/ridesRepository";
 import { localBoostsRepository } from "@/repositories/localBoostsRepository";
+import { newsRepository } from "@/repositories/newsRepository";
+import { representativesRepository } from "@/repositories/representativesRepository";
 import { LocalBoost } from "@/types/boosts";
 
 
