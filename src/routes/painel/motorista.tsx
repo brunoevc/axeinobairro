@@ -2,13 +2,26 @@ import { createFileRoute } from "@tanstack/react-router";
 import { useAtom } from "jotai";
 import { authUserAtom } from "@/hooks/useAuth";
 import { Car, MapPin, Star, History } from "lucide-react";
+import { PixConfigForm } from "@/components/PixConfigForm";
+import { ridesRepository } from "@/repositories/ridesRepository";
 
 export const Route = createFileRoute("/painel/motorista")({
   component: MotoristaPanel,
 });
 
 function MotoristaPanel() {
-  const [authUser] = useAtom(authUserAtom);
+  const [authUser, setAuthUser] = useAtom(authUserAtom);
+  const ride = authUser?.linkedDriverId ? ridesRepository.getById(authUser.linkedDriverId) : null;
+
+  const handleSavePix = (config: any) => {
+    if (ride) {
+      const updatedRide = { ...ride, pixConfig: config };
+      ridesRepository.save(updatedRide);
+      if (authUser) {
+        setAuthUser({ ...authUser, pixConfig: config });
+      }
+    }
+  };
 
   return (
     <div className="space-y-8 animate-in fade-in duration-500">
@@ -45,10 +58,20 @@ function MotoristaPanel() {
 
       <div className="bg-white p-10 rounded-[2.5rem] border border-slate-100 shadow-sm">
          <div className="flex items-center gap-4 mb-8">
-            <MapPin className="w-6 h-6 text-orange-600" />
-            <h3 className="text-xl font-black text-slate-900">Área de Atuação</h3>
-         </div>
-         <p className="text-slate-500 font-medium mb-8">
+             <MapPin className="w-6 h-6 text-orange-600" />
+             <h3 className="text-xl font-black text-slate-900">Área de Atuação</h3>
+          </div>
+          {ride && (
+            <div className="mb-8">
+              <PixConfigForm 
+                title="Receber via Pix"
+                description="Configure sua chave para que passageiros possam pagar diretamente."
+                initialConfig={ride.pixConfig}
+                onSave={handleSavePix}
+              />
+            </div>
+          )}
+          <p className="text-slate-500 font-medium mb-8">
             Defina os bairros onde você mais atua para aparecer prioritariamente nas buscas.
          </p>
          <div className="flex flex-wrap gap-2">

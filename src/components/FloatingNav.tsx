@@ -1,4 +1,4 @@
-import { Home, Search, PlusCircle, Car, Wrench, Newspaper } from "lucide-react";
+import { Home, Search, PlusCircle, Car, Wrench, Newspaper, Users } from "lucide-react";
 import { Link, useLocation } from "@tanstack/react-router";
 import { memo } from "react";
 
@@ -12,7 +12,7 @@ export const FloatingNav = memo(function FloatingNav() {
   };
 
   return (
-    <nav className="fixed bottom-6 left-1/2 -translate-x-1/2 bg-white/95 backdrop-blur-md border border-slate-200/60 rounded-[2rem] px-2 py-2 shadow-[0_20px_50px_rgba(0,0,0,0.15)] flex items-center gap-1 z-50 md:hidden w-[90%] max-w-[400px] justify-around">
+    <nav className="fixed bottom-6 left-1/2 -translate-x-1/2 bg-white/95 backdrop-blur-md border border-slate-200/60 rounded-[2rem] px-2 py-2 shadow-[0_20px_50px_rgba(0,0,0,0.15)] flex items-center gap-1 z-50 md:hidden w-[95%] max-w-[480px] justify-around">
       <Link 
         to="/" 
         className={`flex flex-col items-center gap-1 px-3 py-2 rounded-2xl transition-all duration-300 ${isActive('/') ? 'text-orange-600 bg-orange-50' : 'text-slate-400 hover:text-slate-600'}`}
@@ -51,6 +51,14 @@ export const FloatingNav = memo(function FloatingNav() {
       >
         <Newspaper className={`w-5 h-5 ${isActive('/noticias') ? 'scale-110' : ''}`} />
         <span className="text-[9px] font-black uppercase tracking-tighter">News</span>
+      </Link>
+
+      <Link 
+        to="/comunidades" 
+        className={`flex flex-col items-center gap-1 px-3 py-2 rounded-2xl transition-all duration-300 ${isActive('/comunidades') ? 'text-orange-600 bg-orange-50' : 'text-slate-400 hover:text-slate-600'}`}
+      >
+        <Users className={`w-5 h-5 ${isActive('/comunidades') ? 'scale-110' : ''}`} />
+        <span className="text-[9px] font-black uppercase tracking-tighter">Comu</span>
       </Link>
 
       <Link 

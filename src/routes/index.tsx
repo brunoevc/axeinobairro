@@ -23,7 +23,8 @@ import {
    ArrowLeft,
    ShoppingBag,
    Wrench,
-   Newspaper
+   Newspaper,
+   Users
  } from "lucide-react";
 
 
@@ -240,13 +241,14 @@ function Index() {
 
       {/* New Institutional Block */}
       <section className="max-w-7xl mx-auto px-6 mt-16 mb-16">
-        <h2 className="text-2xl font-black text-slate-900 mb-8">Como o Axêi funciona</h2>
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-4 text-slate-900">
+        <h2 className="text-2xl font-black text-slate-900 mb-8">O que o Axêi oferece</h2>
+        <div className="grid grid-cols-2 md:grid-cols-5 gap-4 text-slate-900">
           {[
             { label: 'Negócios', icon: ShoppingBag, path: '/negocios' },
             { label: 'Serviços', icon: Wrench, path: '/servicos' },
             { label: 'Transporte', icon: Car, path: '/transporte' },
             { label: 'Notícias', icon: Newspaper, path: '/noticias' },
+            { label: 'Comunidades', icon: Users, path: '/comunidades' },
           ].map(item => (
             <Button 
               key={item.label}

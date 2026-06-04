@@ -33,6 +33,7 @@ import { CartDrawer } from "@/components/CartDrawer";
 import { FloatingCart } from "@/components/FloatingCart";
 import { ReviewSection } from "@/components/ReviewSection";
 import { reviewsRepository } from "@/repositories/reviewsRepository";
+import { PixDisplayCard } from "@/components/PixDisplayCard";
 
 
 interface DetailPageContentProps {
@@ -248,6 +249,12 @@ export function DetailPageContent({ merchant }: DetailPageContentProps) {
                 </a>
               </Button>
             </div>
+
+            {merchant.pixConfig?.enabled && (
+              <div className="pt-4 border-t border-slate-50">
+                <PixDisplayCard pixConfig={merchant.pixConfig} />
+              </div>
+            )}
           </div>
         </div>
 

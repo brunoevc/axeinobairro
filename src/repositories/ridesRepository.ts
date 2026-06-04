@@ -12,6 +12,17 @@ export const normalizePhone = (phone: string): string => {
 export const ridesRepository = {
   list: (): RideDriver[] => storage.get(STORAGE_KEY, mockRides),
   
+  save: (ride: RideDriver) => {
+    const rides = ridesRepository.list();
+    const index = rides.findIndex(r => r.id === ride.id);
+    if (index !== -1) {
+      rides[index] = ride;
+    } else {
+      rides.push(ride);
+    }
+    storage.set(STORAGE_KEY, rides);
+  },
+  
   getById: (id: string): RideDriver | undefined => ridesRepository.list().find(r => r.id === id),
   
   create: (ride: RideDriver) => {

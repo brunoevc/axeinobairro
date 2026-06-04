@@ -5,6 +5,7 @@ import { Representative } from "@/types/representatives";
 import { Button } from "@/components/ui/button";
 import { TopBar } from "@/components/TopBar";
 import { Phone, MessageSquare, MapPin, User, ArrowLeft } from "lucide-react";
+import { PixDisplayCard } from "@/components/PixDisplayCard";
 
 export const Route = createFileRoute("/representantes")({
   component: RepresentativesPage,
@@ -66,6 +67,12 @@ function RepresentativesPage() {
               <p className="text-slate-500 text-sm mb-8 leading-relaxed">
                 {rep.description}
               </p>
+
+              {rep.pixConfig?.enabled && (
+                <div className="mb-6">
+                  <PixDisplayCard pixConfig={rep.pixConfig} className="rounded-2xl p-4 md:p-4" />
+                </div>
+              )}
 
               <div className="grid grid-cols-2 gap-4">
                 <Button 

@@ -2,13 +2,26 @@ import { createFileRoute } from "@tanstack/react-router";
 import { useAtom } from "jotai";
 import { authUserAtom } from "@/hooks/useAuth";
 import { Store, ShoppingBag, TrendingUp, Users, MessageSquare } from "lucide-react";
+import { PixConfigForm } from "@/components/PixConfigForm";
+import { merchantsRepository } from "@/repositories/merchantsRepository";
 
 export const Route = createFileRoute("/painel/lojista")({
   component: LojistaPanel,
 });
 
 function LojistaPanel() {
-  const [authUser] = useAtom(authUserAtom);
+  const [authUser, setAuthUser] = useAtom(authUserAtom);
+  const merchant = authUser?.linkedMerchantId ? merchantsRepository.getById(authUser.linkedMerchantId) : null;
+
+  const handleSavePix = (config: any) => {
+    if (merchant) {
+      const updatedMerchant = { ...merchant, pixConfig: config };
+      merchantsRepository.save(updatedMerchant);
+      if (authUser) {
+        setAuthUser({ ...authUser, pixConfig: config });
+      }
+    }
+  };
 
   return (
     <div className="space-y-8 animate-in fade-in duration-500">
@@ -57,9 +70,19 @@ function LojistaPanel() {
         <div className="bg-white p-10 rounded-[2.5rem] border border-slate-100 shadow-sm">
            <div className="flex items-center gap-4 mb-8">
               <Store className="w-6 h-6 text-orange-600" />
-              <h3 className="text-xl font-black text-slate-900">Gerenciar Loja</h3>
-           </div>
-           <p className="text-slate-500 font-medium mb-8">
+               <h3 className="text-xl font-black text-slate-900">Gerenciar Loja</h3>
+            </div>
+            {merchant && (
+              <div className="mb-8">
+                <PixConfigForm 
+                  title="Receber via Pix"
+                  description="Configure sua chave para receber pagamentos diretos dos clientes."
+                  initialConfig={merchant.pixConfig}
+                  onSave={handleSavePix}
+                />
+              </div>
+            )}
+            <p className="text-slate-500 font-medium mb-8">
               A estrutura de edição de produtos, horários e fotos será integrada ao Supabase para persistência real de dados.
            </p>
            <div className="space-y-4">

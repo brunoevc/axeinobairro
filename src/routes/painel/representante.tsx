@@ -2,13 +2,27 @@ import { createFileRoute } from "@tanstack/react-router";
 import { useAtom } from "jotai";
 import { authUserAtom } from "@/hooks/useAuth";
 import { Megaphone, Users, MapPin, TrendingUp, ShieldCheck } from "lucide-react";
+import { PixConfigForm } from "@/components/PixConfigForm";
+import { representativesRepository } from "@/repositories/representativesRepository";
 
 export const Route = createFileRoute("/painel/representante")({
   component: RepresentantePanel,
 });
 
 function RepresentantePanel() {
-  const [authUser] = useAtom(authUserAtom);
+  const [authUser, setAuthUser] = useAtom(authUserAtom);
+  const rep = authUser?.linkedRepresentativeId ? representativesRepository.getAll().find(r => r.id === authUser.linkedRepresentativeId) : null;
+
+  const handleSavePix = (config: any) => {
+    if (rep) {
+      const allReps = representativesRepository.getAll();
+      const updatedReps = allReps.map(r => r.id === rep.id ? { ...r, pixConfig: config } : r);
+      representativesRepository.saveAll(updatedReps);
+      if (authUser) {
+        setAuthUser({ ...authUser, pixConfig: config });
+      }
+    }
+  };
 
   return (
     <div className="space-y-8 animate-in fade-in duration-500">
@@ -55,10 +69,20 @@ function RepresentantePanel() {
 
       <div className="bg-white p-10 rounded-[2.5rem] border border-slate-100 shadow-sm">
          <div className="flex items-center gap-4 mb-8">
-            <MapPin className="w-6 h-6 text-violet-600" />
-            <h3 className="text-xl font-black text-slate-900">Minha Área: Araruama (Centro)</h3>
-         </div>
-         <p className="text-slate-500 font-medium mb-8">
+             <MapPin className="w-6 h-6 text-violet-600" />
+             <h3 className="text-xl font-black text-slate-900">Minha Área: Araruama (Centro)</h3>
+          </div>
+          {rep && (
+            <div className="mb-8">
+              <PixConfigForm 
+                title="Receber via Pix"
+                description="Configure sua chave para receber comissões ou doações."
+                initialConfig={rep.pixConfig}
+                onSave={handleSavePix}
+              />
+            </div>
+          )}
+          <p className="text-slate-500 font-medium mb-8">
             Em breve você poderá visualizar o mapa de calor de lojas ativas e prospectar novos parceiros diretamente pelo painel.
          </p>
          <Button className="rounded-xl bg-violet-600 hover:bg-violet-700 font-black uppercase text-xs">

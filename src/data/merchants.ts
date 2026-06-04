@@ -12,6 +12,7 @@ import {
   Leaf
 } from "lucide-react";
 import { getMerchantPublicPath } from "@/lib/slugs";
+import { PixConfig } from "@/types/users";
 
 export { getMerchantPublicPath };
 
@@ -62,6 +63,7 @@ export type Merchant = {
   slug?: string;
   customDomain?: string;
   canonicalUrl?: string;
+  pixConfig?: PixConfig;
 };
 
 

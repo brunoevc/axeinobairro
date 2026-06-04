@@ -17,6 +17,7 @@ import { FloatingNav } from "@/components/FloatingNav";
 import { Logo } from "@/components/ui/Logo";
 import { useAtom } from "jotai";
 import { isAuthenticatedAtom, authUserAtom } from "@/hooks/useAuth";
+import { usersRepository } from "@/repositories/usersRepository";
 import { toast } from "sonner";
 import React from "react";
 
@@ -131,9 +132,22 @@ function Profile() {
            </p>
            <div className="space-y-6">
               <div className="flex flex-wrap gap-2">
-                 {['negocios', 'servicos', 'transporte', 'noticias', 'eventos_religiosos', 'esportes', 'cultura'].map(interest => (
+                  {['negocios', 'servicos', 'transporte', 'noticias', 'eventos_religiosos', 'esportes', 'cultura'].map(interest => (
                     <button 
                       key={interest}
+                      onClick={() => {
+                        if (authUser) {
+                          const current = authUser.interests || [];
+                          const updated = current.includes(interest as any) 
+                            ? current.filter(i => i !== interest) 
+                            : [...current, interest as any];
+                          const updatedUser = { ...authUser, interests: updated };
+                          setAuthUser(updatedUser);
+                          // Sincronizar com repositório para simular persistência
+                          usersRepository.save(updatedUser as any);
+                          toast.success("Interesses atualizados!");
+                        }
+                      }}
                       className={`px-4 py-2 rounded-xl text-[10px] font-black uppercase tracking-widest border transition-all ${
                         authUser?.interests?.includes(interest) 
                         ? 'bg-orange-600 border-orange-600 text-white shadow-lg shadow-orange-100' 
@@ -145,7 +159,7 @@ function Profile() {
                  ))}
               </div>
               <p className="text-[10px] font-black text-slate-400 uppercase tracking-widest text-center italic mt-4">
-                 Configurações de persistência real virão com o Supabase Auth.
+                 Sincronizado com seu painel de morador.
               </p>
            </div>
         </section>

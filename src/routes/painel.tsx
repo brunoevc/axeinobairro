@@ -1,4 +1,4 @@
-import { createFileRoute, useNavigate, Outlet, redirect } from "@tanstack/react-router";
+import { createFileRoute, useNavigate, Outlet, redirect, Link } from "@tanstack/react-router";
 import { useAtom } from "jotai";
 import { isAuthenticatedAtom, authUserAtom } from "@/hooks/useAuth";
 import { toast } from "sonner";
@@ -111,7 +111,7 @@ function PanelLayout() {
                 </div>
              </div>
              <Button variant="outline" className="rounded-xl border-blue-200 text-blue-700 bg-white hover:bg-blue-50 font-black text-xs uppercase" asChild>
-                <a href="/">Voltar para o Site</a>
+                <Link to="/">Voltar para o Site</Link>
              </Button>
           </div>
 
