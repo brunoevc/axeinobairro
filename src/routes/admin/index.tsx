@@ -1,15 +1,15 @@
-import { createFileRoute, Link } from "@tanstack/react-router";
+import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
 import { useAdminState } from "@/hooks/useAdminState";
 import { DashboardStats } from "@/components/admin/DashboardStats";
 import { PlansChart } from "@/components/admin/PlansChart";
 import { ActivityLog } from "@/components/admin/ActivityLog";
-import { ShieldCheck, Info, TrendingUp, BarChart3, Clock, Layout, Save, Lock, Mail, CheckCircle2, AlertCircle, Users, Car, Wrench, MessageSquare } from "lucide-react";
+import { ShieldCheck, Info, TrendingUp, BarChart3, Clock, Layout, Save, CheckCircle2, AlertCircle, Users, Car, Wrench, MessageSquare } from "lucide-react";
 import { ImageCropUpload } from "@/components/ImageCropUpload";
 import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { toast } from "sonner";
 import { useAtom } from "jotai";
-import { passwordAtom, recoveryRequestsAtom, authUserAtom } from "@/hooks/useAuth";
+import { authUserAtom } from "@/hooks/useAuth";
 
 export const Route = createFileRoute("/admin/")({
   component: AdminDashboard,
@@ -24,13 +24,7 @@ export const Route = createFileRoute("/admin/")({
 function AdminDashboard() {
   const { stats, state, loading } = useAdminState();
   const [platformLogo, setPlatformLogo] = useState("");
-  const [adminPassword, setAdminPassword] = useAtom(passwordAtom);
-  const [recoveryRequests] = useAtom(recoveryRequestsAtom);
   const [authUser] = useAtom(authUserAtom);
-
-  const [currentPass, setCurrentPass] = useState("");
-  const [newPass, setNewPass] = useState("");
-  const [confirmPass, setConfirmPass] = useState("");
 
   useEffect(() => {
     const saved = localStorage.getItem("platform_logo_url");
@@ -43,30 +37,6 @@ function AdminDashboard() {
     window.dispatchEvent(new Event("storage"));
     setTimeout(() => window.location.reload(), 500);
   };
-
-  const handleUpdatePassword = (e: React.FormEvent) => {
-    e.preventDefault();
-    if (currentPass !== adminPassword) {
-      toast.error("Senha atual incorreta.");
-      return;
-    }
-    if (newPass.length < 6) {
-      toast.error("A nova senha deve ter no mínimo 6 caracteres.");
-      return;
-    }
-    if (newPass !== confirmPass) {
-      toast.error("As novas senhas não coincidem.");
-      return;
-    }
-
-    setAdminPassword(newPass);
-    toast.success("Senha alterada com sucesso!");
-    setCurrentPass("");
-    setNewPass("");
-    setConfirmPass("");
-  };
-
-
 
   if (loading || !stats || !state) {
     return (
@@ -93,9 +63,9 @@ function AdminDashboard() {
         
         <div className="flex items-center gap-4">
           <Button asChild className="rounded-2xl h-12 px-6 font-black gap-2 bg-slate-900 hover:bg-slate-800 shadow-xl shadow-slate-100 transition-all active:scale-95">
-            <Link to="/admin/leads">
-              <Users className="w-4 h-4 text-orange-500" />
-              Gestão de Leads (CRM)
+            <Link to="/admin/lojas">
+              <Store className="w-4 h-4 text-orange-500" />
+              Gestão de Lojas
             </Link>
           </Button>
           <Button asChild className="rounded-2xl h-12 px-6 font-black gap-2 bg-slate-900 hover:bg-slate-800 shadow-xl shadow-slate-100 transition-all active:scale-95">
@@ -104,19 +74,6 @@ function AdminDashboard() {
               Gestão de Transporte
             </Link>
           </Button>
-          <Button asChild className="rounded-2xl h-12 px-6 font-black gap-2 bg-slate-900 hover:bg-slate-800 shadow-xl shadow-slate-100 transition-all active:scale-95">
-            <Link to="/admin/servicos">
-              <Wrench className="w-4 h-4 text-orange-500" />
-              Gestão de Serviços
-            </Link>
-          </Button>
-          <Button asChild className="rounded-2xl h-12 px-6 font-black gap-2 bg-slate-900 hover:bg-slate-800 shadow-xl shadow-slate-100 transition-all active:scale-95">
-            <Link to="/admin/avaliacoes">
-              <MessageSquare className="w-4 h-4 text-orange-500" />
-              Gestão de Avaliações
-            </Link>
-          </Button>
-
           <div className="flex items-center gap-2 px-4 py-2 bg-emerald-50 rounded-2xl border border-emerald-100 shadow-sm">
              <div className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
              <span className="text-xs font-black text-emerald-600 uppercase tracking-widest">Sistema Online</span>
@@ -242,62 +199,6 @@ function AdminDashboard() {
         </div>
       </section>
 
-      {/* Reports Section */}
-      <section className="bg-white rounded-[2.5rem] p-10 border border-slate-100 shadow-sm">
-        <div className="flex items-center justify-between mb-8 border-b border-slate-50 pb-6">
-          <div className="flex items-center gap-3">
-             <div className="p-2 bg-red-50 rounded-xl text-red-600">
-                <AlertCircle className="w-5 h-5" />
-             </div>
-             <div>
-                <h3 className="text-xl font-black text-slate-900 tracking-tight">Denúncias e Problemas</h3>
-                <p className="text-xs text-slate-400 font-bold uppercase tracking-wider mt-1">Moderação de conteúdo reportado por usuários</p>
-             </div>
-          </div>
-        </div>
-
-        <div className="space-y-4">
-          {(() => {
-            const reports = JSON.parse(localStorage.getItem('axei_reports') || '[]');
-            if (reports.length === 0) {
-              return (
-                <div className="py-12 text-center">
-                  <p className="text-slate-400 font-bold">Nenhuma denúncia pendente.</p>
-                </div>
-              );
-            }
-            return reports.map((report: any) => (
-              <div key={report.id} className="flex items-center justify-between p-6 bg-slate-50 rounded-2xl border border-slate-100">
-                <div className="flex items-center gap-4">
-                  <div className="w-10 h-10 bg-red-100 rounded-full flex items-center justify-center text-red-600">
-                    <AlertCircle className="w-5 h-5" />
-                  </div>
-                  <div>
-                    <p className="text-sm font-black text-slate-900">{report.merchantName}</p>
-                    <p className="text-xs font-bold text-red-600 uppercase tracking-widest">{report.reasonLabel}</p>
-                  </div>
-                </div>
-                <div className="flex items-center gap-4">
-                   <p className="text-[10px] font-black text-slate-400 uppercase tracking-widest">{new Date(report.timestamp).toLocaleDateString()}</p>
-                   <Button 
-                    variant="ghost" 
-                    className="text-slate-400 hover:text-red-600"
-                    onClick={() => {
-                      const newReports = reports.filter((r: any) => r.id !== report.id);
-                      localStorage.setItem('axei_reports', JSON.stringify(newReports));
-                      toast.success("Denúncia arquivada.");
-                      window.location.reload();
-                    }}
-                   >
-                     Arquivar
-                   </Button>
-                </div>
-              </div>
-            ));
-          })()}
-        </div>
-      </section>
-
       {/* Visual Configuration Section */}
 
       <section className="bg-white rounded-[2.5rem] p-10 border border-slate-100 shadow-sm">
@@ -350,7 +251,7 @@ function AdminDashboard() {
                 <div className="w-1.5 h-1.5 rounded-full bg-white" />
               </div>
               <p className="text-sm text-slate-400 font-medium group-hover:text-white transition-colors">
-                Os dados acima são simulados e persistidos localmente no seu navegador para esta sessão.
+                Acesso por perfil e troca de senha mockados para teste de fluxo.
               </p>
             </li>
             <li className="flex items-start gap-4 group">
@@ -358,7 +259,7 @@ function AdminDashboard() {
                 <div className="w-1.5 h-1.5 rounded-full bg-white" />
               </div>
               <p className="text-sm text-slate-400 font-medium group-hover:text-white transition-colors">
-                Este painel representa a visão do administrador da plataforma Axêi no Bairro.
+                Próxima fase: Integração real com Supabase Auth.
               </p>
             </li>
           </ul>
@@ -369,132 +270,34 @@ function AdminDashboard() {
                <span className="text-[10px] font-black uppercase tracking-widest text-slate-400">Última Sincronização: {new Date(state.lastUpdated).toLocaleTimeString("pt-BR")}</span>
             </div>
             <div className="flex items-center gap-3">
-               <span className="text-[10px] font-black text-slate-500 uppercase tracking-[0.3em]">v1.0.0 Stable Build</span>
+               <span className="text-[10px] font-black text-slate-500 uppercase tracking-[0.3em]">v1.0.0 Phase 8.9.10</span>
                <div className="h-4 w-px bg-white/10" />
                <ShieldCheck className="w-4 h-4 text-emerald-500" />
             </div>
           </div>
         </div>
       </div>
-
-      {/* Security and Recovery Grid */}
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-10">
-        <section className="bg-white rounded-[2.5rem] p-8 border border-slate-100 shadow-sm">
-          <div className="mb-8 flex items-center justify-between border-b border-slate-50 pb-6">
-            <div className="flex items-center gap-3">
-               <div className="p-2 bg-orange-50 rounded-xl text-orange-600">
-                  <Lock className="w-5 h-5" />
-               </div>
-               <div>
-                  <h3 className="text-xl font-black text-slate-900 tracking-tight">Segurança da Conta</h3>
-                  <p className="text-xs text-slate-400 font-bold uppercase tracking-wider mt-1">
-                    {authUser?.provider === 'google' ? 'Autenticado via Google' : 'Gerenciar senha de acesso'}
-                  </p>
-               </div>
-            </div>
-          </div>
-
-          {authUser?.provider === 'google' ? (
-            <div className="py-10 text-center space-y-4">
-              <div className="w-16 h-16 bg-blue-50 rounded-full flex items-center justify-center mx-auto border border-blue-100">
-                <ShieldCheck className="w-8 h-8 text-blue-600" />
-              </div>
-              <div>
-                <p className="text-slate-900 font-black tracking-tight">Conta protegida pelo Google</p>
-                <p className="text-sm text-slate-500 font-medium max-w-xs mx-auto mt-2 leading-relaxed">
-                  Sua senha é gerenciada pelo Google OAuth. Alterações de senha devem ser feitas diretamente na sua Conta Google.
-                </p>
-              </div>
-            </div>
-          ) : (
-            <form onSubmit={handleUpdatePassword} className="space-y-6">
-              <div className="space-y-2">
-                <label className="text-xs font-black text-slate-400 uppercase tracking-widest ml-1">Senha Atual</label>
-                <input 
-                  required
-                  type="password" 
-                  className="w-full bg-slate-50 border border-slate-200 rounded-2xl p-4 text-sm font-bold outline-none focus:border-orange-600 transition-all"
-                  value={currentPass}
-                  onChange={(e) => setCurrentPass(e.target.value)}
-                />
-              </div>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <div className="space-y-2">
-                  <label className="text-xs font-black text-slate-400 uppercase tracking-widest ml-1">Nova Senha</label>
-                  <input 
-                    required
-                    type="password" 
-                    className="w-full bg-slate-50 border border-slate-200 rounded-2xl p-4 text-sm font-bold outline-none focus:border-orange-600 transition-all"
-                    value={newPass}
-                    onChange={(e) => setNewPass(e.target.value)}
-                  />
-                </div>
-                <div className="space-y-2">
-                  <label className="text-xs font-black text-slate-400 uppercase tracking-widest ml-1">Confirmar Nova Senha</label>
-                  <input 
-                    required
-                    type="password" 
-                    className="w-full bg-slate-50 border border-slate-200 rounded-2xl p-4 text-sm font-bold outline-none focus:border-orange-600 transition-all"
-                    value={confirmPass}
-                    onChange={(e) => setConfirmPass(e.target.value)}
-                  />
-                </div>
-              </div>
-              <Button type="submit" className="w-full h-12 rounded-xl bg-slate-900 hover:bg-slate-800 text-white font-black shadow-lg">
-                Atualizar Senha
-              </Button>
-            </form>
-          )}
-        </section>
-
-        <section className="bg-white rounded-[2.5rem] p-8 border border-slate-100 shadow-sm">
-          <div className="mb-8 flex items-center justify-between border-b border-slate-50 pb-6">
-            <div className="flex items-center gap-3">
-               <div className="p-2 bg-orange-50 rounded-xl text-orange-600">
-                  <Mail className="w-5 h-5" />
-               </div>
-               <div>
-                  <h3 className="text-xl font-black text-slate-900 tracking-tight">Recuperação de Senha</h3>
-                  <p className="text-xs text-slate-400 font-bold uppercase tracking-wider mt-1">Solicitações de vizinhos lojistas</p>
-               </div>
-            </div>
-          </div>
-
-          <div className="space-y-4 max-h-[300px] overflow-y-auto pr-2">
-            {recoveryRequests.length === 0 ? (
-              <div className="text-center py-10 text-slate-400">
-                <p className="text-sm font-bold">Nenhuma solicitação pendente.</p>
-              </div>
-            ) : (
-              recoveryRequests.map((req, idx) => (
-                <div key={idx} className="flex items-center justify-between p-4 bg-slate-50 rounded-2xl border border-slate-100 group">
-                  <div>
-                    <p className="text-sm font-black text-slate-900">{req.email}</p>
-                    <p className="text-[10px] font-bold text-slate-400 uppercase mt-0.5">Solicitado em: {new Date(req.date).toLocaleString("pt-BR")}</p>
-                  </div>
-                  <div className="inline-flex items-center gap-1.5 px-3 py-1 bg-orange-100 rounded-full text-[10px] font-black text-orange-600 uppercase tracking-widest border border-orange-200">
-                    {req.status}
-                  </div>
-                </div>
-              ))
-            ).reverse()}
-          </div>
-        </section>
-      </div>
-
-      {/* Demo Warning Banner */}
-      <div className="rounded-2xl bg-orange-50 border border-orange-100 p-6 flex items-start gap-4 shadow-sm animate-in fade-in slide-in-from-bottom-4">
-        <div className="p-3 bg-white rounded-xl text-orange-600 shadow-sm">
-           <ShieldCheck className="w-6 h-6" />
-        </div>
-        <div>
-           <h4 className="text-lg font-black text-slate-900 tracking-tight">Login Provisório Ativado</h4>
-           <p className="text-sm text-slate-600 font-medium leading-relaxed max-w-2xl mt-1">
-             Este sistema de login é provisório para validação do MVP e utiliza armazenamento local do navegador. Na próxima fase, será substituído por uma autenticação real e segura via <span className="font-black text-orange-600">Supabase Auth</span>.
-           </p>
-        </div>
-      </div>
-
     </div>
   );
 }
+
+const Store = ({ className }: { className?: string }) => (
+  <svg 
+    xmlns="http://www.w3.org/2000/svg" 
+    width="24" 
+    height="24" 
+    viewBox="0 0 24 24" 
+    fill="none" 
+    stroke="currentColor" 
+    strokeWidth="2" 
+    strokeLinecap="round" 
+    strokeLinejoin="round" 
+    className={className}
+  >
+    <path d="m2 7 4.41-4.41A2 2 0 0 1 7.83 2h8.34a2 2 0 0 1 1.42.59L22 7" />
+    <path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8" />
+    <path d="M15 22v-4a2 2 0 0 0-2-2h-2a2 2 0 0 0-2 2v4" />
+    <path d="M2 7h20" />
+    <path d="M22 7v3a2 2 0 0 1-2 2v0a2.7 2.7 0 0 1-1.59-.63.7.7 0 0 0-.82 0A2.7 2.7 0 0 1 16 12a2.7 2.7 0 0 1-1.59-.63.7.7 0 0 0-.82 0A2.7 2.7 0 0 1 12 12a2.7 2.7 0 0 1-1.59-.63.7.7 0 0 0-.82 0A2.7 2.7 0 0 1 8 12a2.7 2.7 0 0 1-1.59-.63.7.7 0 0 0-.82 0A2.7 2.7 0 0 1 4 10V7" />
+  </svg>
+);
