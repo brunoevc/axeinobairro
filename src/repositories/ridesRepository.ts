@@ -6,7 +6,11 @@ const STORAGE_KEY = 'axe_rides_data';
 const getRides = (): RideDriver[] => {
   const data = localStorage.getItem(STORAGE_KEY);
   if (!data) return mockRides;
-  return JSON.parse(data);
+  try {
+    return JSON.parse(data);
+  } catch {
+    return mockRides;
+  }
 };
 
 const saveRides = (rides: RideDriver[]) => {
@@ -15,9 +19,8 @@ const saveRides = (rides: RideDriver[]) => {
 
 export const normalizePhone = (phone: string): string => {
   const cleaned = phone.replace(/\D/g, '');
-  if (cleaned.length === 11) return `55${cleaned}`;
-  if (cleaned.length === 10) return `5511${cleaned}`;
-  return cleaned;
+  // Assuming 11 for mobile, 10 for landline if needed, but for simplicity:
+  return cleaned.startsWith('55') ? cleaned : `55${cleaned}`;
 };
 
 export const ridesRepository = {

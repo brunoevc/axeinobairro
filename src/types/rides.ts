@@ -1,4 +1,4 @@
-export type ServiceType = 'carona' | 'frete' | 'moto' | 'van';
+export type ServiceType = 'carona' | 'carro' | 'moto' | 'van' | 'frete';
 export type AvailabilityStatus = 'online' | 'disponivel_hoje' | 'indisponivel';
 
 export interface RideRoute {
@@ -17,4 +17,9 @@ export interface RideDriver {
   routes: RideRoute[];
   notes?: string;
   price?: string;
+  // Visual/Mock data for map
+  approximateLat?: number;
+  approximateLng?: number;
+  mapZone?: string;
+  locationNote?: string;
 }
