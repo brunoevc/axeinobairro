@@ -273,10 +273,14 @@ function Index() {
         <div className="bg-slate-900 rounded-[2rem] p-8 text-white flex flex-col md:flex-row items-center justify-between gap-6">
           <div>
             <h3 className="text-2xl font-black mb-2">Classificados do Bairro</h3>
-            <p className="text-slate-400 font-medium">Venda, trocas e oportunidades locais em breve.</p>
+            <p className="text-slate-400 font-medium">Venda, trocas e oportunidades locais perto de você.</p>
           </div>
-          <Button variant="secondary" className="rounded-2xl font-black h-12 px-8 bg-white text-slate-900 hover:bg-slate-100">
-            Em Breve
+          <Button 
+            variant="secondary" 
+            className="rounded-2xl font-black h-12 px-8 bg-white text-slate-900 hover:bg-slate-100"
+            onClick={() => navigate({ to: '/classificados' })}
+          >
+            Ver Classificados
           </Button>
         </div>
       </section>

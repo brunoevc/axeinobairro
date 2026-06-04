@@ -13,6 +13,7 @@ export interface AuthUser {
   avatar?: string;
   provider: "local" | "google";
   pixConfig?: any;
+  plan?: 'free' | 'community';
   linkedMerchantId?: string;
   linkedServiceId?: string;
   linkedDriverId?: string;
