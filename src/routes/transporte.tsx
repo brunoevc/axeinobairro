@@ -14,6 +14,7 @@ import { LocalTransportMap } from "@/components/LocalTransportMap";
 import { ListingSkeleton } from "@/components/ListingSkeleton";
 import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
 import { Star, Car, Truck, Bike, Users, MessageSquare, ShieldAlert, Search, Filter } from "lucide-react";
+import { PixDisplayCard } from "@/components/PixDisplayCard";
 
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -303,6 +304,11 @@ export default function Transporte() {
                     </div>
 
                     <div className="mt-auto flex flex-col gap-3">
+                      {driver.pixConfig?.enabled && (
+                        <div className="mb-2">
+                           <PixDisplayCard pixConfig={driver.pixConfig} className="rounded-2xl p-4 md:p-4" />
+                        </div>
+                      )}
                       <Dialog>
                         <DialogTrigger asChild>
                           <Button variant="ghost" className="w-full h-12 rounded-2xl text-slate-400 font-bold hover:bg-slate-50 hover:text-slate-900 transition-all border border-transparent hover:border-slate-100">

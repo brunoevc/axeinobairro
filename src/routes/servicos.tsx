@@ -10,6 +10,7 @@ import { reviewsRepository } from "@/repositories/reviewsRepository";
 import { ServiceProvider, ServiceCategory } from "@/types/services";
 import { ReviewSection } from "@/components/ReviewSection";
 import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
+import { PixDisplayCard } from "@/components/PixDisplayCard";
 
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -268,7 +269,12 @@ export default function Servicos() {
                       </Button>
                     </DialogTrigger>
                     <DialogContent className="max-w-2xl max-h-[90vh] overflow-y-auto rounded-[2.5rem] p-8">
-                      <ReviewSection targetId={provider.id} targetType="servico" />
+                      <div className="space-y-8">
+                        {provider.pixConfig?.enabled && (
+                          <PixDisplayCard pixConfig={provider.pixConfig} />
+                        )}
+                        <ReviewSection targetId={provider.id} targetType="servico" />
+                      </div>
                     </DialogContent>
                   </Dialog>
 

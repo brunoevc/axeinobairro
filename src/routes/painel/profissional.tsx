@@ -2,13 +2,26 @@ import { createFileRoute } from "@tanstack/react-router";
 import { useAtom } from "jotai";
 import { authUserAtom } from "@/hooks/useAuth";
 import { Wrench, Clock, TrendingUp, Calendar, ShieldCheck } from "lucide-react";
+import { PixConfigForm } from "@/components/PixConfigForm";
+import { servicesRepository } from "@/repositories/servicesRepository";
 
 export const Route = createFileRoute("/painel/profissional")({
   component: ProfissionalPanel,
 });
 
 function ProfissionalPanel() {
-  const [authUser] = useAtom(authUserAtom);
+  const [authUser, setAuthUser] = useAtom(authUserAtom);
+  const service = authUser?.linkedServiceId ? servicesRepository.getAll().find(s => s.id === authUser.linkedServiceId) : null;
+
+  const handleSavePix = (config: any) => {
+    if (service) {
+      const updatedService = { ...service, pixConfig: config };
+      servicesRepository.save(updatedService);
+      if (authUser) {
+        setAuthUser({ ...authUser, pixConfig: config });
+      }
+    }
+  };
 
   return (
     <div className="space-y-8 animate-in fade-in duration-500">
@@ -55,10 +68,20 @@ function ProfissionalPanel() {
 
       <div className="bg-white p-10 rounded-[2.5rem] border border-slate-100 shadow-sm">
          <div className="flex items-center gap-4 mb-8">
-            <Wrench className="w-6 h-6 text-blue-600" />
-            <h3 className="text-xl font-black text-slate-900">Configurações de Serviço</h3>
-         </div>
-         <p className="text-slate-500 font-medium mb-8">
+             <Wrench className="w-6 h-6 text-blue-600" />
+             <h3 className="text-xl font-black text-slate-900">Configurações de Serviço</h3>
+          </div>
+          {service && (
+            <div className="mb-8">
+              <PixConfigForm 
+                title="Receber via Pix"
+                description="Configure sua chave para receber pagamentos diretos por seus serviços."
+                initialConfig={service.pixConfig}
+                onSave={handleSavePix}
+              />
+            </div>
+          )}
+          <p className="text-slate-500 font-medium mb-8">
             Em breve você poderá editar suas especialidades, raio de atendimento e fotos de portfólio.
          </p>
          <div className="space-y-4">
