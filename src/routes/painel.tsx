@@ -1,4 +1,4 @@
-import { createFileRoute, useNavigate, Outlet, redirect } from "@tanstack/react-router";
+import { createFileRoute, useNavigate, Outlet, redirect, Link } from "@tanstack/react-router";
 import { useAtom } from "jotai";
 import { isAuthenticatedAtom, authUserAtom } from "@/hooks/useAuth";
 import { toast } from "sonner";
