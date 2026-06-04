@@ -12,6 +12,14 @@ export type Interest =
   | 'empregos' | 'classificados' | 'acoes_sociais' | 'eventos_religiosos' 
   | 'esportes' | 'educacao' | 'cultura';
 
+export interface PixConfig {
+  enabled: boolean;
+  keyType: 'cpf' | 'cnpj' | 'email' | 'phone' | 'random';
+  key: string;
+  holderName: string;
+  description?: string;
+}
+
 export interface User {
   id: string;
   name: string;
@@ -29,7 +37,9 @@ export interface User {
   faithCommunity?: string;
   followedCommunities?: string[];
   mustChangePassword?: boolean;
+  pixConfig?: PixConfig;
   createdAt: string;
   updatedAt: string;
 }
+
 

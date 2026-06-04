@@ -1,3 +1,5 @@
+import { PixConfig } from "./users";
+
 /**
  * Database Record Types
  * Prepared for future Supabase migration
@@ -46,7 +48,9 @@ export interface MerchantRecord extends BaseRecord {
   slug?: string;
   customDomain?: string;
   canonicalUrl?: string;
+  pixConfig?: PixConfig;
 }
+
 
 export interface NewsRecord extends BaseRecord {
   title: string;

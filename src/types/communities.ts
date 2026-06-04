@@ -1,3 +1,5 @@
+import { PixConfig } from "./users";
+
 export type CommunityType = 
   | 'religiosa' 
   | 'esportiva' 
@@ -18,6 +20,7 @@ export interface Community {
   phone?: string;
   whatsapp?: string;
   isActive: boolean;
+  pixConfig?: PixConfig;
   createdAt: string;
   updatedAt: string;
 }
