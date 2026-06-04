@@ -3,13 +3,15 @@ import type { Merchant } from "@/data/merchants";
 import { getMerchantPublicPath } from "@/data/merchants";
 import { Button } from "@/components/ui/button";
 import { Link } from "@tanstack/react-router";
+import { reviewsRepository } from "@/repositories/reviewsRepository";
 
 import { useLocation } from "@/hooks/useLocation";
-import { useState, memo } from "react";
+import { useState, memo, useMemo } from "react";
 import { WhatsAppButton } from "./WhatsAppButton";
 import { BusinessStatusBadge } from "./BusinessStatusBadge";
 
 type Props = { merchant: Merchant };
+
 
 
 export function PromotionBadge() {
