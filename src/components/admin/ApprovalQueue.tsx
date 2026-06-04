@@ -1,5 +1,6 @@
-import { useState } from "react";
+import { useState, useCallback } from "react";
 import { MerchantAdmin } from "@/data/admin";
+
 import { Merchant } from "@/data/merchants";
 import { Button } from "@/components/ui/button";
 import { AdminModal } from "./AdminModal";
