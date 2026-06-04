@@ -94,13 +94,31 @@ export default function Transporte() {
         <div className="h-1.5 w-20 bg-orange-600 mt-4 rounded-full" />
       </header>
 
-      <div className="bg-slate-900 text-white p-6 rounded-3xl mb-12 flex items-start gap-4 border-l-8 border-orange-600 shadow-2xl">
-        <ShieldAlert className="w-8 h-8 text-orange-600 shrink-0" />
-        <div>
-          <p className="text-sm font-bold uppercase tracking-widest text-orange-600 mb-1">Atenção Passageiro</p>
-          <p className="text-sm md:text-base font-medium text-slate-300">
-            O Axéí no Bairro apenas conecta passageiros e motoristas locais. Combine valor, ponto de encontro, rota e condições diretamente pelo WhatsApp. Confirme sempre a identidade do motorista antes da viagem.
-          </p>
+      <div className="bg-slate-900 text-white p-8 rounded-3xl mb-12 border-l-8 border-orange-600 shadow-2xl">
+        <div className="mb-8">
+          <h2 className="text-2xl font-black mb-4 italic text-orange-500">Como funciona</h2>
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+            {[
+              { n: '1', t: 'Escolha um motorista' },
+              { n: '2', t: 'Clique em WhatsApp' },
+              { n: '3', t: 'Combine valor e local' },
+              { n: '4', t: 'Realize a viagem' }
+            ].map((step) => (
+              <div key={step.n} className="flex flex-col gap-2 bg-slate-800 p-4 rounded-2xl">
+                <span className="w-8 h-8 flex items-center justify-center rounded-full bg-orange-600 text-white font-black">{step.n}</span>
+                <p className="text-xs font-bold leading-tight">{step.t}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+        <div className="flex items-start gap-4">
+          <ShieldAlert className="w-8 h-8 text-orange-600 shrink-0" />
+          <div>
+            <p className="text-sm md:text-base font-medium text-slate-300">
+              <span className="block font-bold text-white mb-1">Este não é um aplicativo de corrida em tempo real.</span>
+              Os motoristas são profissionais e moradores cadastrados na plataforma. Combine valor, ponto de encontro, rota e condições diretamente pelo WhatsApp.
+            </p>
+          </div>
         </div>
       </div>
 
