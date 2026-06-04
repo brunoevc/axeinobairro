@@ -6,7 +6,9 @@ import { trackEvent } from '@/lib/metrics';
 
 export interface CartItem extends Product {
   quantity: number;
+  itemNote?: string;
 }
+
 
 export interface CheckoutData {
   customerName: string;
@@ -14,6 +16,8 @@ export interface CheckoutData {
   orderType: 'retirada' | 'entrega';
   address: string;
   neighborhood: string;
+  neighborhoodId?: string; // New field for delivery zone linking
+  deliveryFee: number;     // New field
   referencePoint: string;
   paymentMethod: 'pix' | 'dinheiro' | 'cartao';
   changeFor: string;
@@ -21,26 +25,31 @@ export interface CheckoutData {
   deliveryLocationShared?: boolean;
 }
 
+
 const DEFAULT_CHECKOUT_DATA: CheckoutData = {
   customerName: '',
   customerPhone: '',
   orderType: 'retirada',
   address: '',
   neighborhood: '',
+  deliveryFee: 0,
   referencePoint: '',
   paymentMethod: 'pix',
   changeFor: '',
   pixReceiptInstruction: true,
 };
 
+
 interface CartContextType {
   items: CartItem[];
   merchantId: string | null;
   notes: string;
   checkoutData: CheckoutData;
-  addItem: (product: Product) => void;
+  addItem: (product: Product, itemNote?: string) => void;
   removeItem: (productId: string) => void;
   updateQuantity: (productId: string, delta: number) => void;
+  updateItemNote: (productId: string, note: string) => void;
+
   clearCart: () => void;
   setNotes: (notes: string) => void;
   setCheckoutData: (data: Partial<CheckoutData>) => void;
@@ -79,7 +88,7 @@ export const CartProvider: React.FC<{ children: React.ReactNode }> = ({ children
     localStorage.setItem(CART_STORAGE_KEY, JSON.stringify({ items, merchantId, notes, checkoutData }));
   }, [items, merchantId, notes, checkoutData]);
 
-  const addItem = (product: Product) => {
+  const addItem = (product: Product, itemNote?: string) => {
     if (merchantId && merchantId !== product.merchantId) {
       return;
     }
@@ -87,18 +96,22 @@ export const CartProvider: React.FC<{ children: React.ReactNode }> = ({ children
     if (!merchantId) setMerchantId(product.merchantId);
 
     setItems(prev => {
-      const existing = prev.find(item => item.id === product.id);
-      if (existing) {
-        return prev.map(item => 
-          item.id === product.id ? { ...item, quantity: item.quantity + 1 } : item
-        );
+      const existingIndex = prev.findIndex(item => item.id === product.id && item.itemNote === itemNote);
+      if (existingIndex !== -1) {
+        const newItems = [...prev];
+        newItems[existingIndex] = { 
+          ...newItems[existingIndex], 
+          quantity: newItems[existingIndex].quantity + 1 
+        };
+        return newItems;
       }
-      return [...prev, { ...product, quantity: 1 }];
+      return [...prev, { ...product, quantity: 1, itemNote }];
     });
     
     trackEvent(product.merchantId, "product_added");
     toast.success(`${product.name} adicionado ao carrinho`);
   };
+
 
   const removeItem = (productId: string) => {
     setItems(prev => {
@@ -120,7 +133,14 @@ export const CartProvider: React.FC<{ children: React.ReactNode }> = ({ children
     });
   };
 
+  const updateItemNote = (productId: string, note: string) => {
+    setItems(prev => prev.map(item => 
+      item.id === productId ? { ...item, itemNote: note } : item
+    ));
+  };
+
   const clearCart = () => {
+
     setItems([]);
     setMerchantId(null);
     setNotes('');
@@ -143,9 +163,11 @@ export const CartProvider: React.FC<{ children: React.ReactNode }> = ({ children
       addItem, 
       removeItem, 
       updateQuantity, 
+      updateItemNote,
       clearCart, 
       setNotes, 
       setCheckoutData,
+
       getTotal, 
       getItemsCount
     }}>

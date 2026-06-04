@@ -27,17 +27,23 @@ export const getOrderWhatsAppUrl = (
   const formattedPhone = cleanPhone.startsWith("55") ? cleanPhone : `55${cleanPhone}`;
   
   const itemsText = cartItems.map(item => 
-    `• ${item.quantity}x ${item.name} — R$ ${(item.price * item.quantity).toFixed(2).replace('.', ',')}`
+    `• ${item.quantity}x ${item.name} — R$ ${(item.price * item.quantity).toFixed(2).replace('.', ',')}${item.itemNote ? `\n  Obs: ${item.itemNote}` : ''}`
   ).join('\n');
   
-  const total = cartItems.reduce((sum, item) => sum + item.price * item.quantity, 0);
+  const subtotal = cartItems.reduce((sum, item) => sum + item.price * item.quantity, 0);
+  const deliveryFee = checkoutData.orderType === 'entrega' ? (checkoutData.deliveryFee || 0) : 0;
+  const total = subtotal + deliveryFee;
+  
+  const formattedSubtotal = subtotal.toFixed(2).replace('.', ',');
+  const formattedDelivery = deliveryFee.toFixed(2).replace('.', ',');
   const formattedTotal = total.toFixed(2).replace('.', ',');
+
   
   let message = `Olá! Vim pelo Axêi no Bairro e gostaria de fazer este pedido.\n\n`;
   
   message += `🛒 ITENS:\n${itemsText}\n\n`;
   
-  message += `💰 Total estimado:\nR$ ${formattedTotal}\n\n`;
+  message += `💰 RESUMO DO PEDIDO:\nSubtotal: R$ ${formattedSubtotal}\nEntrega: R$ ${formattedDelivery}\nTOTAL: R$ ${formattedTotal}\n\n`;
   
   message += `👤 Cliente:\nNome: ${checkoutData.customerName}\nTelefone: ${checkoutData.customerPhone}\n\n`;
   
@@ -67,7 +73,13 @@ export const getOrderWhatsAppUrl = (
   }
   
   if (checkoutData.paymentMethod === 'pix') {
-    message += `📲 Pix:\nPor favor, envie a chave Pix para pagamento. Enviarei o comprovante após realizar o pagamento.\n\n`;
+    if (merchant.pixConfig?.enabled) {
+      message += `📲 Pix Disponível:\nChave: ${merchant.pixConfig.key}\nTitular: ${merchant.pixConfig.holderName}\n\n`;
+    } else {
+      message += `📲 Pix:\nPor favor, envie a chave Pix para pagamento. Enviarei o comprovante após realizar o pagamento.\n\n`;
+    }
+
+
   }
   
   if (notes) {
