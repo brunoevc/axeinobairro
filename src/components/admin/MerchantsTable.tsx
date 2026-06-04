@@ -262,9 +262,11 @@ export function MerchantsTable({
           merchant={merchant}
           onEdit={onEdit}
           onToggleStatus={onToggleStatus}
+          onChangeStatus={onChangeStatus}
           onChangePlan={onChangePlan}
           onManageCatalog={onManageCatalog}
         />
+
 
       ))}
     </div>
