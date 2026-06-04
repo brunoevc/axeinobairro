@@ -17,11 +17,15 @@ import {
   Bike,
   PawPrint,
   RefreshCw,
-  Briefcase,
-  Car,
-  Lock,
-  ArrowLeft
-} from "lucide-react";
+   Briefcase,
+   Car,
+   Lock,
+   ArrowLeft,
+   ShoppingBag,
+   Wrench,
+   Newspaper
+ } from "lucide-react";
+
 
 
 import { categories } from "@/data/merchants";
