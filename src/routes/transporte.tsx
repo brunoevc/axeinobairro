@@ -191,7 +191,7 @@ export default function Transporte() {
             const isSelected = selectedDriverId === driver.id;
 
             return (
-              <div key={driver.id} ref={el => cardRefs.current[driver.id] = el}>
+              <div key={driver.id} ref={el => { cardRefs.current[driver.id] = el; }}>
                 <Card 
                   className={`
                     rounded-[2.5rem] border-slate-100 hover:shadow-2xl transition-all duration-500 group overflow-hidden relative
