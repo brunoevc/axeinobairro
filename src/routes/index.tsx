@@ -580,6 +580,13 @@ function Index() {
                 <span className="text-[10px] font-black uppercase tracking-widest text-slate-500">Plataforma</span>
                 <Link to="/negocios" className="text-sm font-bold text-slate-300 hover:text-orange-500 transition-colors">Ver Negócios</Link>
                 <Link to="/cadastro" className="text-sm font-bold text-slate-300 hover:text-orange-500 transition-colors">Cadastrar Loja</Link>
+                {IS_ADMIN_ENABLED && (
+                  <Link to="/admin" className="text-sm font-bold text-slate-300 hover:text-orange-500 transition-colors flex items-center gap-1.5">
+                    <Lock className="w-3 h-3" />
+                    Admin
+                  </Link>
+                )}
+
              </div>
              <div className="flex flex-col gap-4 text-center md:text-left">
                 <span className="text-[10px] font-black uppercase tracking-widest text-slate-500">Suporte</span>
