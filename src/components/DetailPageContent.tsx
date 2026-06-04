@@ -193,7 +193,65 @@ export function DetailPageContent({ merchant }: DetailPageContentProps) {
       </div>
 
       <main className="max-w-7xl mx-auto px-6 mt-16 md:mt-24 grid grid-cols-1 lg:grid-cols-3 gap-8">
-        <div className="lg:col-span-2 space-y-8">
+        {/* Contact Info Sidebar - Moved up on mobile for priority */}
+        <div className="order-1 lg:order-2 space-y-6">
+          <div className="bg-white rounded-3xl p-6 border border-slate-100 shadow-sm space-y-6">
+            <h3 className="text-lg font-black text-slate-900">Contato Direto</h3>
+            
+            <div className="pt-2 flex flex-col gap-3 mb-6">
+              <WhatsAppButton 
+                merchantId={merchant.id}
+                phone={merchant.whatsapp} 
+                merchantName={merchant.name} 
+                className="w-full h-16 text-lg"
+              />
+            </div>
+
+            <div className="space-y-4">
+              <div className="flex items-start gap-4 p-4 bg-slate-50 rounded-2xl group hover:bg-orange-50 transition-colors cursor-pointer">
+                <div className="p-3 bg-white rounded-xl text-orange-600 shadow-sm group-hover:bg-orange-600 group-hover:text-white transition-all">
+                  <Clock className="h-5 w-5" />
+                </div>
+                <div>
+                  <p className="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-1">Horário de Funcionamento</p>
+                  <p className="text-sm font-bold text-slate-900 leading-none">{merchant.hours}</p>
+                </div>
+              </div>
+
+              <div className="flex items-start gap-4 p-4 bg-slate-50 rounded-2xl group hover:bg-orange-50 transition-colors cursor-pointer">
+                <div className="p-3 bg-white rounded-xl text-orange-600 shadow-sm group-hover:bg-orange-600 group-hover:text-white transition-all">
+                  <MapPin className="h-5 w-5" />
+                </div>
+                <div>
+                  <p className="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-1">Endereço</p>
+                  <p className="text-sm font-bold text-slate-900 leading-tight flex items-center gap-2">
+                    {merchant.address}
+                    <button onClick={() => handleCopy(merchant.address, "Endereço")} className="p-1 hover:bg-white rounded shadow-sm text-slate-400 hover:text-orange-600 transition-all">
+                      <Copy className="w-3 h-3" />
+                    </button>
+                  </p>
+                  <p className="text-xs font-bold text-orange-600 mt-1">{merchant.neighborhood}</p>
+                  <Button asChild variant="link" className="text-orange-600 h-auto p-0 font-bold text-xs mt-2">
+                    <a href={mapsUrl} target="_blank" rel="noopener noreferrer" className="flex items-center gap-1">
+                      Ver no mapa / Rota <ChevronRight className="w-3 h-3" />
+                    </a>
+                  </Button>
+                </div>
+              </div>
+            </div>
+
+            <div className="pt-4">
+              <Button asChild variant="outline" className="w-full border-slate-200 rounded-2xl h-14 font-black text-slate-700 hover:bg-slate-50">
+                <a href={`https://instagram.com/${merchant.instagram.replace('@', '')}`} target="_blank" rel="noreferrer">
+                  <InstagramIcon className="w-5 h-5 mr-2" />
+                  Instagram
+                </a>
+              </Button>
+            </div>
+          </div>
+        </div>
+
+        <div className="order-2 lg:order-1 lg:col-span-2 space-y-8">
           <section id="catalog" className="scroll-mt-24">
             <div className="flex items-center justify-between mb-8">
               <h2 className="text-3xl font-black text-slate-900 tracking-tighter flex items-center gap-3">
@@ -287,80 +345,7 @@ export function DetailPageContent({ merchant }: DetailPageContentProps) {
           </section>
         </div>
 
-        <div className="space-y-6">
-          <div className="bg-white rounded-3xl p-6 border border-slate-100 shadow-sm space-y-6">
-            <h3 className="text-lg font-black text-slate-900">Informações de Contato</h3>
-            
-            <div className="space-y-4">
-              <div className="flex items-start gap-4 p-4 bg-slate-50 rounded-2xl group hover:bg-orange-50 transition-colors cursor-pointer">
-                <div className="p-3 bg-white rounded-xl text-orange-600 shadow-sm group-hover:bg-orange-600 group-hover:text-white transition-all">
-                  <Clock className="h-5 w-5" />
-                </div>
-                <div>
-                  <p className="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-1">Horário</p>
-                  <p className="text-sm font-bold text-slate-900 leading-none">{merchant.hours}</p>
-                </div>
-              </div>
-
-              <div className="flex items-start gap-4 p-4 bg-slate-50 rounded-2xl group hover:bg-orange-50 transition-colors cursor-pointer">
-                <div className="p-3 bg-white rounded-xl text-orange-600 shadow-sm group-hover:bg-orange-600 group-hover:text-white transition-all">
-                  <MapPin className="h-5 w-5" />
-                </div>
-                <div>
-                  <p className="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-1">Endereço</p>
-                  <p className="text-sm font-bold text-slate-900 leading-tight flex items-center gap-2">
-                    {merchant.address}
-                    <button onClick={() => handleCopy(merchant.address, "Endereço")} className="p-1 hover:bg-white rounded shadow-sm text-slate-400 hover:text-orange-600 transition-all">
-                      <Copy className="w-3 h-3" />
-                    </button>
-                  </p>
-
-                  <p className="text-xs font-bold text-orange-600 mt-1">{merchant.neighborhood}</p>
-                  <Button asChild variant="link" className="text-orange-600 h-auto p-0 font-bold text-xs mt-2">
-                    <a href={mapsUrl} target="_blank" rel="noopener noreferrer" className="flex items-center gap-1">
-                      Ver no mapa / Rota <ChevronRight className="w-3 h-3" />
-                    </a>
-                  </Button>
-                </div>
-              </div>
-
-              <div className="flex items-start gap-4 p-4 bg-slate-50 rounded-2xl group hover:bg-orange-50 transition-colors cursor-pointer">
-                <div className="p-3 bg-white rounded-xl text-orange-600 shadow-sm group-hover:bg-orange-600 group-hover:text-white transition-all">
-                  <InstagramIcon className="h-5 w-5" />
-                </div>
-                <div>
-                  <p className="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-1">Instagram</p>
-                  <p className="text-sm font-bold text-slate-900 leading-none flex items-center gap-2">
-                    {merchant.instagram}
-                    <button onClick={() => handleCopy(merchant.instagram, "Instagram")} className="p-1 hover:bg-white rounded shadow-sm text-slate-400 hover:text-orange-600 transition-all">
-                      <Copy className="w-3 h-3" />
-                    </button>
-                  </p>
-
-                  <a href={`https://instagram.com/${merchant.instagram.replace('@', '')}`} target="_blank" rel="noreferrer" className="text-xs font-bold text-orange-600 mt-1 inline-flex items-center gap-1">
-                    Ver perfil <ChevronRight className="w-3 h-3" />
-                  </a>
-                </div>
-              </div>
-            </div>
-
-            <div className="pt-4 flex flex-col gap-3">
-              <WhatsAppButton 
-                merchantId={merchant.id}
-                phone={merchant.whatsapp} 
-                merchantName={merchant.name} 
-                className="w-full h-14"
-              />
-
-              <Button asChild variant="outline" className="w-full border-slate-200 rounded-2xl h-14 font-black text-slate-700 hover:bg-slate-50">
-                <a href={`https://instagram.com/${merchant.instagram.replace('@', '')}`} target="_blank" rel="noreferrer">
-                  <InstagramIcon className="w-5 h-5 mr-2" />
-                  Seguir no Instagram
-                </a>
-              </Button>
-            </div>
-          </div>
-
+        <div className="order-3 space-y-6">
           <div className="bg-white rounded-3xl p-6 border border-slate-100 shadow-sm space-y-4">
             <h3 className="text-sm font-black text-slate-900 uppercase tracking-widest flex items-center gap-2">
               <AlertCircle className="w-4 h-4 text-slate-400" />
