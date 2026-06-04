@@ -44,10 +44,12 @@ export function MerchantRow({
   merchant,
   onEdit,
   onToggleStatus,
+  onChangeStatus,
   onChangePlan,
   onManageCatalog,
 }: MerchantRowProps) {
 
+  const [statusOpen, setStatusOpen] = useState(false);
   const [planOpen, setPlanOpen] = useState(false);
   const currentPlan = merchant.plan || "free";
   
@@ -57,6 +59,7 @@ export function MerchantRow({
     "sales",
     "pro",
   ];
+
 
   return (
     <div className="border border-accent/10 rounded-lg p-4 mb-3 bg-card hover:border-accent/20 transition-colors">
