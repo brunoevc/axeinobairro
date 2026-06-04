@@ -62,8 +62,8 @@ export function MerchantEditForm({
       return;
     }
 
-    if (!slugIsValid) {
-      toast.error("O slug é inválido ou reservado. Use apenas letras minúsculas, números e hifens (não no início ou fim).");
+    if (!slugIsValid || isReserved) {
+      toast.error("O slug é inválido ou reservado. Use apenas letras minúsculas, números e hifens.");
       return;
     }
 
@@ -71,6 +71,7 @@ export function MerchantEditForm({
       toast.error("Este slug já está sendo usado por outro estabelecimento.");
       return;
     }
+
 
 
     setIsSaving(true);
