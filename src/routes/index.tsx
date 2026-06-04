@@ -21,6 +21,11 @@ import {
 
 import { categories } from "@/data/merchants";
 import { merchantsRepository } from "@/repositories/merchantsRepository";
+import { servicesRepository } from "@/repositories/servicesRepository";
+import { ridesRepository } from "@/repositories/ridesRepository";
+import { localBoostsRepository } from "@/repositories/localBoostsRepository";
+import { LocalBoost } from "@/types/boosts";
+
 
 import { MerchantCard } from "@/components/MerchantCard";
 import { MerchantSkeleton } from "@/components/MerchantSkeleton";
@@ -47,6 +52,10 @@ function Index() {
   const navigate = useNavigate();
   const { coords, getDistance, loading: locationLoading } = useLocation();
   const merchants = useMemo(() => merchantsRepository.getAll(), []);
+  const services = useMemo(() => servicesRepository.getAll(), []);
+  const rides = useMemo(() => ridesRepository.list(), []);
+  const activeBoosts = useMemo(() => localBoostsRepository.getActiveBoosts(), []);
+
   const [searchTerm, setSearchTerm] = useState("");
 
   const [isLoading, setIsLoading] = useState(true);
@@ -330,6 +339,118 @@ function Index() {
         </div>
 
       </section>
+
+      {/* Destaques do Bairro (Phase 8.3) */}
+      <section className="max-w-7xl mx-auto px-6 mt-24">
+        <div className="flex flex-col md:flex-row md:items-end justify-between mb-12 gap-4">
+          <div>
+            <div className="inline-flex items-center gap-2 px-2 py-0.5 rounded-md bg-orange-50 text-orange-600 text-[10px] font-black uppercase tracking-widest mb-4 border border-orange-100 shadow-sm">
+              <Zap className="h-3 w-3 fill-orange-600" />
+              Patrocinado
+            </div>
+            <h2 className="text-4xl font-black text-slate-900 tracking-tighter">
+              Destaques do Bairro
+            </h2>
+            <p className="text-slate-500 font-medium text-lg mt-2">
+              Os melhores profissionais e lojas em evidência na sua região.
+            </p>
+          </div>
+        </div>
+
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          {isLoading 
+            ? [...Array(3)].map((_, i) => <MerchantSkeleton key={i} />)
+            : activeBoosts.filter(b => b.level === 'A').slice(0, 6).map((boost) => {
+                if (boost.targetType === 'loja') {
+                  const item = merchants.find(m => m.id === boost.targetId);
+                  if (!item) return null;
+                  return (
+                    <div key={boost.id} className="relative group">
+                      <div className="absolute -top-3 -right-3 z-10 bg-orange-600 text-white text-[10px] font-black px-3 py-1 rounded-full shadow-lg flex items-center gap-1 border-2 border-white uppercase tracking-wider">
+                        <Star className="w-3 h-3 fill-white" />
+                        Destaque
+                      </div>
+                      <MerchantCard merchant={item} />
+                    </div>
+                  );
+                }
+                if (boost.targetType === 'servico') {
+                  const item = services.find(s => s.id === boost.targetId);
+                  if (!item) return null;
+                  return (
+                    <Card key={boost.id} className="rounded-3xl border-2 border-orange-100 hover:shadow-xl transition-all duration-300 group overflow-hidden relative">
+                      <div className="absolute -top-3 -right-3 z-10 bg-orange-600 text-white text-[10px] font-black px-3 py-1 rounded-full shadow-lg flex items-center gap-1 border-2 border-white uppercase tracking-wider">
+                        <Star className="w-3 h-3 fill-white" />
+                        Destaque
+                      </div>
+                      <CardContent className="p-6">
+                        <div className="flex justify-between items-start mb-4">
+                          <Badge variant="outline" className="text-[10px] font-bold uppercase py-1 border-slate-200 capitalize">
+                            {item.category}
+                          </Badge>
+                        </div>
+                        <div className="flex items-center gap-4 mb-4">
+                          <div className="w-12 h-12 bg-slate-100 rounded-xl flex items-center justify-center text-slate-400 group-hover:bg-orange-600 group-hover:text-white transition-colors">
+                            <Briefcase className="w-5 h-5" />
+                          </div>
+                          <div>
+                            <h3 className="font-black text-lg text-slate-900 truncate">{item.name}</h3>
+                            <div className="flex items-center gap-1 text-orange-500">
+                              <Star className="w-3 h-3 fill-current" />
+                              <span className="text-xs font-bold">{item.rating || 'Novo'}</span>
+                            </div>
+                          </div>
+                        </div>
+                        <Button 
+                          onClick={() => window.open(servicesRepository.formatWhatsAppLink(item.phone, "Olá, vi seu destaque no Axêi no Bairro."), "_blank")}
+                          className="w-full bg-slate-900 hover:bg-orange-600 text-white rounded-xl h-12 font-black text-xs uppercase transition-all"
+                        >
+                          Ver Serviço
+                        </Button>
+                      </CardContent>
+                    </Card>
+                  );
+                }
+                if (boost.targetType === 'transporte') {
+                  const item = rides.find(r => r.id === boost.targetId);
+                  if (!item) return null;
+                  return (
+                    <Card key={boost.id} className="rounded-3xl border-2 border-orange-100 hover:shadow-xl transition-all duration-300 group overflow-hidden relative">
+                      <div className="absolute -top-3 -right-3 z-10 bg-orange-600 text-white text-[10px] font-black px-3 py-1 rounded-full shadow-lg flex items-center gap-1 border-2 border-white uppercase tracking-wider">
+                        <Star className="w-3 h-3 fill-white" />
+                        Destaque
+                      </div>
+                      <CardContent className="p-6">
+                        <div className="flex justify-between items-start mb-4">
+                          <Badge variant="outline" className="text-[10px] font-bold uppercase py-1 border-slate-200 capitalize">
+                            {item.serviceType}
+                          </Badge>
+                        </div>
+                        <div className="flex items-center gap-4 mb-4">
+                          <div className="w-12 h-12 bg-slate-100 rounded-xl flex items-center justify-center text-slate-400 group-hover:bg-orange-600 group-hover:text-white transition-colors">
+                            <Navigation className="w-5 h-5" />
+                          </div>
+                          <div>
+                            <h3 className="font-black text-lg text-slate-900 truncate">{item.name}</h3>
+                            <p className="text-[10px] text-slate-500 font-bold uppercase">{item.vehicle}</p>
+                          </div>
+                        </div>
+                        <Button 
+                          onClick={() => navigate({ to: '/transporte' })}
+                          className="w-full bg-slate-900 hover:bg-orange-600 text-white rounded-xl h-12 font-black text-xs uppercase transition-all"
+                        >
+                          Ver Transporte
+                        </Button>
+                      </CardContent>
+                    </Card>
+                  );
+                }
+                return null;
+              })
+          }
+        </div>
+      </section>
+
 
       {/* Nearby Businesses */}
       {nearbyMerchants.length > 0 && (
