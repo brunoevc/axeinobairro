@@ -9,8 +9,11 @@ type ApprovalQueueProps = {
   merchants: MerchantAdmin[];
   onApprove: (id: string) => void;
   onReject: (id: string, reason: string) => void;
+  onChangeStatus: (id: string, status: Merchant["status"]) => void;
+  onChangePlan: (id: string, plan: MerchantAdmin["plan"]) => void;
   onEdit: (merchant: MerchantAdmin) => void;
 };
+
 
 export function ApprovalQueue({
   merchants,
