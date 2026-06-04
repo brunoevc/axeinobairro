@@ -162,8 +162,6 @@ export function CartDrawer({ isOpen, onClose, merchant }: CartDrawerProps) {
         </div>
       </SheetContent>
     </Sheet>
-
-      </SheetContent>
-    </Sheet>
   );
 }
+
