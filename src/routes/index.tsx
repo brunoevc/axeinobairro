@@ -17,7 +17,8 @@ import {
   Bike,
   PawPrint,
   RefreshCw,
-  Briefcase
+  Briefcase,
+  Car
 } from "lucide-react";
 
 import { categories } from "@/data/merchants";
