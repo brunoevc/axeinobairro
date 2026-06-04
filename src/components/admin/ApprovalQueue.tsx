@@ -1,9 +1,11 @@
 import { useState } from "react";
 import { MerchantAdmin } from "@/data/admin";
+import { Merchant } from "@/data/merchants";
 import { Button } from "@/components/ui/button";
 import { AdminModal } from "./AdminModal";
 import { Store, CheckCircle2, XCircle, Edit3, MessageCircle, MapPin, Tag, ShieldCheck, Clock, ChevronDown } from "lucide-react";
 import React from "react";
+
 
 type ApprovalQueueProps = {
   merchants: MerchantAdmin[];
