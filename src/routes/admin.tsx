@@ -1,5 +1,5 @@
 import { createFileRoute, useNavigate, Outlet, Link, redirect } from "@tanstack/react-router";
-import { LayoutDashboard, Store, CheckCircle, CreditCard, ArrowLeft, LogOut, ShieldCheck, User, Megaphone, Car } from "lucide-react";
+import { LayoutDashboard, Store, CheckCircle, CreditCard, ArrowLeft, LogOut, ShieldCheck, User, Megaphone, Car, Zap } from "lucide-react";
 import { Logo } from "@/components/ui/Logo";
 import { useAtom } from "jotai";
 import { isAuthenticatedAtom, authUserAtom } from "@/hooks/useAuth";
@@ -132,6 +132,15 @@ function AdminLayout() {
             <span>Campanhas</span>
           </Link>
           <Link 
+            to="/admin/destaques" 
+            activeProps={{ className: "bg-orange-600 text-white shadow-lg shadow-orange-200" }}
+            inactiveProps={{ className: "text-slate-500 hover:bg-slate-50 hover:text-slate-900" }}
+            className="flex items-center gap-3 px-5 py-4 rounded-2xl text-sm font-bold transition-all shrink-0 md:shrink"
+          >
+            <Zap className="h-5 w-5" />
+            <span>Destaques</span>
+          </Link>
+          <Link 
             to="/admin/transporte" 
             activeProps={{ className: "bg-orange-600 text-white shadow-lg shadow-orange-200" }}
             inactiveProps={{ className: "text-slate-500 hover:bg-slate-50 hover:text-slate-900" }}
@@ -140,6 +149,7 @@ function AdminLayout() {
             <Car className="h-5 w-5" />
             <span>Transporte</span>
           </Link>
+
 
         </nav>
 
