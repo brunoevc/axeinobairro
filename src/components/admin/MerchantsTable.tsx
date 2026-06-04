@@ -34,9 +34,11 @@ type MerchantRowProps = {
   merchant: MerchantAdmin;
   onEdit: (merchant: MerchantAdmin) => void;
   onToggleStatus: (id: string) => void;
-  onChangePlan: (id: string, status: Merchant["status"]) => void;
+  onChangeStatus: (id: string, status: Merchant["status"]) => void;
+  onChangePlan: (id: string, plan: MerchantAdmin["plan"]) => void;
   onManageCatalog?: (merchantId: string) => void;
 };
+
 
 export function MerchantRow({
   merchant,
