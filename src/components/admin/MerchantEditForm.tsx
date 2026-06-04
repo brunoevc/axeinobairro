@@ -41,8 +41,10 @@ export function MerchantEditForm({
     }
   }, []);
 
-  const slugIsValid = isValidSlug(formData.slug);
-  const slugIsUnique = isSlugUnique(formData.slug, merchant.id, allMerchants);
+  const slugIsValid = useMemo(() => isValidSlug(formData.slug), [formData.slug]);
+  const slugIsUnique = useMemo(() => isSlugUnique(formData.slug, merchant.id, allMerchants), [formData.slug, merchant.id, allMerchants]);
+  const isReserved = useMemo(() => RESERVED_SLUGS.includes(formData.slug.toLowerCase()), [formData.slug]);
+
 
   const handleCopyLink = () => {
     const url = `${window.location.origin}/loja/${formData.slug || merchant.id}`;
