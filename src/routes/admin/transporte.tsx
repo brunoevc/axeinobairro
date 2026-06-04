@@ -161,6 +161,7 @@ export default function AdminTransporte() {
                     <SelectTrigger><SelectValue /></SelectTrigger>
                     <SelectContent>
                       <SelectItem value="carona">Carona</SelectItem>
+                      <SelectItem value="carro">Carro</SelectItem>
                       <SelectItem value="frete">Frete</SelectItem>
                       <SelectItem value="moto">Moto</SelectItem>
                       <SelectItem value="van">Van</SelectItem>
@@ -180,6 +181,32 @@ export default function AdminTransporte() {
                       <SelectItem value="indisponivel">Indisponível</SelectItem>
                     </SelectContent>
                   </Select>
+                </div>
+              </div>
+
+              <div className="grid grid-cols-2 gap-4">
+                <div className="grid gap-2">
+                  <Label className="font-bold">Zona no Mapa Visual</Label>
+                  <Select 
+                    value={editingItem?.mapZone} 
+                    onValueChange={(val: string) => setEditingItem({...editingItem, mapZone: val})}
+                  >
+                    <SelectTrigger><SelectValue placeholder="Selecione a zona" /></SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="Centro">Centro</SelectItem>
+                      <SelectItem value="Vila Madalena">Vila Madalena</SelectItem>
+                      <SelectItem value="Mooca">Mooca</SelectItem>
+                      <SelectItem value="Jardins">Jardins</SelectItem>
+                    </SelectContent>
+                  </Select>
+                </div>
+                <div className="grid gap-2">
+                  <Label className="font-bold">Nota de Localização</Label>
+                  <Input 
+                    value={editingItem?.locationNote || ""} 
+                    onChange={(e) => setEditingItem({...editingItem, locationNote: e.target.value})}
+                    placeholder="Ex: Perto do Posto Ipiranga"
+                  />
                 </div>
               </div>
 
