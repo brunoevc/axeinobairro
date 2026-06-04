@@ -6,7 +6,10 @@ export const Route = createFileRoute("/transporte")({
 });
 import { ridesRepository, normalizePhone } from "@/repositories/ridesRepository";
 import { localBoostsRepository } from "@/repositories/localBoostsRepository";
+import { reviewsRepository } from "@/repositories/reviewsRepository";
 import { RideDriver, ServiceType, AvailabilityStatus } from "@/types/rides";
+import { ReviewSection } from "@/components/ReviewSection";
+import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
 import { Star } from "lucide-react";
 
 import { Badge } from "@/components/ui/badge";
@@ -175,7 +178,18 @@ export default function Transporte() {
                   </div>
                   <div>
                     <h3 className="font-black text-xl text-slate-900 group-hover:text-orange-600 transition-colors">{driver.name}</h3>
-                    <p className="text-xs text-slate-500 font-medium">{driver.vehicle}</p>
+                    <div className="flex items-center gap-2">
+                      <p className="text-xs text-slate-500 font-medium">{driver.vehicle}</p>
+                      <div className="flex items-center gap-1 text-orange-500">
+                        <Star className="w-3 h-3 fill-current" />
+                        <span className="text-[10px] font-bold">
+                          {(() => {
+                            const { average, total } = reviewsRepository.getAverageRating('transporte', driver.id);
+                            return total > 0 ? average : 'Novo';
+                          })()}
+                        </span>
+                      </div>
+                    </div>
                   </div>
                 </div>
 
@@ -197,13 +211,27 @@ export default function Transporte() {
                   )}
                 </div>
 
-                <Button 
-                  onClick={() => handleWhatsApp(driver)}
-                  className="w-full bg-orange-600 hover:bg-orange-700 h-14 rounded-2xl font-black text-white shadow-lg shadow-orange-600/20 flex items-center gap-2 transition-transform hover:-translate-y-1"
-                >
-                  <MessageSquare className="w-5 h-5" />
-                  Chamar no WhatsApp
-                </Button>
+                <div className="mt-auto space-y-2">
+                  <Dialog>
+                    <DialogTrigger asChild>
+                      <Button variant="outline" className="w-full h-12 rounded-2xl border-slate-200 text-slate-600 font-bold hover:bg-slate-50 gap-2">
+                        <Star className="w-4 h-4 text-orange-500" />
+                        Ver Avaliações
+                      </Button>
+                    </DialogTrigger>
+                    <DialogContent className="max-w-2xl max-h-[90vh] overflow-y-auto rounded-[2.5rem] p-8">
+                      <ReviewSection targetId={driver.id} targetType="transporte" />
+                    </DialogContent>
+                  </Dialog>
+
+                  <Button 
+                    onClick={() => handleWhatsApp(driver)}
+                    className="w-full bg-orange-600 hover:bg-orange-700 h-14 rounded-2xl font-black text-white shadow-lg shadow-orange-600/20 flex items-center gap-2 transition-transform hover:-translate-y-1"
+                  >
+                    <MessageSquare className="w-5 h-5" />
+                    Chamar no WhatsApp
+                  </Button>
+                </div>
               </CardContent>
             </Card>
           );
