@@ -8,7 +8,7 @@ import { trackEvent } from "@/lib/metrics";
 
 interface ProductCardProps {
   product: Product;
-  onAdd: (product: Product) => void;
+  onAdd: (product: Product, note?: string) => void;
   disabled?: boolean;
 }
 
@@ -59,6 +59,7 @@ export function ProductCard({ product, onAdd, disabled }: ProductCardProps) {
             size="sm"
             onClick={() => {
               onAdd(product);
+
               trackEvent(product.merchantId, "promocao"); // Tracking as a general interest/promotion click
             }}
 

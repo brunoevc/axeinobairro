@@ -273,14 +273,15 @@ export function DetailPageContent({ merchant }: DetailPageContentProps) {
                   <ProductCard 
                     key={product.id} 
                     product={product} 
-                    onAdd={(p) => {
+                    onAdd={(p, note) => {
                       if (cartMerchantId && cartMerchantId !== merchant.id) {
                         if (window.confirm("Seu carrinho possui itens de outra loja. Deseja limpar o carrinho e adicionar este produto?")) {
                           clearCart();
-                          addItem(p);
+                          addItem(p, note);
+
                         }
                       } else {
-                        addItem(p);
+                        addItem(p, note);
                       }
                     }} 
                   />
