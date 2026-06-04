@@ -11,6 +11,7 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as TransporteRouteImport } from './routes/transporte'
 import { Route as ServicosRouteImport } from './routes/servicos'
+import { Route as RepresentantesRouteImport } from './routes/representantes'
 import { Route as PerfilRouteImport } from './routes/perfil'
 import { Route as OfertasRouteImport } from './routes/ofertas'
 import { Route as NoticiasRouteImport } from './routes/noticias'
@@ -41,6 +42,11 @@ const TransporteRoute = TransporteRouteImport.update({
 const ServicosRoute = ServicosRouteImport.update({
   id: '/servicos',
   path: '/servicos',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const RepresentantesRoute = RepresentantesRouteImport.update({
+  id: '/representantes',
+  path: '/representantes',
   getParentRoute: () => rootRouteImport,
 } as any)
 const PerfilRoute = PerfilRouteImport.update({
@@ -158,6 +164,7 @@ export interface FileRoutesByFullPath {
   '/noticias': typeof NoticiasRoute
   '/ofertas': typeof OfertasRoute
   '/perfil': typeof PerfilRoute
+  '/representantes': typeof RepresentantesRoute
   '/servicos': typeof ServicosRoute
   '/transporte': typeof TransporteRoute
   '/admin/aprovacoes': typeof AdminAprovacoesRoute
@@ -181,6 +188,7 @@ export interface FileRoutesByTo {
   '/noticias': typeof NoticiasRoute
   '/ofertas': typeof OfertasRoute
   '/perfil': typeof PerfilRoute
+  '/representantes': typeof RepresentantesRoute
   '/servicos': typeof ServicosRoute
   '/transporte': typeof TransporteRoute
   '/admin/aprovacoes': typeof AdminAprovacoesRoute
@@ -207,6 +215,7 @@ export interface FileRoutesById {
   '/noticias': typeof NoticiasRoute
   '/ofertas': typeof OfertasRoute
   '/perfil': typeof PerfilRoute
+  '/representantes': typeof RepresentantesRoute
   '/servicos': typeof ServicosRoute
   '/transporte': typeof TransporteRoute
   '/admin/aprovacoes': typeof AdminAprovacoesRoute
@@ -234,6 +243,7 @@ export interface FileRouteTypes {
     | '/noticias'
     | '/ofertas'
     | '/perfil'
+    | '/representantes'
     | '/servicos'
     | '/transporte'
     | '/admin/aprovacoes'
@@ -257,6 +267,7 @@ export interface FileRouteTypes {
     | '/noticias'
     | '/ofertas'
     | '/perfil'
+    | '/representantes'
     | '/servicos'
     | '/transporte'
     | '/admin/aprovacoes'
@@ -282,6 +293,7 @@ export interface FileRouteTypes {
     | '/noticias'
     | '/ofertas'
     | '/perfil'
+    | '/representantes'
     | '/servicos'
     | '/transporte'
     | '/admin/aprovacoes'
@@ -308,6 +320,7 @@ export interface RootRouteChildren {
   NoticiasRoute: typeof NoticiasRoute
   OfertasRoute: typeof OfertasRoute
   PerfilRoute: typeof PerfilRoute
+  RepresentantesRoute: typeof RepresentantesRoute
   ServicosRoute: typeof ServicosRoute
   TransporteRoute: typeof TransporteRoute
   LojaSlugRoute: typeof LojaSlugRoute
@@ -327,6 +340,13 @@ declare module '@tanstack/react-router' {
       path: '/servicos'
       fullPath: '/servicos'
       preLoaderRoute: typeof ServicosRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/representantes': {
+      id: '/representantes'
+      path: '/representantes'
+      fullPath: '/representantes'
+      preLoaderRoute: typeof RepresentantesRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/perfil': {
@@ -530,6 +550,7 @@ const rootRouteChildren: RootRouteChildren = {
   NoticiasRoute: NoticiasRoute,
   OfertasRoute: OfertasRoute,
   PerfilRoute: PerfilRoute,
+  RepresentantesRoute: RepresentantesRoute,
   ServicosRoute: ServicosRoute,
   TransporteRoute: TransporteRoute,
   LojaSlugRoute: LojaSlugRoute,
