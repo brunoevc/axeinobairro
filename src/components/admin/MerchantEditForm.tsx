@@ -120,18 +120,18 @@ export function MerchantEditForm({
                       URL Personalizada (Slug)
                     </label>
                     {formData.slug && (
-                      <span className={`text-[10px] font-bold uppercase ${!slugIsValid || !slugIsUnique ? 'text-red-500' : 'text-emerald-500'}`}>
-                        {RESERVED_SLUGS.includes(formData.slug.toLowerCase()) 
-                          ? "Reservado" 
-                          : !slugIsValid ? "Inválido" 
-                          : !slugIsUnique ? "Duplicado" 
-                          : "Disponível"}
+                      <span className={`text-[10px] font-bold uppercase flex items-center gap-1 ${!slugIsValid || !slugIsUnique || isReserved ? 'text-red-500' : 'text-emerald-500'}`}>
+                        {isReserved 
+                          ? <><AlertCircle className="w-3 h-3" /> Reservado</>
+                          : !slugIsValid ? <><AlertCircle className="w-3 h-3" /> Inválido</>
+                          : !slugIsUnique ? <><AlertCircle className="w-3 h-3" /> Em uso</>
+                          : <><Check className="w-3 h-3" /> Disponível</>}
                       </span>
                     )}
                   </div>
 
                   <div className="relative group">
-                    <Globe className={`absolute left-5 top-1/2 -translate-y-1/2 w-4 h-4 transition-colors ${!slugIsValid || !slugIsUnique ? 'text-red-400' : 'text-slate-400 group-focus-within:text-violet-600'}`} />
+                    <Globe className={`absolute left-5 top-1/2 -translate-y-1/2 w-4 h-4 transition-colors ${!slugIsValid || !slugIsUnique || isReserved ? 'text-red-400' : 'text-slate-400 group-focus-within:text-violet-600'}`} />
                     <input
                       type="text"
                       value={formData.slug}
@@ -140,12 +140,13 @@ export function MerchantEditForm({
                       }
                       placeholder="ex: cantina-da-nonna"
                       className={`w-full rounded-2xl border bg-slate-50 px-5 pl-12 py-4 text-sm font-bold text-slate-900 outline-none focus:ring-4 transition-all shadow-sm ${
-                        !slugIsValid || !slugIsUnique 
-                          ? 'border-red-100 focus:ring-red-500/5 focus:border-red-600 focus:bg-red-50/30' 
+                        !slugIsValid || !slugIsUnique || isReserved
+                          ? 'border-red-200 focus:ring-red-500/5 focus:border-red-600 focus:bg-red-50/30' 
                           : 'border-slate-100 focus:ring-violet-500/5 focus:border-violet-600 focus:bg-white'
                       }`}
                     />
                   </div>
+
                   <div className="flex flex-col gap-1.5 px-1">
                     <div className="flex items-center justify-between">
                       <p className="text-[10px] text-slate-400 font-medium">
