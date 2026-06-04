@@ -3,13 +3,14 @@ import { useAdminState } from "@/hooks/useAdminState";
 import { DashboardStats } from "@/components/admin/DashboardStats";
 import { PlansChart } from "@/components/admin/PlansChart";
 import { ActivityLog } from "@/components/admin/ActivityLog";
-import { ShieldCheck, Info, TrendingUp, BarChart3, Clock, Layout, Save, CheckCircle2, AlertCircle, Users, Car, Wrench, MessageSquare } from "lucide-react";
+import { ShieldCheck, Info, TrendingUp, BarChart3, Clock, Layout, Save, CheckCircle2, AlertCircle, Users, Car, Wrench, MessageSquare, Tag } from "lucide-react";
 import { ImageCropUpload } from "@/components/ImageCropUpload";
 import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { toast } from "sonner";
 import { useAtom } from "jotai";
 import { authUserAtom } from "@/hooks/useAuth";
+import ClassifiedsModeration from "@/components/admin/ClassifiedsModeration";
 
 export const Route = createFileRoute("/admin/")({
   component: AdminDashboard,

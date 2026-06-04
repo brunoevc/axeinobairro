@@ -1,4 +1,4 @@
-import { ClassifiedAd, ClassifiedReport } from '../types/classifieds';
+import { ClassifiedAd } from '../types/classifieds';
 
 const STORAGE_KEY = 'axei_classifieds';
 const REPORTS_KEY = 'axei_classified_reports';
@@ -10,12 +10,20 @@ export const classifiedsRepository = {
     
     // Auto-expire check
     const now = new Date();
-    return ads.map(ad => {
+    let changed = false;
+    const updatedAds = ads.map(ad => {
       if (ad.status === 'active' && new Date(ad.expiresAt) < now) {
+        changed = true;
         return { ...ad, status: 'expired' as const };
       }
       return ad;
     });
+
+    if (changed) {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(updatedAds));
+    }
+    
+    return updatedAds;
   },
 
   getActive(): ClassifiedAd[] {
@@ -41,16 +49,18 @@ export const classifiedsRepository = {
     }
     
     localStorage.setItem(STORAGE_KEY, JSON.stringify(ads));
+    window.dispatchEvent(new Event("storage"));
   },
 
   delete(id: string): void {
     const ads = this.getAll().filter(ad => ad.id !== id);
     localStorage.setItem(STORAGE_KEY, JSON.stringify(ads));
+    window.dispatchEvent(new Event("storage"));
   },
 
-  report(report: ClassifiedReport): void {
+  report(report: { id: string; adId: string; reason: string; createdAt: string }): void {
     const reportsStr = localStorage.getItem(REPORTS_KEY);
-    const reports: ClassifiedReport[] = reportsStr ? JSON.parse(reportsStr) : [];
+    const reports: any[] = reportsStr ? JSON.parse(reportsStr) : [];
     reports.push(report);
     localStorage.setItem(REPORTS_KEY, JSON.stringify(reports));
 
@@ -60,10 +70,11 @@ export const classifiedsRepository = {
     if (adIndex >= 0) {
       ads[adIndex].reports = (ads[adIndex].reports || 0) + 1;
       localStorage.setItem(STORAGE_KEY, JSON.stringify(ads));
+      window.dispatchEvent(new Event("storage"));
     }
   },
 
-  getReports(): ClassifiedReport[] {
+  getReports(): any[] {
     const data = localStorage.getItem(REPORTS_KEY);
     return data ? JSON.parse(data) : [];
   }
