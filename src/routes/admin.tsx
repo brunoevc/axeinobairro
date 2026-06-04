@@ -1,13 +1,19 @@
 import { createFileRoute, useNavigate, Outlet, Link, redirect } from "@tanstack/react-router";
-import { LayoutDashboard, Store, CheckCircle, CreditCard, ArrowLeft, LogOut, ShieldCheck, User, Megaphone, Car, Zap } from "lucide-react";
+import { LayoutDashboard, Store, CheckCircle, CreditCard, ArrowLeft, LogOut, ShieldCheck, User, Megaphone, Car, Zap, Lock } from "lucide-react";
 import { Logo } from "@/components/ui/Logo";
 import { useAtom } from "jotai";
 import { isAuthenticatedAtom, authUserAtom } from "@/hooks/useAuth";
 import { useEffect } from "react";
 import { toast } from "sonner";
 
+const IS_ADMIN_ENABLED = import.meta.env.VITE_ADMIN_ENABLED === 'true';
+
 export const Route = createFileRoute("/admin")({
   beforeLoad: ({ location }) => {
+    if (!IS_ADMIN_ENABLED) {
+      return; // Permite carregar para mostrar o aviso de desativado
+    }
+
     const authStatus = localStorage.getItem("axei_auth_status");
     const authUser = localStorage.getItem("axei_auth_user");
     const isAuthenticated = authStatus === "true" && authUser !== null && authUser !== "null";
@@ -24,6 +30,7 @@ export const Route = createFileRoute("/admin")({
   component: AdminLayout,
 });
 
+
 function AdminLayout() {
   const navigate = useNavigate();
   const [isAuthenticated, setIsAuthenticated] = useAtom(isAuthenticatedAtom);
@@ -37,8 +44,34 @@ function AdminLayout() {
   };
 
 
+  if (!IS_ADMIN_ENABLED) {
+    return (
+      <div className="min-h-screen bg-slate-50 flex items-center justify-center p-6">
+        <div className="max-w-md w-full bg-white p-12 rounded-3xl shadow-xl text-center border border-slate-100">
+          <div className="w-20 h-20 bg-orange-100 rounded-full flex items-center justify-center mx-auto mb-8">
+            <Lock className="w-10 h-10 text-orange-600" />
+          </div>
+          <h1 className="text-2xl font-black text-slate-900 mb-4 italic uppercase tracking-tight">
+            Acesso Restrito
+          </h1>
+          <p className="text-slate-500 font-medium mb-8 leading-relaxed">
+            A área administrativa está temporariamente indisponível para o público durante esta fase de lançamento.
+          </p>
+          <Link 
+            to="/" 
+            className="inline-flex items-center gap-2 px-8 py-4 bg-orange-600 text-white rounded-2xl font-black italic uppercase tracking-widest text-sm hover:bg-orange-700 transition-all shadow-lg shadow-orange-200"
+          >
+            <ArrowLeft className="w-4 h-4" />
+            Voltar para o Início
+          </Link>
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div className="min-h-screen bg-slate-50 flex flex-col md:flex-row">
+
       {/* Sidebar - Desktop */}
       <aside className="w-full md:w-72 bg-white border-b md:border-r border-slate-100 flex flex-col sticky top-0 md:h-screen z-40">
         <div className="p-8 border-b border-slate-50 hidden md:flex flex-col gap-6">

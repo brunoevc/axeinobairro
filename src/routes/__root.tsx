@@ -94,8 +94,9 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
         content:
           "Descubra comércios, serviços e ofertas do seu bairro e fale com eles pelo WhatsApp em segundos.",
       },
-      { property: "og:image", content: "https://via.placeholder.com/1200x630.png?text=Ax%C3%AAi+no+Bairro" },
-      { name: "twitter:image", content: "https://via.placeholder.com/1200x630.png?text=Ax%C3%AAi+no+Bairro" },
+      { property: "og:image", content: "/og-image.png" },
+      { name: "twitter:image", content: "/og-image.png" },
+
     ],
     links: [
       {
