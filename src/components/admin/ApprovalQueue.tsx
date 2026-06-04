@@ -21,8 +21,11 @@ export function ApprovalQueue({
   merchants,
   onApprove,
   onReject,
+  onChangeStatus,
+  onChangePlan,
   onEdit,
 }: ApprovalQueueProps) {
+
   const pending = merchants.filter((m) => m.status === "pending");
   const [selectedId, setSelectedId] = useState<string | null>(null);
   const [rejectReason, setRejectReason] = useState("");
