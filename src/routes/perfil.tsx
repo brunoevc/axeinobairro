@@ -1,18 +1,38 @@
-import { createFileRoute, useNavigate, Link } from "@tanstack/react-router";
-import { ArrowLeft, User, MapPin, Bell, Shield, Settings, ChevronRight, Store, Sparkles, ChevronLeft } from "lucide-react";
-import { useState } from "react";
+import { createFileRoute, useNavigate, Link, redirect } from "@tanstack/react-router";
+import { ArrowLeft, User, MapPin, Bell, Shield, Settings, ChevronRight, Store, Sparkles, ChevronLeft, LogOut } from "lucide-react";
+import { useState, useEffect } from "react";
 import { TopBar } from "@/components/TopBar";
 import { FloatingNav } from "@/components/FloatingNav";
 import { Logo } from "@/components/ui/Logo";
+import { useAtom } from "jotai";
+import { isAuthenticatedAtom, authUserAtom } from "@/hooks/useAuth";
+import { toast } from "sonner";
 import React from "react";
 
 export const Route = createFileRoute("/perfil")({
+  beforeLoad: () => {
+    const authStatus = localStorage.getItem("axei_auth_status");
+    if (authStatus !== "true") {
+       throw redirect({ to: '/login' });
+    }
+  },
   component: Profile,
 });
 
+
 function Profile() {
   const navigate = useNavigate();
-  const [name, setName] = useState("Morador do Bairro");
+  const [isAuthenticated, setIsAuthenticated] = useAtom(isAuthenticatedAtom);
+  const [authUser, setAuthUser] = useAtom(authUserAtom);
+  const [name, setName] = useState(authUser?.name || "Morador do Bairro");
+
+  const handleLogout = () => {
+    setIsAuthenticated(false);
+    setAuthUser(null);
+    toast.success("Você saiu com sucesso.");
+    navigate({ to: "/" });
+  };
+
 
   return (
     <div className="min-h-screen bg-slate-50 pb-32">
@@ -128,8 +148,15 @@ function Profile() {
         </section>
         
         <div className="pt-4 flex justify-center">
-           <button className="text-[10px] font-black uppercase tracking-[0.3em] text-red-400 hover:text-red-600 transition-colors">Sair da Conta</button>
+           <button 
+            onClick={handleLogout}
+            className="text-[10px] font-black uppercase tracking-[0.3em] text-red-400 hover:text-red-600 transition-colors flex items-center gap-2"
+           >
+             <LogOut className="w-3 h-3" />
+             Sair da Conta
+           </button>
         </div>
+
       </main>
 
       <FloatingNav />
