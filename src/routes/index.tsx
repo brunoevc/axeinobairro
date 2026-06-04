@@ -587,6 +587,7 @@ function Index() {
                   </Link>
                 )}
 
+
              </div>
              <div className="flex flex-col gap-4 text-center md:text-left">
                 <span className="text-[10px] font-black uppercase tracking-widest text-slate-500">Suporte</span>
