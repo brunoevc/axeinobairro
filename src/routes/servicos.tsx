@@ -241,6 +241,7 @@ export default function Servicos() {
           );
         })
 
+
         ) : (
           <div className="col-span-full py-20 text-center">
             <div className="bg-slate-50 w-20 h-20 rounded-full flex items-center justify-center mx-auto mb-6">
