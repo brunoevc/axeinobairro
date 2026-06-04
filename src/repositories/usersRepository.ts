@@ -9,12 +9,40 @@ const defaultUsers: User[] = [
     name: "Bruno E.",
     email: "brunoevc@gmail.com",
     role: "master_admin",
-    password: "123", // Password simplificado para teste local rápido, mas user pediu 123456
+    password: "123",
+    neighborhood: "Centro",
+    interests: ["negocios", "noticias", "transporte"],
     mustChangePassword: true,
+    createdAt: new Date().toISOString(),
+    updatedAt: new Date().toISOString(),
+  },
+  {
+    id: "user-2",
+    name: "Maria Santos",
+    email: "maria@exemplo.com",
+    role: "morador",
+    password: "123",
+    neighborhood: "Vila Nova",
+    interests: ["eventos_religiosos", "noticias", "servicos"],
+    faithCommunity: "Igreja Matriz de Araruama",
+    mustChangePassword: false,
+    createdAt: new Date().toISOString(),
+    updatedAt: new Date().toISOString(),
+  },
+  {
+    id: "user-3",
+    name: "João Silva",
+    email: "lider@comunidade.com",
+    role: "lider_comunidade",
+    password: "123",
+    neighborhood: "Centro",
+    faithCommunity: "Igreja Matriz de Araruama",
+    mustChangePassword: false,
     createdAt: new Date().toISOString(),
     updatedAt: new Date().toISOString(),
   }
 ];
+
 
 // Garantir que a senha inicial do prompt seja respeitada se não houver no storage
 const initialPassword = "123456";
