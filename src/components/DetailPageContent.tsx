@@ -264,10 +264,16 @@ export function DetailPageContent({ merchant }: DetailPageContentProps) {
                  <span className="text-sm font-bold text-slate-900">$$$</span>
               </div>
               <div className="flex flex-col gap-1">
-                 <span className="text-[10px] font-bold text-slate-400 uppercase">No App desde</span>
-                 <span className="text-sm font-bold text-slate-900">Maio 2026</span>
+                 <span className="text-[10px] font-bold text-slate-400 uppercase">Avaliações</span>
+                 <span className="text-sm font-bold text-slate-900">
+                   {reviewsRepository.getAverageRating('loja', merchant.id).total} totais
+                 </span>
               </div>
             </div>
+          </section>
+
+          <section id="reviews" className="scroll-mt-24">
+             <ReviewSection targetId={merchant.id} targetType="loja" />
           </section>
         </div>
 
