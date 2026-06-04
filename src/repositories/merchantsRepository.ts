@@ -3,7 +3,22 @@ import { storage } from "./storage";
 
 const STORAGE_KEY = "axei_merchants";
 
+type Listener = () => void;
+const listeners: Listener[] = [];
+
 export const merchantsRepository = {
+  subscribe: (listener: Listener) => {
+    listeners.push(listener);
+    return () => {
+      const index = listeners.indexOf(listener);
+      if (index !== -1) listeners.splice(index, 1);
+    };
+  },
+  
+  notify: () => {
+    listeners.forEach(l => l());
+  },
+
   getAll: (): Merchant[] => {
     return storage.get(STORAGE_KEY, mockMerchants);
   },
@@ -25,6 +40,7 @@ export const merchantsRepository = {
       merchants.push(merchant);
     }
     storage.set(STORAGE_KEY, merchants);
+    merchantsRepository.notify();
   },
 
   update: (id: string, data: Partial<Merchant>) => {
@@ -33,12 +49,15 @@ export const merchantsRepository = {
     if (index !== -1) {
       merchants[index] = { ...merchants[index], ...data };
       storage.set(STORAGE_KEY, merchants);
+      merchantsRepository.notify();
     }
   },
 
   delete: (id: string) => {
     const merchants = merchantsRepository.getAll().filter(m => m.id !== id);
     storage.set(STORAGE_KEY, merchants);
+    merchantsRepository.notify();
   }
 };
+
 
