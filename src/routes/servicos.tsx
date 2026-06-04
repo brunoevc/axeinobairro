@@ -1,5 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useMemo, useCallback } from "react";
 
 export const Route = createFileRoute("/servicos")({
   component: Servicos,
@@ -16,8 +16,9 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Card, CardContent } from "@/components/ui/card";
-import { MessageSquare, ShieldAlert, Search, Filter, Star, MapPin, Briefcase, CheckCircle2, Award } from "lucide-react";
+import { MessageSquare, ShieldAlert, Search, Filter, Star, MapPin, Briefcase, CheckCircle2, Award, X } from "lucide-react";
 import { neighborhoods } from "@/data/merchants";
+import { ListingSkeleton } from "@/components/ListingSkeleton";
 
 const categories: ServiceCategory[] = [
   'eletricista', 'encanador', 'pedreiro', 'pintor', 'diarista', 'jardineiro',
@@ -27,36 +28,58 @@ const categories: ServiceCategory[] = [
 
 export default function Servicos() {
   const [services, setServices] = useState<ServiceProvider[]>([]);
+  const [searchTerm, setSearchTerm] = useState("");
   const [filters, setFilters] = useState({
     neighborhood: "all",
     category: "all",
     onlyAvailable: false,
   });
+  const [isLoading, setIsLoading] = useState(true);
+  const [isFiltering, setIsFiltering] = useState(false);
+
+  // Debounced search
+  useEffect(() => {
+    setIsLoading(true);
+    const timer = setTimeout(() => {
+      let filtered = servicesRepository.getAll();
+
+      if (searchTerm) {
+        const search = searchTerm.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+        filtered = filtered.filter(s => 
+          s.name.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").includes(search) ||
+          s.description.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").includes(search) ||
+          s.category.toLowerCase().includes(search)
+        );
+      }
+
+      if (filters.category !== "all") {
+        filtered = filtered.filter(s => s.category === filters.category);
+      }
+      
+      if (filters.neighborhood !== "all") {
+        filtered = filtered.filter(s => 
+          s.neighborhood === filters.neighborhood || 
+          (s.serviceArea && s.serviceArea.includes(filters.neighborhood))
+        );
+      }
+      
+      if (filters.onlyAvailable) {
+        filtered = filtered.filter(s => s.isAvailable);
+      }
+
+      filtered = localBoostsRepository.sortByBoost(filtered, 'servico', 'id');
+      setServices(filtered);
+      setIsLoading(false);
+    }, 400);
+
+    return () => clearTimeout(timer);
+  }, [filters, searchTerm]);
 
   useEffect(() => {
-    let filtered = servicesRepository.getAll();
+    const timer = setTimeout(() => setIsLoading(false), 800);
+    return () => clearTimeout(timer);
+  }, []);
 
-    if (filters.category !== "all") {
-      filtered = filtered.filter(s => s.category === filters.category);
-    }
-    
-    if (filters.neighborhood !== "all") {
-      filtered = filtered.filter(s => 
-        s.neighborhood === filters.neighborhood || 
-        (s.serviceArea && s.serviceArea.includes(filters.neighborhood))
-      );
-    }
-    
-    if (filters.onlyAvailable) {
-      filtered = filtered.filter(s => s.isAvailable);
-    }
-
-    // Phase 8.7: Apply Boosts via central repository
-    filtered = localBoostsRepository.sortByBoost(filtered, 'servico', 'id');
-
-
-    setServices(filtered);
-  }, [filters]);
 
 
   const handleWhatsApp = (provider: ServiceProvider) => {
@@ -91,7 +114,22 @@ export default function Servicos() {
           <Filter className="w-4 h-4" />
           <span className="text-xs font-black uppercase tracking-widest">Filtros</span>
         </div>
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+        <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
+          <div className="relative group md:col-span-1">
+            <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400 group-focus-within:text-orange-500 transition-colors" />
+            <Input 
+              placeholder="Buscar serviço..."
+              className="pl-10 h-12 rounded-xl border-slate-100 bg-slate-50 focus:bg-white"
+              value={searchTerm}
+              onChange={(e) => setSearchTerm(e.target.value)}
+            />
+            {searchTerm && (
+              <button onClick={() => setSearchTerm("")} className="absolute right-3 top-1/2 -translate-y-1/2 p-1 hover:bg-slate-200 rounded-full transition-colors">
+                <X className="w-3 h-3 text-slate-400" />
+              </button>
+            )}
+          </div>
+
           <Select value={filters.category} onValueChange={(val) => setFilters({ ...filters, category: val })}>
             <SelectTrigger className="h-12 rounded-xl">
               <SelectValue placeholder="Categoria" />
@@ -124,10 +162,16 @@ export default function Servicos() {
             Disponível agora
           </Button>
         </div>
+
       </section>
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-        {services.length > 0 ? (
+        {isLoading ? (
+          <div className="col-span-full">
+            <ListingSkeleton type="service" count={6} />
+          </div>
+        ) : services.length > 0 ? (
+
           services.map((provider) => {
             const activeBoost = localBoostsRepository.getActiveBoostForTarget('servico', provider.id);
             const isBoosted = !!activeBoost;
