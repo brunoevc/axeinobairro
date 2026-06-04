@@ -1,3 +1,5 @@
+import { PixConfig } from "./users";
+
 export type Representative = {
   id: string;
   name: string;
@@ -9,6 +11,7 @@ export type Representative = {
   photo?: string;
   description: string;
   isActive: boolean;
+  pixConfig?: PixConfig;
   createdAt: string;
   updatedAt: string;
 };

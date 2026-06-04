@@ -1,3 +1,5 @@
+import { PixConfig } from "./users";
+
 export type ServiceCategory = 
   | 'eletricista' 
   | 'encanador' 
@@ -27,6 +29,8 @@ export interface ServiceProvider {
   verified?: boolean;
   priceNote?: string;
   serviceArea?: string[];
+  pixConfig?: PixConfig;
   createdAt: string;
   updatedAt: string;
 }
+

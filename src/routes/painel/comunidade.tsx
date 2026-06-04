@@ -4,15 +4,30 @@ import { authUserAtom } from "@/hooks/useAuth";
 import { Users, Calendar, MessageSquare, Megaphone, ShieldAlert, Heart, Info } from "lucide-react";
 import { communitiesRepository } from "@/repositories/communitiesRepository";
 import { Button } from "@/components/ui/button";
+import { PixConfigForm } from "@/components/PixConfigForm";
+import { AuthUser } from "@/hooks/useAuth";
+
+
 
 export const Route = createFileRoute("/painel/comunidade")({
   component: ComunidadePanel,
 });
 
 function ComunidadePanel() {
-  const [authUser] = useAtom(authUserAtom);
+  const [authUser, setAuthUser] = useAtom(authUserAtom);
   const communities = communitiesRepository.getAll();
   const linkedCommunity = authUser?.faithCommunity ? communities.find(c => c.name === authUser.faithCommunity) : communities[0];
+
+  const handleSavePix = (config: any) => {
+    if (linkedCommunity) {
+      const updatedCommunity = { ...linkedCommunity, pixConfig: config };
+      communitiesRepository.save(updatedCommunity);
+      // Update local auth user too if needed
+      if (authUser) {
+        setAuthUser({ ...authUser, pixConfig: config });
+      }
+    }
+  };
 
   return (
     <div className="space-y-8 animate-in fade-in duration-500">
@@ -66,24 +81,35 @@ function ComunidadePanel() {
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-        <div className="bg-white p-10 rounded-[2.5rem] border border-slate-100 shadow-sm">
-           <div className="flex items-center gap-4 mb-8">
-              <Megaphone className="w-6 h-6 text-violet-600" />
-              <h3 className="text-xl font-black text-slate-900">Comunicados e Ações</h3>
-           </div>
-           <div className="space-y-6">
-              <div className="p-4 bg-slate-50 rounded-2xl border border-slate-100">
-                <p className="text-xs font-black text-violet-600 uppercase mb-2">Ação Social</p>
-                <p className="text-sm font-bold text-slate-700">Arrecadação de alimentos para o inverno - Sábado às 14h.</p>
-              </div>
-              <div className="p-4 bg-slate-50 rounded-2xl border border-slate-100">
-                <p className="text-xs font-black text-violet-600 uppercase mb-2">Evento</p>
-                <p className="text-sm font-bold text-slate-700">Encontro de Jovens - Próxima Terça.</p>
-              </div>
-           </div>
-           <Button className="w-full mt-8 rounded-xl bg-violet-600 hover:bg-violet-700 font-black uppercase text-xs">
-              Novo Comunicado
-           </Button>
+        <div className="space-y-8">
+          <div className="bg-white p-10 rounded-[2.5rem] border border-slate-100 shadow-sm">
+             <div className="flex items-center gap-4 mb-8">
+                <Megaphone className="w-6 h-6 text-violet-600" />
+                <h3 className="text-xl font-black text-slate-900">Comunicados e Ações</h3>
+             </div>
+             <div className="space-y-6">
+                <div className="p-4 bg-slate-50 rounded-2xl border border-slate-100">
+                  <p className="text-xs font-black text-violet-600 uppercase mb-2">Ação Social</p>
+                  <p className="text-sm font-bold text-slate-700">Arrecadação de alimentos para o inverno - Sábado às 14h.</p>
+                </div>
+                <div className="p-4 bg-slate-50 rounded-2xl border border-slate-100">
+                  <p className="text-xs font-black text-violet-600 uppercase mb-2">Evento</p>
+                  <p className="text-sm font-bold text-slate-700">Encontro de Jovens - Próxima Terça.</p>
+                </div>
+             </div>
+             <Button className="w-full mt-8 rounded-xl bg-violet-600 hover:bg-violet-700 font-black uppercase text-xs">
+                Novo Comunicado
+             </Button>
+          </div>
+
+          {linkedCommunity && (
+            <PixConfigForm 
+              title="Pix da Comunidade"
+              description="Informar chave Pix para dízimos, doações ou campanhas."
+              initialConfig={linkedCommunity.pixConfig}
+              onSave={handleSavePix}
+            />
+          )}
         </div>
 
         <div className="bg-slate-900 p-10 rounded-[2.5rem] text-white">
@@ -116,3 +142,4 @@ function ComunidadePanel() {
     </div>
   );
 }
+
