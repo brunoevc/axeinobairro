@@ -332,8 +332,14 @@ export function DetailPageContent({ merchant }: DetailPageContentProps) {
 
               <div className="flex flex-col gap-1">
                  <span className="text-[10px] font-bold text-slate-400 uppercase">Entrega</span>
-                 <span className="text-sm font-bold text-slate-900">{merchant.delivery ? 'Sim' : 'Não'}</span>
+                 <div className="flex flex-col">
+                   <span className="text-sm font-bold text-slate-900">{merchant.delivery ? 'Sim' : 'Não'}</span>
+                   {merchant.delivery && (
+                     <span className="text-[10px] font-bold text-orange-600 uppercase">Ver opções no carrinho</span>
+                   )}
+                 </div>
               </div>
+
               <div className="flex flex-col gap-1">
                  <span className="text-[10px] font-bold text-slate-400 uppercase">Preço</span>
                  <span className="text-sm font-bold text-slate-900">$$$</span>
