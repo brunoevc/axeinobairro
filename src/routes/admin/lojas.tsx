@@ -132,12 +132,11 @@ function AdminLojas() {
                   updateMerchantStatus(id, newStatus);
                 }
               }}
-              onChangePlan={(id, status) => {
-                const m = state.merchants.find(m => m.id === id);
-                if (m) {
-                   // In this context, onChangePlan is being used to update status
-                   updateMerchantStatus(id, status);
-                }
+              onChangeStatus={(id, status) => {
+                updateMerchantStatus(id, status);
+              }}
+              onChangePlan={(id, plan) => {
+                changePlan(id, plan);
               }}
               onManageCatalog={(id) => {
                 const m = state.merchants.find(m => m.id === id);
@@ -148,6 +147,7 @@ function AdminLojas() {
               }}
               filterStatus={activeTab === "todas" ? "all" : (activeTab as any)}
             />
+
 
 
           </div>

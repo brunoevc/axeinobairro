@@ -22,7 +22,7 @@ export const Route = createFileRoute("/admin/aprovacoes")({
 type ViewMode = "queue" | "edit";
 
 function AdminApprovals() {
-  const { state, loading, updateMerchantStatus, editMerchant } =
+  const { state, loading, updateMerchantStatus, changePlan, editMerchant } =
     useAdminState();
 
 
@@ -30,6 +30,7 @@ function AdminApprovals() {
   const [selectedMerchant, setSelectedMerchant] = useState<MerchantAdmin | null>(
     null
   );
+
 
   if (loading || !state) {
     return (
@@ -136,8 +137,12 @@ function AdminApprovals() {
               merchants={state.merchants}
               onApprove={(id) => updateMerchantStatus(id, "verified")}
               onReject={(id, reason) => updateMerchantStatus(id, "rejected", reason)}
+              onChangeStatus={(id, status) => updateMerchantStatus(id, status)}
+              onChangePlan={(id, plan) => changePlan(id, plan)}
               onEdit={handleEdit}
             />
+
+
           </div>
 
         </div>

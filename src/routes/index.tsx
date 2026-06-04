@@ -68,7 +68,7 @@ export const Route = createFileRoute("/")({
 function Index() {
   const navigate = useNavigate();
   const { coords, getDistance, loading: locationLoading } = useLocation();
-  const merchants = useMemo(() => merchantsRepository.getAll(), []);
+  const [merchants, setMerchants] = useState(() => merchantsRepository.getAll());
   const services = useMemo(() => servicesRepository.getAll(), []);
   const rides = useMemo(() => ridesRepository.list(), []);
   const activeBoosts = useMemo(() => localBoostsRepository.getActiveBoosts(), []);
@@ -78,9 +78,18 @@ function Index() {
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
+    // Sincronizar com o repositório
+    const unsubscribe = merchantsRepository.subscribe(() => {
+      setMerchants(merchantsRepository.getAll());
+    });
+
     const timer = setTimeout(() => setIsLoading(false), 800);
-    return () => clearTimeout(timer);
+    return () => {
+      unsubscribe();
+      clearTimeout(timer);
+    };
   }, []);
+
 
   const handleSearch = (e?: React.FormEvent) => {
     e?.preventDefault();
