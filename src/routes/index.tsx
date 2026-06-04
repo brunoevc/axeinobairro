@@ -16,7 +16,8 @@ import {
   Croissant,
   Bike,
   PawPrint,
-  RefreshCw
+  RefreshCw,
+  Briefcase
 } from "lucide-react";
 
 import { categories } from "@/data/merchants";
@@ -32,8 +33,11 @@ import { MerchantSkeleton } from "@/components/MerchantSkeleton";
 import { TopBar } from "@/components/TopBar";
 import { FloatingNav } from "@/components/FloatingNav";
 import { Button } from "@/components/ui/button";
+import { Badge } from "@/components/ui/badge";
+import { Card, CardContent } from "@/components/ui/card";
 import { Logo } from "@/components/ui/Logo";
 import { useLocation } from "@/hooks/useLocation";
+
 
 export const Route = createFileRoute("/")({
   component: Index,
