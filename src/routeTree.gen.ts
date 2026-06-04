@@ -26,6 +26,7 @@ import { Route as IndexRouteImport } from './routes/index'
 import { Route as NegociosIndexRouteImport } from './routes/negocios/index'
 import { Route as AdminIndexRouteImport } from './routes/admin/index'
 import { Route as PainelProfissionalRouteImport } from './routes/painel/profissional'
+import { Route as PainelMotoristaRouteImport } from './routes/painel/motorista'
 import { Route as PainelLojistaRouteImport } from './routes/painel/lojista'
 import { Route as NegociosIdRouteImport } from './routes/negocios/$id'
 import { Route as LojaSlugRouteImport } from './routes/loja/$slug'
@@ -125,6 +126,11 @@ const PainelProfissionalRoute = PainelProfissionalRouteImport.update({
   path: '/profissional',
   getParentRoute: () => PainelRoute,
 } as any)
+const PainelMotoristaRoute = PainelMotoristaRouteImport.update({
+  id: '/motorista',
+  path: '/motorista',
+  getParentRoute: () => PainelRoute,
+} as any)
 const PainelLojistaRoute = PainelLojistaRouteImport.update({
   id: '/lojista',
   path: '/lojista',
@@ -219,6 +225,7 @@ export interface FileRoutesByFullPath {
   '/loja/$slug': typeof LojaSlugRoute
   '/negocios/$id': typeof NegociosIdRoute
   '/painel/lojista': typeof PainelLojistaRoute
+  '/painel/motorista': typeof PainelMotoristaRoute
   '/painel/profissional': typeof PainelProfissionalRoute
   '/admin/': typeof AdminIndexRoute
   '/negocios/': typeof NegociosIndexRoute
@@ -249,6 +256,7 @@ export interface FileRoutesByTo {
   '/loja/$slug': typeof LojaSlugRoute
   '/negocios/$id': typeof NegociosIdRoute
   '/painel/lojista': typeof PainelLojistaRoute
+  '/painel/motorista': typeof PainelMotoristaRoute
   '/painel/profissional': typeof PainelProfissionalRoute
   '/admin': typeof AdminIndexRoute
   '/negocios': typeof NegociosIndexRoute
@@ -282,6 +290,7 @@ export interface FileRoutesById {
   '/loja/$slug': typeof LojaSlugRoute
   '/negocios/$id': typeof NegociosIdRoute
   '/painel/lojista': typeof PainelLojistaRoute
+  '/painel/motorista': typeof PainelMotoristaRoute
   '/painel/profissional': typeof PainelProfissionalRoute
   '/admin/': typeof AdminIndexRoute
   '/negocios/': typeof NegociosIndexRoute
@@ -316,6 +325,7 @@ export interface FileRouteTypes {
     | '/loja/$slug'
     | '/negocios/$id'
     | '/painel/lojista'
+    | '/painel/motorista'
     | '/painel/profissional'
     | '/admin/'
     | '/negocios/'
@@ -346,6 +356,7 @@ export interface FileRouteTypes {
     | '/loja/$slug'
     | '/negocios/$id'
     | '/painel/lojista'
+    | '/painel/motorista'
     | '/painel/profissional'
     | '/admin'
     | '/negocios'
@@ -378,6 +389,7 @@ export interface FileRouteTypes {
     | '/loja/$slug'
     | '/negocios/$id'
     | '/painel/lojista'
+    | '/painel/motorista'
     | '/painel/profissional'
     | '/admin/'
     | '/negocios/'
@@ -522,6 +534,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof PainelProfissionalRouteImport
       parentRoute: typeof PainelRoute
     }
+    '/painel/motorista': {
+      id: '/painel/motorista'
+      path: '/motorista'
+      fullPath: '/painel/motorista'
+      preLoaderRoute: typeof PainelMotoristaRouteImport
+      parentRoute: typeof PainelRoute
+    }
     '/painel/lojista': {
       id: '/painel/lojista'
       path: '/lojista'
@@ -662,11 +681,13 @@ const NegociosRouteWithChildren = NegociosRoute._addFileChildren(
 
 interface PainelRouteChildren {
   PainelLojistaRoute: typeof PainelLojistaRoute
+  PainelMotoristaRoute: typeof PainelMotoristaRoute
   PainelProfissionalRoute: typeof PainelProfissionalRoute
 }
 
 const PainelRouteChildren: PainelRouteChildren = {
   PainelLojistaRoute: PainelLojistaRoute,
+  PainelMotoristaRoute: PainelMotoristaRoute,
   PainelProfissionalRoute: PainelProfissionalRoute,
 }
 
