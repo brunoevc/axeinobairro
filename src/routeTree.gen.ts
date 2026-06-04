@@ -13,6 +13,7 @@ import { Route as TransporteRouteImport } from './routes/transporte'
 import { Route as ServicosRouteImport } from './routes/servicos'
 import { Route as RepresentantesRouteImport } from './routes/representantes'
 import { Route as PerfilRouteImport } from './routes/perfil'
+import { Route as PainelRouteImport } from './routes/painel'
 import { Route as OfertasRouteImport } from './routes/ofertas'
 import { Route as NoticiasRouteImport } from './routes/noticias'
 import { Route as NegociosRouteImport } from './routes/negocios'
@@ -24,6 +25,11 @@ import { Route as AdminRouteImport } from './routes/admin'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as NegociosIndexRouteImport } from './routes/negocios/index'
 import { Route as AdminIndexRouteImport } from './routes/admin/index'
+import { Route as PainelRepresentanteRouteImport } from './routes/painel/representante'
+import { Route as PainelProfissionalRouteImport } from './routes/painel/profissional'
+import { Route as PainelMotoristaRouteImport } from './routes/painel/motorista'
+import { Route as PainelMoradorRouteImport } from './routes/painel/morador'
+import { Route as PainelLojistaRouteImport } from './routes/painel/lojista'
 import { Route as NegociosIdRouteImport } from './routes/negocios/$id'
 import { Route as LojaSlugRouteImport } from './routes/loja/$slug'
 import { Route as AdminTransporteRouteImport } from './routes/admin/transporte'
@@ -55,6 +61,11 @@ const RepresentantesRoute = RepresentantesRouteImport.update({
 const PerfilRoute = PerfilRouteImport.update({
   id: '/perfil',
   path: '/perfil',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const PainelRoute = PainelRouteImport.update({
+  id: '/painel',
+  path: '/painel',
   getParentRoute: () => rootRouteImport,
 } as any)
 const OfertasRoute = OfertasRouteImport.update({
@@ -111,6 +122,31 @@ const AdminIndexRoute = AdminIndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => AdminRoute,
+} as any)
+const PainelRepresentanteRoute = PainelRepresentanteRouteImport.update({
+  id: '/representante',
+  path: '/representante',
+  getParentRoute: () => PainelRoute,
+} as any)
+const PainelProfissionalRoute = PainelProfissionalRouteImport.update({
+  id: '/profissional',
+  path: '/profissional',
+  getParentRoute: () => PainelRoute,
+} as any)
+const PainelMotoristaRoute = PainelMotoristaRouteImport.update({
+  id: '/motorista',
+  path: '/motorista',
+  getParentRoute: () => PainelRoute,
+} as any)
+const PainelMoradorRoute = PainelMoradorRouteImport.update({
+  id: '/morador',
+  path: '/morador',
+  getParentRoute: () => PainelRoute,
+} as any)
+const PainelLojistaRoute = PainelLojistaRouteImport.update({
+  id: '/lojista',
+  path: '/lojista',
+  getParentRoute: () => PainelRoute,
 } as any)
 const NegociosIdRoute = NegociosIdRouteImport.update({
   id: '/$id',
@@ -183,6 +219,7 @@ export interface FileRoutesByFullPath {
   '/negocios': typeof NegociosRouteWithChildren
   '/noticias': typeof NoticiasRoute
   '/ofertas': typeof OfertasRoute
+  '/painel': typeof PainelRouteWithChildren
   '/perfil': typeof PerfilRoute
   '/representantes': typeof RepresentantesRoute
   '/servicos': typeof ServicosRoute
@@ -199,6 +236,11 @@ export interface FileRoutesByFullPath {
   '/admin/transporte': typeof AdminTransporteRoute
   '/loja/$slug': typeof LojaSlugRoute
   '/negocios/$id': typeof NegociosIdRoute
+  '/painel/lojista': typeof PainelLojistaRoute
+  '/painel/morador': typeof PainelMoradorRoute
+  '/painel/motorista': typeof PainelMotoristaRoute
+  '/painel/profissional': typeof PainelProfissionalRoute
+  '/painel/representante': typeof PainelRepresentanteRoute
   '/admin/': typeof AdminIndexRoute
   '/negocios/': typeof NegociosIndexRoute
 }
@@ -210,6 +252,7 @@ export interface FileRoutesByTo {
   '/login': typeof LoginRoute
   '/noticias': typeof NoticiasRoute
   '/ofertas': typeof OfertasRoute
+  '/painel': typeof PainelRouteWithChildren
   '/perfil': typeof PerfilRoute
   '/representantes': typeof RepresentantesRoute
   '/servicos': typeof ServicosRoute
@@ -226,6 +269,11 @@ export interface FileRoutesByTo {
   '/admin/transporte': typeof AdminTransporteRoute
   '/loja/$slug': typeof LojaSlugRoute
   '/negocios/$id': typeof NegociosIdRoute
+  '/painel/lojista': typeof PainelLojistaRoute
+  '/painel/morador': typeof PainelMoradorRoute
+  '/painel/motorista': typeof PainelMotoristaRoute
+  '/painel/profissional': typeof PainelProfissionalRoute
+  '/painel/representante': typeof PainelRepresentanteRoute
   '/admin': typeof AdminIndexRoute
   '/negocios': typeof NegociosIndexRoute
 }
@@ -240,6 +288,7 @@ export interface FileRoutesById {
   '/negocios': typeof NegociosRouteWithChildren
   '/noticias': typeof NoticiasRoute
   '/ofertas': typeof OfertasRoute
+  '/painel': typeof PainelRouteWithChildren
   '/perfil': typeof PerfilRoute
   '/representantes': typeof RepresentantesRoute
   '/servicos': typeof ServicosRoute
@@ -256,6 +305,11 @@ export interface FileRoutesById {
   '/admin/transporte': typeof AdminTransporteRoute
   '/loja/$slug': typeof LojaSlugRoute
   '/negocios/$id': typeof NegociosIdRoute
+  '/painel/lojista': typeof PainelLojistaRoute
+  '/painel/morador': typeof PainelMoradorRoute
+  '/painel/motorista': typeof PainelMotoristaRoute
+  '/painel/profissional': typeof PainelProfissionalRoute
+  '/painel/representante': typeof PainelRepresentanteRoute
   '/admin/': typeof AdminIndexRoute
   '/negocios/': typeof NegociosIndexRoute
 }
@@ -271,6 +325,7 @@ export interface FileRouteTypes {
     | '/negocios'
     | '/noticias'
     | '/ofertas'
+    | '/painel'
     | '/perfil'
     | '/representantes'
     | '/servicos'
@@ -287,6 +342,11 @@ export interface FileRouteTypes {
     | '/admin/transporte'
     | '/loja/$slug'
     | '/negocios/$id'
+    | '/painel/lojista'
+    | '/painel/morador'
+    | '/painel/motorista'
+    | '/painel/profissional'
+    | '/painel/representante'
     | '/admin/'
     | '/negocios/'
   fileRoutesByTo: FileRoutesByTo
@@ -298,6 +358,7 @@ export interface FileRouteTypes {
     | '/login'
     | '/noticias'
     | '/ofertas'
+    | '/painel'
     | '/perfil'
     | '/representantes'
     | '/servicos'
@@ -314,6 +375,11 @@ export interface FileRouteTypes {
     | '/admin/transporte'
     | '/loja/$slug'
     | '/negocios/$id'
+    | '/painel/lojista'
+    | '/painel/morador'
+    | '/painel/motorista'
+    | '/painel/profissional'
+    | '/painel/representante'
     | '/admin'
     | '/negocios'
   id:
@@ -327,6 +393,7 @@ export interface FileRouteTypes {
     | '/negocios'
     | '/noticias'
     | '/ofertas'
+    | '/painel'
     | '/perfil'
     | '/representantes'
     | '/servicos'
@@ -343,6 +410,11 @@ export interface FileRouteTypes {
     | '/admin/transporte'
     | '/loja/$slug'
     | '/negocios/$id'
+    | '/painel/lojista'
+    | '/painel/morador'
+    | '/painel/motorista'
+    | '/painel/profissional'
+    | '/painel/representante'
     | '/admin/'
     | '/negocios/'
   fileRoutesById: FileRoutesById
@@ -357,6 +429,7 @@ export interface RootRouteChildren {
   NegociosRoute: typeof NegociosRouteWithChildren
   NoticiasRoute: typeof NoticiasRoute
   OfertasRoute: typeof OfertasRoute
+  PainelRoute: typeof PainelRouteWithChildren
   PerfilRoute: typeof PerfilRoute
   RepresentantesRoute: typeof RepresentantesRoute
   ServicosRoute: typeof ServicosRoute
@@ -392,6 +465,13 @@ declare module '@tanstack/react-router' {
       path: '/perfil'
       fullPath: '/perfil'
       preLoaderRoute: typeof PerfilRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/painel': {
+      id: '/painel'
+      path: '/painel'
+      fullPath: '/painel'
+      preLoaderRoute: typeof PainelRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/ofertas': {
@@ -470,6 +550,41 @@ declare module '@tanstack/react-router' {
       fullPath: '/admin/'
       preLoaderRoute: typeof AdminIndexRouteImport
       parentRoute: typeof AdminRoute
+    }
+    '/painel/representante': {
+      id: '/painel/representante'
+      path: '/representante'
+      fullPath: '/painel/representante'
+      preLoaderRoute: typeof PainelRepresentanteRouteImport
+      parentRoute: typeof PainelRoute
+    }
+    '/painel/profissional': {
+      id: '/painel/profissional'
+      path: '/profissional'
+      fullPath: '/painel/profissional'
+      preLoaderRoute: typeof PainelProfissionalRouteImport
+      parentRoute: typeof PainelRoute
+    }
+    '/painel/motorista': {
+      id: '/painel/motorista'
+      path: '/motorista'
+      fullPath: '/painel/motorista'
+      preLoaderRoute: typeof PainelMotoristaRouteImport
+      parentRoute: typeof PainelRoute
+    }
+    '/painel/morador': {
+      id: '/painel/morador'
+      path: '/morador'
+      fullPath: '/painel/morador'
+      preLoaderRoute: typeof PainelMoradorRouteImport
+      parentRoute: typeof PainelRoute
+    }
+    '/painel/lojista': {
+      id: '/painel/lojista'
+      path: '/lojista'
+      fullPath: '/painel/lojista'
+      preLoaderRoute: typeof PainelLojistaRouteImport
+      parentRoute: typeof PainelRoute
     }
     '/negocios/$id': {
       id: '/negocios/$id'
@@ -602,6 +717,25 @@ const NegociosRouteWithChildren = NegociosRoute._addFileChildren(
   NegociosRouteChildren,
 )
 
+interface PainelRouteChildren {
+  PainelLojistaRoute: typeof PainelLojistaRoute
+  PainelMoradorRoute: typeof PainelMoradorRoute
+  PainelMotoristaRoute: typeof PainelMotoristaRoute
+  PainelProfissionalRoute: typeof PainelProfissionalRoute
+  PainelRepresentanteRoute: typeof PainelRepresentanteRoute
+}
+
+const PainelRouteChildren: PainelRouteChildren = {
+  PainelLojistaRoute: PainelLojistaRoute,
+  PainelMoradorRoute: PainelMoradorRoute,
+  PainelMotoristaRoute: PainelMotoristaRoute,
+  PainelProfissionalRoute: PainelProfissionalRoute,
+  PainelRepresentanteRoute: PainelRepresentanteRoute,
+}
+
+const PainelRouteWithChildren =
+  PainelRoute._addFileChildren(PainelRouteChildren)
+
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AdminRoute: AdminRouteWithChildren,
@@ -612,6 +746,7 @@ const rootRouteChildren: RootRouteChildren = {
   NegociosRoute: NegociosRouteWithChildren,
   NoticiasRoute: NoticiasRoute,
   OfertasRoute: OfertasRoute,
+  PainelRoute: PainelRouteWithChildren,
   PerfilRoute: PerfilRoute,
   RepresentantesRoute: RepresentantesRoute,
   ServicosRoute: ServicosRoute,
