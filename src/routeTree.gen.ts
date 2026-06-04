@@ -28,6 +28,7 @@ import { Route as AdminIndexRouteImport } from './routes/admin/index'
 import { Route as PainelRepresentanteRouteImport } from './routes/painel/representante'
 import { Route as PainelProfissionalRouteImport } from './routes/painel/profissional'
 import { Route as PainelMotoristaRouteImport } from './routes/painel/motorista'
+import { Route as PainelMoradorRouteImport } from './routes/painel/morador'
 import { Route as PainelLojistaRouteImport } from './routes/painel/lojista'
 import { Route as NegociosIdRouteImport } from './routes/negocios/$id'
 import { Route as LojaSlugRouteImport } from './routes/loja/$slug'
@@ -137,6 +138,11 @@ const PainelMotoristaRoute = PainelMotoristaRouteImport.update({
   path: '/motorista',
   getParentRoute: () => PainelRoute,
 } as any)
+const PainelMoradorRoute = PainelMoradorRouteImport.update({
+  id: '/morador',
+  path: '/morador',
+  getParentRoute: () => PainelRoute,
+} as any)
 const PainelLojistaRoute = PainelLojistaRouteImport.update({
   id: '/lojista',
   path: '/lojista',
@@ -231,6 +237,7 @@ export interface FileRoutesByFullPath {
   '/loja/$slug': typeof LojaSlugRoute
   '/negocios/$id': typeof NegociosIdRoute
   '/painel/lojista': typeof PainelLojistaRoute
+  '/painel/morador': typeof PainelMoradorRoute
   '/painel/motorista': typeof PainelMotoristaRoute
   '/painel/profissional': typeof PainelProfissionalRoute
   '/painel/representante': typeof PainelRepresentanteRoute
@@ -263,6 +270,7 @@ export interface FileRoutesByTo {
   '/loja/$slug': typeof LojaSlugRoute
   '/negocios/$id': typeof NegociosIdRoute
   '/painel/lojista': typeof PainelLojistaRoute
+  '/painel/morador': typeof PainelMoradorRoute
   '/painel/motorista': typeof PainelMotoristaRoute
   '/painel/profissional': typeof PainelProfissionalRoute
   '/painel/representante': typeof PainelRepresentanteRoute
@@ -298,6 +306,7 @@ export interface FileRoutesById {
   '/loja/$slug': typeof LojaSlugRoute
   '/negocios/$id': typeof NegociosIdRoute
   '/painel/lojista': typeof PainelLojistaRoute
+  '/painel/morador': typeof PainelMoradorRoute
   '/painel/motorista': typeof PainelMotoristaRoute
   '/painel/profissional': typeof PainelProfissionalRoute
   '/painel/representante': typeof PainelRepresentanteRoute
@@ -334,6 +343,7 @@ export interface FileRouteTypes {
     | '/loja/$slug'
     | '/negocios/$id'
     | '/painel/lojista'
+    | '/painel/morador'
     | '/painel/motorista'
     | '/painel/profissional'
     | '/painel/representante'
@@ -366,6 +376,7 @@ export interface FileRouteTypes {
     | '/loja/$slug'
     | '/negocios/$id'
     | '/painel/lojista'
+    | '/painel/morador'
     | '/painel/motorista'
     | '/painel/profissional'
     | '/painel/representante'
@@ -400,6 +411,7 @@ export interface FileRouteTypes {
     | '/loja/$slug'
     | '/negocios/$id'
     | '/painel/lojista'
+    | '/painel/morador'
     | '/painel/motorista'
     | '/painel/profissional'
     | '/painel/representante'
@@ -560,6 +572,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof PainelMotoristaRouteImport
       parentRoute: typeof PainelRoute
     }
+    '/painel/morador': {
+      id: '/painel/morador'
+      path: '/morador'
+      fullPath: '/painel/morador'
+      preLoaderRoute: typeof PainelMoradorRouteImport
+      parentRoute: typeof PainelRoute
+    }
     '/painel/lojista': {
       id: '/painel/lojista'
       path: '/lojista'
@@ -700,6 +719,7 @@ const NegociosRouteWithChildren = NegociosRoute._addFileChildren(
 
 interface PainelRouteChildren {
   PainelLojistaRoute: typeof PainelLojistaRoute
+  PainelMoradorRoute: typeof PainelMoradorRoute
   PainelMotoristaRoute: typeof PainelMotoristaRoute
   PainelProfissionalRoute: typeof PainelProfissionalRoute
   PainelRepresentanteRoute: typeof PainelRepresentanteRoute
@@ -707,6 +727,7 @@ interface PainelRouteChildren {
 
 const PainelRouteChildren: PainelRouteChildren = {
   PainelLojistaRoute: PainelLojistaRoute,
+  PainelMoradorRoute: PainelMoradorRoute,
   PainelMotoristaRoute: PainelMotoristaRoute,
   PainelProfissionalRoute: PainelProfissionalRoute,
   PainelRepresentanteRoute: PainelRepresentanteRoute,
