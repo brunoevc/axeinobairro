@@ -17,7 +17,9 @@ import { Route as OfertasRouteImport } from './routes/ofertas'
 import { Route as NoticiasRouteImport } from './routes/noticias'
 import { Route as NegociosRouteImport } from './routes/negocios'
 import { Route as LoginRouteImport } from './routes/login'
+import { Route as ComoFuncionaRouteImport } from './routes/como-funciona'
 import { Route as CadastroRouteImport } from './routes/cadastro'
+import { Route as AnuncieRouteImport } from './routes/anuncie'
 import { Route as AdminRouteImport } from './routes/admin'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as NegociosIndexRouteImport } from './routes/negocios/index'
@@ -75,9 +77,19 @@ const LoginRoute = LoginRouteImport.update({
   path: '/login',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ComoFuncionaRoute = ComoFuncionaRouteImport.update({
+  id: '/como-funciona',
+  path: '/como-funciona',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const CadastroRoute = CadastroRouteImport.update({
   id: '/cadastro',
   path: '/cadastro',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AnuncieRoute = AnuncieRouteImport.update({
+  id: '/anuncie',
+  path: '/anuncie',
   getParentRoute: () => rootRouteImport,
 } as any)
 const AdminRoute = AdminRouteImport.update({
@@ -164,7 +176,9 @@ const AdminAprovacoesRoute = AdminAprovacoesRouteImport.update({
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/admin': typeof AdminRouteWithChildren
+  '/anuncie': typeof AnuncieRoute
   '/cadastro': typeof CadastroRoute
+  '/como-funciona': typeof ComoFuncionaRoute
   '/login': typeof LoginRoute
   '/negocios': typeof NegociosRouteWithChildren
   '/noticias': typeof NoticiasRoute
@@ -190,7 +204,9 @@ export interface FileRoutesByFullPath {
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/anuncie': typeof AnuncieRoute
   '/cadastro': typeof CadastroRoute
+  '/como-funciona': typeof ComoFuncionaRoute
   '/login': typeof LoginRoute
   '/noticias': typeof NoticiasRoute
   '/ofertas': typeof OfertasRoute
@@ -217,7 +233,9 @@ export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/admin': typeof AdminRouteWithChildren
+  '/anuncie': typeof AnuncieRoute
   '/cadastro': typeof CadastroRoute
+  '/como-funciona': typeof ComoFuncionaRoute
   '/login': typeof LoginRoute
   '/negocios': typeof NegociosRouteWithChildren
   '/noticias': typeof NoticiasRoute
@@ -246,7 +264,9 @@ export interface FileRouteTypes {
   fullPaths:
     | '/'
     | '/admin'
+    | '/anuncie'
     | '/cadastro'
+    | '/como-funciona'
     | '/login'
     | '/negocios'
     | '/noticias'
@@ -272,7 +292,9 @@ export interface FileRouteTypes {
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
+    | '/anuncie'
     | '/cadastro'
+    | '/como-funciona'
     | '/login'
     | '/noticias'
     | '/ofertas'
@@ -298,7 +320,9 @@ export interface FileRouteTypes {
     | '__root__'
     | '/'
     | '/admin'
+    | '/anuncie'
     | '/cadastro'
+    | '/como-funciona'
     | '/login'
     | '/negocios'
     | '/noticias'
@@ -326,7 +350,9 @@ export interface FileRouteTypes {
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AdminRoute: typeof AdminRouteWithChildren
+  AnuncieRoute: typeof AnuncieRoute
   CadastroRoute: typeof CadastroRoute
+  ComoFuncionaRoute: typeof ComoFuncionaRoute
   LoginRoute: typeof LoginRoute
   NegociosRoute: typeof NegociosRouteWithChildren
   NoticiasRoute: typeof NoticiasRoute
@@ -396,11 +422,25 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof LoginRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/como-funciona': {
+      id: '/como-funciona'
+      path: '/como-funciona'
+      fullPath: '/como-funciona'
+      preLoaderRoute: typeof ComoFuncionaRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/cadastro': {
       id: '/cadastro'
       path: '/cadastro'
       fullPath: '/cadastro'
       preLoaderRoute: typeof CadastroRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/anuncie': {
+      id: '/anuncie'
+      path: '/anuncie'
+      fullPath: '/anuncie'
+      preLoaderRoute: typeof AnuncieRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/admin': {
@@ -565,7 +605,9 @@ const NegociosRouteWithChildren = NegociosRoute._addFileChildren(
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AdminRoute: AdminRouteWithChildren,
+  AnuncieRoute: AnuncieRoute,
   CadastroRoute: CadastroRoute,
+  ComoFuncionaRoute: ComoFuncionaRoute,
   LoginRoute: LoginRoute,
   NegociosRoute: NegociosRouteWithChildren,
   NoticiasRoute: NoticiasRoute,

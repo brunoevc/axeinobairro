@@ -167,7 +167,7 @@ function Index() {
                 </Button>
               </form>
 
-              <div className="flex flex-col sm:flex-row gap-4">
+               <div className="flex flex-col sm:flex-row gap-4">
                 <Button 
                   onClick={() => navigate({ to: '/negocios' })}
                   className="h-16 px-10 bg-orange-600 hover:bg-orange-700 text-white rounded-2xl font-black shadow-xl shadow-orange-200 transition-all active:scale-95 text-lg group"
@@ -180,18 +180,8 @@ function Index() {
                   onClick={() => navigate({ to: '/cadastro' })}
                   className="h-16 px-10 bg-white border-slate-200 text-slate-700 rounded-2xl font-black hover:bg-slate-50 transition-all active:scale-95 text-lg"
                 >
-                  Cadastrar minha loja
+                  Anunciar meu negócio
                 </Button>
-                <Button 
-                  variant="link"
-                  onClick={() => navigate({ to: '/negocios', search: { bairro: 'Centro' } })}
-                  className="h-16 px-4 text-orange-600 font-black hover:no-underline hover:text-orange-700 transition-all active:scale-95 text-base"
-                >
-                  Ver negócios no Centro de Araruama
-                  <ArrowRight className="ml-2 h-4 w-4" />
-                </Button>
-
-
               </div>
             </div>
           </div>
@@ -234,6 +224,48 @@ function Index() {
           </div>
         </div>
       </section>
+
+      {/* New Institutional Block */}
+      <section className="max-w-7xl mx-auto px-6 mt-16 mb-16">
+        <h2 className="text-2xl font-black text-slate-900 mb-8">Como o Axêi funciona</h2>
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-4 text-slate-900">
+          {[
+            { label: 'Negócios', icon: ShoppingBag, path: '/negocios' },
+            { label: 'Serviços', icon: Wrench, path: '/servicos' },
+            { label: 'Transporte', icon: Car, path: '/transporte' },
+            { label: 'Notícias', icon: Newspaper, path: '/noticias' },
+          ].map(item => (
+            <Button 
+              key={item.label}
+              variant="outline"
+              onClick={() => navigate({ to: item.path })}
+              className="h-24 flex flex-col gap-2 rounded-2xl font-bold border-slate-100 hover:border-orange-200 hover:bg-orange-50 transition-all shadow-sm"
+            >
+              <item.icon className="w-5 h-5 text-orange-600" />
+              {item.label}
+            </Button>
+          ))}
+        </div>
+        <div className="mt-8 flex justify-center">
+          <Button onClick={() => navigate({ to: '/como-funciona' })} className="bg-slate-900 text-white h-12 px-8 rounded-2xl font-black">
+            Saiba Mais
+          </Button>
+        </div>
+      </section>
+      
+      {/* Classificados Teaser */}
+      <section className="max-w-7xl mx-auto px-6 mb-16">
+        <div className="bg-slate-900 rounded-[2rem] p-8 text-white flex flex-col md:flex-row items-center justify-between gap-6">
+          <div>
+            <h3 className="text-2xl font-black mb-2">Classificados do Bairro</h3>
+            <p className="text-slate-400 font-medium">Venda, trocas e oportunidades locais em breve.</p>
+          </div>
+          <Button variant="secondary" className="rounded-2xl font-black h-12 px-8 bg-white text-slate-900 hover:bg-slate-100">
+            Em Breve
+          </Button>
+        </div>
+      </section>
+
 
       {/* Acontecendo Agora - Redesigned to be less orange-heavy and more premium */}
       <section className="max-w-7xl mx-auto px-6 mt-12 mb-12">
