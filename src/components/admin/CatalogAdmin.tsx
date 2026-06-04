@@ -289,12 +289,13 @@ export function CatalogAdmin({ merchantId, onBack }: CatalogAdminProps) {
                     <span className="text-slate-500 font-bold flex items-center gap-1"><DollarSign className="w-3 h-3" /> Taxa</span>
                     <span className="font-black text-slate-900">R$ {zone.deliveryFee.toFixed(2).replace('.', ',')}</span>
                   </div>
-                  {zone.minimumOrder > 0 && (
+                  {(zone.minimumOrder || 0) > 0 && (
                     <div className="flex items-center justify-between text-xs">
                       <span className="text-slate-500 font-bold">Mínimo</span>
-                      <span className="font-bold text-slate-900">R$ {zone.minimumOrder.toFixed(2).replace('.', ',')}</span>
+                      <span className="font-bold text-slate-900">R$ {(zone.minimumOrder || 0).toFixed(2).replace('.', ',')}</span>
                     </div>
                   )}
+
                   {zone.estimatedTime && (
                     <div className="flex items-center justify-between text-xs">
                       <span className="text-slate-500 font-bold flex items-center gap-1"><Clock className="w-3 h-3" /> Tempo</span>
