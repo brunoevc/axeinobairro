@@ -54,20 +54,10 @@ export default function Transporte() {
       status: filters.status === "all" ? undefined : filters.status,
     });
 
-    const activeBoosts = localBoostsRepository.getActiveBoostsByType('transporte');
-    const levelWeight = { 'A': 3, 'B': 2, 'C': 1, 'none': 0 };
+    // Phase 8.7: Apply Boosts via central repository
+    const sorted = localBoostsRepository.sortByBoost(filtered, 'transporte', 'id');
+    setRides(sorted);
 
-    filtered.sort((a, b) => {
-      const boostA = activeBoosts.find(boost => boost.targetId === a.id);
-      const boostB = activeBoosts.find(boost => boost.targetId === b.id);
-      
-      const weightA = boostA ? (levelWeight[boostA.level] || 0) : levelWeight.none;
-      const weightB = boostB ? (levelWeight[boostB.level] || 0) : levelWeight.none;
-
-      return weightB - weightA;
-    });
-
-    setRides(filtered);
   }, [filters]);
 
   const handleSelectDriver = (driverId: string) => {

@@ -13,7 +13,9 @@ import {
   Navigation,
   RefreshCw
 } from "lucide-react";
-import { merchants, categories, neighborhoods } from "@/data/merchants";
+import { categories, neighborhoods } from "@/data/merchants";
+import { merchantsRepository } from "@/repositories/merchantsRepository";
+import { localBoostsRepository } from "@/repositories/localBoostsRepository";
 import { MerchantCard } from "@/components/MerchantCard";
 import { MerchantSkeleton } from "@/components/MerchantSkeleton";
 import { z } from "zod";
@@ -112,20 +114,12 @@ function ListingPage() {
   }, []);
 
   const filteredMerchants = useMemo(() => {
-    let list = [...merchants];
+    let list = merchantsRepository.getAll();
     
-    // Calculate distance and sort if coordinates are available
-    if (coords) {
-      list = list.map(m => ({
-        ...m,
-        calculatedDistance: getDistance(coords.latitude, coords.longitude, m.latitude, m.longitude)
-      }))
-      .sort((a, b) => (a as any).calculatedDistance - (b as any).calculatedDistance);
-    }
-
+    // Apply filters first
     const searchKeywords = normalizeString(searchTerm).split(/\s+/).filter((k: string) => k.length > 0);
 
-    return list.filter(merchant => {
+    list = list.filter(merchant => {
       const categoryLabel = categories.find(c => c.slug === merchant.category)?.label || "";
       const searchableFields = [
         merchant.name,
@@ -147,7 +141,25 @@ function ListingPage() {
       
       return matchesSearch && matchesCategory && matchesNeighborhood && matchesPromotion;
     });
+
+    // Apply Boosts (Priority)
+    list = localBoostsRepository.sortByBoost(list, 'loja', 'id');
+
+    // Calculate distance and sort by distance only for items within same boost level?
+    // User asked to apply sortByBoost. Usually boosts override distance.
+    if (coords) {
+      list = list.map(m => ({
+        ...m,
+        calculatedDistance: getDistance(coords.latitude, coords.longitude, m.latitude, m.longitude)
+      }));
+      // If we want distance to be secondary:
+      // list.sort((a, b) => (a as any).calculatedDistance - (b as any).calculatedDistance);
+      // But sortByBoost already sorted them. Let's keep boost as primary.
+    }
+
+    return list;
   }, [searchTerm, selectedCategory, selectedNeighborhood, searchParams.hasPromotion, coords, getDistance]);
+
 
   const clearFilters = () => {
     setSearchTerm("");

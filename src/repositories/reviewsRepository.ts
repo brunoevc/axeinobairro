@@ -1,17 +1,12 @@
 import { Review, ReviewTargetType } from "@/types/reviews";
 import { mockReviews } from "@/data/reviews";
+import { storage } from "./storage";
 
 const STORAGE_KEY = "axei_reviews";
 
 export const reviewsRepository = {
   getAll: (): Review[] => {
-    const stored = localStorage.getItem(STORAGE_KEY);
-    if (!stored) {
-      // Initialize with mocks if nothing in storage
-      localStorage.setItem(STORAGE_KEY, JSON.stringify(mockReviews));
-      return mockReviews;
-    }
-    return JSON.parse(stored);
+    return storage.get(STORAGE_KEY, mockReviews);
   },
 
   getByTarget: (targetType: ReviewTargetType, targetId: string): Review[] => {
@@ -21,7 +16,6 @@ export const reviewsRepository = {
   },
 
   create: (review: Omit<Review, "id" | "createdAt" | "isVisible">): Review => {
-    // Validations
     if (!review.authorName) throw new Error("Nome é obrigatório");
     if (review.rating < 1 || review.rating > 5) throw new Error("Nota deve ser entre 1 e 5");
     if (review.comment.length < 10) throw new Error("Comentário deve ter no mínimo 10 caracteres");
@@ -35,7 +29,7 @@ export const reviewsRepository = {
     };
     
     all.push(newReview);
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(all));
+    storage.set(STORAGE_KEY, all);
     return newReview;
   },
 
@@ -44,13 +38,13 @@ export const reviewsRepository = {
     const index = all.findIndex((r) => r.id === id);
     if (index !== -1) {
       all[index] = { ...all[index], ...updates };
-      localStorage.setItem(STORAGE_KEY, JSON.stringify(all));
+      storage.set(STORAGE_KEY, all);
     }
   },
 
   delete: (id: string): void => {
     const all = reviewsRepository.getAll().filter((r) => r.id !== id);
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(all));
+    storage.set(STORAGE_KEY, all);
   },
 
   hide: (id: string): void => {
@@ -72,3 +66,4 @@ export const reviewsRepository = {
     };
   }
 };
+

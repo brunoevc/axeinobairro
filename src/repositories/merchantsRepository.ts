@@ -1,12 +1,11 @@
 import { Merchant, merchants as mockMerchants } from "@/data/merchants";
+import { storage } from "./storage";
 
 const STORAGE_KEY = "axei_merchants";
 
 export const merchantsRepository = {
   getAll: (): Merchant[] => {
-    const stored = localStorage.getItem(STORAGE_KEY);
-    if (!stored) return mockMerchants;
-    return JSON.parse(stored);
+    return storage.get(STORAGE_KEY, mockMerchants);
   },
 
   getById: (id: string): Merchant | undefined => {
@@ -25,7 +24,7 @@ export const merchantsRepository = {
     } else {
       merchants.push(merchant);
     }
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(merchants));
+    storage.set(STORAGE_KEY, merchants);
   },
 
   update: (id: string, data: Partial<Merchant>) => {
@@ -33,12 +32,13 @@ export const merchantsRepository = {
     const index = merchants.findIndex(m => m.id === id);
     if (index !== -1) {
       merchants[index] = { ...merchants[index], ...data };
-      localStorage.setItem(STORAGE_KEY, JSON.stringify(merchants));
+      storage.set(STORAGE_KEY, merchants);
     }
   },
 
   delete: (id: string) => {
     const merchants = merchantsRepository.getAll().filter(m => m.id !== id);
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(merchants));
+    storage.set(STORAGE_KEY, merchants);
   }
 };
+

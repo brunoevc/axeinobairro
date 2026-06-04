@@ -1,13 +1,12 @@
 import { ServiceProvider, ServiceCategory } from "@/types/services";
 import { initialServices } from "@/data/services";
+import { storage } from "./storage";
 
 const STORAGE_KEY = "axei_services";
 
 export const servicesRepository = {
   getAll: (): ServiceProvider[] => {
-    const stored = localStorage.getItem(STORAGE_KEY);
-    if (!stored) return initialServices;
-    return JSON.parse(stored);
+    return storage.get(STORAGE_KEY, initialServices);
   },
 
   normalizePhone: (phone: string) => {
@@ -41,12 +40,12 @@ export const servicesRepository = {
     } else {
       services.push(normalizedService);
     }
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(services));
+    storage.set(STORAGE_KEY, services);
   },
 
   delete: (id: string) => {
     const services = servicesRepository.getAll().filter(s => s.id !== id);
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(services));
+    storage.set(STORAGE_KEY, services);
   },
 
   formatWhatsAppLink: (phone: string, message: string) => {
@@ -54,3 +53,4 @@ export const servicesRepository = {
     return `https://wa.me/${cleanPhone}?text=${encodeURIComponent(message)}`;
   }
 };
+

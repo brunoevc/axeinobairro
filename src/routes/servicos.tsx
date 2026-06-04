@@ -51,19 +51,9 @@ export default function Servicos() {
       filtered = filtered.filter(s => s.isAvailable);
     }
 
-    // Phase 8.3: Apply Boosts
-    const activeBoosts = localBoostsRepository.getActiveBoostsByType('servico');
-    const levelWeight = { 'A': 3, 'B': 2, 'C': 1, 'none': 0 };
+    // Phase 8.7: Apply Boosts via central repository
+    filtered = localBoostsRepository.sortByBoost(filtered, 'servico', 'id');
 
-    filtered.sort((a, b) => {
-      const boostA = activeBoosts.find(boost => boost.targetId === a.id);
-      const boostB = activeBoosts.find(boost => boost.targetId === b.id);
-      
-      const weightA = boostA ? levelWeight[boostA.level] : levelWeight.none;
-      const weightB = boostB ? levelWeight[boostB.level] : levelWeight.none;
-
-      return weightB - weightA;
-    });
 
     setServices(filtered);
   }, [filters]);
