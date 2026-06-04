@@ -83,7 +83,7 @@ export default function Servicos() {
 
 
   const handleWhatsApp = (provider: ServiceProvider) => {
-    const message = "Olá, encontrei seu anúncio no Axéí no Bairro e gostaria de solicitar um orçamento.";
+    const message = "Olá. Encontrei seu perfil no Axéí no Bairro e gostaria de solicitar um orçamento.";
     const link = servicesRepository.formatWhatsAppLink(provider.phone, message);
     window.open(link, "_blank");
   };
@@ -225,11 +225,11 @@ export default function Servicos() {
                           })()}
                         </span>
                       </div>
-                      {(() => {
+                        {(() => {
                         const { average, total } = reviewsRepository.getAverageRating('servico', provider.id);
-                        if (average >= 4.5 && total > 5) return <Badge className="bg-emerald-100 text-emerald-600 border-emerald-200 text-[8px] font-black uppercase px-1.5 py-0">Excelente</Badge>;
-                        if (average >= 4.0 && total > 3) return <Badge className="bg-blue-100 text-blue-600 border-blue-200 text-[8px] font-black uppercase px-1.5 py-0">Bem Avaliado</Badge>;
-                        if (total <= 3) return <Badge className="bg-slate-100 text-slate-500 border-slate-200 text-[8px] font-black uppercase px-1.5 py-0">Novo</Badge>;
+                        if (average >= 4.5 && total > 5) return <Badge className="bg-emerald-100 text-emerald-600 border-emerald-200 text-[10px] font-black uppercase px-2 py-0.5">Excelente</Badge>;
+                        if (average >= 4.0 && total > 3) return <Badge className="bg-blue-100 text-blue-600 border-blue-200 text-[10px] font-black uppercase px-2 py-0.5">Muito Bem Avaliado</Badge>;
+                        if (total <= 3) return <Badge className="bg-slate-100 text-slate-500 border-slate-200 text-[10px] font-black uppercase px-2 py-0.5">Novo</Badge>;
                         return null;
                       })()}
                     </div>
@@ -274,9 +274,9 @@ export default function Servicos() {
 
                   <Button 
                     onClick={() => handleWhatsApp(provider)}
-                    className="w-full bg-orange-600 hover:bg-orange-700 h-14 rounded-2xl font-black text-white shadow-lg shadow-orange-600/20 flex items-center gap-2 transition-transform hover:-translate-y-1"
+                    className="w-full bg-orange-600 hover:bg-orange-700 h-16 rounded-2xl font-black text-white shadow-lg shadow-orange-600/20 flex items-center gap-3 transition-all active:scale-95 group/btn italic text-lg"
                   >
-                    <MessageSquare className="w-5 h-5" />
+                    <MessageSquare className="w-6 h-6 fill-white" />
                     Solicitar Orçamento
                   </Button>
                 </div>
