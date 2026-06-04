@@ -100,11 +100,12 @@ function RegistrationPage() {
           </Button>
           <Button 
             variant="outline" 
-            onClick={() => navigate({ to: '/admin/lojas' })} 
+            onClick={() => navigate({ to: '/painel' })} 
             className="rounded-2xl h-16 text-lg font-black border-slate-200 text-slate-600 hover:bg-white"
           >
-            Ver minhas lojas
+            Acessar meu painel
           </Button>
+
         </div>
       </div>
     );
