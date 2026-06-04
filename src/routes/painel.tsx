@@ -111,7 +111,7 @@ function PanelLayout() {
                 </div>
              </div>
              <Button variant="outline" className="rounded-xl border-blue-200 text-blue-700 bg-white hover:bg-blue-50 font-black text-xs uppercase" asChild>
-                <a href="/">Voltar para o Site</a>
+                <Link to="/">Voltar para o Site</Link>
              </Button>
           </div>
 
