@@ -7,6 +7,13 @@ export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
 }
 
+export function formatCurrency(value: number) {
+  return new Intl.NumberFormat('pt-BR', {
+    style: 'currency',
+    currency: 'BRL',
+  }).format(value);
+}
+
 export const getWhatsAppUrl = (phone: string, merchantName: string) => {
   if (!phone) return null;
   const cleanPhone = phone.replace(/\D/g, "");

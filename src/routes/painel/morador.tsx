@@ -16,6 +16,7 @@ import {
   MapPin
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { ClassifiedsManager } from "@/components/ClassifiedsManager";
 
 export const Route = createFileRoute("/painel/morador")({
   component: MoradorPanel,
@@ -189,6 +190,13 @@ function MoradorPanel() {
            </div>
         </div>
       </div>
+
+      {/* Meus Anúncios */}
+      <ClassifiedsManager 
+        userId={authUser?.id || ""} 
+        userName={authUser?.name || ""}
+        planType={authUser?.plan === 'community' ? 'community' : 'free'} 
+      />
 
       {/* Banner Institucional */}
       <div className="p-6 bg-slate-50 rounded-3xl border border-slate-200 text-center">
