@@ -78,13 +78,11 @@ export function CatalogAdmin({ merchantId, onBack }: CatalogAdminProps) {
       toast.success("Zona de entrega excluída");
     }
   };
-
+  useEffect(() => {
     const saved = JSON.parse(localStorage.getItem("axei_products") || "[]");
-    // Filter by merchantId
-    // Initial mock products are not in localStorage, so we should merge them or just manage the custom ones
-    // For simplicity in this demo, let's just manage the localStorage ones
-    setProducts(saved.filter((p: Product) => p.merchantId === merchantId));
+    setProducts(saved.filter((p: any) => p.merchantId === merchantId));
   }, [merchantId]);
+
 
   const saveProducts = (newProducts: Product[]) => {
     const allProducts = JSON.parse(localStorage.getItem("axei_products") || "[]");
