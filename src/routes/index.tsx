@@ -18,8 +18,11 @@ import {
   PawPrint,
   RefreshCw,
   Briefcase,
-  Car
+  Car,
+  Lock,
+  ArrowLeft
 } from "lucide-react";
+
 
 import { categories } from "@/data/merchants";
 import { merchantsRepository } from "@/repositories/merchantsRepository";
@@ -40,8 +43,11 @@ import { Logo } from "@/components/ui/Logo";
 import { useLocation } from "@/hooks/useLocation";
 
 
+const IS_ADMIN_ENABLED = import.meta.env.VITE_ADMIN_ENABLED === 'true';
+
 export const Route = createFileRoute("/")({
   component: Index,
+
   head: () => ({
     meta: [
       { title: "Axêi no Bairro — Marketplace Local" },
