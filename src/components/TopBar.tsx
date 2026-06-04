@@ -1,11 +1,14 @@
 import { useState, useMemo, useEffect, useCallback, memo } from "react";
-import { MapPin, Search, RefreshCw, AlertCircle, ChevronDown, X, History } from "lucide-react";
+import { MapPin, Search, RefreshCw, AlertCircle, ChevronDown, X, History, Lock } from "lucide-react";
 import { Link, useNavigate } from "@tanstack/react-router";
 import { Logo } from "@/components/ui/Logo";
 import { useLocation } from "@/hooks/useLocation";
 import { neighborhoods } from "@/data/merchants";
 import { Button } from "@/components/ui/button";
 import { DigitalClock, DigitalDate } from "./DigitalClock";
+
+const IS_ADMIN_ENABLED = import.meta.env.VITE_ADMIN_ENABLED === 'true';
+
 
 const RECENT_NEIGHBORHOODS_KEY = "axei_recent_neighborhoods";
 
@@ -122,6 +125,13 @@ export const TopBar = memo(function TopBar() {
                 <Link to="/transporte" className="text-sm font-semibold text-slate-600 hover:text-orange-600 transition-colors">Transporte</Link>
                 <Link to="/noticias" className="text-sm font-semibold text-slate-600 hover:text-orange-600 transition-colors">Notícias</Link>
                 <Link to="/cadastro" className="text-sm font-semibold text-slate-600 hover:text-orange-600 transition-colors">Cadastro</Link>
+                {IS_ADMIN_ENABLED && (
+                  <Link to="/admin" className="text-sm font-semibold text-slate-400 hover:text-orange-600 transition-colors flex items-center gap-1">
+                    <Lock className="w-3 h-3" />
+                    Admin
+                  </Link>
+                )}
+
               </nav>
             )}
           </div>
