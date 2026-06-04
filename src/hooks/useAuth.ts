@@ -12,6 +12,7 @@ export interface AuthUser {
   faithCommunity?: string;
   avatar?: string;
   provider: "local" | "google";
+  pixConfig?: any;
 }
 
 

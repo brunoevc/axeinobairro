@@ -5,6 +5,8 @@ import { Users, Calendar, MessageSquare, Megaphone, ShieldAlert, Heart, Info } f
 import { communitiesRepository } from "@/repositories/communitiesRepository";
 import { Button } from "@/components/ui/button";
 import { PixConfigForm } from "@/components/PixConfigForm";
+import { AuthUser } from "@/hooks/useAuth";
+
 
 
 export const Route = createFileRoute("/painel/comunidade")({
