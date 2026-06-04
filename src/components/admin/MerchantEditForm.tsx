@@ -1,8 +1,9 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useMemo } from "react";
 import { MerchantAdmin } from "@/data/admin";
 import { Button } from "@/components/ui/button";
-import { Store, MapPin, MessageCircle, FileText, Save, X, Info, Globe, Copy, Check } from "lucide-react";
+import { Store, MapPin, MessageCircle, FileText, Save, X, Info, Globe, Copy, Check, AlertCircle } from "lucide-react";
 import { generateSlug, isValidSlug, isSlugUnique, RESERVED_SLUGS } from "@/lib/slugs";
+
 
 import { toast } from "sonner";
 import React from "react";
