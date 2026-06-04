@@ -26,6 +26,7 @@ import { Route as NegociosIdRouteImport } from './routes/negocios/$id'
 import { Route as LojaSlugRouteImport } from './routes/loja/$slug'
 import { Route as AdminTransporteRouteImport } from './routes/admin/transporte'
 import { Route as AdminServicosRouteImport } from './routes/admin/servicos'
+import { Route as AdminRepresentantesRouteImport } from './routes/admin/representantes'
 import { Route as AdminPlanosRouteImport } from './routes/admin/planos'
 import { Route as AdminLojasRouteImport } from './routes/admin/lojas'
 import { Route as AdminLeadsRouteImport } from './routes/admin/leads'
@@ -119,6 +120,11 @@ const AdminServicosRoute = AdminServicosRouteImport.update({
   path: '/servicos',
   getParentRoute: () => AdminRoute,
 } as any)
+const AdminRepresentantesRoute = AdminRepresentantesRouteImport.update({
+  id: '/representantes',
+  path: '/representantes',
+  getParentRoute: () => AdminRoute,
+} as any)
 const AdminPlanosRoute = AdminPlanosRouteImport.update({
   id: '/planos',
   path: '/planos',
@@ -174,6 +180,7 @@ export interface FileRoutesByFullPath {
   '/admin/leads': typeof AdminLeadsRoute
   '/admin/lojas': typeof AdminLojasRoute
   '/admin/planos': typeof AdminPlanosRoute
+  '/admin/representantes': typeof AdminRepresentantesRoute
   '/admin/servicos': typeof AdminServicosRoute
   '/admin/transporte': typeof AdminTransporteRoute
   '/loja/$slug': typeof LojaSlugRoute
@@ -198,6 +205,7 @@ export interface FileRoutesByTo {
   '/admin/leads': typeof AdminLeadsRoute
   '/admin/lojas': typeof AdminLojasRoute
   '/admin/planos': typeof AdminPlanosRoute
+  '/admin/representantes': typeof AdminRepresentantesRoute
   '/admin/servicos': typeof AdminServicosRoute
   '/admin/transporte': typeof AdminTransporteRoute
   '/loja/$slug': typeof LojaSlugRoute
@@ -225,6 +233,7 @@ export interface FileRoutesById {
   '/admin/leads': typeof AdminLeadsRoute
   '/admin/lojas': typeof AdminLojasRoute
   '/admin/planos': typeof AdminPlanosRoute
+  '/admin/representantes': typeof AdminRepresentantesRoute
   '/admin/servicos': typeof AdminServicosRoute
   '/admin/transporte': typeof AdminTransporteRoute
   '/loja/$slug': typeof LojaSlugRoute
@@ -253,6 +262,7 @@ export interface FileRouteTypes {
     | '/admin/leads'
     | '/admin/lojas'
     | '/admin/planos'
+    | '/admin/representantes'
     | '/admin/servicos'
     | '/admin/transporte'
     | '/loja/$slug'
@@ -277,6 +287,7 @@ export interface FileRouteTypes {
     | '/admin/leads'
     | '/admin/lojas'
     | '/admin/planos'
+    | '/admin/representantes'
     | '/admin/servicos'
     | '/admin/transporte'
     | '/loja/$slug'
@@ -303,6 +314,7 @@ export interface FileRouteTypes {
     | '/admin/leads'
     | '/admin/lojas'
     | '/admin/planos'
+    | '/admin/representantes'
     | '/admin/servicos'
     | '/admin/transporte'
     | '/loja/$slug'
@@ -447,6 +459,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AdminServicosRouteImport
       parentRoute: typeof AdminRoute
     }
+    '/admin/representantes': {
+      id: '/admin/representantes'
+      path: '/representantes'
+      fullPath: '/admin/representantes'
+      preLoaderRoute: typeof AdminRepresentantesRouteImport
+      parentRoute: typeof AdminRoute
+    }
     '/admin/planos': {
       id: '/admin/planos'
       path: '/planos'
@@ -507,6 +526,7 @@ interface AdminRouteChildren {
   AdminLeadsRoute: typeof AdminLeadsRoute
   AdminLojasRoute: typeof AdminLojasRoute
   AdminPlanosRoute: typeof AdminPlanosRoute
+  AdminRepresentantesRoute: typeof AdminRepresentantesRoute
   AdminServicosRoute: typeof AdminServicosRoute
   AdminTransporteRoute: typeof AdminTransporteRoute
   AdminIndexRoute: typeof AdminIndexRoute
@@ -520,6 +540,7 @@ const AdminRouteChildren: AdminRouteChildren = {
   AdminLeadsRoute: AdminLeadsRoute,
   AdminLojasRoute: AdminLojasRoute,
   AdminPlanosRoute: AdminPlanosRoute,
+  AdminRepresentantesRoute: AdminRepresentantesRoute,
   AdminServicosRoute: AdminServicosRoute,
   AdminTransporteRoute: AdminTransporteRoute,
   AdminIndexRoute: AdminIndexRoute,

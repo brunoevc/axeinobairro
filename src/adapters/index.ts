@@ -41,3 +41,16 @@ export const recordToCampaign = (record: CampaignRecord): Campaign => {
   const { updatedAt, deletedAt, ownerId, source, ...campaign } = record;
   return campaign as Campaign;
 };
+
+import { Representative } from "@/types/representatives";
+import { RepresentativeRecord } from "@/types/database";
+
+export const representativeToRecord = (rep: Representative): RepresentativeRecord => ({
+  ...rep,
+  source: 'localStorage' as const,
+});
+
+export const recordToRepresentative = (record: RepresentativeRecord): Representative => {
+  const { updatedAt, deletedAt, ownerId, source, ...rep } = record;
+  return rep as Representative;
+};
