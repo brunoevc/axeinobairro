@@ -1,11 +1,12 @@
 import { NewsItem } from "@/types/news";
+import { initialNews } from "@/data/news";
 
 const STORAGE_KEY = "axei_news_data";
 
 export const newsRepository = {
   getAll: (): NewsItem[] => {
     const data = localStorage.getItem(STORAGE_KEY);
-    return data ? JSON.parse(data) : [];
+    return data ? JSON.parse(data) : initialNews;
   },
 
   saveAll: (news: NewsItem[]) => {
