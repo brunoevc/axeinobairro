@@ -247,6 +247,7 @@ function Index() {
             { label: 'Serviços', icon: Wrench, path: '/servicos' },
             { label: 'Transporte', icon: Car, path: '/transporte' },
             { label: 'Notícias', icon: Newspaper, path: '/noticias' },
+            { label: 'Comunidades', icon: Users, path: '/comunidades' },
           ].map(item => (
             <Button 
               key={item.label}
