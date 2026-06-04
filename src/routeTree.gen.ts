@@ -20,6 +20,7 @@ import { Route as NegociosRouteImport } from './routes/negocios'
 import { Route as LoginRouteImport } from './routes/login'
 import { Route as ComunidadesRouteImport } from './routes/comunidades'
 import { Route as ComoFuncionaRouteImport } from './routes/como-funciona'
+import { Route as ClassificadosRouteImport } from './routes/classificados'
 import { Route as CadastroRouteImport } from './routes/cadastro'
 import { Route as AnuncieRouteImport } from './routes/anuncie'
 import { Route as AdminRouteImport } from './routes/admin'
@@ -98,6 +99,11 @@ const ComunidadesRoute = ComunidadesRouteImport.update({
 const ComoFuncionaRoute = ComoFuncionaRouteImport.update({
   id: '/como-funciona',
   path: '/como-funciona',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ClassificadosRoute = ClassificadosRouteImport.update({
+  id: '/classificados',
+  path: '/classificados',
   getParentRoute: () => rootRouteImport,
 } as any)
 const CadastroRoute = CadastroRouteImport.update({
@@ -226,6 +232,7 @@ export interface FileRoutesByFullPath {
   '/admin': typeof AdminRouteWithChildren
   '/anuncie': typeof AnuncieRoute
   '/cadastro': typeof CadastroRoute
+  '/classificados': typeof ClassificadosRoute
   '/como-funciona': typeof ComoFuncionaRoute
   '/comunidades': typeof ComunidadesRoute
   '/login': typeof LoginRoute
@@ -262,6 +269,7 @@ export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/anuncie': typeof AnuncieRoute
   '/cadastro': typeof CadastroRoute
+  '/classificados': typeof ClassificadosRoute
   '/como-funciona': typeof ComoFuncionaRoute
   '/comunidades': typeof ComunidadesRoute
   '/login': typeof LoginRoute
@@ -299,6 +307,7 @@ export interface FileRoutesById {
   '/admin': typeof AdminRouteWithChildren
   '/anuncie': typeof AnuncieRoute
   '/cadastro': typeof CadastroRoute
+  '/classificados': typeof ClassificadosRoute
   '/como-funciona': typeof ComoFuncionaRoute
   '/comunidades': typeof ComunidadesRoute
   '/login': typeof LoginRoute
@@ -338,6 +347,7 @@ export interface FileRouteTypes {
     | '/admin'
     | '/anuncie'
     | '/cadastro'
+    | '/classificados'
     | '/como-funciona'
     | '/comunidades'
     | '/login'
@@ -374,6 +384,7 @@ export interface FileRouteTypes {
     | '/'
     | '/anuncie'
     | '/cadastro'
+    | '/classificados'
     | '/como-funciona'
     | '/comunidades'
     | '/login'
@@ -410,6 +421,7 @@ export interface FileRouteTypes {
     | '/admin'
     | '/anuncie'
     | '/cadastro'
+    | '/classificados'
     | '/como-funciona'
     | '/comunidades'
     | '/login'
@@ -448,6 +460,7 @@ export interface RootRouteChildren {
   AdminRoute: typeof AdminRouteWithChildren
   AnuncieRoute: typeof AnuncieRoute
   CadastroRoute: typeof CadastroRoute
+  ClassificadosRoute: typeof ClassificadosRoute
   ComoFuncionaRoute: typeof ComoFuncionaRoute
   ComunidadesRoute: typeof ComunidadesRoute
   LoginRoute: typeof LoginRoute
@@ -539,6 +552,13 @@ declare module '@tanstack/react-router' {
       path: '/como-funciona'
       fullPath: '/como-funciona'
       preLoaderRoute: typeof ComoFuncionaRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/classificados': {
+      id: '/classificados'
+      path: '/classificados'
+      fullPath: '/classificados'
+      preLoaderRoute: typeof ClassificadosRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/cadastro': {
@@ -782,6 +802,7 @@ const rootRouteChildren: RootRouteChildren = {
   AdminRoute: AdminRouteWithChildren,
   AnuncieRoute: AnuncieRoute,
   CadastroRoute: CadastroRoute,
+  ClassificadosRoute: ClassificadosRoute,
   ComoFuncionaRoute: ComoFuncionaRoute,
   ComunidadesRoute: ComunidadesRoute,
   LoginRoute: LoginRoute,
