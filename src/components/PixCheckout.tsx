@@ -5,7 +5,7 @@ import { Copy, CheckCircle2, Clock, XCircle, AlertCircle, FileCheck, Send } from
 import { PixCharge } from "@/types/payment";
 import { updatePixStatus } from "@/lib/payments";
 import { toast } from "sonner";
-import { useState } from "react";
+import { useState, useCallback } from "react";
 
 interface Props {
   charge: PixCharge;
@@ -16,12 +16,15 @@ export function PixCheckout({ charge, onStatusUpdate }: Props) {
   const [copied, setCopied] = useState(false);
   const [isSending, setIsSending] = useState(false);
 
-  const copyToClipboard = () => {
-    navigator.clipboard.writeText(charge.pixKey);
+  const copyToClipboard = useCallback((text: string, label: string) => {
+    navigator.clipboard.writeText(text);
     setCopied(true);
-    toast.success("Chave Pix copiada!");
+    toast.success(`${label} copiado!`, {
+      className: "font-black uppercase text-[10px] tracking-widest",
+    });
     setTimeout(() => setCopied(false), 2000);
-  };
+  }, []);
+
 
   const handleSendReceipt = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
@@ -84,7 +87,7 @@ export function PixCheckout({ charge, onStatusUpdate }: Props) {
                   {charge.pixKey}
                 </div>
                 <Button 
-                  onClick={copyToClipboard}
+                  onClick={() => copyToClipboard(charge.pixKey, "Código Pix")}
                   size="icon"
                   className="h-12 w-12 rounded-2xl bg-orange-600 hover:bg-orange-700 shrink-0 shadow-lg shadow-orange-100"
                 >
