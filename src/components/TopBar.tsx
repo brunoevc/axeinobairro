@@ -120,12 +120,13 @@ export const TopBar = memo(function TopBar() {
             {!isCompact && (
               <nav className="hidden lg:flex items-center gap-6">
                 <Link to="/" className="text-sm font-semibold text-slate-600 hover:text-orange-600 transition-colors">Início</Link>
-                <Link to="/negocios" className="text-sm font-semibold text-slate-600 hover:text-orange-600 transition-colors">Negócios</Link>
+                <Link to="/como-funciona" className="text-sm font-semibold text-slate-600 hover:text-orange-600 transition-colors">Como Funciona</Link>
+                <Link to="/negocios" className="text-sm font-semibold text-slate-600 hover:text-orange-600 transition-colors">Lojas</Link>
                 <Link to="/servicos" className="text-sm font-semibold text-slate-600 hover:text-orange-600 transition-colors">Serviços</Link>
                 <Link to="/transporte" className="text-sm font-semibold text-slate-600 hover:text-orange-600 transition-colors">Transporte</Link>
                 <Link to="/representantes" className="text-sm font-semibold text-slate-600 hover:text-orange-600 transition-colors">Representantes</Link>
-                <Link to="/noticias" className="text-sm font-semibold text-slate-600 hover:text-orange-600 transition-colors">Notícias</Link>
-                <Link to="/cadastro" className="text-sm font-semibold text-slate-600 hover:text-orange-600 transition-colors">Cadastro</Link>
+                <Link to="/anuncie" className="text-sm font-bold text-orange-600 hover:text-orange-700 transition-colors px-4 py-2 bg-orange-50 rounded-xl">Anuncie</Link>
+
                 {IS_ADMIN_ENABLED && (
                   <Link to="/admin" className="text-sm font-semibold text-slate-400 hover:text-orange-600 transition-colors flex items-center gap-1">
                     <Lock className="w-3 h-3" />

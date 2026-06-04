@@ -27,10 +27,19 @@ function RepresentativesPage() {
             Voltar para Home
           </Link>
           <h1 className="text-4xl font-black text-slate-900 tracking-tight">Representantes Locais</h1>
-          <p className="text-slate-500 mt-4 text-lg max-w-2xl">
-            Conheça quem ajuda a conectar moradores, comerciantes e oportunidades na sua região.
+          <p className="text-slate-500 mt-4 text-lg max-w-2xl leading-relaxed">
+            Representantes ajudam a conectar moradores, comerciantes e oportunidades locais, fortalecendo o bairro e a economia da comunidade.
           </p>
-          <div className="h-1.5 w-20 bg-orange-600 mt-4 rounded-full" />
+          <div className="h-1.5 w-20 bg-orange-600 mt-6 rounded-full" />
+          
+          <div className="mt-8">
+            <Button asChild className="h-14 px-8 bg-slate-900 hover:bg-slate-800 text-white rounded-2xl font-black shadow-lg">
+              <a href="https://wa.me/5500000000000" target="_blank" rel="noopener noreferrer">
+                Quero ser Representante
+              </a>
+            </Button>
+          </div>
+
         </header>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">

@@ -54,12 +54,13 @@ export const FloatingNav = memo(function FloatingNav() {
       </Link>
 
       <Link 
-        to="/cadastro" 
-        className={`flex flex-col items-center gap-1 px-3 py-2 rounded-2xl transition-all duration-300 ${isActive('/cadastro') ? 'text-orange-600 bg-orange-50' : 'text-slate-400 hover:text-slate-600'}`}
+        to="/anuncie" 
+        className={`flex flex-col items-center gap-1 px-3 py-2 rounded-2xl transition-all duration-300 ${isActive('/anuncie') ? 'text-orange-600 bg-orange-50' : 'text-slate-400 hover:text-slate-600'}`}
       >
-        <PlusCircle className={`w-5 h-5 ${isActive('/cadastro') ? 'scale-110' : ''}`} />
+        <PlusCircle className={`w-5 h-5 ${isActive('/anuncie') ? 'scale-110' : ''}`} />
         <span className="text-[9px] font-black uppercase tracking-tighter">Anunciar</span>
       </Link>
+
     </nav>
   );
 });
