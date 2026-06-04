@@ -154,21 +154,21 @@ export function MerchantRow({
           <Button
             variant="outline"
             size="sm"
-            onClick={() => setPlanOpen(!planOpen)}
+            onClick={() => setStatusOpen(!statusOpen)}
             className="text-xs flex items-center gap-1"
           >
-            📊 Status
+            ⚖️ Status
             <ChevronDown className="h-3 w-3" />
           </Button>
 
-          {planOpen && (
+          {statusOpen && (
             <div className="absolute top-full left-0 mt-1 bg-card border border-accent/20 rounded-lg shadow-lg z-10 min-w-[150px]">
-              {(["verified", "featured", "partner", "rejected"] as const).map((status) => (
+              {(["pending", "verified", "featured", "partner", "rejected"] as const).map((status) => (
                 <button
                   key={status}
                   onClick={() => {
-                    onChangePlan(merchant.id, status as any); // Reusing onChangePlan for status update in table logic for simplicity
-                    setPlanOpen(false);
+                    onChangeStatus(merchant.id, status);
+                    setStatusOpen(false);
                   }}
                   className={`w-full text-left px-3 py-2 text-xs hover:bg-accent/10 first:rounded-t-lg last:rounded-b-lg transition-colors ${
                     merchant.status === status ? "bg-accent/20" : ""
@@ -180,6 +180,38 @@ export function MerchantRow({
             </div>
           )}
         </div>
+
+        <div className="relative">
+          <Button
+            variant="outline"
+            size="sm"
+            onClick={() => setPlanOpen(!planOpen)}
+            className="text-xs flex items-center gap-1"
+          >
+            📊 Plano
+            <ChevronDown className="h-3 w-3" />
+          </Button>
+
+          {planOpen && (
+            <div className="absolute top-full left-0 mt-1 bg-card border border-accent/20 rounded-lg shadow-lg z-10 min-w-[150px]">
+              {plans.map((p) => (
+                <button
+                  key={p}
+                  onClick={() => {
+                    onChangePlan(merchant.id, p);
+                    setPlanOpen(false);
+                  }}
+                  className={`w-full text-left px-3 py-2 text-xs hover:bg-accent/10 first:rounded-t-lg last:rounded-b-lg transition-colors ${
+                    currentPlan === p ? "bg-accent/20" : ""
+                  }`}
+                >
+                  {planLabels[p]}
+                </button>
+              ))}
+            </div>
+          )}
+        </div>
+
       </div>
     </div>
   );
