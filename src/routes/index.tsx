@@ -29,6 +29,8 @@ import { merchantsRepository } from "@/repositories/merchantsRepository";
 import { servicesRepository } from "@/repositories/servicesRepository";
 import { ridesRepository } from "@/repositories/ridesRepository";
 import { localBoostsRepository } from "@/repositories/localBoostsRepository";
+import { newsRepository } from "@/repositories/newsRepository";
+import { representativesRepository } from "@/repositories/representativesRepository";
 import { LocalBoost } from "@/types/boosts";
 
 
@@ -233,80 +235,72 @@ function Index() {
         </div>
       </section>
 
-      {/* Acontecendo Agora */}
+      {/* Acontecendo Agora - Redesigned to be less orange-heavy and more premium */}
       <section className="max-w-7xl mx-auto px-6 mt-12 mb-12">
         <div className="flex items-center gap-2 mb-6">
           <div className="h-2 w-2 rounded-full bg-emerald-500 animate-ping" />
-          <h2 className="text-sm font-black uppercase tracking-widest text-slate-400">Acontecendo Agora</h2>
+          <h2 className="text-xs font-black uppercase tracking-widest text-slate-400">Destaques em Araruama</h2>
         </div>
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-          <div className="bg-white border border-slate-100 p-4 rounded-2xl flex items-center gap-4 shadow-sm hover:shadow-md transition-all group">
-            <div className="w-12 h-12 bg-orange-50 rounded-xl flex items-center justify-center text-orange-600 group-hover:bg-orange-600 group-hover:text-white transition-colors">
+        <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
+          <div className="bg-white border border-slate-100 p-6 rounded-[2rem] flex items-center gap-4 shadow-sm hover:shadow-lg transition-all group">
+            <div className="w-12 h-12 bg-slate-50 rounded-2xl flex items-center justify-center text-slate-600 group-hover:bg-orange-600 group-hover:text-white transition-all">
               <Croissant className="w-6 h-6" />
             </div>
             <div>
-              <div className="text-sm font-black text-slate-900 leading-none mb-1">Padaria aberta agora</div>
-              <div className="text-[10px] font-bold text-slate-400 uppercase tracking-tight">Pão quentinho em Rio do Limão</div>
+              <div className="text-sm font-black text-slate-900 leading-none mb-1">Padarias</div>
+              <div className="text-[10px] font-bold text-slate-400 uppercase tracking-tight">Pão quentinho agora</div>
             </div>
           </div>
-          <div className="bg-white border border-slate-100 p-4 rounded-2xl flex items-center gap-4 shadow-sm hover:shadow-md transition-all group">
-            <div className="w-12 h-12 bg-emerald-50 rounded-xl flex items-center justify-center text-emerald-600 group-hover:bg-emerald-600 group-hover:text-white transition-colors">
+          <div className="bg-white border border-slate-100 p-6 rounded-[2rem] flex items-center gap-4 shadow-sm hover:shadow-lg transition-all group">
+            <div className="w-12 h-12 bg-slate-50 rounded-2xl flex items-center justify-center text-slate-600 group-hover:bg-orange-600 group-hover:text-white transition-all">
               <Tag className="w-6 h-6" />
             </div>
             <div>
-              <div className="text-sm font-black text-slate-900 leading-none mb-1">Promoção ativa perto de você</div>
-              <div className="text-[10px] font-bold text-slate-400 uppercase tracking-tight">50% OFF em Cantina da Nonna</div>
+              <div className="text-sm font-black text-slate-900 leading-none mb-1">Ofertas</div>
+              <div className="text-[10px] font-bold text-slate-400 uppercase tracking-tight">Economia garantida</div>
             </div>
           </div>
-          <div className="bg-white border border-slate-100 p-4 rounded-2xl flex items-center gap-4 shadow-sm hover:shadow-md transition-all group">
-            <div className="w-12 h-12 bg-blue-50 rounded-xl flex items-center justify-center text-blue-600 group-hover:bg-blue-600 group-hover:text-white transition-colors">
+          <div className="bg-white border border-slate-100 p-6 rounded-[2rem] flex items-center gap-4 shadow-sm hover:shadow-lg transition-all group">
+            <div className="w-12 h-12 bg-slate-50 rounded-2xl flex items-center justify-center text-slate-600 group-hover:bg-orange-600 group-hover:text-white transition-all">
               <Bike className="w-6 h-6" />
             </div>
             <div>
-              <div className="text-sm font-black text-slate-900 leading-none mb-1">Entrega disponível</div>
-              <div className="text-[10px] font-bold text-slate-400 uppercase tracking-tight">PetShop Amigo Fiel com delivery</div>
+              <div className="text-sm font-black text-slate-900 leading-none mb-1">Delivery</div>
+              <div className="text-[10px] font-bold text-slate-400 uppercase tracking-tight">Rápido e no bairro</div>
             </div>
           </div>
-          <div className="bg-white border border-slate-100 p-4 rounded-2xl flex items-center gap-4 shadow-sm hover:shadow-md transition-all group">
-            <div className="w-12 h-12 bg-violet-50 rounded-xl flex items-center justify-center text-violet-600 group-hover:bg-violet-600 group-hover:text-white transition-colors">
-              <PawPrint className="w-6 h-6" />
+          <div className="bg-white border border-slate-100 p-6 rounded-[2rem] flex items-center gap-4 shadow-sm hover:shadow-lg transition-all group">
+            <div className="w-12 h-12 bg-slate-50 rounded-2xl flex items-center justify-center text-slate-600 group-hover:bg-orange-600 group-hover:text-white transition-all">
+              <Zap className="w-6 h-6" />
             </div>
             <div>
-              <div className="text-sm font-black text-slate-900 leading-none mb-1">Pet shop em destaque</div>
-              <div className="text-[10px] font-bold text-slate-400 uppercase tracking-tight">Banho & Tosa hoje no Centro</div>
+              <div className="text-sm font-black text-slate-900 leading-none mb-1">Destaques</div>
+              <div className="text-[10px] font-bold text-slate-400 uppercase tracking-tight">O melhor da região</div>
             </div>
           </div>
         </div>
       </section>
 
-      {/* Category Grid */}
-      <section className="max-w-7xl mx-auto px-6 -mt-10 relative z-20">
-        <div className="bg-white border border-slate-100 rounded-[2.5rem] p-8 shadow-2xl shadow-slate-200/50">
-          <div className="flex justify-between items-center mb-8">
-            <h2 className="text-xs font-black uppercase tracking-[0.2em] text-slate-400 flex items-center gap-2">
-              <Zap className="h-4 w-4 text-orange-500 fill-orange-500" />
-              Acesso Rápido
-            </h2>
-          </div>
-          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-6">
-            {categories.map((cat) => {
-              const Icon = cat.icon;
-              return (
-                <button
-                  key={cat.slug}
-                  onClick={() => navigate({ to: '/negocios', search: { categoria: cat.slug } })}
-                  className="flex flex-col items-center gap-3 group"
-                >
-                  <div className="w-20 h-20 rounded-3xl bg-slate-50 flex items-center justify-center border border-slate-100 group-hover:bg-orange-600 group-hover:border-orange-600 group-hover:scale-105 transition-all duration-300 shadow-sm group-hover:shadow-xl group-hover:shadow-orange-200">
-                    <Icon className="w-8 h-8 text-orange-600 group-hover:text-white transition-colors" />
-                  </div>
-                  <span className="text-[11px] font-black text-center uppercase tracking-wider text-slate-500 group-hover:text-orange-600 transition-colors">
-                    {cat.label}
-                  </span>
-                </button>
-              );
-            })}
-          </div>
+      {/* Category Grid - Simplified and Premium */}
+      <section className="max-w-7xl mx-auto px-6 mt-12 mb-24">
+        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-6">
+          {categories.map((cat) => {
+            const Icon = cat.icon;
+            return (
+              <button
+                key={cat.slug}
+                onClick={() => navigate({ to: '/negocios', search: { categoria: cat.slug } })}
+                className="flex flex-col items-center gap-4 group"
+              >
+                <div className="w-20 h-20 rounded-[2rem] bg-white border border-slate-100 flex items-center justify-center group-hover:bg-orange-600 group-hover:border-orange-600 group-hover:scale-105 transition-all duration-300 shadow-sm group-hover:shadow-xl group-hover:shadow-orange-200">
+                  <Icon className="w-8 h-8 text-slate-400 group-hover:text-white transition-colors" />
+                </div>
+                <span className="text-[11px] font-black text-center uppercase tracking-widest text-slate-500 group-hover:text-orange-600 transition-colors">
+                  {cat.label}
+                </span>
+              </button>
+            );
+          })}
         </div>
       </section>
 
@@ -387,7 +381,75 @@ function Index() {
         </div>
       </section>
 
-      {/* Serviços Section - Reordered higher */}
+      {/* Notícias e Agenda Section */}
+      <section className="max-w-7xl mx-auto px-6 mt-24">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
+          {/* Notícias */}
+          <div>
+            <div className="flex items-center justify-between mb-8">
+              <h2 className="text-2xl font-black text-slate-900">Notícias Locais</h2>
+              <Link to="/noticias" className="text-orange-600 font-bold text-sm flex items-center hover:underline">
+                Ver todas <ChevronRight className="w-4 h-4" />
+              </Link>
+            </div>
+            <div className="space-y-4">
+              {newsRepository.getAll().slice(0, 3).map(item => (
+                <div key={item.id} className="bg-white p-4 rounded-2xl border border-slate-100 flex gap-4 hover:shadow-md transition-shadow">
+                  <img src={item.imageUrl} className="w-20 h-20 rounded-xl object-cover" alt="" />
+                  <div>
+                    <span className="text-[10px] font-black uppercase text-orange-600">{item.category}</span>
+                    <h3 className="font-bold text-slate-900 leading-tight">{item.title}</h3>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          {/* Agenda */}
+          <div>
+            <div className="flex items-center justify-between mb-8">
+              <h2 className="text-2xl font-black text-slate-900">Agenda do Bairro</h2>
+              <Link to="/admin/agenda" className="text-orange-600 font-bold text-sm flex items-center hover:underline">
+                Ver agenda <ChevronRight className="w-4 h-4" />
+              </Link>
+            </div>
+            <div className="space-y-4">
+              <div className="bg-slate-900 text-white p-6 rounded-2xl flex items-center gap-6">
+                <div className="text-center">
+                  <div className="text-2xl font-black">15</div>
+                  <div className="text-[10px] uppercase font-bold text-slate-400">JUN</div>
+                </div>
+                <div>
+                  <h3 className="font-bold">Festival do Pescado</h3>
+                  <p className="text-sm text-slate-400">Praça do Centro</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Representantes */}
+      <section className="max-w-7xl mx-auto px-6 mt-24 bg-slate-900 rounded-[3rem] p-12 text-white">
+        <div className="flex flex-col md:flex-row items-center justify-between gap-8">
+          <div className="max-w-xl">
+            <h2 className="text-3xl font-black mb-4">Representantes Locais</h2>
+            <p className="text-slate-400 mb-8">Conheça quem ajuda a conectar moradores, comerciantes e oportunidades na sua região.</p>
+            <Button asChild className="bg-orange-600 hover:bg-orange-700 rounded-xl px-8">
+              <Link to="/representantes">Ver representantes</Link>
+            </Button>
+          </div>
+          <div className="flex gap-4">
+            {representativesRepository.getAll().slice(0, 3).map(rep => (
+              <div key={rep.id} className="w-16 h-16 rounded-full bg-slate-700 flex items-center justify-center font-black border-2 border-slate-600">
+                {rep.name.charAt(0)}
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Serviços Section */}
       <section className="max-w-7xl mx-auto px-6 mt-24">
         <div className="flex flex-col md:flex-row md:items-end justify-between mb-12 gap-4">
           <div>
@@ -395,9 +457,6 @@ function Index() {
               <Briefcase className="w-8 h-8 text-orange-600" />
               Serviços da Comunidade
             </h2>
-            <p className="text-slate-500 font-medium text-lg mt-2">
-              Encontre profissionais qualificados que moram e atendem no seu bairro.
-            </p>
           </div>
           <Button 
             variant="ghost"
@@ -585,15 +644,20 @@ function Index() {
              <div className="flex flex-col gap-4 text-center md:text-left">
                 <span className="text-[10px] font-black uppercase tracking-widest text-slate-500">Plataforma</span>
                 <Link to="/negocios" className="text-sm font-bold text-slate-300 hover:text-orange-500 transition-colors">Ver Negócios</Link>
+                <Link to="/servicos" className="text-sm font-bold text-slate-300 hover:text-orange-500 transition-colors">Serviços</Link>
+                <Link to="/transporte" className="text-sm font-bold text-slate-300 hover:text-orange-500 transition-colors">Transporte</Link>
+                <Link to="/representantes" className="text-sm font-bold text-slate-300 hover:text-orange-500 transition-colors">Representantes</Link>
+                <Link to="/noticias" className="text-sm font-bold text-slate-300 hover:text-orange-500 transition-colors">Notícias Locais</Link>
                 <Link to="/cadastro" className="text-sm font-bold text-slate-300 hover:text-orange-500 transition-colors">Cadastrar Loja</Link>
                 {IS_ADMIN_ENABLED && (
-                  <Link to="/admin" className="text-sm font-bold text-slate-300 hover:text-orange-500 transition-colors flex items-center gap-1.5">
-                    <Lock className="w-3 h-3" />
-                    Admin
-                  </Link>
+                  <>
+                    <Link to="/admin" className="text-sm font-bold text-slate-300 hover:text-orange-500 transition-colors flex items-center gap-1.5">
+                      <Lock className="w-3 h-3" />
+                      Admin
+                    </Link>
+                    <Link to="/admin/representantes" className="text-sm font-bold text-slate-400 hover:text-orange-500 transition-colors">Admin Representantes</Link>
+                  </>
                 )}
-
-
              </div>
              <div className="flex flex-col gap-4 text-center md:text-left">
                 <span className="text-[10px] font-black uppercase tracking-widest text-slate-500">Suporte</span>

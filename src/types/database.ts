@@ -55,11 +55,25 @@ export interface NewsRecord extends BaseRecord {
   category: string;
   date: string;
   imageUrl: string;
-  merchantId: string;
+  merchantId?: string;
   exposureLevel: string;
   isActive: boolean;
   views: number;
   clicks: number;
+  origin?: string;
+  sourceUrl?: string;
+}
+
+export interface RepresentativeRecord extends BaseRecord {
+  name: string;
+  role: string;
+  city: string;
+  neighborhood?: string;
+  phone: string;
+  whatsapp: string;
+  photo?: string;
+  description: string;
+  isActive: boolean;
 }
 
 export interface CampaignRecord extends BaseRecord {
