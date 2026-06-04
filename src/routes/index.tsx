@@ -304,94 +304,6 @@ function Index() {
         </div>
       </section>
 
-      {/* Mais procurados do bairro */}
-      <section className="max-w-7xl mx-auto px-6 mt-24">
-        <div className="flex flex-col md:flex-row md:items-end justify-between mb-12 gap-4">
-          <div>
-            <div className="inline-flex items-center gap-2 px-2 py-0.5 rounded-md bg-violet-50 text-violet-600 text-[10px] font-black uppercase tracking-widest mb-4 border border-violet-100">
-              Popular hoje
-            </div>
-            <h2 className="text-4xl font-black text-slate-900 tracking-tighter">
-              {levelAMerchants.length > 0 ? "Destaques Principais" : "Mais procurados do bairro"}
-            </h2>
-            <p className="text-slate-500 font-medium text-lg mt-2">
-              {levelAMerchants.length > 0 ? "As melhores oportunidades selecionadas para você" : "Destaques que a vizinhança está amando em Araruama"}
-            </p>
-          </div>
-          <Button 
-            variant="ghost"
-            onClick={() => navigate({ to: '/negocios' })}
-            className="text-orange-600 font-black hover:bg-orange-50 self-start md:self-auto"
-          >
-            Ver todos
-            <ArrowRight className="ml-2 h-4 w-4" />
-          </Button>
-        </div>
-
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {isLoading 
-            ? [...Array(3)].map((_, i) => <MerchantSkeleton key={i} />)
-            : featuredMerchants.length > 0 ? (
-                featuredMerchants.map((merchant) => (
-                  <MerchantCard key={merchant.id} merchant={merchant} />
-                ))
-              ) : (
-                <div className="col-span-full py-12 text-center bg-white rounded-3xl border border-slate-100">
-                  <p className="text-slate-400 font-bold">Nenhum destaque disponível no momento.</p>
-                </div>
-              )
-          }
-        </div>
-
-      </section>
-
-      {/* Transporte Alternativo Section (Phase 8.5) */}
-      <section className="max-w-7xl mx-auto px-6 mt-24">
-        <div className="bg-slate-900 rounded-[3rem] p-12 overflow-hidden relative border-8 border-slate-100 shadow-2xl">
-          <div className="absolute top-0 right-0 w-1/3 h-full opacity-10 pointer-events-none">
-             <Car className="w-full h-full text-white -rotate-12 translate-x-12 translate-y-12" />
-          </div>
-          
-          <div className="relative z-10 flex flex-col md:flex-row items-center gap-12">
-            <div className="flex-1 text-center md:text-left">
-              <Badge className="bg-orange-600 text-white mb-6 font-black uppercase tracking-widest px-4 py-2 rounded-xl text-xs">Comunidade Viva</Badge>
-              <h2 className="text-4xl md:text-6xl font-black text-white tracking-tighter mb-6 leading-none italic">
-                Transporte <br /> <span className="text-orange-600">Alternativo Local</span>
-              </h2>
-              <p className="text-slate-400 text-lg md:text-xl font-medium mb-10 leading-relaxed max-w-xl">
-                Encontre carros e motos disponíveis no bairro e combine sua viagem pelo WhatsApp. Direto, rápido e da sua vizinhança.
-              </p>
-              <Button 
-                onClick={() => navigate({ to: '/transporte' })}
-                className="h-16 px-12 bg-white hover:bg-orange-50 text-slate-900 rounded-2xl font-black text-lg transition-all active:scale-95 group shadow-xl"
-              >
-                Ver motoristas
-                <ArrowRight className="ml-3 h-6 w-6 text-orange-600 transition-transform group-hover:translate-x-2" />
-              </Button>
-            </div>
-            
-            <div className="flex-1 hidden lg:block">
-              <div className="grid grid-cols-2 gap-4">
-                <div className="bg-slate-800 p-6 rounded-3xl border border-slate-700">
-                  <div className="w-12 h-12 bg-orange-600 rounded-xl flex items-center justify-center text-white mb-4 shadow-lg shadow-orange-600/20">
-                    <Car className="w-6 h-6" />
-                  </div>
-                  <div className="text-white font-black text-xl mb-1 italic">Carros</div>
-                  <div className="text-slate-500 text-xs font-bold uppercase tracking-widest">Passeio e conforto</div>
-                </div>
-                <div className="bg-slate-800 p-6 rounded-3xl border border-slate-700 mt-8">
-                  <div className="w-12 h-12 bg-slate-100 rounded-xl flex items-center justify-center text-slate-900 mb-4 shadow-lg">
-                    <Bike className="w-6 h-6" />
-                  </div>
-                  <div className="text-white font-black text-xl mb-1 italic">Motos</div>
-                  <div className="text-slate-500 text-xs font-bold uppercase tracking-widest">Agilidade urbana</div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
       {/* Destaques do Bairro (Phase 8.3) */}
       <section className="max-w-7xl mx-auto px-6 mt-24">
         <div className="flex flex-col md:flex-row md:items-end justify-between mb-12 gap-4">
@@ -463,46 +375,119 @@ function Index() {
                     </Card>
                   );
                 }
-                if (boost.targetType === 'transporte') {
-                  const item = rides.find(r => r.id === boost.targetId);
-                  if (!item) return null;
-                  return (
-                    <Card key={boost.id} className="rounded-3xl border-2 border-orange-100 hover:shadow-xl transition-all duration-300 group overflow-hidden relative">
-                      <div className="absolute -top-3 -right-3 z-10 bg-orange-600 text-white text-[10px] font-black px-3 py-1 rounded-full shadow-lg flex items-center gap-1 border-2 border-white uppercase tracking-wider">
-                        <Star className="w-3 h-3 fill-white" />
-                        Destaque
-                      </div>
-                      <CardContent className="p-6">
-                        <div className="flex justify-between items-start mb-4">
-                          <Badge variant="outline" className="text-[10px] font-bold uppercase py-1 border-slate-200 capitalize">
-                            {item.serviceType}
-                          </Badge>
-                        </div>
-                        <div className="flex items-center gap-4 mb-4">
-                          <div className="w-12 h-12 bg-slate-100 rounded-xl flex items-center justify-center text-slate-400 group-hover:bg-orange-600 group-hover:text-white transition-colors">
-                            <Navigation className="w-5 h-5" />
-                          </div>
-                          <div>
-                            <h3 className="font-black text-lg text-slate-900 truncate">{item.name}</h3>
-                            <p className="text-[10px] text-slate-500 font-bold uppercase">{item.vehicle}</p>
-                          </div>
-                        </div>
-                        <Button 
-                          onClick={() => navigate({ to: '/transporte' })}
-                          className="w-full bg-slate-900 hover:bg-orange-600 text-white rounded-xl h-12 font-black text-xs uppercase transition-all"
-                        >
-                          Ver Transporte
-                        </Button>
-                      </CardContent>
-                    </Card>
-                  );
-                }
                 return null;
               })
           }
         </div>
       </section>
 
+      {/* Serviços Section - Reordered higher */}
+      <section className="max-w-7xl mx-auto px-6 mt-24">
+        <div className="flex flex-col md:flex-row md:items-end justify-between mb-12 gap-4">
+          <div>
+            <h2 className="text-4xl font-black text-slate-900 tracking-tighter flex items-center gap-3">
+              <Briefcase className="w-8 h-8 text-orange-600" />
+              Serviços da Comunidade
+            </h2>
+            <p className="text-slate-500 font-medium text-lg mt-2">
+              Encontre profissionais qualificados que moram e atendem no seu bairro.
+            </p>
+          </div>
+          <Button 
+            variant="ghost"
+            onClick={() => navigate({ to: '/servicos' })}
+            className="text-orange-600 font-black hover:bg-orange-50 self-start md:self-auto"
+          >
+            Ver todos profissionais
+            <ArrowRight className="ml-2 h-4 w-4" />
+          </Button>
+        </div>
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+          {services.slice(0, 4).map((service) => (
+            <Card key={service.id} className="rounded-3xl border border-slate-100 hover:shadow-xl transition-all group">
+              <CardContent className="p-6">
+                <div className="flex items-center gap-4 mb-4">
+                  <div className="w-12 h-12 bg-slate-50 rounded-xl flex items-center justify-center text-slate-400 group-hover:bg-orange-600 group-hover:text-white transition-colors">
+                    <Briefcase className="w-6 h-6" />
+                  </div>
+                  <div>
+                    <h3 className="font-black text-slate-900 truncate">{service.name}</h3>
+                    <p className="text-[10px] font-bold text-slate-400 uppercase tracking-widest">{service.category}</p>
+                  </div>
+                </div>
+                <Button 
+                  variant="outline"
+                  onClick={() => navigate({ to: '/servicos' })}
+                  className="w-full border-slate-200 rounded-xl font-black text-xs uppercase"
+                >
+                  Solicitar Orçamento
+                </Button>
+              </CardContent>
+            </Card>
+          ))}
+        </div>
+      </section>
+
+      {/* Transporte Alternativo Section */}
+      <section className="max-w-7xl mx-auto px-6 mt-24">
+        <div className="bg-slate-900 rounded-[3rem] p-12 overflow-hidden relative border-8 border-slate-100 shadow-2xl">
+          <div className="absolute top-0 right-0 w-1/3 h-full opacity-10 pointer-events-none">
+             <Car className="w-full h-full text-white -rotate-12 translate-x-12 translate-y-12" />
+          </div>
+          <div className="relative z-10 flex flex-col md:flex-row items-center gap-12">
+            <div className="flex-1 text-center md:text-left">
+              <Badge className="bg-orange-600 text-white mb-6 font-black uppercase tracking-widest px-4 py-2 rounded-xl text-xs">Comunidade Viva</Badge>
+              <h2 className="text-4xl md:text-6xl font-black text-white tracking-tighter mb-6 leading-none italic">
+                Transporte <br /> <span className="text-orange-600">Alternativo Local</span>
+              </h2>
+              <p className="text-slate-400 text-lg md:text-xl font-medium mb-10 leading-relaxed max-w-xl">
+                Encontre carros e motos disponíveis no bairro e combine sua viagem pelo WhatsApp. Direto e rápido.
+              </p>
+              <Button 
+                onClick={() => navigate({ to: '/transporte' })}
+                className="h-16 px-12 bg-white hover:bg-orange-50 text-slate-900 rounded-2xl font-black text-lg transition-all active:scale-95 group shadow-xl"
+              >
+                Ver motoristas
+                <ArrowRight className="ml-3 h-6 w-6 text-orange-600 transition-transform group-hover:translate-x-2" />
+              </Button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Mais procurados do bairro - (Moved down) */}
+      <section className="max-w-7xl mx-auto px-6 mt-24">
+        <div className="flex flex-col md:flex-row md:items-end justify-between mb-12 gap-4">
+          <div>
+            <div className="inline-flex items-center gap-2 px-2 py-0.5 rounded-md bg-violet-50 text-violet-600 text-[10px] font-black uppercase tracking-widest mb-4 border border-violet-100">
+              Popular hoje
+            </div>
+            <h2 className="text-4xl font-black text-slate-900 tracking-tighter">
+              Mais procurados
+            </h2>
+            <p className="text-slate-500 font-medium text-lg mt-2">
+              Destaques que a vizinhança está amando em Araruama.
+            </p>
+          </div>
+          <Button 
+            variant="ghost"
+            onClick={() => navigate({ to: '/negocios' })}
+            className="text-orange-600 font-black hover:bg-orange-50 self-start md:self-auto"
+          >
+            Ver todos
+            <ArrowRight className="ml-2 h-4 w-4" />
+          </Button>
+        </div>
+
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          {isLoading 
+            ? [...Array(3)].map((_, i) => <MerchantSkeleton key={i} />)
+            : featuredMerchants.slice(0, 3).map((merchant) => (
+                <MerchantCard key={merchant.id} merchant={merchant} />
+              ))
+          }
+        </div>
+      </section>
 
       {/* Nearby Businesses */}
       {nearbyMerchants.length > 0 && (
@@ -515,16 +500,9 @@ function Index() {
               </h2>
               <div className="flex items-center gap-3 mt-2">
                 <p className="text-slate-500 font-medium text-lg">Negócios que estão a poucos passos de distância</p>
-                {locationLoading && (
-                  <div className="flex items-center gap-2 px-2 py-1 bg-orange-50 rounded-lg animate-pulse">
-                    <RefreshCw className="w-3 h-3 text-orange-500 animate-spin" />
-                    <span className="text-[10px] font-black text-orange-600 uppercase tracking-widest">Atualizando GPS...</span>
-                  </div>
-                )}
               </div>
             </div>
           </div>
-
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {nearbyMerchants.map((merchant) => (
               <MerchantCard key={merchant.id} merchant={merchant} />
@@ -533,65 +511,30 @@ function Index() {
         </section>
       )}
 
-      {/* Local Widgets / Info */}
-      <section className="max-w-7xl mx-auto px-6 mt-24">
-         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            <div className="bg-white border border-slate-100 p-8 rounded-[2rem] shadow-sm">
-               <div className="w-12 h-12 bg-blue-50 rounded-2xl flex items-center justify-center text-blue-600 mb-6">
-                  <ShieldCheck className="w-6 h-6" />
-               </div>
-               <h3 className="text-xl font-black text-slate-900 mb-2 tracking-tight">Compre Local</h3>
-               <p className="text-slate-500 font-medium">Fortaleça a economia do seu bairro e receba atendimento personalizado de quem você conhece.</p>
-            </div>
-            <div className="bg-white border border-slate-100 p-8 rounded-[2rem] shadow-sm">
-               <div className="w-12 h-12 bg-emerald-50 rounded-2xl flex items-center justify-center text-emerald-600 mb-6">
-                  <Clock className="w-6 h-6" />
-               </div>
-               <h3 className="text-xl font-black text-slate-900 mb-2 tracking-tight">Rápido e Direto</h3>
-               <p className="text-slate-500 font-medium">Nada de intermediários. Fale diretamente com o lojista via WhatsApp e resolva tudo em minutos.</p>
-            </div>
-            <div className="bg-white border border-slate-100 p-8 rounded-[2rem] shadow-sm">
-               <div className="w-12 h-12 bg-amber-50 rounded-2xl flex items-center justify-center text-amber-600 mb-6">
-                  <MapPin className="w-6 h-6" />
-               </div>
-               <h3 className="text-xl font-black text-slate-900 mb-2 tracking-tight">Hiperlocal</h3>
-               <p className="text-slate-500 font-medium">Filtre por bairro e encontre exatamente o que você precisa a poucos metros de distância.</p>
-            </div>
-         </div>
-      </section>
-
       {/* Promotions Section */}
       <section className="max-w-7xl mx-auto px-6 mt-24 pb-20">
         <div className="bg-orange-600 rounded-[3rem] p-8 md:p-16 relative overflow-hidden">
-          <div className="absolute top-0 right-0 w-96 h-96 bg-white/5 rounded-full blur-3xl -mr-48 -mt-48" />
-          <div className="absolute bottom-0 left-0 w-96 h-96 bg-orange-400/20 rounded-full blur-3xl -ml-48 -mb-48" />
-          
           <div className="relative z-10 flex flex-col md:flex-row md:items-end justify-between mb-12 gap-4">
             <div>
-              <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-white/10 text-white text-[10px] font-black uppercase tracking-[0.2em] mb-4 border border-white/20">
-                <Tag className="h-3 w-3" />
-                Economia Real no Bairro
-              </div>
               <h2 className="text-4xl md:text-6xl font-black text-white tracking-tighter">
-                {levelBMerchants.length > 0 ? "Impulsos Comerciais" : "Ofertas perto de você"}
+                Ofertas do Bairro
               </h2>
               <p className="text-orange-100 font-medium text-xl mt-4">
-                {levelBMerchants.length > 0 ? "Novidades e impulsos dos lojistas locais" : "Economize comprando no comércio local de Araruama"}
+                Economize comprando no comércio local de Araruama
               </p>
             </div>
             <Button 
               variant="outline"
               onClick={() => navigate({ to: '/negocios', search: { hasPromotion: true } })}
-              className="bg-white text-orange-600 hover:bg-orange-50 font-black rounded-xl border-none h-12 px-8 shadow-xl shadow-orange-900/20 transition-all active:scale-95 self-start md:self-auto"
+              className="bg-white text-orange-600 hover:bg-orange-50 font-black rounded-xl border-none h-12 px-8 shadow-xl shadow-orange-900/20 transition-all active:scale-95"
             >
               Ver todas as ofertas
             </Button>
           </div>
-
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 relative z-10">
             {isLoading 
               ? [...Array(4)].map((_, i) => <MerchantSkeleton key={i} />)
-              : promotionalMerchants.map((merchant) => (
+              : promotionalMerchants.slice(0, 4).map((merchant) => (
                 <MerchantCard key={merchant.id} merchant={merchant} />
               ))
             }

@@ -155,9 +155,8 @@ export const MerchantCard = memo(function MerchantCard({ merchant }: Props) {
           <WhatsAppButton 
             merchantId={merchant.id}
             phone={merchant.whatsapp} 
-
             merchantName={merchant.name} 
-            className="flex-1"
+            className="flex-1 h-11 shadow-md shadow-emerald-500/10"
           />
 
 
