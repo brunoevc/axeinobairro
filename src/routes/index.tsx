@@ -253,6 +253,7 @@ function Index() {
       </section>
 
       <ValueProposition />
+      <SponsorSection />
       
       {/* Classificados Teaser */}
       <section className="max-w-7xl mx-auto px-6 mb-16">
