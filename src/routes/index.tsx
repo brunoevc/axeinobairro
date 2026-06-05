@@ -827,9 +827,12 @@ function Index() {
                 <Link to="/negocios" className="text-sm font-bold text-slate-300 hover:text-orange-500 transition-colors">Ver Negócios</Link>
                 <Link to="/servicos" className="text-sm font-bold text-slate-300 hover:text-orange-500 transition-colors">Serviços</Link>
                 <Link to="/transporte" className="text-sm font-bold text-slate-300 hover:text-orange-500 transition-colors">Transporte</Link>
-                <Link to="/representantes" className="text-sm font-bold text-slate-300 hover:text-orange-500 transition-colors">Representantes</Link>
+                <Link to="/representantes-programa" className="text-sm font-bold text-slate-300 hover:text-orange-500 transition-colors">Seja Representante</Link>
+                <Link to="/planos" className="text-sm font-bold text-slate-300 hover:text-orange-500 transition-colors">Planos & Preços</Link>
+                <Link to="/apoiadores" className="text-sm font-bold text-slate-300 hover:text-orange-500 transition-colors">Apoiadores</Link>
                 <Link to="/noticias" className="text-sm font-bold text-slate-300 hover:text-orange-500 transition-colors">Notícias Locais</Link>
                 <Link to="/cadastro" className="text-sm font-bold text-slate-300 hover:text-orange-500 transition-colors">Cadastrar Loja</Link>
+
                 {IS_ADMIN_ENABLED && (
                   <>
                     <Link to="/admin" className="text-sm font-bold text-slate-300 hover:text-orange-500 transition-colors flex items-center gap-1.5">
