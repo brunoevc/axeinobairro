@@ -780,62 +780,7 @@ function Index() {
         </div>
       </section>
 
-      <footer className="bg-slate-900 text-white py-20 px-6 mt-20">
-        <div className="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center gap-12">
-          <div className="flex flex-col items-center md:items-start text-center md:text-left gap-4">
-            <Logo dark />
-            <p className="text-slate-400 font-medium max-w-xs">
-              Encontre. Conecte. Fortaleça o comércio local.
-            </p>
-            <div className="mt-4 space-y-1">
-              <p className="text-[10px] font-black uppercase tracking-widest text-slate-500">Uma solução Hubia Connect</p>
-              <p className="text-[10px] font-black uppercase tracking-widest text-slate-500">CNPJ 27.807.284/0001-89</p>
-            </div>
-          </div>
-          
-          <div className="grid grid-cols-2 sm:grid-cols-3 gap-12 md:gap-24">
-             <div className="flex flex-col gap-4 text-center md:text-left">
-                <span className="text-[10px] font-black uppercase tracking-widest text-slate-500">Plataforma</span>
-                <Link to="/negocios" className="text-sm font-bold text-slate-300 hover:text-orange-500 transition-colors">Ver Negócios</Link>
-                <Link to="/servicos" className="text-sm font-bold text-slate-300 hover:text-orange-500 transition-colors">Serviços</Link>
-                <Link to="/transporte" className="text-sm font-bold text-slate-300 hover:text-orange-500 transition-colors">Transporte</Link>
-                <Link to="/representantes-programa" className="text-sm font-bold text-slate-300 hover:text-orange-500 transition-colors">Seja Representante</Link>
-                <Link to="/planos" className="text-sm font-bold text-slate-300 hover:text-orange-500 transition-colors">Planos & Preços</Link>
-                <Link to="/apoiadores" className="text-sm font-bold text-slate-300 hover:text-orange-500 transition-colors">Apoiadores</Link>
-                <Link to="/noticias" className="text-sm font-bold text-slate-300 hover:text-orange-500 transition-colors">Notícias Locais</Link>
-                <Link to="/cadastro" className="text-sm font-bold text-slate-300 hover:text-orange-500 transition-colors">Cadastrar Loja</Link>
-
-                {IS_ADMIN_ENABLED && (
-                  <>
-                    <Link to="/admin" className="text-sm font-bold text-slate-300 hover:text-orange-500 transition-colors flex items-center gap-1.5">
-                      <Lock className="w-3 h-3" />
-                      Admin
-                    </Link>
-                    <Link to="/admin/representantes" className="text-sm font-bold text-slate-400 hover:text-orange-500 transition-colors">Admin Representantes</Link>
-                  </>
-                )}
-             </div>
-             <div className="flex flex-col gap-4 text-center md:text-left">
-                <span className="text-[10px] font-black uppercase tracking-widest text-slate-500">Suporte</span>
-                <a href="#" className="text-sm font-bold text-slate-300 hover:text-orange-500 transition-colors">Central de Ajuda</a>
-                <a href="#" className="text-sm font-bold text-slate-300 hover:text-orange-500 transition-colors">Termos de Uso</a>
-             </div>
-             <div className="hidden sm:flex flex-col gap-4 text-center md:text-left">
-                <span className="text-[10px] font-black uppercase tracking-widest text-slate-500">Cidade Sede</span>
-                <span className="text-sm font-bold text-slate-300">Araruama / RJ</span>
-             </div>
-          </div>
-        </div>
-        
-        <div className="max-w-7xl mx-auto mt-20 pt-8 border-t border-white/5 flex flex-col md:flex-row justify-between items-center gap-6 text-[10px] font-black uppercase tracking-widest text-slate-500">
-           <span>© 2026 Axêi no Bairro. Todos os direitos reservados.</span>
-           <div className="flex items-center gap-6">
-              <a href="https://www.instagram.com/axeinobairro" target="_blank" rel="noopener noreferrer" className="hover:text-white transition-colors">Instagram</a>
-              <a href="https://www.facebook.com/axeinobairro/" target="_blank" rel="noopener noreferrer" className="hover:text-white transition-colors">Facebook</a>
-              <a href="https://wa.me/5521999869070" target="_blank" rel="noopener noreferrer" className="hover:text-white transition-colors">WhatsApp</a>
-           </div>
-        </div>
-      </footer>
+      <Footer />
 
       <FloatingNav />
     </div>
