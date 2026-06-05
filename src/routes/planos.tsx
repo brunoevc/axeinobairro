@@ -66,7 +66,54 @@ function Planos() {
                 <ul className="text-sm font-medium text-slate-300 space-y-2 mb-6">
                   <li>• Tudo do Destaque</li>
                   <li>• Campanhas locais</li>
-                  <li>• Destaque rotativo</li>
+                  <li>• Agenda Profissional</li>
+                </ul>
+              </div>
+            </div>
+          </section>
+
+          {/* Profissionais Autônomos */}
+          <section>
+            <h2 className="text-2xl font-black mb-6 flex items-center gap-2"><Star className="text-orange-600" /> Profissionais</h2>
+            <div className="grid md:grid-cols-2 gap-6">
+              <div className="bg-slate-900 p-6 rounded-2xl text-white">
+                <h3 className="font-black text-lg mb-2 text-blue-400">Premium</h3>
+                <p className="text-2xl font-black mb-4">R$ 97</p>
+                <ul className="text-sm font-medium text-slate-300 space-y-2 mb-6">
+                  <li>• Perfil Verificado Premium</li>
+                  <li>• Agenda de Atendimentos</li>
+                  <li>• Histórico de Serviços</li>
+                </ul>
+              </div>
+              <div className="bg-slate-900 p-6 rounded-2xl text-white border-2 border-orange-500 relative">
+                <div className="absolute -top-3 right-4 bg-orange-500 text-slate-900 text-[10px] font-black px-3 py-1 rounded-full uppercase">Melhor Valor</div>
+                <h3 className="font-black text-lg mb-2 text-orange-500">Premium+</h3>
+                <p className="text-2xl font-black mb-4">R$ 147</p>
+                <ul className="text-sm font-medium text-slate-300 space-y-2 mb-6">
+                  <li>• Tudo do Premium</li>
+                  <li>• Gestão de Clientes (CRM)</li>
+                  <li>• Pipeline de Vendas</li>
+                  <li>• Métricas de Conversão</li>
+                </ul>
+              </div>
+            </div>
+          </section>
+
+          {/* Transporte */}
+          <section>
+            <h2 className="text-2xl font-black mb-6 flex items-center gap-2"><Building2 className="text-orange-600" /> Transporte</h2>
+            <div className="grid md:grid-cols-2 gap-6">
+              <div className="bg-white p-6 rounded-2xl border border-slate-200">
+                <h3 className="font-black text-lg mb-2">Básico</h3>
+                <p className="text-sm text-slate-500 mb-6">Presença na lista de motoristas e contato via WhatsApp.</p>
+              </div>
+              <div className="bg-slate-900 p-6 rounded-2xl text-white">
+                <h3 className="font-black text-lg mb-2 text-emerald-400">Premium</h3>
+                <p className="text-2xl font-black mb-4">R$ 97</p>
+                <ul className="text-sm font-medium text-slate-300 space-y-2 mb-6">
+                  <li>• Corridas Agendadas</li>
+                  <li>• Gestão de Clientes Recorrentes</li>
+                  <li>• Histórico Completo</li>
                 </ul>
               </div>
             </div>
