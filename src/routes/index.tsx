@@ -160,18 +160,18 @@ function Index() {
       <section className="relative overflow-hidden bg-white border-b border-slate-100">
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,_var(--tw-gradient-stops))] from-violet-50/50 via-transparent to-transparent opacity-70" />
         
-        <div className="max-w-7xl mx-auto px-6 py-12 md:py-20 relative z-10 flex flex-col md:flex-row items-center gap-12">
+        <div className="max-w-7xl mx-auto px-6 py-12 md:py-28 relative z-10 flex flex-col md:flex-row items-center gap-12">
           <div className="flex-1 text-center md:text-left">
             <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-orange-50 text-orange-600 text-[10px] font-black uppercase tracking-widest mb-6 border border-orange-100 shadow-sm">
-              <TrendingUp className="h-3 w-3" />
-              +10 negócios em Araruama
+              <Sparkles className="h-3 w-3" />
+              Ecossistema Digital da Comunidade
             </div>
-            <h1 className="text-4xl md:text-7xl font-black tracking-tighter text-slate-900 mb-6 leading-[0.9]">
-              Encontre comércios, <br className="hidden md:block" />
-              <span className="text-orange-600">serviços e promoções</span>
+            <h1 className="text-4xl md:text-8xl font-black tracking-tighter text-slate-900 mb-6 leading-[0.85]">
+              O Ecossistema Digital <br className="hidden md:block" />
+              <span className="text-orange-600">da Sua Comunidade</span>
             </h1>
             <p className="text-slate-500 text-lg md:text-xl font-medium mb-10 leading-relaxed max-w-xl mx-auto md:mx-0">
-              O Axêi no Bairro conecta você aos negócios locais mais próximos, com ofertas, rotas e contato direto pelo WhatsApp.
+              Conectando moradores, negócios e serviços para fortalecer o bairro e criar novas oportunidades para todos.
             </p>
             
             <div className="flex flex-col gap-6">
