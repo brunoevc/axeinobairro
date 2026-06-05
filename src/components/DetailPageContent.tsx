@@ -34,6 +34,8 @@ import { FloatingCart } from "@/components/FloatingCart";
 import { ReviewSection } from "@/components/ReviewSection";
 import { reviewsRepository } from "@/repositories/reviewsRepository";
 import { PixDisplayCard } from "@/components/PixDisplayCard";
+import { EcosystemLoops } from "@/components/EcosystemLoops";
+
 
 
 interface DetailPageContentProps {
@@ -352,6 +354,10 @@ export function DetailPageContent({ merchant }: DetailPageContentProps) {
                  </span>
               </div>
             </div>
+          </section>
+
+          <section className="mt-12">
+            <EcosystemLoops currentCategory={merchant.category} />
           </section>
 
           <section id="reviews" className="scroll-mt-24">

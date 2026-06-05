@@ -15,6 +15,9 @@ import { ListingSkeleton } from "@/components/ListingSkeleton";
 import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
 import { Star, Car, Truck, Bike, Users, MessageSquare, ShieldAlert, Search, Filter } from "lucide-react";
 import { PixDisplayCard } from "@/components/PixDisplayCard";
+import { EcosystemLoops } from "@/components/EcosystemLoops";
+import { Footer } from "@/components/Footer";
+
 
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -346,13 +349,19 @@ export default function Transporte() {
             <Button 
               variant="outline" 
               onClick={() => setFilters({ origin: "", destination: "", serviceType: "all", status: "all" })}
-              className="h-14 px-8 rounded-2xl border-slate-200 font-black uppercase text-xs tracking-[0.2em]"
+              className="h-14 px-10 rounded-2xl font-black border-slate-200"
             >
-              Ver todos os motoristas
+              Limpar Filtros
             </Button>
           </div>
         )}
       </div>
+
+      <section className="mt-20">
+        <EcosystemLoops />
+      </section>
+
+      <Footer />
     </div>
   );
 }

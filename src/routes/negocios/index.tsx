@@ -26,6 +26,10 @@ import { TopBar } from "@/components/TopBar";
 import { FloatingNav } from "@/components/FloatingNav";
 import { Button } from "@/components/ui/button";
 import { useLocation } from "@/hooks/useLocation";
+import { Footer } from "@/components/Footer";
+import { EcosystemLoops } from "@/components/EcosystemLoops";
+
+
 
 const searchSchema = z.object({
   categoria: z.string().optional(),
@@ -356,7 +360,12 @@ function ListingPage() {
           </div>
         )}
       </main>
+      
+      <section className="mt-12">
+        <EcosystemLoops />
+      </section>
 
+      <Footer />
       <FloatingNav />
     </div>
   );

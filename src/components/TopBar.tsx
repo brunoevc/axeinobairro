@@ -116,6 +116,12 @@ export const TopBar = memo(function TopBar() {
           <div className="flex items-center gap-8">
             <Link to="/" className={`flex items-center transition-all duration-300 ${isCompact ? 'scale-90 origin-left' : ''}`}>
               <Logo />
+              {!isCompact && (
+                <div className="ml-3 pl-3 border-l border-slate-100 hidden sm:block">
+                  <div className="text-[10px] font-black text-slate-400 uppercase tracking-widest leading-none mb-1">Ecossistema</div>
+                  <div className="text-[10px] font-black text-orange-600 uppercase tracking-[0.2em] leading-none">Comunitário</div>
+                </div>
+              )}
             </Link>
             
             {!isCompact && (
@@ -126,12 +132,12 @@ export const TopBar = memo(function TopBar() {
                 <Link to="/servicos" className="text-sm font-semibold text-slate-600 hover:text-orange-600 transition-colors">Serviços</Link>
                 <Link to="/transporte" className="text-sm font-semibold text-slate-600 hover:text-orange-600 transition-colors">Transporte</Link>
                 <Link to="/recomendacoes" className="text-sm font-semibold text-slate-600 hover:text-orange-600 transition-colors">Dicas</Link>
-                <Link to="/planos" className="text-sm font-semibold text-slate-600 hover:text-orange-600 transition-colors">Planos</Link>
+                <Link to="/planos" className="text-sm font-bold text-slate-900 px-4 py-2 bg-slate-100 rounded-xl hover:bg-orange-50 hover:text-orange-600 transition-all">Planos</Link>
                 <Link to="/feedback" className="text-sm font-bold text-violet-600 hover:text-violet-700 transition-all flex items-center gap-1.5 px-3 py-1.5 bg-violet-50 rounded-xl">
                   <Sparkles className="w-3.5 h-3.5" />
                   Feedback
                 </Link>
-                <Link to="/anuncie" className="text-sm font-bold text-orange-600 hover:text-orange-700 transition-colors px-4 py-2 bg-orange-50 rounded-xl">Anuncie</Link>
+                <Link to="/planos" className="text-sm font-bold text-white px-4 py-2 bg-orange-600 rounded-xl hover:bg-orange-700 transition-all">Participar</Link>
 
 
 

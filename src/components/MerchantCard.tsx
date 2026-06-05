@@ -1,4 +1,4 @@
-import { MapPin, Star, Bike, ChevronRight, TrendingUp, Navigation, Tag } from "lucide-react";
+import { MapPin, Star, Bike, ChevronRight, TrendingUp, Navigation, Tag, ShieldCheck } from "lucide-react";
 import type { Merchant } from "@/data/merchants";
 import { getMerchantPublicPath } from "@/data/merchants";
 import { Button } from "@/components/ui/button";
@@ -58,20 +58,19 @@ export const MerchantCard = memo(function MerchantCard({ merchant }: Props) {
           {merchant.promotion.isActive && <PromotionBadge />}
           {(() => {
             const exposure = (() => {
-              if (merchant.exposureLevel === 'A') return { label: 'Patrocinador', color: 'bg-slate-900 text-white' };
-              if (['igreja', 'escola', 'ong', 'social'].includes(merchant.category.toLowerCase())) return { label: 'Institucional', color: 'bg-blue-600 text-white' };
-              if (merchant.exposureLevel === 'B') return { label: 'Pago', color: 'bg-orange-600 text-white' };
-              return { label: 'Isento', color: 'bg-slate-600 text-white' };
+              if (merchant.exposureLevel === 'A') return { label: 'Patrocinador', color: 'bg-slate-900 text-white border-white/20' };
+              if (['igreja', 'escola', 'ong', 'social'].includes(merchant.category.toLowerCase())) return { label: 'Institucional', color: 'bg-blue-600 text-white border-blue-400/30' };
+              if (merchant.exposureLevel === 'B') return { label: 'Destaque', color: 'bg-orange-600 text-white border-orange-400/30' };
+              if (merchant.exposureLevel === 'C') return { label: 'Premium', color: 'bg-violet-600 text-white border-violet-400/30' };
+              return { label: 'Ecossistema', color: 'bg-slate-500 text-white border-slate-300/30' };
             })();
             return (
-              <div className={`inline-flex items-center gap-1 rounded-full ${exposure.color} px-2.5 py-1 text-[10px] font-black uppercase tracking-widest shadow-sm`}>
+              <div className={`inline-flex items-center gap-1.5 rounded-full ${exposure.color} px-3 py-1.5 text-[9px] font-black uppercase tracking-[0.15em] shadow-xl border backdrop-blur-sm`}>
+                <ShieldCheck className="w-2.5 h-2.5" />
                 {exposure.label}
               </div>
             );
           })()}
-          <div className="inline-flex items-center gap-1 rounded-full bg-white/90 backdrop-blur-md px-2.5 py-1 text-[10px] font-extrabold uppercase text-slate-900 shadow-sm border border-slate-200/50">
-            {merchant.category}
-          </div>
         </div>
 
         
@@ -85,37 +84,35 @@ export const MerchantCard = memo(function MerchantCard({ merchant }: Props) {
       </div>
 
       <div className="flex flex-col p-5 flex-1">
-        <div className="flex items-start justify-between gap-2 mb-2">
+        <div className="flex items-start justify-between gap-2 mb-3">
           <div className="min-w-0 flex-1">
-            <h3 className="truncate text-lg font-black text-slate-900 leading-tight">
+            <h3 className="truncate text-xl font-black text-slate-900 leading-none tracking-tight group-hover:text-orange-600 transition-colors">
               {merchant.name}
             </h3>
-            <div className="flex items-center gap-1 mt-1">
+            <div className="flex items-center gap-1.5 mt-2">
               <MapPin className="h-3 w-3 text-orange-500" />
-              <span className="text-xs font-bold text-slate-500 truncate">
+              <span className="text-[10px] font-black uppercase text-slate-400 tracking-wider truncate">
                 {merchant.neighborhood}
                 {distance !== null && (
-                  <span className="flex items-center gap-1 ml-1 pl-1 border-l border-slate-200">
-                    <Navigation className="w-2.5 h-2.5" />
+                  <span className="inline-flex items-center gap-1 ml-1 pl-1 border-l border-slate-200">
+                    <Navigation className="w-2 h-2" />
                     {formatDistance(distance)}
                   </span>
                 )}
               </span>
             </div>
           </div>
-          <div className="flex items-center gap-1.5 rounded-lg bg-slate-50 px-2 py-1 text-xs font-bold text-slate-900 border border-slate-100">
+          <div className="flex items-center gap-1.5 rounded-xl bg-orange-50 px-2.5 py-1.5 text-xs font-black text-orange-600 border border-orange-100 shadow-sm">
             <Star className="h-3 w-3 fill-orange-500 text-orange-500" />
             {(() => {
               const { average, total } = reviewsRepository.getAverageRating('loja', merchant.id);
               return (
                 <div className="flex items-center gap-1">
                   <span>{total > 0 ? average.toFixed(1) : merchant.rating.toFixed(1)}</span>
-                  {total > 0 && <span className="text-[10px] text-slate-400 font-medium">({total})</span>}
                 </div>
               );
             })()}
           </div>
-
         </div>
 
         <p className="line-clamp-2 text-sm text-slate-500 leading-relaxed mb-4 min-h-[2.5rem]">

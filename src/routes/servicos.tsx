@@ -11,6 +11,9 @@ import { ServiceProvider, ServiceCategory } from "@/types/services";
 import { ReviewSection } from "@/components/ReviewSection";
 import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
 import { PixDisplayCard } from "@/components/PixDisplayCard";
+import { EcosystemLoops } from "@/components/EcosystemLoops";
+import { Footer } from "@/components/Footer";
+
 
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -311,6 +314,12 @@ export default function Servicos() {
           </div>
         )}
       </div>
+
+      <section className="mt-20">
+        <EcosystemLoops />
+      </section>
+
+      <Footer />
     </div>
   );
 }

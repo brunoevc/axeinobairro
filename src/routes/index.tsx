@@ -29,9 +29,6 @@ import {
     Sparkles
   } from "lucide-react";
 
-
-
-
 import { categories } from "@/data/merchants";
 import { merchantsRepository } from "@/repositories/merchantsRepository";
 import { servicesRepository } from "@/repositories/servicesRepository";
@@ -43,7 +40,6 @@ import { recommendationsRepository } from "@/repositories/recommendationsReposit
 import { LocalBoost } from "@/types/boosts";
 import { Recommendation } from "@/types/recommendations";
 
-
 import { MerchantCard } from "@/components/MerchantCard";
 import { MerchantSkeleton } from "@/components/MerchantSkeleton";
 import { TopBar } from "@/components/TopBar";
@@ -53,6 +49,11 @@ import { Badge } from "@/components/ui/badge";
 import { Card, CardContent } from "@/components/ui/card";
 import { Logo } from "@/components/ui/Logo";
 import { useLocation } from "@/hooks/useLocation";
+import { Footer } from "@/components/Footer";
+import { ValueProposition } from "@/components/ValueProposition";
+import { SponsorSection } from "@/components/SponsorSection";
+
+
 
 
 const IS_ADMIN_ENABLED = import.meta.env.VITE_ADMIN_ENABLED === 'true';
@@ -161,18 +162,18 @@ function Index() {
       <section className="relative overflow-hidden bg-white border-b border-slate-100">
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,_var(--tw-gradient-stops))] from-violet-50/50 via-transparent to-transparent opacity-70" />
         
-        <div className="max-w-7xl mx-auto px-6 py-12 md:py-20 relative z-10 flex flex-col md:flex-row items-center gap-12">
+        <div className="max-w-7xl mx-auto px-6 py-12 md:py-28 relative z-10 flex flex-col md:flex-row items-center gap-12">
           <div className="flex-1 text-center md:text-left">
             <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-orange-50 text-orange-600 text-[10px] font-black uppercase tracking-widest mb-6 border border-orange-100 shadow-sm">
-              <TrendingUp className="h-3 w-3" />
-              +10 negócios em Araruama
+              <Sparkles className="h-3 w-3" />
+              Ecossistema Digital da Comunidade
             </div>
-            <h1 className="text-4xl md:text-7xl font-black tracking-tighter text-slate-900 mb-6 leading-[0.9]">
-              Encontre comércios, <br className="hidden md:block" />
-              <span className="text-orange-600">serviços e promoções</span>
+            <h1 className="text-4xl md:text-8xl font-black tracking-tighter text-slate-900 mb-6 leading-[0.85]">
+              O Ecossistema Digital <br className="hidden md:block" />
+              <span className="text-orange-600">da Sua Comunidade</span>
             </h1>
             <p className="text-slate-500 text-lg md:text-xl font-medium mb-10 leading-relaxed max-w-xl mx-auto md:mx-0">
-              O Axêi no Bairro conecta você aos negócios locais mais próximos, com ofertas, rotas e contato direto pelo WhatsApp.
+              Conectando moradores, negócios e serviços para fortalecer o bairro e criar novas oportunidades para todos.
             </p>
             
             <div className="flex flex-col gap-6">
@@ -251,34 +252,8 @@ function Index() {
         </div>
       </section>
 
-      {/* New Institutional Block */}
-      <section className="max-w-7xl mx-auto px-6 mt-16 mb-16">
-        <h2 className="text-2xl font-black text-slate-900 mb-8">O que o Axêi oferece</h2>
-        <div className="grid grid-cols-2 md:grid-cols-5 gap-4 text-slate-900">
-          {[
-            { label: 'Negócios', icon: ShoppingBag, path: '/negocios' },
-            { label: 'Serviços', icon: Wrench, path: '/servicos' },
-            { label: 'Transporte', icon: Car, path: '/transporte' },
-            { label: 'Notícias', icon: Newspaper, path: '/noticias' },
-            { label: 'Comunidades', icon: Users, path: '/comunidades' },
-          ].map(item => (
-            <Button 
-              key={item.label}
-              variant="outline"
-              onClick={() => navigate({ to: item.path })}
-              className="h-24 flex flex-col gap-2 rounded-2xl font-bold border-slate-100 hover:border-orange-200 hover:bg-orange-50 transition-all shadow-sm"
-            >
-              <item.icon className="w-5 h-5 text-orange-600" />
-              {item.label}
-            </Button>
-          ))}
-        </div>
-        <div className="mt-8 flex justify-center">
-          <Button onClick={() => navigate({ to: '/como-funciona' })} className="bg-slate-900 text-white h-12 px-8 rounded-2xl font-black">
-            Saiba Mais
-          </Button>
-        </div>
-      </section>
+      <ValueProposition />
+      <SponsorSection />
       
       {/* Classificados Teaser */}
       <section className="max-w-7xl mx-auto px-6 mb-16">
@@ -808,62 +783,7 @@ function Index() {
         </div>
       </section>
 
-      <footer className="bg-slate-900 text-white py-20 px-6 mt-20">
-        <div className="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center gap-12">
-          <div className="flex flex-col items-center md:items-start text-center md:text-left gap-4">
-            <Logo dark />
-            <p className="text-slate-400 font-medium max-w-xs">
-              Encontre. Conecte. Fortaleça o comércio local.
-            </p>
-            <div className="mt-4 space-y-1">
-              <p className="text-[10px] font-black uppercase tracking-widest text-slate-500">Uma solução Hubia Connect</p>
-              <p className="text-[10px] font-black uppercase tracking-widest text-slate-500">CNPJ 27.807.284/0001-89</p>
-            </div>
-          </div>
-          
-          <div className="grid grid-cols-2 sm:grid-cols-3 gap-12 md:gap-24">
-             <div className="flex flex-col gap-4 text-center md:text-left">
-                <span className="text-[10px] font-black uppercase tracking-widest text-slate-500">Plataforma</span>
-                <Link to="/negocios" className="text-sm font-bold text-slate-300 hover:text-orange-500 transition-colors">Ver Negócios</Link>
-                <Link to="/servicos" className="text-sm font-bold text-slate-300 hover:text-orange-500 transition-colors">Serviços</Link>
-                <Link to="/transporte" className="text-sm font-bold text-slate-300 hover:text-orange-500 transition-colors">Transporte</Link>
-                <Link to="/representantes-programa" className="text-sm font-bold text-slate-300 hover:text-orange-500 transition-colors">Seja Representante</Link>
-                <Link to="/planos" className="text-sm font-bold text-slate-300 hover:text-orange-500 transition-colors">Planos & Preços</Link>
-                <Link to="/apoiadores" className="text-sm font-bold text-slate-300 hover:text-orange-500 transition-colors">Apoiadores</Link>
-                <Link to="/noticias" className="text-sm font-bold text-slate-300 hover:text-orange-500 transition-colors">Notícias Locais</Link>
-                <Link to="/cadastro" className="text-sm font-bold text-slate-300 hover:text-orange-500 transition-colors">Cadastrar Loja</Link>
-
-                {IS_ADMIN_ENABLED && (
-                  <>
-                    <Link to="/admin" className="text-sm font-bold text-slate-300 hover:text-orange-500 transition-colors flex items-center gap-1.5">
-                      <Lock className="w-3 h-3" />
-                      Admin
-                    </Link>
-                    <Link to="/admin/representantes" className="text-sm font-bold text-slate-400 hover:text-orange-500 transition-colors">Admin Representantes</Link>
-                  </>
-                )}
-             </div>
-             <div className="flex flex-col gap-4 text-center md:text-left">
-                <span className="text-[10px] font-black uppercase tracking-widest text-slate-500">Suporte</span>
-                <a href="#" className="text-sm font-bold text-slate-300 hover:text-orange-500 transition-colors">Central de Ajuda</a>
-                <a href="#" className="text-sm font-bold text-slate-300 hover:text-orange-500 transition-colors">Termos de Uso</a>
-             </div>
-             <div className="hidden sm:flex flex-col gap-4 text-center md:text-left">
-                <span className="text-[10px] font-black uppercase tracking-widest text-slate-500">Cidade Sede</span>
-                <span className="text-sm font-bold text-slate-300">Araruama / RJ</span>
-             </div>
-          </div>
-        </div>
-        
-        <div className="max-w-7xl mx-auto mt-20 pt-8 border-t border-white/5 flex flex-col md:flex-row justify-between items-center gap-6 text-[10px] font-black uppercase tracking-widest text-slate-500">
-           <span>© 2026 Axêi no Bairro. Todos os direitos reservados.</span>
-           <div className="flex items-center gap-6">
-              <a href="https://www.instagram.com/axeinobairro" target="_blank" rel="noopener noreferrer" className="hover:text-white transition-colors">Instagram</a>
-              <a href="https://www.facebook.com/axeinobairro/" target="_blank" rel="noopener noreferrer" className="hover:text-white transition-colors">Facebook</a>
-              <a href="https://wa.me/5521999869070" target="_blank" rel="noopener noreferrer" className="hover:text-white transition-colors">WhatsApp</a>
-           </div>
-        </div>
-      </footer>
+      <Footer />
 
       <FloatingNav />
     </div>
