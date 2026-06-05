@@ -116,6 +116,12 @@ export const TopBar = memo(function TopBar() {
           <div className="flex items-center gap-8">
             <Link to="/" className={`flex items-center transition-all duration-300 ${isCompact ? 'scale-90 origin-left' : ''}`}>
               <Logo />
+              {!isCompact && (
+                <div className="ml-3 pl-3 border-l border-slate-100 hidden sm:block">
+                  <div className="text-[10px] font-black text-slate-400 uppercase tracking-widest leading-none mb-1">Ecossistema</div>
+                  <div className="text-[10px] font-black text-orange-600 uppercase tracking-[0.2em] leading-none">Comunitário</div>
+                </div>
+              )}
             </Link>
             
             {!isCompact && (
