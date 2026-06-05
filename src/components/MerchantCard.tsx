@@ -58,20 +58,19 @@ export const MerchantCard = memo(function MerchantCard({ merchant }: Props) {
           {merchant.promotion.isActive && <PromotionBadge />}
           {(() => {
             const exposure = (() => {
-              if (merchant.exposureLevel === 'A') return { label: 'Patrocinador', color: 'bg-slate-900 text-white' };
-              if (['igreja', 'escola', 'ong', 'social'].includes(merchant.category.toLowerCase())) return { label: 'Institucional', color: 'bg-blue-600 text-white' };
-              if (merchant.exposureLevel === 'B') return { label: 'Pago', color: 'bg-orange-600 text-white' };
-              return { label: 'Isento', color: 'bg-slate-600 text-white' };
+              if (merchant.exposureLevel === 'A') return { label: 'Patrocinador', color: 'bg-slate-900 text-white border-white/20' };
+              if (['igreja', 'escola', 'ong', 'social'].includes(merchant.category.toLowerCase())) return { label: 'Institucional', color: 'bg-blue-600 text-white border-blue-400/30' };
+              if (merchant.exposureLevel === 'B') return { label: 'Destaque', color: 'bg-orange-600 text-white border-orange-400/30' };
+              if (merchant.exposureLevel === 'C') return { label: 'Premium', color: 'bg-violet-600 text-white border-violet-400/30' };
+              return { label: 'Ecossistema', color: 'bg-slate-500 text-white border-slate-300/30' };
             })();
             return (
-              <div className={`inline-flex items-center gap-1 rounded-full ${exposure.color} px-2.5 py-1 text-[10px] font-black uppercase tracking-widest shadow-sm`}>
+              <div className={`inline-flex items-center gap-1.5 rounded-full ${exposure.color} px-3 py-1.5 text-[9px] font-black uppercase tracking-[0.15em] shadow-xl border backdrop-blur-sm`}>
+                <ShieldCheck className="w-2.5 h-2.5" />
                 {exposure.label}
               </div>
             );
           })()}
-          <div className="inline-flex items-center gap-1 rounded-full bg-white/90 backdrop-blur-md px-2.5 py-1 text-[10px] font-extrabold uppercase text-slate-900 shadow-sm border border-slate-200/50">
-            {merchant.category}
-          </div>
         </div>
 
         
