@@ -84,37 +84,35 @@ export const MerchantCard = memo(function MerchantCard({ merchant }: Props) {
       </div>
 
       <div className="flex flex-col p-5 flex-1">
-        <div className="flex items-start justify-between gap-2 mb-2">
+        <div className="flex items-start justify-between gap-2 mb-3">
           <div className="min-w-0 flex-1">
-            <h3 className="truncate text-lg font-black text-slate-900 leading-tight">
+            <h3 className="truncate text-xl font-black text-slate-900 leading-none tracking-tight group-hover:text-orange-600 transition-colors">
               {merchant.name}
             </h3>
-            <div className="flex items-center gap-1 mt-1">
+            <div className="flex items-center gap-1.5 mt-2">
               <MapPin className="h-3 w-3 text-orange-500" />
-              <span className="text-xs font-bold text-slate-500 truncate">
+              <span className="text-[10px] font-black uppercase text-slate-400 tracking-wider truncate">
                 {merchant.neighborhood}
                 {distance !== null && (
-                  <span className="flex items-center gap-1 ml-1 pl-1 border-l border-slate-200">
-                    <Navigation className="w-2.5 h-2.5" />
+                  <span className="inline-flex items-center gap-1 ml-1 pl-1 border-l border-slate-200">
+                    <Navigation className="w-2 h-2" />
                     {formatDistance(distance)}
                   </span>
                 )}
               </span>
             </div>
           </div>
-          <div className="flex items-center gap-1.5 rounded-lg bg-slate-50 px-2 py-1 text-xs font-bold text-slate-900 border border-slate-100">
+          <div className="flex items-center gap-1.5 rounded-xl bg-orange-50 px-2.5 py-1.5 text-xs font-black text-orange-600 border border-orange-100 shadow-sm">
             <Star className="h-3 w-3 fill-orange-500 text-orange-500" />
             {(() => {
               const { average, total } = reviewsRepository.getAverageRating('loja', merchant.id);
               return (
                 <div className="flex items-center gap-1">
                   <span>{total > 0 ? average.toFixed(1) : merchant.rating.toFixed(1)}</span>
-                  {total > 0 && <span className="text-[10px] text-slate-400 font-medium">({total})</span>}
                 </div>
               );
             })()}
           </div>
-
         </div>
 
         <p className="line-clamp-2 text-sm text-slate-500 leading-relaxed mb-4 min-h-[2.5rem]">
