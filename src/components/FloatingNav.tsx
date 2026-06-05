@@ -44,6 +44,14 @@ export const FloatingNav = memo(function FloatingNav() {
         <Car className={`w-5 h-5 ${isActive('/transporte') ? 'scale-110' : ''}`} />
         <span className="text-[9px] font-black uppercase tracking-tighter">Rides</span>
       </Link>
+
+      <Link 
+        to="/recomendacoes" 
+        className={`flex flex-col items-center gap-1 px-3 py-2 rounded-2xl transition-all duration-300 ${isActive('/recomendacoes') ? 'text-orange-600 bg-orange-50' : 'text-slate-400 hover:text-slate-600'}`}
+      >
+        <Sparkles className={`w-5 h-5 ${isActive('/recomendacoes') ? 'scale-110' : ''}`} />
+        <span className="text-[9px] font-black uppercase tracking-tighter">Dicas</span>
+      </Link>
       
       <Link 
         to="/noticias" 
