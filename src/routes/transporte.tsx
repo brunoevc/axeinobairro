@@ -15,6 +15,9 @@ import { ListingSkeleton } from "@/components/ListingSkeleton";
 import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
 import { Star, Car, Truck, Bike, Users, MessageSquare, ShieldAlert, Search, Filter } from "lucide-react";
 import { PixDisplayCard } from "@/components/PixDisplayCard";
+import { EcosystemLoops } from "@/components/EcosystemLoops";
+import { Footer } from "@/components/Footer";
+
 
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
