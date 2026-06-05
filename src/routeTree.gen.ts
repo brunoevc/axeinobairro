@@ -47,6 +47,7 @@ import { Route as AdminRecomendacoesRouteImport } from './routes/admin/recomenda
 import { Route as AdminPlanosRouteImport } from './routes/admin/planos'
 import { Route as AdminLojasRouteImport } from './routes/admin/lojas'
 import { Route as AdminLeadsRouteImport } from './routes/admin/leads'
+import { Route as AdminInsightsRouteImport } from './routes/admin/insights'
 import { Route as AdminFeedbacksRouteImport } from './routes/admin/feedbacks'
 import { Route as AdminDestaquesRouteImport } from './routes/admin/destaques'
 import { Route as AdminCampanhasRouteImport } from './routes/admin/campanhas'
@@ -243,6 +244,11 @@ const AdminLeadsRoute = AdminLeadsRouteImport.update({
   path: '/leads',
   getParentRoute: () => AdminRoute,
 } as any)
+const AdminInsightsRoute = AdminInsightsRouteImport.update({
+  id: '/insights',
+  path: '/insights',
+  getParentRoute: () => AdminRoute,
+} as any)
 const AdminFeedbacksRoute = AdminFeedbacksRouteImport.update({
   id: '/feedbacks',
   path: '/feedbacks',
@@ -296,6 +302,7 @@ export interface FileRoutesByFullPath {
   '/admin/campanhas': typeof AdminCampanhasRoute
   '/admin/destaques': typeof AdminDestaquesRoute
   '/admin/feedbacks': typeof AdminFeedbacksRoute
+  '/admin/insights': typeof AdminInsightsRoute
   '/admin/leads': typeof AdminLeadsRoute
   '/admin/lojas': typeof AdminLojasRoute
   '/admin/planos': typeof AdminPlanosRoute
@@ -339,6 +346,7 @@ export interface FileRoutesByTo {
   '/admin/campanhas': typeof AdminCampanhasRoute
   '/admin/destaques': typeof AdminDestaquesRoute
   '/admin/feedbacks': typeof AdminFeedbacksRoute
+  '/admin/insights': typeof AdminInsightsRoute
   '/admin/leads': typeof AdminLeadsRoute
   '/admin/lojas': typeof AdminLojasRoute
   '/admin/planos': typeof AdminPlanosRoute
@@ -385,6 +393,7 @@ export interface FileRoutesById {
   '/admin/campanhas': typeof AdminCampanhasRoute
   '/admin/destaques': typeof AdminDestaquesRoute
   '/admin/feedbacks': typeof AdminFeedbacksRoute
+  '/admin/insights': typeof AdminInsightsRoute
   '/admin/leads': typeof AdminLeadsRoute
   '/admin/lojas': typeof AdminLojasRoute
   '/admin/planos': typeof AdminPlanosRoute
@@ -432,6 +441,7 @@ export interface FileRouteTypes {
     | '/admin/campanhas'
     | '/admin/destaques'
     | '/admin/feedbacks'
+    | '/admin/insights'
     | '/admin/leads'
     | '/admin/lojas'
     | '/admin/planos'
@@ -475,6 +485,7 @@ export interface FileRouteTypes {
     | '/admin/campanhas'
     | '/admin/destaques'
     | '/admin/feedbacks'
+    | '/admin/insights'
     | '/admin/leads'
     | '/admin/lojas'
     | '/admin/planos'
@@ -520,6 +531,7 @@ export interface FileRouteTypes {
     | '/admin/campanhas'
     | '/admin/destaques'
     | '/admin/feedbacks'
+    | '/admin/insights'
     | '/admin/leads'
     | '/admin/lojas'
     | '/admin/planos'
@@ -832,6 +844,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AdminLeadsRouteImport
       parentRoute: typeof AdminRoute
     }
+    '/admin/insights': {
+      id: '/admin/insights'
+      path: '/insights'
+      fullPath: '/admin/insights'
+      preLoaderRoute: typeof AdminInsightsRouteImport
+      parentRoute: typeof AdminRoute
+    }
     '/admin/feedbacks': {
       id: '/admin/feedbacks'
       path: '/feedbacks'
@@ -876,6 +895,7 @@ interface AdminRouteChildren {
   AdminCampanhasRoute: typeof AdminCampanhasRoute
   AdminDestaquesRoute: typeof AdminDestaquesRoute
   AdminFeedbacksRoute: typeof AdminFeedbacksRoute
+  AdminInsightsRoute: typeof AdminInsightsRoute
   AdminLeadsRoute: typeof AdminLeadsRoute
   AdminLojasRoute: typeof AdminLojasRoute
   AdminPlanosRoute: typeof AdminPlanosRoute
@@ -892,6 +912,7 @@ const AdminRouteChildren: AdminRouteChildren = {
   AdminCampanhasRoute: AdminCampanhasRoute,
   AdminDestaquesRoute: AdminDestaquesRoute,
   AdminFeedbacksRoute: AdminFeedbacksRoute,
+  AdminInsightsRoute: AdminInsightsRoute,
   AdminLeadsRoute: AdminLeadsRoute,
   AdminLojasRoute: AdminLojasRoute,
   AdminPlanosRoute: AdminPlanosRoute,
