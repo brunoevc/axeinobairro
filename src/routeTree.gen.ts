@@ -18,6 +18,7 @@ import { Route as OfertasRouteImport } from './routes/ofertas'
 import { Route as NoticiasRouteImport } from './routes/noticias'
 import { Route as NegociosRouteImport } from './routes/negocios'
 import { Route as LoginRouteImport } from './routes/login'
+import { Route as FeedbackRouteImport } from './routes/feedback'
 import { Route as ComunidadesRouteImport } from './routes/comunidades'
 import { Route as ComoFuncionaRouteImport } from './routes/como-funciona'
 import { Route as ClassificadosRouteImport } from './routes/classificados'
@@ -41,6 +42,7 @@ import { Route as AdminRepresentantesRouteImport } from './routes/admin/represen
 import { Route as AdminPlanosRouteImport } from './routes/admin/planos'
 import { Route as AdminLojasRouteImport } from './routes/admin/lojas'
 import { Route as AdminLeadsRouteImport } from './routes/admin/leads'
+import { Route as AdminFeedbacksRouteImport } from './routes/admin/feedbacks'
 import { Route as AdminDestaquesRouteImport } from './routes/admin/destaques'
 import { Route as AdminCampanhasRouteImport } from './routes/admin/campanhas'
 import { Route as AdminAvaliacoesRouteImport } from './routes/admin/avaliacoes'
@@ -89,6 +91,11 @@ const NegociosRoute = NegociosRouteImport.update({
 const LoginRoute = LoginRouteImport.update({
   id: '/login',
   path: '/login',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const FeedbackRoute = FeedbackRouteImport.update({
+  id: '/feedback',
+  path: '/feedback',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ComunidadesRoute = ComunidadesRouteImport.update({
@@ -206,6 +213,11 @@ const AdminLeadsRoute = AdminLeadsRouteImport.update({
   path: '/leads',
   getParentRoute: () => AdminRoute,
 } as any)
+const AdminFeedbacksRoute = AdminFeedbacksRouteImport.update({
+  id: '/feedbacks',
+  path: '/feedbacks',
+  getParentRoute: () => AdminRoute,
+} as any)
 const AdminDestaquesRoute = AdminDestaquesRouteImport.update({
   id: '/destaques',
   path: '/destaques',
@@ -235,6 +247,7 @@ export interface FileRoutesByFullPath {
   '/classificados': typeof ClassificadosRoute
   '/como-funciona': typeof ComoFuncionaRoute
   '/comunidades': typeof ComunidadesRoute
+  '/feedback': typeof FeedbackRoute
   '/login': typeof LoginRoute
   '/negocios': typeof NegociosRouteWithChildren
   '/noticias': typeof NoticiasRoute
@@ -248,6 +261,7 @@ export interface FileRoutesByFullPath {
   '/admin/avaliacoes': typeof AdminAvaliacoesRoute
   '/admin/campanhas': typeof AdminCampanhasRoute
   '/admin/destaques': typeof AdminDestaquesRoute
+  '/admin/feedbacks': typeof AdminFeedbacksRoute
   '/admin/leads': typeof AdminLeadsRoute
   '/admin/lojas': typeof AdminLojasRoute
   '/admin/planos': typeof AdminPlanosRoute
@@ -272,6 +286,7 @@ export interface FileRoutesByTo {
   '/classificados': typeof ClassificadosRoute
   '/como-funciona': typeof ComoFuncionaRoute
   '/comunidades': typeof ComunidadesRoute
+  '/feedback': typeof FeedbackRoute
   '/login': typeof LoginRoute
   '/noticias': typeof NoticiasRoute
   '/ofertas': typeof OfertasRoute
@@ -284,6 +299,7 @@ export interface FileRoutesByTo {
   '/admin/avaliacoes': typeof AdminAvaliacoesRoute
   '/admin/campanhas': typeof AdminCampanhasRoute
   '/admin/destaques': typeof AdminDestaquesRoute
+  '/admin/feedbacks': typeof AdminFeedbacksRoute
   '/admin/leads': typeof AdminLeadsRoute
   '/admin/lojas': typeof AdminLojasRoute
   '/admin/planos': typeof AdminPlanosRoute
@@ -310,6 +326,7 @@ export interface FileRoutesById {
   '/classificados': typeof ClassificadosRoute
   '/como-funciona': typeof ComoFuncionaRoute
   '/comunidades': typeof ComunidadesRoute
+  '/feedback': typeof FeedbackRoute
   '/login': typeof LoginRoute
   '/negocios': typeof NegociosRouteWithChildren
   '/noticias': typeof NoticiasRoute
@@ -323,6 +340,7 @@ export interface FileRoutesById {
   '/admin/avaliacoes': typeof AdminAvaliacoesRoute
   '/admin/campanhas': typeof AdminCampanhasRoute
   '/admin/destaques': typeof AdminDestaquesRoute
+  '/admin/feedbacks': typeof AdminFeedbacksRoute
   '/admin/leads': typeof AdminLeadsRoute
   '/admin/lojas': typeof AdminLojasRoute
   '/admin/planos': typeof AdminPlanosRoute
@@ -350,6 +368,7 @@ export interface FileRouteTypes {
     | '/classificados'
     | '/como-funciona'
     | '/comunidades'
+    | '/feedback'
     | '/login'
     | '/negocios'
     | '/noticias'
@@ -363,6 +382,7 @@ export interface FileRouteTypes {
     | '/admin/avaliacoes'
     | '/admin/campanhas'
     | '/admin/destaques'
+    | '/admin/feedbacks'
     | '/admin/leads'
     | '/admin/lojas'
     | '/admin/planos'
@@ -387,6 +407,7 @@ export interface FileRouteTypes {
     | '/classificados'
     | '/como-funciona'
     | '/comunidades'
+    | '/feedback'
     | '/login'
     | '/noticias'
     | '/ofertas'
@@ -399,6 +420,7 @@ export interface FileRouteTypes {
     | '/admin/avaliacoes'
     | '/admin/campanhas'
     | '/admin/destaques'
+    | '/admin/feedbacks'
     | '/admin/leads'
     | '/admin/lojas'
     | '/admin/planos'
@@ -424,6 +446,7 @@ export interface FileRouteTypes {
     | '/classificados'
     | '/como-funciona'
     | '/comunidades'
+    | '/feedback'
     | '/login'
     | '/negocios'
     | '/noticias'
@@ -437,6 +460,7 @@ export interface FileRouteTypes {
     | '/admin/avaliacoes'
     | '/admin/campanhas'
     | '/admin/destaques'
+    | '/admin/feedbacks'
     | '/admin/leads'
     | '/admin/lojas'
     | '/admin/planos'
@@ -463,6 +487,7 @@ export interface RootRouteChildren {
   ClassificadosRoute: typeof ClassificadosRoute
   ComoFuncionaRoute: typeof ComoFuncionaRoute
   ComunidadesRoute: typeof ComunidadesRoute
+  FeedbackRoute: typeof FeedbackRoute
   LoginRoute: typeof LoginRoute
   NegociosRoute: typeof NegociosRouteWithChildren
   NoticiasRoute: typeof NoticiasRoute
@@ -538,6 +563,13 @@ declare module '@tanstack/react-router' {
       path: '/login'
       fullPath: '/login'
       preLoaderRoute: typeof LoginRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/feedback': {
+      id: '/feedback'
+      path: '/feedback'
+      fullPath: '/feedback'
+      preLoaderRoute: typeof FeedbackRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/comunidades': {
@@ -701,6 +733,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AdminLeadsRouteImport
       parentRoute: typeof AdminRoute
     }
+    '/admin/feedbacks': {
+      id: '/admin/feedbacks'
+      path: '/feedbacks'
+      fullPath: '/admin/feedbacks'
+      preLoaderRoute: typeof AdminFeedbacksRouteImport
+      parentRoute: typeof AdminRoute
+    }
     '/admin/destaques': {
       id: '/admin/destaques'
       path: '/destaques'
@@ -737,6 +776,7 @@ interface AdminRouteChildren {
   AdminAvaliacoesRoute: typeof AdminAvaliacoesRoute
   AdminCampanhasRoute: typeof AdminCampanhasRoute
   AdminDestaquesRoute: typeof AdminDestaquesRoute
+  AdminFeedbacksRoute: typeof AdminFeedbacksRoute
   AdminLeadsRoute: typeof AdminLeadsRoute
   AdminLojasRoute: typeof AdminLojasRoute
   AdminPlanosRoute: typeof AdminPlanosRoute
@@ -751,6 +791,7 @@ const AdminRouteChildren: AdminRouteChildren = {
   AdminAvaliacoesRoute: AdminAvaliacoesRoute,
   AdminCampanhasRoute: AdminCampanhasRoute,
   AdminDestaquesRoute: AdminDestaquesRoute,
+  AdminFeedbacksRoute: AdminFeedbacksRoute,
   AdminLeadsRoute: AdminLeadsRoute,
   AdminLojasRoute: AdminLojasRoute,
   AdminPlanosRoute: AdminPlanosRoute,
@@ -805,6 +846,7 @@ const rootRouteChildren: RootRouteChildren = {
   ClassificadosRoute: ClassificadosRoute,
   ComoFuncionaRoute: ComoFuncionaRoute,
   ComunidadesRoute: ComunidadesRoute,
+  FeedbackRoute: FeedbackRoute,
   LoginRoute: LoginRoute,
   NegociosRoute: NegociosRouteWithChildren,
   NoticiasRoute: NoticiasRoute,
