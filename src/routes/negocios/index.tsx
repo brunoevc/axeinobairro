@@ -360,7 +360,12 @@ function ListingPage() {
           </div>
         )}
       </main>
+      
+      <section className="mt-12">
+        <EcosystemLoops />
+      </section>
 
+      <Footer />
       <FloatingNav />
     </div>
   );
