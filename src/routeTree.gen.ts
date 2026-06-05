@@ -40,6 +40,7 @@ import { Route as LojaSlugRouteImport } from './routes/loja/$slug'
 import { Route as AdminTransporteRouteImport } from './routes/admin/transporte'
 import { Route as AdminServicosRouteImport } from './routes/admin/servicos'
 import { Route as AdminRepresentantesRouteImport } from './routes/admin/representantes'
+import { Route as AdminRecomendacoesRouteImport } from './routes/admin/recomendacoes'
 import { Route as AdminPlanosRouteImport } from './routes/admin/planos'
 import { Route as AdminLojasRouteImport } from './routes/admin/lojas'
 import { Route as AdminLeadsRouteImport } from './routes/admin/leads'
@@ -204,6 +205,11 @@ const AdminRepresentantesRoute = AdminRepresentantesRouteImport.update({
   path: '/representantes',
   getParentRoute: () => AdminRoute,
 } as any)
+const AdminRecomendacoesRoute = AdminRecomendacoesRouteImport.update({
+  id: '/recomendacoes',
+  path: '/recomendacoes',
+  getParentRoute: () => AdminRoute,
+} as any)
 const AdminPlanosRoute = AdminPlanosRouteImport.update({
   id: '/planos',
   path: '/planos',
@@ -272,6 +278,7 @@ export interface FileRoutesByFullPath {
   '/admin/leads': typeof AdminLeadsRoute
   '/admin/lojas': typeof AdminLojasRoute
   '/admin/planos': typeof AdminPlanosRoute
+  '/admin/recomendacoes': typeof AdminRecomendacoesRoute
   '/admin/representantes': typeof AdminRepresentantesRoute
   '/admin/servicos': typeof AdminServicosRoute
   '/admin/transporte': typeof AdminTransporteRoute
@@ -311,6 +318,7 @@ export interface FileRoutesByTo {
   '/admin/leads': typeof AdminLeadsRoute
   '/admin/lojas': typeof AdminLojasRoute
   '/admin/planos': typeof AdminPlanosRoute
+  '/admin/recomendacoes': typeof AdminRecomendacoesRoute
   '/admin/representantes': typeof AdminRepresentantesRoute
   '/admin/servicos': typeof AdminServicosRoute
   '/admin/transporte': typeof AdminTransporteRoute
@@ -353,6 +361,7 @@ export interface FileRoutesById {
   '/admin/leads': typeof AdminLeadsRoute
   '/admin/lojas': typeof AdminLojasRoute
   '/admin/planos': typeof AdminPlanosRoute
+  '/admin/recomendacoes': typeof AdminRecomendacoesRoute
   '/admin/representantes': typeof AdminRepresentantesRoute
   '/admin/servicos': typeof AdminServicosRoute
   '/admin/transporte': typeof AdminTransporteRoute
@@ -396,6 +405,7 @@ export interface FileRouteTypes {
     | '/admin/leads'
     | '/admin/lojas'
     | '/admin/planos'
+    | '/admin/recomendacoes'
     | '/admin/representantes'
     | '/admin/servicos'
     | '/admin/transporte'
@@ -435,6 +445,7 @@ export interface FileRouteTypes {
     | '/admin/leads'
     | '/admin/lojas'
     | '/admin/planos'
+    | '/admin/recomendacoes'
     | '/admin/representantes'
     | '/admin/servicos'
     | '/admin/transporte'
@@ -476,6 +487,7 @@ export interface FileRouteTypes {
     | '/admin/leads'
     | '/admin/lojas'
     | '/admin/planos'
+    | '/admin/recomendacoes'
     | '/admin/representantes'
     | '/admin/servicos'
     | '/admin/transporte'
@@ -732,6 +744,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AdminRepresentantesRouteImport
       parentRoute: typeof AdminRoute
     }
+    '/admin/recomendacoes': {
+      id: '/admin/recomendacoes'
+      path: '/recomendacoes'
+      fullPath: '/admin/recomendacoes'
+      preLoaderRoute: typeof AdminRecomendacoesRouteImport
+      parentRoute: typeof AdminRoute
+    }
     '/admin/planos': {
       id: '/admin/planos'
       path: '/planos'
@@ -800,6 +819,7 @@ interface AdminRouteChildren {
   AdminLeadsRoute: typeof AdminLeadsRoute
   AdminLojasRoute: typeof AdminLojasRoute
   AdminPlanosRoute: typeof AdminPlanosRoute
+  AdminRecomendacoesRoute: typeof AdminRecomendacoesRoute
   AdminRepresentantesRoute: typeof AdminRepresentantesRoute
   AdminServicosRoute: typeof AdminServicosRoute
   AdminTransporteRoute: typeof AdminTransporteRoute
@@ -815,6 +835,7 @@ const AdminRouteChildren: AdminRouteChildren = {
   AdminLeadsRoute: AdminLeadsRoute,
   AdminLojasRoute: AdminLojasRoute,
   AdminPlanosRoute: AdminPlanosRoute,
+  AdminRecomendacoesRoute: AdminRecomendacoesRoute,
   AdminRepresentantesRoute: AdminRepresentantesRoute,
   AdminServicosRoute: AdminServicosRoute,
   AdminTransporteRoute: AdminTransporteRoute,

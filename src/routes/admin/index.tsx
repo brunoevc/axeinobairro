@@ -285,7 +285,7 @@ function AdminDashboard() {
                <span className="text-[10px] font-black uppercase tracking-widest text-slate-400">Última Sincronização: {new Date(state.lastUpdated).toLocaleTimeString("pt-BR")}</span>
             </div>
             <div className="flex items-center gap-3">
-               <span className="text-[10px] font-black text-slate-500 uppercase tracking-[0.3em]">v1.0.0 Phase 8.9.12</span>
+               <span className="text-[10px] font-black text-slate-500 uppercase tracking-[0.3em]">v0.8.9.14</span>
                <div className="h-4 w-px bg-white/10" />
                <ShieldCheck className="w-4 h-4 text-emerald-500" />
             </div>
