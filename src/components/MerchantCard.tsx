@@ -9,6 +9,8 @@ import { useLocation } from "@/hooks/useLocation";
 import { useState, memo, useMemo } from "react";
 import { WhatsAppButton } from "./WhatsAppButton";
 import { BusinessStatusBadge } from "./BusinessStatusBadge";
+import { intentTracker } from "@/utils/intent-tracker";
+import { EconomicCategory, Territory } from "@/types/business-intelligence";
 
 type Props = { merchant: Merchant };
 
@@ -157,6 +159,14 @@ export const MerchantCard = memo(function MerchantCard({ merchant }: Props) {
           >
             <Link 
               to={getMerchantPublicPath(merchant)}
+              onClick={() => {
+                intentTracker.track({
+                  type: 'view_business',
+                  category: merchant.category as EconomicCategory,
+                  territory: merchant.neighborhood as Territory,
+                  source: 'negocios'
+                });
+              }}
             >
 
               Ver Detalhes
