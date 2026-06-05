@@ -51,6 +51,8 @@ import { Logo } from "@/components/ui/Logo";
 import { useLocation } from "@/hooks/useLocation";
 import { Footer } from "@/components/Footer";
 import { ValueProposition } from "@/components/ValueProposition";
+import { SponsorSection } from "@/components/SponsorSection";
+
 
 
 
