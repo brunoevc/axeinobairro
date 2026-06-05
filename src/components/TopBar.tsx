@@ -1,5 +1,6 @@
 import { useState, useMemo, useEffect, useCallback, memo } from "react";
-import { MapPin, Search, RefreshCw, AlertCircle, ChevronDown, X, History, Lock } from "lucide-react";
+import { MapPin, Search, RefreshCw, AlertCircle, ChevronDown, X, History, Lock, Sparkles } from "lucide-react";
+
 import { Link, useNavigate } from "@tanstack/react-router";
 import { Logo } from "@/components/ui/Logo";
 import { useLocation } from "@/hooks/useLocation";
@@ -124,8 +125,12 @@ export const TopBar = memo(function TopBar() {
                 <Link to="/negocios" className="text-sm font-semibold text-slate-600 hover:text-orange-600 transition-colors">Lojas</Link>
                 <Link to="/servicos" className="text-sm font-semibold text-slate-600 hover:text-orange-600 transition-colors">Serviços</Link>
                 <Link to="/transporte" className="text-sm font-semibold text-slate-600 hover:text-orange-600 transition-colors">Transporte</Link>
-                <Link to="/representantes" className="text-sm font-semibold text-slate-600 hover:text-orange-600 transition-colors">Representantes</Link>
+                <Link to="/feedback" className="text-sm font-bold text-violet-600 hover:text-violet-700 transition-all flex items-center gap-1.5 px-3 py-1.5 bg-violet-50 rounded-xl">
+                  <Sparkles className="w-3.5 h-3.5" />
+                  Feedback
+                </Link>
                 <Link to="/anuncie" className="text-sm font-bold text-orange-600 hover:text-orange-700 transition-colors px-4 py-2 bg-orange-50 rounded-xl">Anuncie</Link>
+
 
                 <div className="flex items-center gap-4 pl-4 border-l border-slate-100">
                   <Link 
