@@ -12,6 +12,7 @@ import { Route as rootRouteImport } from './routes/__root'
 import { Route as TransporteRouteImport } from './routes/transporte'
 import { Route as ServicosRouteImport } from './routes/servicos'
 import { Route as RepresentantesRouteImport } from './routes/representantes'
+import { Route as RecomendacoesRouteImport } from './routes/recomendacoes'
 import { Route as PerfilRouteImport } from './routes/perfil'
 import { Route as PainelRouteImport } from './routes/painel'
 import { Route as OfertasRouteImport } from './routes/ofertas'
@@ -61,6 +62,11 @@ const ServicosRoute = ServicosRouteImport.update({
 const RepresentantesRoute = RepresentantesRouteImport.update({
   id: '/representantes',
   path: '/representantes',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const RecomendacoesRoute = RecomendacoesRouteImport.update({
+  id: '/recomendacoes',
+  path: '/recomendacoes',
   getParentRoute: () => rootRouteImport,
 } as any)
 const PerfilRoute = PerfilRouteImport.update({
@@ -254,6 +260,7 @@ export interface FileRoutesByFullPath {
   '/ofertas': typeof OfertasRoute
   '/painel': typeof PainelRouteWithChildren
   '/perfil': typeof PerfilRoute
+  '/recomendacoes': typeof RecomendacoesRoute
   '/representantes': typeof RepresentantesRoute
   '/servicos': typeof ServicosRoute
   '/transporte': typeof TransporteRoute
@@ -292,6 +299,7 @@ export interface FileRoutesByTo {
   '/ofertas': typeof OfertasRoute
   '/painel': typeof PainelRouteWithChildren
   '/perfil': typeof PerfilRoute
+  '/recomendacoes': typeof RecomendacoesRoute
   '/representantes': typeof RepresentantesRoute
   '/servicos': typeof ServicosRoute
   '/transporte': typeof TransporteRoute
@@ -333,6 +341,7 @@ export interface FileRoutesById {
   '/ofertas': typeof OfertasRoute
   '/painel': typeof PainelRouteWithChildren
   '/perfil': typeof PerfilRoute
+  '/recomendacoes': typeof RecomendacoesRoute
   '/representantes': typeof RepresentantesRoute
   '/servicos': typeof ServicosRoute
   '/transporte': typeof TransporteRoute
@@ -375,6 +384,7 @@ export interface FileRouteTypes {
     | '/ofertas'
     | '/painel'
     | '/perfil'
+    | '/recomendacoes'
     | '/representantes'
     | '/servicos'
     | '/transporte'
@@ -413,6 +423,7 @@ export interface FileRouteTypes {
     | '/ofertas'
     | '/painel'
     | '/perfil'
+    | '/recomendacoes'
     | '/representantes'
     | '/servicos'
     | '/transporte'
@@ -453,6 +464,7 @@ export interface FileRouteTypes {
     | '/ofertas'
     | '/painel'
     | '/perfil'
+    | '/recomendacoes'
     | '/representantes'
     | '/servicos'
     | '/transporte'
@@ -494,6 +506,7 @@ export interface RootRouteChildren {
   OfertasRoute: typeof OfertasRoute
   PainelRoute: typeof PainelRouteWithChildren
   PerfilRoute: typeof PerfilRoute
+  RecomendacoesRoute: typeof RecomendacoesRoute
   RepresentantesRoute: typeof RepresentantesRoute
   ServicosRoute: typeof ServicosRoute
   TransporteRoute: typeof TransporteRoute
@@ -521,6 +534,13 @@ declare module '@tanstack/react-router' {
       path: '/representantes'
       fullPath: '/representantes'
       preLoaderRoute: typeof RepresentantesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/recomendacoes': {
+      id: '/recomendacoes'
+      path: '/recomendacoes'
+      fullPath: '/recomendacoes'
+      preLoaderRoute: typeof RecomendacoesRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/perfil': {
@@ -853,6 +873,7 @@ const rootRouteChildren: RootRouteChildren = {
   OfertasRoute: OfertasRoute,
   PainelRoute: PainelRouteWithChildren,
   PerfilRoute: PerfilRoute,
+  RecomendacoesRoute: RecomendacoesRoute,
   RepresentantesRoute: RepresentantesRoute,
   ServicosRoute: ServicosRoute,
   TransporteRoute: TransporteRoute,
