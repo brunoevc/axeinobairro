@@ -30,6 +30,7 @@ import { Route as ApoiadoresRouteImport } from './routes/apoiadores'
 import { Route as AnuncieRouteImport } from './routes/anuncie'
 import { Route as AdminRouteImport } from './routes/admin'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as PainelIndexRouteImport } from './routes/painel/index'
 import { Route as NegociosIndexRouteImport } from './routes/negocios/index'
 import { Route as AdminIndexRouteImport } from './routes/admin/index'
 import { Route as PainelRepresentanteRouteImport } from './routes/painel/representante'
@@ -158,6 +159,11 @@ const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
+} as any)
+const PainelIndexRoute = PainelIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => PainelRoute,
 } as any)
 const NegociosIndexRoute = NegociosIndexRouteImport.update({
   id: '/',
@@ -320,6 +326,7 @@ export interface FileRoutesByFullPath {
   '/painel/representante': typeof PainelRepresentanteRoute
   '/admin/': typeof AdminIndexRoute
   '/negocios/': typeof NegociosIndexRoute
+  '/painel/': typeof PainelIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -333,7 +340,6 @@ export interface FileRoutesByTo {
   '/login': typeof LoginRoute
   '/noticias': typeof NoticiasRoute
   '/ofertas': typeof OfertasRoute
-  '/painel': typeof PainelRouteWithChildren
   '/perfil': typeof PerfilRoute
   '/planos': typeof PlanosRoute
   '/recomendacoes': typeof RecomendacoesRoute
@@ -364,6 +370,7 @@ export interface FileRoutesByTo {
   '/painel/representante': typeof PainelRepresentanteRoute
   '/admin': typeof AdminIndexRoute
   '/negocios': typeof NegociosIndexRoute
+  '/painel': typeof PainelIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -411,6 +418,7 @@ export interface FileRoutesById {
   '/painel/representante': typeof PainelRepresentanteRoute
   '/admin/': typeof AdminIndexRoute
   '/negocios/': typeof NegociosIndexRoute
+  '/painel/': typeof PainelIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -459,6 +467,7 @@ export interface FileRouteTypes {
     | '/painel/representante'
     | '/admin/'
     | '/negocios/'
+    | '/painel/'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -472,7 +481,6 @@ export interface FileRouteTypes {
     | '/login'
     | '/noticias'
     | '/ofertas'
-    | '/painel'
     | '/perfil'
     | '/planos'
     | '/recomendacoes'
@@ -503,6 +511,7 @@ export interface FileRouteTypes {
     | '/painel/representante'
     | '/admin'
     | '/negocios'
+    | '/painel'
   id:
     | '__root__'
     | '/'
@@ -549,6 +558,7 @@ export interface FileRouteTypes {
     | '/painel/representante'
     | '/admin/'
     | '/negocios/'
+    | '/painel/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -724,6 +734,13 @@ declare module '@tanstack/react-router' {
       fullPath: '/'
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
+    }
+    '/painel/': {
+      id: '/painel/'
+      path: '/'
+      fullPath: '/painel/'
+      preLoaderRoute: typeof PainelIndexRouteImport
+      parentRoute: typeof PainelRoute
     }
     '/negocios/': {
       id: '/negocios/'
@@ -946,6 +963,7 @@ interface PainelRouteChildren {
   PainelMotoristaRoute: typeof PainelMotoristaRoute
   PainelProfissionalRoute: typeof PainelProfissionalRoute
   PainelRepresentanteRoute: typeof PainelRepresentanteRoute
+  PainelIndexRoute: typeof PainelIndexRoute
 }
 
 const PainelRouteChildren: PainelRouteChildren = {
@@ -955,6 +973,7 @@ const PainelRouteChildren: PainelRouteChildren = {
   PainelMotoristaRoute: PainelMotoristaRoute,
   PainelProfissionalRoute: PainelProfissionalRoute,
   PainelRepresentanteRoute: PainelRepresentanteRoute,
+  PainelIndexRoute: PainelIndexRoute,
 }
 
 const PainelRouteWithChildren =
