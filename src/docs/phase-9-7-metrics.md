@@ -26,8 +26,8 @@ Este documento serve como o Dashboard de acompanhamento da Phase 9.7.
 
 | Item | Problema Atual | Resultado Esperado | Impacto | Esforço | Prioridade | Status |
 | :--- | :--- | :--- | :--- | :--- | :--- | :--- |
-| **Loops Comerciais** | Módulos funcionam em silos. | Navegação cruzada orgânica entre módulos. | Retenção | Médio | Alta | Não iniciado |
-| **Recomendações** | Baseadas apenas em distância/categoria. | Baseadas em relevância para o ecossistema. | Valor Percebido | Médio | Média | Não iniciado |
+| **Loops Comerciais** | Módulos funcionam em silos. | Navegação cruzada orgânica entre módulos. | Retenção | Médio | Alta | Concluído |
+| **Recomendações** | Baseadas apenas em distância/categoria. | Baseadas em relevância para o ecossistema. | Valor Percebido | Médio | Média | Concluído |
 
 ## Sprint 4 — Autoridade
 **Objetivo:** Patrocinadores percebem claramente o benefício da exposição.
