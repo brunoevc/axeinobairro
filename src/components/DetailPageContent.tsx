@@ -34,6 +34,8 @@ import { FloatingCart } from "@/components/FloatingCart";
 import { ReviewSection } from "@/components/ReviewSection";
 import { reviewsRepository } from "@/repositories/reviewsRepository";
 import { PixDisplayCard } from "@/components/PixDisplayCard";
+import { EcosystemLoops } from "@/components/EcosystemLoops";
+
 
 
 interface DetailPageContentProps {
