@@ -7,10 +7,10 @@ Este documento serve como o Dashboard de acompanhamento da Phase 9.7.
 
 | Item | Problema Atual | Resultado Esperado | Impacto | Esforço | Prioridade | Status |
 | :--- | :--- | :--- | :--- | :--- | :--- | :--- |
-| **Hero da Home** | Comunica funcionalidades, mas não o ecossistema. | Usuário entende o ecossistema em <30s. | Receita, Retenção, Representantes | Médio | Crítica | Em andamento |
-| **Proposta de Valor** | Valor está "escondido" em blocos dispersos. | Seção clara conectando os atores do ecossistema. | Valor Percebido | Baixo | Alta | Não iniciado |
-| **Navegação Principal** | Foco em navegação técnica. | Foco em descoberta e conversão (Planos). | Receita | Baixo | Alta | Não iniciado |
-| **Footer Institucional** | Links básicos sem narrativa. | Reforço da autoridade e links do ecossistema. | Autoridade | Baixo | Média | Não iniciado |
+| **Hero da Home** | Comunica funcionalidades, mas não o ecossistema. | Usuário entende o ecossistema em <30s. | Receita, Retenção, Representantes | Médio | Crítica | Concluído |
+| **Proposta de Valor** | Valor está "escondido" em blocos dispersos. | Seção clara conectando os atores do ecossistema. | Valor Percebido | Baixo | Alta | Concluído |
+| **Navegação Principal** | Foco em navegação técnica. | Foco em descoberta e conversão (Planos). | Receita | Baixo | Alta | Concluído |
+| **Footer Institucional** | Links básicos sem narrativa. | Reforço da autoridade e links do ecossistema. | Autoridade | Baixo | Média | Concluído |
 
 ## Sprint 2 — Conversão
 **Objetivo:** O representante deve conseguir apresentar os planos em menos de 5 minutos.
