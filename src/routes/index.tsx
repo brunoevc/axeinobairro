@@ -429,7 +429,7 @@ function Index() {
                   const item = services.find(s => s.id === boost.targetId);
                   if (!item) return null;
                   return (
-                    <Card key={boost.id} className="rounded-3xl border-2 border-orange-100 hover:shadow-xl transition-all duration-300 group overflow-hidden relative">
+                    <Card key={boost.id} className="rounded-3xl border-2 border-orange-100 hover:shadow-xl transition-all duration-300 group overflow-hidden relative flex flex-col h-full">
                       <div className="absolute -top-3 -right-3 z-10 bg-orange-600 text-white text-[10px] font-black px-3 py-1 rounded-full shadow-lg flex items-center gap-1 border-2 border-white uppercase tracking-wider">
                         <Star className="w-3 h-3 fill-white" />
                         Destaque
@@ -452,12 +452,14 @@ function Index() {
                             </div>
                           </div>
                         </div>
+                        <div className="mt-auto">
                         <Button 
                           onClick={() => window.open(servicesRepository.formatWhatsAppLink(item.phone, "Olá, vi seu destaque no Axêi no Bairro."), "_blank")}
                           className="w-full bg-slate-900 hover:bg-orange-600 text-white rounded-xl h-12 font-black text-xs uppercase transition-all"
                         >
                           Ver Serviço
                         </Button>
+                        </div>
                       </CardContent>
                     </Card>
                   );

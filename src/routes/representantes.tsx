@@ -45,7 +45,7 @@ function RepresentativesPage() {
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           {reps.map(rep => (
-            <div key={rep.id} className="bg-white rounded-[2.5rem] p-8 border border-slate-100 shadow-sm hover:shadow-xl transition-all group">
+            <div key={rep.id} className="bg-white rounded-[2.5rem] p-8 border border-slate-100 shadow-sm hover:shadow-xl transition-all group flex flex-col h-full">
               <div className="flex items-center gap-6 mb-6">
                 <div className="w-20 h-20 rounded-full bg-slate-100 flex items-center justify-center overflow-hidden border-2 border-orange-100 group-hover:border-orange-500 transition-colors">
                   {rep.photo ? (
@@ -74,7 +74,7 @@ function RepresentativesPage() {
                 </div>
               )}
 
-              <div className="grid grid-cols-2 gap-4">
+              <div className="grid grid-cols-2 gap-4 mt-auto">
                 <Button 
                   asChild
                   variant="outline"

@@ -220,7 +220,7 @@ export default function Transporte() {
               <div key={driver.id} ref={el => { cardRefs.current[driver.id] = el; }}>
                 <Card 
                   className={`
-                    rounded-[2.5rem] border-slate-100 hover:shadow-2xl transition-all duration-500 group overflow-hidden relative
+                    rounded-[2.5rem] border-slate-100 hover:shadow-2xl transition-all duration-500 group overflow-hidden relative flex flex-col h-full
                     ${isBoosted ? 'border-2 border-orange-200' : ''}
                     ${isSelected ? 'ring-4 ring-orange-600 ring-offset-4 scale-[1.02] shadow-2xl' : ''}
                   `}
