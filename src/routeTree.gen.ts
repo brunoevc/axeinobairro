@@ -30,6 +30,7 @@ import { Route as ApoiadoresRouteImport } from './routes/apoiadores'
 import { Route as AnuncieRouteImport } from './routes/anuncie'
 import { Route as AdminRouteImport } from './routes/admin'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as PainelIndexRouteImport } from './routes/painel/index'
 import { Route as NegociosIndexRouteImport } from './routes/negocios/index'
 import { Route as AdminIndexRouteImport } from './routes/admin/index'
 import { Route as PainelRepresentanteRouteImport } from './routes/painel/representante'
@@ -47,6 +48,7 @@ import { Route as AdminRecomendacoesRouteImport } from './routes/admin/recomenda
 import { Route as AdminPlanosRouteImport } from './routes/admin/planos'
 import { Route as AdminLojasRouteImport } from './routes/admin/lojas'
 import { Route as AdminLeadsRouteImport } from './routes/admin/leads'
+import { Route as AdminInsightsRouteImport } from './routes/admin/insights'
 import { Route as AdminFeedbacksRouteImport } from './routes/admin/feedbacks'
 import { Route as AdminDestaquesRouteImport } from './routes/admin/destaques'
 import { Route as AdminCampanhasRouteImport } from './routes/admin/campanhas'
@@ -158,6 +160,11 @@ const IndexRoute = IndexRouteImport.update({
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const PainelIndexRoute = PainelIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => PainelRoute,
+} as any)
 const NegociosIndexRoute = NegociosIndexRouteImport.update({
   id: '/',
   path: '/',
@@ -243,6 +250,11 @@ const AdminLeadsRoute = AdminLeadsRouteImport.update({
   path: '/leads',
   getParentRoute: () => AdminRoute,
 } as any)
+const AdminInsightsRoute = AdminInsightsRouteImport.update({
+  id: '/insights',
+  path: '/insights',
+  getParentRoute: () => AdminRoute,
+} as any)
 const AdminFeedbacksRoute = AdminFeedbacksRouteImport.update({
   id: '/feedbacks',
   path: '/feedbacks',
@@ -296,6 +308,7 @@ export interface FileRoutesByFullPath {
   '/admin/campanhas': typeof AdminCampanhasRoute
   '/admin/destaques': typeof AdminDestaquesRoute
   '/admin/feedbacks': typeof AdminFeedbacksRoute
+  '/admin/insights': typeof AdminInsightsRoute
   '/admin/leads': typeof AdminLeadsRoute
   '/admin/lojas': typeof AdminLojasRoute
   '/admin/planos': typeof AdminPlanosRoute
@@ -313,6 +326,7 @@ export interface FileRoutesByFullPath {
   '/painel/representante': typeof PainelRepresentanteRoute
   '/admin/': typeof AdminIndexRoute
   '/negocios/': typeof NegociosIndexRoute
+  '/painel/': typeof PainelIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -326,7 +340,6 @@ export interface FileRoutesByTo {
   '/login': typeof LoginRoute
   '/noticias': typeof NoticiasRoute
   '/ofertas': typeof OfertasRoute
-  '/painel': typeof PainelRouteWithChildren
   '/perfil': typeof PerfilRoute
   '/planos': typeof PlanosRoute
   '/recomendacoes': typeof RecomendacoesRoute
@@ -339,6 +352,7 @@ export interface FileRoutesByTo {
   '/admin/campanhas': typeof AdminCampanhasRoute
   '/admin/destaques': typeof AdminDestaquesRoute
   '/admin/feedbacks': typeof AdminFeedbacksRoute
+  '/admin/insights': typeof AdminInsightsRoute
   '/admin/leads': typeof AdminLeadsRoute
   '/admin/lojas': typeof AdminLojasRoute
   '/admin/planos': typeof AdminPlanosRoute
@@ -356,6 +370,7 @@ export interface FileRoutesByTo {
   '/painel/representante': typeof PainelRepresentanteRoute
   '/admin': typeof AdminIndexRoute
   '/negocios': typeof NegociosIndexRoute
+  '/painel': typeof PainelIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -385,6 +400,7 @@ export interface FileRoutesById {
   '/admin/campanhas': typeof AdminCampanhasRoute
   '/admin/destaques': typeof AdminDestaquesRoute
   '/admin/feedbacks': typeof AdminFeedbacksRoute
+  '/admin/insights': typeof AdminInsightsRoute
   '/admin/leads': typeof AdminLeadsRoute
   '/admin/lojas': typeof AdminLojasRoute
   '/admin/planos': typeof AdminPlanosRoute
@@ -402,6 +418,7 @@ export interface FileRoutesById {
   '/painel/representante': typeof PainelRepresentanteRoute
   '/admin/': typeof AdminIndexRoute
   '/negocios/': typeof NegociosIndexRoute
+  '/painel/': typeof PainelIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -432,6 +449,7 @@ export interface FileRouteTypes {
     | '/admin/campanhas'
     | '/admin/destaques'
     | '/admin/feedbacks'
+    | '/admin/insights'
     | '/admin/leads'
     | '/admin/lojas'
     | '/admin/planos'
@@ -449,6 +467,7 @@ export interface FileRouteTypes {
     | '/painel/representante'
     | '/admin/'
     | '/negocios/'
+    | '/painel/'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -462,7 +481,6 @@ export interface FileRouteTypes {
     | '/login'
     | '/noticias'
     | '/ofertas'
-    | '/painel'
     | '/perfil'
     | '/planos'
     | '/recomendacoes'
@@ -475,6 +493,7 @@ export interface FileRouteTypes {
     | '/admin/campanhas'
     | '/admin/destaques'
     | '/admin/feedbacks'
+    | '/admin/insights'
     | '/admin/leads'
     | '/admin/lojas'
     | '/admin/planos'
@@ -492,6 +511,7 @@ export interface FileRouteTypes {
     | '/painel/representante'
     | '/admin'
     | '/negocios'
+    | '/painel'
   id:
     | '__root__'
     | '/'
@@ -520,6 +540,7 @@ export interface FileRouteTypes {
     | '/admin/campanhas'
     | '/admin/destaques'
     | '/admin/feedbacks'
+    | '/admin/insights'
     | '/admin/leads'
     | '/admin/lojas'
     | '/admin/planos'
@@ -537,6 +558,7 @@ export interface FileRouteTypes {
     | '/painel/representante'
     | '/admin/'
     | '/negocios/'
+    | '/painel/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -713,6 +735,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/painel/': {
+      id: '/painel/'
+      path: '/'
+      fullPath: '/painel/'
+      preLoaderRoute: typeof PainelIndexRouteImport
+      parentRoute: typeof PainelRoute
+    }
     '/negocios/': {
       id: '/negocios/'
       path: '/'
@@ -832,6 +861,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AdminLeadsRouteImport
       parentRoute: typeof AdminRoute
     }
+    '/admin/insights': {
+      id: '/admin/insights'
+      path: '/insights'
+      fullPath: '/admin/insights'
+      preLoaderRoute: typeof AdminInsightsRouteImport
+      parentRoute: typeof AdminRoute
+    }
     '/admin/feedbacks': {
       id: '/admin/feedbacks'
       path: '/feedbacks'
@@ -876,6 +912,7 @@ interface AdminRouteChildren {
   AdminCampanhasRoute: typeof AdminCampanhasRoute
   AdminDestaquesRoute: typeof AdminDestaquesRoute
   AdminFeedbacksRoute: typeof AdminFeedbacksRoute
+  AdminInsightsRoute: typeof AdminInsightsRoute
   AdminLeadsRoute: typeof AdminLeadsRoute
   AdminLojasRoute: typeof AdminLojasRoute
   AdminPlanosRoute: typeof AdminPlanosRoute
@@ -892,6 +929,7 @@ const AdminRouteChildren: AdminRouteChildren = {
   AdminCampanhasRoute: AdminCampanhasRoute,
   AdminDestaquesRoute: AdminDestaquesRoute,
   AdminFeedbacksRoute: AdminFeedbacksRoute,
+  AdminInsightsRoute: AdminInsightsRoute,
   AdminLeadsRoute: AdminLeadsRoute,
   AdminLojasRoute: AdminLojasRoute,
   AdminPlanosRoute: AdminPlanosRoute,
@@ -925,6 +963,7 @@ interface PainelRouteChildren {
   PainelMotoristaRoute: typeof PainelMotoristaRoute
   PainelProfissionalRoute: typeof PainelProfissionalRoute
   PainelRepresentanteRoute: typeof PainelRepresentanteRoute
+  PainelIndexRoute: typeof PainelIndexRoute
 }
 
 const PainelRouteChildren: PainelRouteChildren = {
@@ -934,6 +973,7 @@ const PainelRouteChildren: PainelRouteChildren = {
   PainelMotoristaRoute: PainelMotoristaRoute,
   PainelProfissionalRoute: PainelProfissionalRoute,
   PainelRepresentanteRoute: PainelRepresentanteRoute,
+  PainelIndexRoute: PainelIndexRoute,
 }
 
 const PainelRouteWithChildren =

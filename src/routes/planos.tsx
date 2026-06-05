@@ -16,6 +16,8 @@ import {
   Crown
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { intentTracker } from "@/utils/intent-tracker";
+import { EconomicCategory, Territory, PlanType } from "@/types/business-intelligence";
 
 export const Route = createFileRoute("/planos")({
   component: Planos,
@@ -112,8 +114,20 @@ function Planos() {
                   Relatório de Cliques Mensal
                 </li>
               </ul>
-              <Button asChild className="h-14 rounded-2xl font-black bg-orange-600 hover:bg-orange-700 shadow-lg shadow-orange-200">
-                <a href={whatsappUrl}>Assinar Destaque</a>
+              <Button 
+                className="h-14 rounded-2xl font-black bg-orange-600 hover:bg-orange-700 shadow-lg shadow-orange-200"
+                onClick={() => {
+                  intentTracker.track({
+                    type: 'click_plan',
+                    planId: 'Destaque' as PlanType,
+                    source: 'planos',
+                    category: 'outros' as EconomicCategory,
+                    territory: 'Araruama' as Territory
+                  });
+                  window.open(whatsappUrl, '_blank');
+                }}
+              >
+                Assinar Destaque
               </Button>
             </div>
 
