@@ -39,6 +39,7 @@ export const Route = createFileRoute("/painel")({
           representante: '/painel/representante',
           morador: '/painel/morador',
           lider_comunidade: '/painel/comunidade',
+          master_admin: '/admin',
         };
 
         
