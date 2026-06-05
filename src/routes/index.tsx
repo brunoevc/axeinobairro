@@ -250,34 +250,7 @@ function Index() {
         </div>
       </section>
 
-      {/* New Institutional Block */}
-      <section className="max-w-7xl mx-auto px-6 mt-16 mb-16">
-        <h2 className="text-2xl font-black text-slate-900 mb-8">O que o Axêi oferece</h2>
-        <div className="grid grid-cols-2 md:grid-cols-5 gap-4 text-slate-900">
-          {[
-            { label: 'Negócios', icon: ShoppingBag, path: '/negocios' },
-            { label: 'Serviços', icon: Wrench, path: '/servicos' },
-            { label: 'Transporte', icon: Car, path: '/transporte' },
-            { label: 'Notícias', icon: Newspaper, path: '/noticias' },
-            { label: 'Comunidades', icon: Users, path: '/comunidades' },
-          ].map(item => (
-            <Button 
-              key={item.label}
-              variant="outline"
-              onClick={() => navigate({ to: item.path })}
-              className="h-24 flex flex-col gap-2 rounded-2xl font-bold border-slate-100 hover:border-orange-200 hover:bg-orange-50 transition-all shadow-sm"
-            >
-              <item.icon className="w-5 h-5 text-orange-600" />
-              {item.label}
-            </Button>
-          ))}
-        </div>
-        <div className="mt-8 flex justify-center">
-          <Button onClick={() => navigate({ to: '/como-funciona' })} className="bg-slate-900 text-white h-12 px-8 rounded-2xl font-black">
-            Saiba Mais
-          </Button>
-        </div>
-      </section>
+      <ValueProposition />
       
       {/* Classificados Teaser */}
       <section className="max-w-7xl mx-auto px-6 mb-16">
