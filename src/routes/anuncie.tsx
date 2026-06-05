@@ -45,7 +45,7 @@ function Anuncie() {
           </div>
         </section>
 
-        <div className="grid md:grid-cols-2 gap-8">
+        <div className="grid md:grid-cols-2 gap-8 mb-12">
           <div className="bg-white p-8 rounded-[2.5rem] border-2 border-slate-200 shadow-sm">
             <h3 className="text-xl font-black mb-4">Plano Gratuito</h3>
             <ul className="space-y-4 mb-8">
@@ -60,20 +60,28 @@ function Anuncie() {
 
           <div className="bg-slate-900 p-8 rounded-[2.5rem] text-white">
             <h3 className="text-xl font-black mb-4 text-orange-500 flex items-center gap-2">
-              <Star className="w-5 h-5 fill-orange-500" /> Plano Premium
+              <Star className="w-5 h-5 fill-orange-500" /> Planos Pagos
             </h3>
-            <p className="text-slate-400 mb-8 font-medium">Em breve</p>
+            <p className="text-slate-400 mb-8 font-medium italic text-sm leading-relaxed">Turbine sua visibilidade com selos de verificação, destaque nas buscas e entrega local.</p>
             <ul className="space-y-4 mb-8 text-slate-300 font-medium">
-              <li>Destaque local</li>
-              <li>Mais visibilidade</li>
-              <li>Galeria avançada</li>
-              <li>Recursos exclusivos</li>
+              <li className="flex items-center gap-2"><Check className="w-4 h-4 text-orange-500"/> Destaque nas Buscas</li>
+              <li className="flex items-center gap-2"><Check className="w-4 h-4 text-orange-500"/> Selo Verificado</li>
+              <li className="flex items-center gap-2"><Check className="w-4 h-4 text-orange-500"/> Prioridade no Bairro</li>
             </ul>
-            <Button className="w-full h-12 bg-slate-800 text-slate-500 rounded-2xl font-black" disabled>
-              Em Breve
+            <Button asChild className="w-full h-12 bg-orange-600 hover:bg-orange-700 text-white rounded-2xl font-black transition-all">
+              <Link to="/planos">Ver todos os Planos</Link>
             </Button>
           </div>
         </div>
+
+        <section className="text-center bg-slate-100 p-8 rounded-[2.5rem]">
+          <h2 className="text-2xl font-black mb-4">Seja um Representante Local</h2>
+          <p className="text-slate-600 font-medium mb-6">Ajude a crescer o comércio do seu bairro e ganhe comissões recorrentes.</p>
+          <Button asChild variant="outline" className="border-slate-300 rounded-2xl font-black h-12 px-8">
+            <Link to="/representantes-programa">Saber mais sobre o Programa</Link>
+          </Button>
+        </section>
+
       </main>
       <FloatingNav />
     </div>
