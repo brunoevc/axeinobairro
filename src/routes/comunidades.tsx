@@ -124,6 +124,11 @@ function CommunitiesPage() {
           </div>
         </div>
       </div>
+      <section className="mt-20">
+        <EcosystemLoops />
+      </section>
+
+      <Footer />
       <FloatingNav />
     </div>
   );
