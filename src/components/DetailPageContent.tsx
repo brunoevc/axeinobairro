@@ -356,6 +356,10 @@ export function DetailPageContent({ merchant }: DetailPageContentProps) {
             </div>
           </section>
 
+          <section className="mt-12">
+            <EcosystemLoops currentCategory={merchant.category} />
+          </section>
+
           <section id="reviews" className="scroll-mt-24">
              <ReviewSection targetId={merchant.id} targetType="loja" />
           </section>
