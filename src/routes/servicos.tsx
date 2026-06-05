@@ -180,7 +180,7 @@ export default function Servicos() {
             return (
               <Card 
                 key={provider.id} 
-                className={`rounded-3xl border-slate-100 hover:shadow-xl transition-all duration-300 group overflow-hidden relative flex flex-col ${isBoosted ? 'border-2 border-orange-200 shadow-orange-100' : ''}`}
+                className={`rounded-3xl border-slate-100 hover:shadow-xl transition-all duration-300 group overflow-hidden relative flex flex-col h-full ${isBoosted ? 'border-2 border-orange-200 shadow-orange-100' : ''}`}
               >
                 {isBoosted && (
                   <div className="absolute top-4 right-4 z-10 bg-orange-600 text-white text-[10px] font-black px-2 py-1 rounded-full shadow-lg flex items-center gap-1 border border-white uppercase tracking-wider">

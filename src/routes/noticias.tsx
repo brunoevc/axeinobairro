@@ -47,7 +47,7 @@ function NoticiasPage() {
           <div className="lg:col-span-2 space-y-12">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
               {news.map(item => (
-                <article key={item.id} className="group bg-white rounded-[2rem] border border-slate-100 overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300">
+                <article key={item.id} className="group bg-white rounded-[2rem] border border-slate-100 overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 flex flex-col h-full">
                   <div className="relative aspect-video overflow-hidden">
                     <img src={item.imageUrl} className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" alt={item.title} />
                     <div className="absolute top-4 left-4">
@@ -56,7 +56,7 @@ function NoticiasPage() {
                       </Badge>
                     </div>
                   </div>
-                  <div className="p-6">
+                  <div className="p-6 flex flex-col flex-1">
                     <div className="flex items-center gap-2 text-[10px] font-black uppercase text-slate-400 mb-3">
                       <Calendar className="w-3 h-3 text-orange-500" />
                       {new Date(item.date).toLocaleDateString('pt-BR')}
@@ -70,6 +70,7 @@ function NoticiasPage() {
                     <h3 className="text-xl font-black text-slate-900 mb-3 group-hover:text-orange-600 transition-colors">{item.title}</h3>
                     <p className="text-sm text-slate-500 mb-6 line-clamp-2">{item.summary}</p>
                     
+                    <div className="mt-auto">
                     {item.merchantId ? (
                       <Link 
                         to={getMerchantPublicPath(merchantsRepository.getById(item.merchantId) || { id: item.merchantId })}
@@ -90,6 +91,7 @@ function NoticiasPage() {
                         <ChevronRight className="w-4 h-4" />
                       </a>
                     ) : null}
+                    </div>
                   </div>
                 </article>
               ))}

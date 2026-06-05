@@ -39,7 +39,9 @@ import { ridesRepository } from "@/repositories/ridesRepository";
 import { localBoostsRepository } from "@/repositories/localBoostsRepository";
 import { newsRepository } from "@/repositories/newsRepository";
 import { representativesRepository } from "@/repositories/representativesRepository";
+import { recommendationsRepository } from "@/repositories/recommendationsRepository";
 import { LocalBoost } from "@/types/boosts";
+import { Recommendation } from "@/types/recommendations";
 
 
 import { MerchantCard } from "@/components/MerchantCard";
@@ -76,6 +78,7 @@ function Index() {
   const services = useMemo(() => servicesRepository.getAll(), []);
   const rides = useMemo(() => ridesRepository.list(), []);
   const activeBoosts = useMemo(() => localBoostsRepository.getActiveBoosts(), []);
+  const [recommendations, setRecommendations] = useState<Recommendation[]>(() => recommendationsRepository.getActive().slice(0, 3));
 
   const [searchTerm, setSearchTerm] = useState("");
 
@@ -88,8 +91,14 @@ function Index() {
     });
 
     const timer = setTimeout(() => setIsLoading(false), 800);
+    
+    const unsubscribeRecs = recommendationsRepository.subscribe(() => {
+      setRecommendations(recommendationsRepository.getActive().slice(0, 3));
+    });
+
     return () => {
       unsubscribe();
+      unsubscribeRecs();
       clearTimeout(timer);
     };
   }, []);
@@ -420,7 +429,7 @@ function Index() {
                   const item = services.find(s => s.id === boost.targetId);
                   if (!item) return null;
                   return (
-                    <Card key={boost.id} className="rounded-3xl border-2 border-orange-100 hover:shadow-xl transition-all duration-300 group overflow-hidden relative">
+                    <Card key={boost.id} className="rounded-3xl border-2 border-orange-100 hover:shadow-xl transition-all duration-300 group overflow-hidden relative flex flex-col h-full">
                       <div className="absolute -top-3 -right-3 z-10 bg-orange-600 text-white text-[10px] font-black px-3 py-1 rounded-full shadow-lg flex items-center gap-1 border-2 border-white uppercase tracking-wider">
                         <Star className="w-3 h-3 fill-white" />
                         Destaque
@@ -443,12 +452,14 @@ function Index() {
                             </div>
                           </div>
                         </div>
+                        <div className="mt-auto">
                         <Button 
                           onClick={() => window.open(servicesRepository.formatWhatsAppLink(item.phone, "Olá, vi seu destaque no Axêi no Bairro."), "_blank")}
                           className="w-full bg-slate-900 hover:bg-orange-600 text-white rounded-xl h-12 font-black text-xs uppercase transition-all"
                         >
                           Ver Serviço
                         </Button>
+                        </div>
                       </CardContent>
                     </Card>
                   );
@@ -704,6 +715,70 @@ function Index() {
           </div>
         </section>
       )}
+
+      {/* Dicas úteis para o bairro */}
+      <section className="max-w-7xl mx-auto px-6 mt-24 mb-24">
+        <div className="flex flex-col md:flex-row md:items-end justify-between mb-12 gap-4">
+          <div>
+            <div className="inline-flex items-center gap-2 px-2 py-0.5 rounded-md bg-orange-50 text-orange-600 text-[10px] font-black uppercase tracking-widest mb-4 border border-orange-100">
+              <Sparkles className="w-3 h-3" />
+              Seleção do Axêi
+            </div>
+            <h2 className="text-4xl font-black text-slate-900 tracking-tighter">
+              Dicas úteis para o bairro
+            </h2>
+            <p className="text-slate-500 font-medium text-lg mt-2">
+              Produtos e serviços recomendados para o seu dia a dia.
+            </p>
+          </div>
+          <Button 
+            variant="ghost"
+            onClick={() => navigate({ to: '/recomendacoes' })}
+            className="text-orange-600 font-black hover:bg-orange-50 self-start md:self-auto"
+          >
+            Ver todas as dicas
+            <ArrowRight className="ml-2 h-4 w-4" />
+          </Button>
+        </div>
+
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+          {recommendations.map((rec) => (
+            <Card key={rec.id} className="group overflow-hidden rounded-[2.5rem] border-slate-100 hover:border-orange-200 hover:shadow-2xl transition-all h-full flex flex-col">
+              <div className="aspect-[16/10] relative overflow-hidden bg-slate-50">
+                {rec.imageUrl ? (
+                  <img src={rec.imageUrl} alt={rec.title} className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" />
+                ) : (
+                  <div className="w-full h-full flex items-center justify-center text-slate-200">
+                    <ShoppingBag className="w-10 h-10" />
+                  </div>
+                )}
+                <div className="absolute top-4 left-4">
+                  <Badge className="bg-white/90 text-slate-900 border-none font-black text-[10px] uppercase px-2 py-0.5 rounded-lg">
+                    {rec.category}
+                  </Badge>
+                </div>
+              </div>
+              <CardContent className="p-6 flex flex-col flex-1">
+                <h3 className="text-xl font-black text-slate-900 mb-2 group-hover:text-orange-600 transition-colors">
+                  {rec.title}
+                </h3>
+                <p className="text-sm text-slate-500 mb-6 line-clamp-2 font-medium">
+                  {rec.description}
+                </p>
+                <div className="mt-auto">
+                  <Button 
+                    asChild
+                    variant="outline"
+                    className="w-full border-slate-200 rounded-xl font-black text-xs uppercase hover:bg-orange-600 hover:text-white hover:border-orange-600 transition-all"
+                  >
+                    <Link to="/recomendacoes">Ver Detalhes</Link>
+                  </Button>
+                </div>
+              </CardContent>
+            </Card>
+          ))}
+        </div>
+      </section>
 
       <footer className="bg-slate-900 text-white py-20 px-6 mt-20">
         <div className="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center gap-12">

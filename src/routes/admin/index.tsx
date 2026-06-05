@@ -3,7 +3,7 @@ import { useAdminState } from "@/hooks/useAdminState";
 import { DashboardStats } from "@/components/admin/DashboardStats";
 import { PlansChart } from "@/components/admin/PlansChart";
 import { ActivityLog } from "@/components/admin/ActivityLog";
-import { ShieldCheck, Info, TrendingUp, BarChart3, Clock, Layout, Save, CheckCircle2, AlertCircle, Users, Car, Wrench, MessageSquare, Tag } from "lucide-react";
+import { ShieldCheck, Info, TrendingUp, BarChart3, Clock, Layout, Save, CheckCircle2, AlertCircle, Users, Car, Wrench, MessageSquare, Tag, ShoppingBag } from "lucide-react";
 import { ImageCropUpload } from "@/components/ImageCropUpload";
 import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
@@ -84,6 +84,12 @@ function AdminDashboard() {
           >
             <Tag className="w-4 h-4 text-orange-500" />
             Classificados
+          </Button>
+          <Button asChild className="rounded-2xl h-12 px-6 font-black gap-2 bg-slate-900 hover:bg-slate-800 shadow-xl shadow-slate-100 transition-all active:scale-95">
+            <Link to="/admin/recomendacoes">
+              <ShoppingBag className="w-4 h-4 text-orange-500" />
+              Dicas
+            </Link>
           </Button>
           <div className="flex items-center gap-2 px-4 py-2 bg-emerald-50 rounded-2xl border border-emerald-100 shadow-sm">
              <div className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
@@ -285,7 +291,7 @@ function AdminDashboard() {
                <span className="text-[10px] font-black uppercase tracking-widest text-slate-400">Última Sincronização: {new Date(state.lastUpdated).toLocaleTimeString("pt-BR")}</span>
             </div>
             <div className="flex items-center gap-3">
-               <span className="text-[10px] font-black text-slate-500 uppercase tracking-[0.3em]">v1.0.0 Phase 8.9.12</span>
+               <span className="text-[10px] font-black text-slate-500 uppercase tracking-[0.3em]">v0.8.9.14</span>
                <div className="h-4 w-px bg-white/10" />
                <ShieldCheck className="w-4 h-4 text-emerald-500" />
             </div>

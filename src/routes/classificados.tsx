@@ -166,7 +166,7 @@ function ClassifiedsPage() {
             {filteredAds.map((ad) => (
               <Card 
                 key={ad.id} 
-                className="group overflow-hidden rounded-[2rem] border-slate-100 hover:border-orange-200 hover:shadow-2xl hover:shadow-orange-200/20 transition-all cursor-pointer"
+                className="group overflow-hidden rounded-[2rem] border-slate-100 hover:border-orange-200 hover:shadow-2xl hover:shadow-orange-200/20 transition-all cursor-pointer flex flex-col h-full"
                 onClick={() => setSelectedAd(ad)}
               >
                 <div className="aspect-[4/3] relative overflow-hidden bg-slate-100">
@@ -194,7 +194,7 @@ function ClassifiedsPage() {
                     </div>
                   )}
                 </div>
-                <CardContent className="p-6">
+                <CardContent className="p-6 flex flex-col flex-1">
                   <div className="flex items-center gap-2 text-[10px] font-black text-slate-400 uppercase tracking-widest mb-2">
                     <MapPin className="w-3 h-3" />
                     {ad.neighborhood}
@@ -202,7 +202,7 @@ function ClassifiedsPage() {
                   <h3 className="text-lg font-black text-slate-900 leading-tight mb-2 group-hover:text-orange-600 transition-colors">
                     {ad.title}
                   </h3>
-                  <div className="text-2xl font-black text-slate-900 tracking-tighter">
+                  <div className="text-2xl font-black text-slate-900 tracking-tighter mt-auto">
                     {ad.price === 0 ? "Grátis" : formatCurrency(ad.price)}
                   </div>
                 </CardContent>
