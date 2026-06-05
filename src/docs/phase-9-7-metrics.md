@@ -17,9 +17,9 @@ Este documento serve como o Dashboard de acompanhamento da Phase 9.7.
 
 | Item | Problema Atual | Resultado Esperado | Impacto | Esforço | Prioridade | Status |
 | :--- | :--- | :--- | :--- | :--- | :--- | :--- |
-| **Página de Planos** | Planos são listas de features. | Planos são níveis de crescimento/gestão. | Receita | Médio | Crítica | Não iniciado |
-| **CTA Principal** | Dispersos ou genéricos. | Direcionamento claro para conversão. | Receita | Baixo | Alta | Não iniciado |
-| **Diferenciação Visual** | Níveis de exposição pouco claros. | Hierarquia visual óbvia entre planos. | Valor Percebido | Médio | Alta | Não iniciado |
+| **Página de Planos** | Planos são listas de features. | Planos são níveis de crescimento/gestão. | Receita | Médio | Crítica | Concluído |
+| **CTA Principal** | Dispersos ou genéricos. | Direcionamento claro para conversão. | Receita | Baixo | Alta | Concluído |
+| **Diferenciação Visual** | Níveis de exposição pouco claros. | Hierarquia visual óbvia entre planos. | Valor Percebido | Médio | Alta | Concluído |
 
 ## Sprint 3 — Integração
 **Objetivo:** Usuário percebe que todos os módulos fazem parte do mesmo sistema.
