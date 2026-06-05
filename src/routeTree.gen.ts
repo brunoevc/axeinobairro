@@ -11,8 +11,10 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as TransporteRouteImport } from './routes/transporte'
 import { Route as ServicosRouteImport } from './routes/servicos'
+import { Route as RepresentantesProgramaRouteImport } from './routes/representantes-programa'
 import { Route as RepresentantesRouteImport } from './routes/representantes'
 import { Route as RecomendacoesRouteImport } from './routes/recomendacoes'
+import { Route as PlanosRouteImport } from './routes/planos'
 import { Route as PerfilRouteImport } from './routes/perfil'
 import { Route as PainelRouteImport } from './routes/painel'
 import { Route as OfertasRouteImport } from './routes/ofertas'
@@ -24,6 +26,7 @@ import { Route as ComunidadesRouteImport } from './routes/comunidades'
 import { Route as ComoFuncionaRouteImport } from './routes/como-funciona'
 import { Route as ClassificadosRouteImport } from './routes/classificados'
 import { Route as CadastroRouteImport } from './routes/cadastro'
+import { Route as ApoiadoresRouteImport } from './routes/apoiadores'
 import { Route as AnuncieRouteImport } from './routes/anuncie'
 import { Route as AdminRouteImport } from './routes/admin'
 import { Route as IndexRouteImport } from './routes/index'
@@ -60,6 +63,11 @@ const ServicosRoute = ServicosRouteImport.update({
   path: '/servicos',
   getParentRoute: () => rootRouteImport,
 } as any)
+const RepresentantesProgramaRoute = RepresentantesProgramaRouteImport.update({
+  id: '/representantes-programa',
+  path: '/representantes-programa',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const RepresentantesRoute = RepresentantesRouteImport.update({
   id: '/representantes',
   path: '/representantes',
@@ -68,6 +76,11 @@ const RepresentantesRoute = RepresentantesRouteImport.update({
 const RecomendacoesRoute = RecomendacoesRouteImport.update({
   id: '/recomendacoes',
   path: '/recomendacoes',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const PlanosRoute = PlanosRouteImport.update({
+  id: '/planos',
+  path: '/planos',
   getParentRoute: () => rootRouteImport,
 } as any)
 const PerfilRoute = PerfilRouteImport.update({
@@ -123,6 +136,11 @@ const ClassificadosRoute = ClassificadosRouteImport.update({
 const CadastroRoute = CadastroRouteImport.update({
   id: '/cadastro',
   path: '/cadastro',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ApoiadoresRoute = ApoiadoresRouteImport.update({
+  id: '/apoiadores',
+  path: '/apoiadores',
   getParentRoute: () => rootRouteImport,
 } as any)
 const AnuncieRoute = AnuncieRouteImport.update({
@@ -255,6 +273,7 @@ export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/admin': typeof AdminRouteWithChildren
   '/anuncie': typeof AnuncieRoute
+  '/apoiadores': typeof ApoiadoresRoute
   '/cadastro': typeof CadastroRoute
   '/classificados': typeof ClassificadosRoute
   '/como-funciona': typeof ComoFuncionaRoute
@@ -266,8 +285,10 @@ export interface FileRoutesByFullPath {
   '/ofertas': typeof OfertasRoute
   '/painel': typeof PainelRouteWithChildren
   '/perfil': typeof PerfilRoute
+  '/planos': typeof PlanosRoute
   '/recomendacoes': typeof RecomendacoesRoute
   '/representantes': typeof RepresentantesRoute
+  '/representantes-programa': typeof RepresentantesProgramaRoute
   '/servicos': typeof ServicosRoute
   '/transporte': typeof TransporteRoute
   '/admin/aprovacoes': typeof AdminAprovacoesRoute
@@ -296,6 +317,7 @@ export interface FileRoutesByFullPath {
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/anuncie': typeof AnuncieRoute
+  '/apoiadores': typeof ApoiadoresRoute
   '/cadastro': typeof CadastroRoute
   '/classificados': typeof ClassificadosRoute
   '/como-funciona': typeof ComoFuncionaRoute
@@ -306,8 +328,10 @@ export interface FileRoutesByTo {
   '/ofertas': typeof OfertasRoute
   '/painel': typeof PainelRouteWithChildren
   '/perfil': typeof PerfilRoute
+  '/planos': typeof PlanosRoute
   '/recomendacoes': typeof RecomendacoesRoute
   '/representantes': typeof RepresentantesRoute
+  '/representantes-programa': typeof RepresentantesProgramaRoute
   '/servicos': typeof ServicosRoute
   '/transporte': typeof TransporteRoute
   '/admin/aprovacoes': typeof AdminAprovacoesRoute
@@ -338,6 +362,7 @@ export interface FileRoutesById {
   '/': typeof IndexRoute
   '/admin': typeof AdminRouteWithChildren
   '/anuncie': typeof AnuncieRoute
+  '/apoiadores': typeof ApoiadoresRoute
   '/cadastro': typeof CadastroRoute
   '/classificados': typeof ClassificadosRoute
   '/como-funciona': typeof ComoFuncionaRoute
@@ -349,8 +374,10 @@ export interface FileRoutesById {
   '/ofertas': typeof OfertasRoute
   '/painel': typeof PainelRouteWithChildren
   '/perfil': typeof PerfilRoute
+  '/planos': typeof PlanosRoute
   '/recomendacoes': typeof RecomendacoesRoute
   '/representantes': typeof RepresentantesRoute
+  '/representantes-programa': typeof RepresentantesProgramaRoute
   '/servicos': typeof ServicosRoute
   '/transporte': typeof TransporteRoute
   '/admin/aprovacoes': typeof AdminAprovacoesRoute
@@ -382,6 +409,7 @@ export interface FileRouteTypes {
     | '/'
     | '/admin'
     | '/anuncie'
+    | '/apoiadores'
     | '/cadastro'
     | '/classificados'
     | '/como-funciona'
@@ -393,8 +421,10 @@ export interface FileRouteTypes {
     | '/ofertas'
     | '/painel'
     | '/perfil'
+    | '/planos'
     | '/recomendacoes'
     | '/representantes'
+    | '/representantes-programa'
     | '/servicos'
     | '/transporte'
     | '/admin/aprovacoes'
@@ -423,6 +453,7 @@ export interface FileRouteTypes {
   to:
     | '/'
     | '/anuncie'
+    | '/apoiadores'
     | '/cadastro'
     | '/classificados'
     | '/como-funciona'
@@ -433,8 +464,10 @@ export interface FileRouteTypes {
     | '/ofertas'
     | '/painel'
     | '/perfil'
+    | '/planos'
     | '/recomendacoes'
     | '/representantes'
+    | '/representantes-programa'
     | '/servicos'
     | '/transporte'
     | '/admin/aprovacoes'
@@ -464,6 +497,7 @@ export interface FileRouteTypes {
     | '/'
     | '/admin'
     | '/anuncie'
+    | '/apoiadores'
     | '/cadastro'
     | '/classificados'
     | '/como-funciona'
@@ -475,8 +509,10 @@ export interface FileRouteTypes {
     | '/ofertas'
     | '/painel'
     | '/perfil'
+    | '/planos'
     | '/recomendacoes'
     | '/representantes'
+    | '/representantes-programa'
     | '/servicos'
     | '/transporte'
     | '/admin/aprovacoes'
@@ -507,6 +543,7 @@ export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AdminRoute: typeof AdminRouteWithChildren
   AnuncieRoute: typeof AnuncieRoute
+  ApoiadoresRoute: typeof ApoiadoresRoute
   CadastroRoute: typeof CadastroRoute
   ClassificadosRoute: typeof ClassificadosRoute
   ComoFuncionaRoute: typeof ComoFuncionaRoute
@@ -518,8 +555,10 @@ export interface RootRouteChildren {
   OfertasRoute: typeof OfertasRoute
   PainelRoute: typeof PainelRouteWithChildren
   PerfilRoute: typeof PerfilRoute
+  PlanosRoute: typeof PlanosRoute
   RecomendacoesRoute: typeof RecomendacoesRoute
   RepresentantesRoute: typeof RepresentantesRoute
+  RepresentantesProgramaRoute: typeof RepresentantesProgramaRoute
   ServicosRoute: typeof ServicosRoute
   TransporteRoute: typeof TransporteRoute
   LojaSlugRoute: typeof LojaSlugRoute
@@ -541,6 +580,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ServicosRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/representantes-programa': {
+      id: '/representantes-programa'
+      path: '/representantes-programa'
+      fullPath: '/representantes-programa'
+      preLoaderRoute: typeof RepresentantesProgramaRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/representantes': {
       id: '/representantes'
       path: '/representantes'
@@ -553,6 +599,13 @@ declare module '@tanstack/react-router' {
       path: '/recomendacoes'
       fullPath: '/recomendacoes'
       preLoaderRoute: typeof RecomendacoesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/planos': {
+      id: '/planos'
+      path: '/planos'
+      fullPath: '/planos'
+      preLoaderRoute: typeof PlanosRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/perfil': {
@@ -630,6 +683,13 @@ declare module '@tanstack/react-router' {
       path: '/cadastro'
       fullPath: '/cadastro'
       preLoaderRoute: typeof CadastroRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/apoiadores': {
+      id: '/apoiadores'
+      path: '/apoiadores'
+      fullPath: '/apoiadores'
+      preLoaderRoute: typeof ApoiadoresRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/anuncie': {
@@ -883,6 +943,7 @@ const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AdminRoute: AdminRouteWithChildren,
   AnuncieRoute: AnuncieRoute,
+  ApoiadoresRoute: ApoiadoresRoute,
   CadastroRoute: CadastroRoute,
   ClassificadosRoute: ClassificadosRoute,
   ComoFuncionaRoute: ComoFuncionaRoute,
@@ -894,8 +955,10 @@ const rootRouteChildren: RootRouteChildren = {
   OfertasRoute: OfertasRoute,
   PainelRoute: PainelRouteWithChildren,
   PerfilRoute: PerfilRoute,
+  PlanosRoute: PlanosRoute,
   RecomendacoesRoute: RecomendacoesRoute,
   RepresentantesRoute: RepresentantesRoute,
+  RepresentantesProgramaRoute: RepresentantesProgramaRoute,
   ServicosRoute: ServicosRoute,
   TransporteRoute: TransporteRoute,
   LojaSlugRoute: LojaSlugRoute,
