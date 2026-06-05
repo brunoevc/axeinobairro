@@ -1,4 +1,4 @@
-import { Appointment } from "@/types/appointments";
+import { Appointment, AppointmentStatus } from "@/types/appointments";
 
 const STORAGE_KEY = "axei_appointments";
 
