@@ -116,6 +116,9 @@ function Planos() {
                   <li>• Histórico Completo</li>
                 </ul>
               </div>
+            </div>
+          </section>
+        </div>
 
         <div className="mt-16 text-center">
           <Button asChild className="h-14 px-8 rounded-2xl font-black bg-orange-600 hover:bg-orange-700">
