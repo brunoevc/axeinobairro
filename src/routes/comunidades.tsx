@@ -7,6 +7,9 @@ import { TopBar } from "@/components/TopBar";
 import { FloatingNav } from "@/components/FloatingNav";
 import { Users, MapPin, ArrowLeft, Heart, ChevronRight, MessageSquare, ShieldCheck, Info } from "lucide-react";
 import { PixDisplayCard } from "@/components/PixDisplayCard";
+import { Footer } from "@/components/Footer";
+import { EcosystemLoops } from "@/components/EcosystemLoops";
+
 
 export const Route = createFileRoute("/comunidades")({
   component: CommunitiesPage,
