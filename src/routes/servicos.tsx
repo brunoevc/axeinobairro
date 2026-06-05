@@ -314,6 +314,12 @@ export default function Servicos() {
           </div>
         )}
       </div>
+
+      <section className="mt-20">
+        <EcosystemLoops />
+      </section>
+
+      <Footer />
     </div>
   );
 }
