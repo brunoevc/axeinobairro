@@ -3,7 +3,7 @@ import { useAdminState } from "@/hooks/useAdminState";
 import { DashboardStats } from "@/components/admin/DashboardStats";
 import { PlansChart } from "@/components/admin/PlansChart";
 import { ActivityLog } from "@/components/admin/ActivityLog";
-import { ShieldCheck, Info, TrendingUp, BarChart3, Clock, Layout, Save, CheckCircle2, AlertCircle, Users, Car, Wrench, MessageSquare, Tag } from "lucide-react";
+import { ShieldCheck, Info, TrendingUp, BarChart3, Clock, Layout, Save, CheckCircle2, AlertCircle, Users, Car, Wrench, MessageSquare, Tag, ShoppingBag } from "lucide-react";
 import { ImageCropUpload } from "@/components/ImageCropUpload";
 import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
