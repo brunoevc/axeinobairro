@@ -34,8 +34,8 @@ Este documento serve como o Dashboard de acompanhamento da Phase 9.7.
 
 | Item | Problema Atual | Resultado Esperado | Impacto | Esforço | Prioridade | Status |
 | :--- | :--- | :--- | :--- | :--- | :--- | :--- |
-| **Seção Patrocinadores** | Falta destaque institucional. | Autoridade e visibilidade institucional clara. | Receita | Baixo | Alta | Não iniciado |
-| **Selos e Prova Social** | Poucos elementos de confiança. | Presença de selos "Apoiador" e "Oficial". | Autoridade | Baixo | Média | Não iniciado |
+| **Seção Patrocinadores** | Falta destaque institucional. | Autoridade e visibilidade institucional clara. | Receita | Baixo | Alta | Concluído |
+| **Selos e Prova Social** | Poucos elementos de confiança. | Presença de selos "Apoiador" e "Oficial". | Autoridade | Baixo | Média | Concluído |
 
 ## Sprint 5 — Refinamento
 **Objetivo:** A estética deve reforçar a autoridade da marca.
