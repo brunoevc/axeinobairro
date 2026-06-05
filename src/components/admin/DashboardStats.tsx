@@ -9,18 +9,30 @@ import {
   Navigation, 
   Share2,
   Target,
-  DollarSign
+  DollarSign,
+  MessageCircle
 } from "lucide-react";
 import { getLeads } from "@/lib/leads";
-import { useMemo } from "react";
+import { useMemo, useEffect, useState } from "react";
+import { feedbackRepository } from "@/repositories/feedbackRepository";
+
 
 
 export function DashboardStats({ stats, state }: { stats: AdminStats, state: AdminState }) {
   const leads = useMemo(() => getLeads(), []);
+  const [feedbackCount, setFeedbackCount] = useState(feedbackRepository.getAll().length);
+
+  useEffect(() => {
+    return feedbackRepository.subscribe(() => {
+      setFeedbackCount(feedbackRepository.getAll().length);
+    });
+  }, []);
+
   const totalLeadValue = leads.reduce((acc, l) => acc + (l.estimatedValue || 0), 0);
   const conversionRate = leads.length > 0 
     ? Math.round((leads.filter(l => l.status === 'cliente').length / leads.length) * 100) 
     : 0;
+
 
   const mainStats = [
 
@@ -52,7 +64,15 @@ export function DashboardStats({ stats, state }: { stats: AdminStats, state: Adm
       color: "text-orange-600",
       bgColor: "bg-orange-50",
     },
+    {
+      label: "Feedbacks Recebidos",
+      value: feedbackCount,
+      icon: MessageCircle,
+      color: "text-violet-600",
+      bgColor: "bg-violet-50",
+    },
   ];
+
 
   const commercialStats = [
     {
