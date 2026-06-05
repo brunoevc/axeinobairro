@@ -24,8 +24,11 @@ import {
    ShoppingBag,
    Wrench,
    Newspaper,
-   Users
- } from "lucide-react";
+    Users,
+    MessageCircle,
+    Sparkles
+  } from "lucide-react";
+
 
 
 
@@ -284,6 +287,30 @@ function Index() {
           </Button>
         </div>
       </section>
+      
+      {/* Feedback Banner - Localized for Homologation */}
+      <section className="max-w-7xl mx-auto px-6 mb-16">
+        <div className="bg-violet-600 rounded-[2rem] p-8 text-white flex flex-col md:flex-row items-center justify-between gap-6 relative overflow-hidden">
+          <div className="absolute top-0 right-0 w-64 h-64 bg-white/10 rounded-full blur-3xl -mr-32 -mt-32" />
+          <div className="relative z-10">
+            <div className="inline-flex items-center gap-2 px-2 py-0.5 rounded bg-white/20 text-white text-[10px] font-black uppercase tracking-widest mb-3">
+              <Sparkles className="h-3 w-3" />
+              Sua voz importa
+            </div>
+            <h3 className="text-2xl font-black mb-2">Ajude-nos a melhorar!</h3>
+            <p className="text-violet-100 font-medium max-w-md">Estamos em fase de testes. Diga-nos o que você está achando do Axêi no Bairro.</p>
+          </div>
+          <Button 
+            variant="secondary" 
+            className="rounded-2xl font-black h-12 px-8 bg-white text-violet-600 hover:bg-violet-50 relative z-10"
+            onClick={() => navigate({ to: '/feedback' })}
+          >
+            Dar Feedback
+            <ArrowRight className="ml-2 h-4 w-4" />
+          </Button>
+        </div>
+      </section>
+
 
 
       {/* Acontecendo Agora - Redesigned to be less orange-heavy and more premium */}
