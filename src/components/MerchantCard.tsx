@@ -56,10 +56,24 @@ export const MerchantCard = memo(function MerchantCard({ merchant }: Props) {
         )}
         <div className="absolute top-4 left-4 flex flex-col gap-2 z-10">
           {merchant.promotion.isActive && <PromotionBadge />}
+          {(() => {
+            const exposure = (() => {
+              if (merchant.exposureLevel === 'A') return { label: 'Patrocinador', color: 'bg-slate-900 text-white' };
+              if (['igreja', 'escola', 'ong', 'social'].includes(merchant.category.toLowerCase())) return { label: 'Institucional', color: 'bg-blue-600 text-white' };
+              if (merchant.exposureLevel === 'B') return { label: 'Pago', color: 'bg-orange-600 text-white' };
+              return { label: 'Isento', color: 'bg-slate-600 text-white' };
+            })();
+            return (
+              <div className={`inline-flex items-center gap-1 rounded-full ${exposure.color} px-2.5 py-1 text-[10px] font-black uppercase tracking-widest shadow-sm`}>
+                {exposure.label}
+              </div>
+            );
+          })()}
           <div className="inline-flex items-center gap-1 rounded-full bg-white/90 backdrop-blur-md px-2.5 py-1 text-[10px] font-extrabold uppercase text-slate-900 shadow-sm border border-slate-200/50">
             {merchant.category}
           </div>
         </div>
+
         
         {merchant.featured && (
            <div className="absolute top-4 right-4 z-10">

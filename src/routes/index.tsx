@@ -320,9 +320,37 @@ function Index() {
         </div>
       </section>
 
-
+      {/* Apoiadores da Comunidade - Phase 8.9.18 */}
+      <section className="max-w-7xl mx-auto px-6 mb-16">
+        <div className="flex items-center justify-between mb-8">
+          <div>
+            <div className="flex items-center gap-2 mb-1">
+              <div className="h-2 w-2 rounded-full bg-orange-500 animate-pulse" />
+              <h2 className="text-2xl font-black text-slate-900 tracking-tight italic">Apoiadores da Comunidade</h2>
+            </div>
+            <p className="text-slate-500 font-medium text-sm">Empresas que investem no desenvolvimento do nosso bairro.</p>
+          </div>
+          <Button variant="ghost" onClick={() => navigate({ to: '/apoiadores' })} className="font-bold text-orange-600 hover:text-orange-700 p-0 hover:bg-transparent">
+            Ver todos <ArrowRight className="ml-2 h-4 w-4" />
+          </Button>
+        </div>
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+          {[
+            { name: 'Mercado Preço Justo', cat: 'Alimentação' },
+            { name: 'Clínica Sorriso', cat: 'Saúde' },
+            { name: 'Academia Fitness', cat: 'Esporte' },
+            { name: 'Farmácia Saúde', cat: 'Saúde' }
+          ].map(apoiador => (
+            <div key={apoiador.name} className="bg-white border border-slate-100 p-6 rounded-[2rem] flex flex-col items-center justify-center text-center shadow-sm hover:shadow-md transition-all group border-b-4 border-b-orange-500/10">
+              <div className="text-[9px] font-black text-orange-600 uppercase tracking-widest mb-2 opacity-50 group-hover:opacity-100 transition-opacity">{apoiador.cat}</div>
+              <span className="font-black text-slate-700 text-sm uppercase tracking-tighter leading-none">{apoiador.name}</span>
+            </div>
+          ))}
+        </div>
+      </section>
 
       {/* Acontecendo Agora - Redesigned to be less orange-heavy and more premium */}
+
       <section className="max-w-7xl mx-auto px-6 mt-12 mb-12">
         <div className="flex items-center gap-2 mb-6">
           <div className="h-2 w-2 rounded-full bg-emerald-500 animate-ping" />
