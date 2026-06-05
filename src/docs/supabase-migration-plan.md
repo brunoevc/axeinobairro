@@ -1,5 +1,7 @@
 # Plano de Migração Supabase - Axêi no Bairro
 
+**Diretriz Estratégica:** Todas as fases deste plano devem ser validadas contra a [Política de Evolução do Produto](./product-evolution-policy.md) antes da execução.
+
 Este documento descreve a estratégia para migrar os dados atuais do `localStorage` e mock data para o Supabase.
 
 ## Estado Atual

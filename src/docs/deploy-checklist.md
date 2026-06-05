@@ -1,5 +1,7 @@
 # Checklist de Deploy Externo — Axêi no Bairro
 
+**Importante:** Antes de cada deploy, valide se as novas funcionalidades respeitam a [Política de Evolução do Produto](./product-evolution-policy.md).
+
 Este guia detalha como publicar o projeto em uma infraestrutura independente (fora da Lovable).
 
 ## 1. Build de Produção
