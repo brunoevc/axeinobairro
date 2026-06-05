@@ -131,7 +131,7 @@ export const TopBar = memo(function TopBar() {
                   <Sparkles className="w-3.5 h-3.5" />
                   Feedback
                 </Link>
-                <Link to="/anuncie" className="text-sm font-bold text-orange-600 hover:text-orange-700 transition-colors px-4 py-2 bg-orange-50 rounded-xl">Anuncie</Link>
+                <Link to="/planos" className="text-sm font-bold text-white px-4 py-2 bg-orange-600 rounded-xl hover:bg-orange-700 transition-all">Participar</Link>
 
 
 
