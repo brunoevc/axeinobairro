@@ -66,5 +66,6 @@ Como o projeto utiliza `@tanstack/react-router`, é vital garantir que as rotas 
 - [ ] A página `/ecossistema` e o novo Footer estão visíveis.
 
 ---
+**Governança:** Antes de realizar qualquer modificação pós-exportação, consulte a [Política de Evolução do Produto](./product-evolution-policy.md).
 **Status:** Pronto para Independência.
 *Nota: Nenhuma integração externa (Supabase/APIs) foi adicionada nesta fase.*
