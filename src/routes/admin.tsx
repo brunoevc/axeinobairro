@@ -1,5 +1,5 @@
 import { createFileRoute, useNavigate, Outlet, Link, redirect } from "@tanstack/react-router";
-import { LayoutDashboard, Store, CheckCircle, CreditCard, ArrowLeft, LogOut, User, Megaphone, Car, Zap, Lock, ShieldAlert, MessageCircle, Sparkles } from "lucide-react";
+import { LayoutDashboard, Store, CheckCircle, CreditCard, ArrowLeft, LogOut, User, Megaphone, Car, Zap, Lock, ShieldAlert, MessageCircle, Sparkles, TrendingUp } from "lucide-react";
 import { Logo } from "@/components/ui/Logo";
 import { useAtom } from "jotai";
 import { isAuthenticatedAtom, authUserAtom } from "@/hooks/useAuth";

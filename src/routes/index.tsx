@@ -52,6 +52,8 @@ import { useLocation } from "@/hooks/useLocation";
 import { Footer } from "@/components/Footer";
 import { ValueProposition } from "@/components/ValueProposition";
 import { SponsorSection } from "@/components/SponsorSection";
+import { intentTracker } from "@/utils/intent-tracker";
+import { EconomicCategory, Territory } from "@/types/business-intelligence";
 
 
 
@@ -109,6 +111,12 @@ function Index() {
     e?.preventDefault();
     if (searchTerm.trim()) {
       navigate({ to: '/negocios', search: { q: searchTerm.trim() } });
+      intentTracker.track({
+        type: 'search',
+        source: 'home',
+        category: 'outros' as EconomicCategory,
+        territory: 'Araruama' as Territory,
+      });
     } else {
       navigate({ to: '/negocios' });
     }
