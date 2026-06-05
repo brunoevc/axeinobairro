@@ -27,6 +27,8 @@ import { FloatingNav } from "@/components/FloatingNav";
 import { Button } from "@/components/ui/button";
 import { useLocation } from "@/hooks/useLocation";
 import { Footer } from "@/components/Footer";
+import { EcosystemLoops } from "@/components/EcosystemLoops";
+
 
 
 const searchSchema = z.object({
