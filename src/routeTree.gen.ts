@@ -18,6 +18,7 @@ import { Route as OfertasRouteImport } from './routes/ofertas'
 import { Route as NoticiasRouteImport } from './routes/noticias'
 import { Route as NegociosRouteImport } from './routes/negocios'
 import { Route as LoginRouteImport } from './routes/login'
+import { Route as FeedbackRouteImport } from './routes/feedback'
 import { Route as ComunidadesRouteImport } from './routes/comunidades'
 import { Route as ComoFuncionaRouteImport } from './routes/como-funciona'
 import { Route as ClassificadosRouteImport } from './routes/classificados'
@@ -89,6 +90,11 @@ const NegociosRoute = NegociosRouteImport.update({
 const LoginRoute = LoginRouteImport.update({
   id: '/login',
   path: '/login',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const FeedbackRoute = FeedbackRouteImport.update({
+  id: '/feedback',
+  path: '/feedback',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ComunidadesRoute = ComunidadesRouteImport.update({
@@ -235,6 +241,7 @@ export interface FileRoutesByFullPath {
   '/classificados': typeof ClassificadosRoute
   '/como-funciona': typeof ComoFuncionaRoute
   '/comunidades': typeof ComunidadesRoute
+  '/feedback': typeof FeedbackRoute
   '/login': typeof LoginRoute
   '/negocios': typeof NegociosRouteWithChildren
   '/noticias': typeof NoticiasRoute
@@ -272,6 +279,7 @@ export interface FileRoutesByTo {
   '/classificados': typeof ClassificadosRoute
   '/como-funciona': typeof ComoFuncionaRoute
   '/comunidades': typeof ComunidadesRoute
+  '/feedback': typeof FeedbackRoute
   '/login': typeof LoginRoute
   '/noticias': typeof NoticiasRoute
   '/ofertas': typeof OfertasRoute
@@ -310,6 +318,7 @@ export interface FileRoutesById {
   '/classificados': typeof ClassificadosRoute
   '/como-funciona': typeof ComoFuncionaRoute
   '/comunidades': typeof ComunidadesRoute
+  '/feedback': typeof FeedbackRoute
   '/login': typeof LoginRoute
   '/negocios': typeof NegociosRouteWithChildren
   '/noticias': typeof NoticiasRoute
@@ -350,6 +359,7 @@ export interface FileRouteTypes {
     | '/classificados'
     | '/como-funciona'
     | '/comunidades'
+    | '/feedback'
     | '/login'
     | '/negocios'
     | '/noticias'
@@ -387,6 +397,7 @@ export interface FileRouteTypes {
     | '/classificados'
     | '/como-funciona'
     | '/comunidades'
+    | '/feedback'
     | '/login'
     | '/noticias'
     | '/ofertas'
@@ -424,6 +435,7 @@ export interface FileRouteTypes {
     | '/classificados'
     | '/como-funciona'
     | '/comunidades'
+    | '/feedback'
     | '/login'
     | '/negocios'
     | '/noticias'
@@ -463,6 +475,7 @@ export interface RootRouteChildren {
   ClassificadosRoute: typeof ClassificadosRoute
   ComoFuncionaRoute: typeof ComoFuncionaRoute
   ComunidadesRoute: typeof ComunidadesRoute
+  FeedbackRoute: typeof FeedbackRoute
   LoginRoute: typeof LoginRoute
   NegociosRoute: typeof NegociosRouteWithChildren
   NoticiasRoute: typeof NoticiasRoute
@@ -538,6 +551,13 @@ declare module '@tanstack/react-router' {
       path: '/login'
       fullPath: '/login'
       preLoaderRoute: typeof LoginRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/feedback': {
+      id: '/feedback'
+      path: '/feedback'
+      fullPath: '/feedback'
+      preLoaderRoute: typeof FeedbackRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/comunidades': {
@@ -805,6 +825,7 @@ const rootRouteChildren: RootRouteChildren = {
   ClassificadosRoute: ClassificadosRoute,
   ComoFuncionaRoute: ComoFuncionaRoute,
   ComunidadesRoute: ComunidadesRoute,
+  FeedbackRoute: FeedbackRoute,
   LoginRoute: LoginRoute,
   NegociosRoute: NegociosRouteWithChildren,
   NoticiasRoute: NoticiasRoute,
