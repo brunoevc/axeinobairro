@@ -1,4 +1,4 @@
-import { MapPin, Star, Bike, ChevronRight, TrendingUp, Navigation, Tag } from "lucide-react";
+import { MapPin, Star, Bike, ChevronRight, TrendingUp, Navigation, Tag, ShieldCheck } from "lucide-react";
 import type { Merchant } from "@/data/merchants";
 import { getMerchantPublicPath } from "@/data/merchants";
 import { Button } from "@/components/ui/button";
