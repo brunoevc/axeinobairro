@@ -29,9 +29,6 @@ import {
     Sparkles
   } from "lucide-react";
 
-
-
-
 import { categories } from "@/data/merchants";
 import { merchantsRepository } from "@/repositories/merchantsRepository";
 import { servicesRepository } from "@/repositories/servicesRepository";
@@ -43,7 +40,6 @@ import { recommendationsRepository } from "@/repositories/recommendationsReposit
 import { LocalBoost } from "@/types/boosts";
 import { Recommendation } from "@/types/recommendations";
 
-
 import { MerchantCard } from "@/components/MerchantCard";
 import { MerchantSkeleton } from "@/components/MerchantSkeleton";
 import { TopBar } from "@/components/TopBar";
@@ -53,6 +49,9 @@ import { Badge } from "@/components/ui/badge";
 import { Card, CardContent } from "@/components/ui/card";
 import { Logo } from "@/components/ui/Logo";
 import { useLocation } from "@/hooks/useLocation";
+import { Footer } from "@/components/Footer";
+import { ValueProposition } from "@/components/ValueProposition";
+
 
 
 const IS_ADMIN_ENABLED = import.meta.env.VITE_ADMIN_ENABLED === 'true';
