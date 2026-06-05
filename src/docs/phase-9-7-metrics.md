@@ -42,7 +42,7 @@ Este documento serve como o Dashboard de acompanhamento da Phase 9.7.
 
 | Item | Problema Atual | Resultado Esperado | Impacto | Esforço | Prioridade | Status |
 | :--- | :--- | :--- | :--- | :--- | :--- | :--- |
-| **Design System** | Algumas inconsistências visuais. | Interface premium e coesa. | Valor Percebido | Médio | Média | Não iniciado |
+| **Design System** | Algumas inconsistências visuais. | Interface premium e coesa. | Valor Percebido | Médio | Média | Concluído |
 
 ---
 
