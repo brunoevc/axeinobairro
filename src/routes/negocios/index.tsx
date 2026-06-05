@@ -26,6 +26,8 @@ import { TopBar } from "@/components/TopBar";
 import { FloatingNav } from "@/components/FloatingNav";
 import { Button } from "@/components/ui/button";
 import { useLocation } from "@/hooks/useLocation";
+import { Footer } from "@/components/Footer";
+
 
 const searchSchema = z.object({
   categoria: z.string().optional(),
