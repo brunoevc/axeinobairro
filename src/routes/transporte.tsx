@@ -349,13 +349,19 @@ export default function Transporte() {
             <Button 
               variant="outline" 
               onClick={() => setFilters({ origin: "", destination: "", serviceType: "all", status: "all" })}
-              className="h-14 px-8 rounded-2xl border-slate-200 font-black uppercase text-xs tracking-[0.2em]"
+              className="h-14 px-10 rounded-2xl font-black border-slate-200"
             >
-              Ver todos os motoristas
+              Limpar Filtros
             </Button>
           </div>
         )}
       </div>
+
+      <section className="mt-20">
+        <EcosystemLoops />
+      </section>
+
+      <Footer />
     </div>
   );
 }
