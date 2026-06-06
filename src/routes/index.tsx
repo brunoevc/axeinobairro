@@ -33,7 +33,8 @@ import {
     LayoutGrid,
     Flame,
     ArrowRightCircle,
-    CheckCircle2
+    CheckCircle2,
+    Store
   } from "lucide-react";
 
 import { categories } from "@/data/merchants";
