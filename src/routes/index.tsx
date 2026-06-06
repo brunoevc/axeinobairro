@@ -269,87 +269,14 @@ function Index() {
         </div>
       </section>
 
-      <ValueProposition />
-      <SponsorSection />
-      
-      {/* Classificados Teaser */}
-      <section className="max-w-7xl mx-auto px-6 mb-16">
-        <div className="bg-slate-900 rounded-[2rem] p-8 text-white flex flex-col md:flex-row items-center justify-between gap-6">
-          <div>
-            <h3 className="text-2xl font-black mb-2">Classificados do Bairro</h3>
-            <p className="text-slate-400 font-medium">Venda, trocas e oportunidades locais perto de você.</p>
-          </div>
-          <Button 
-            variant="secondary" 
-            className="rounded-2xl font-black h-12 px-8 bg-white text-slate-900 hover:bg-slate-100"
-            onClick={() => navigate({ to: '/classificados' })}
-          >
-            Ver Classificados
-          </Button>
-        </div>
-      </section>
-      
-      {/* Feedback Banner - Localized for Homologation */}
-      <section className="max-w-7xl mx-auto px-6 mb-16">
-        <div className="bg-violet-600 rounded-[2rem] p-8 text-white flex flex-col md:flex-row items-center justify-between gap-6 relative overflow-hidden">
-          <div className="absolute top-0 right-0 w-64 h-64 bg-white/10 rounded-full blur-3xl -mr-32 -mt-32" />
-          <div className="relative z-10">
-            <div className="inline-flex items-center gap-2 px-2 py-0.5 rounded bg-white/20 text-white text-[10px] font-black uppercase tracking-widest mb-3">
-              <Sparkles className="h-3 w-3" />
-              Sua voz importa
-            </div>
-            <h3 className="text-2xl font-black mb-2">Ajude-nos a melhorar!</h3>
-            <p className="text-violet-100 font-medium max-w-md">Estamos em fase de testes. Diga-nos o que você está achando do Axêi no Bairro.</p>
-          </div>
-          <Button 
-            variant="secondary" 
-            className="rounded-2xl font-black h-12 px-8 bg-white text-violet-600 hover:bg-violet-50 relative z-10"
-            onClick={() => navigate({ to: '/feedback' })}
-          >
-            Dar Feedback
-            <ArrowRight className="ml-2 h-4 w-4" />
-          </Button>
-        </div>
-      </section>
-
-      {/* Apoiadores da Comunidade - Phase 8.9.18 */}
-      <section className="max-w-7xl mx-auto px-6 mb-16">
-        <div className="flex items-center justify-between mb-8">
-          <div>
-            <div className="flex items-center gap-2 mb-1">
-              <div className="h-2 w-2 rounded-full bg-orange-500 animate-pulse" />
-              <h2 className="text-2xl font-black text-slate-900 tracking-tight italic">Apoiadores da Comunidade</h2>
-            </div>
-            <p className="text-slate-500 font-medium text-sm">Empresas que investem no desenvolvimento do nosso bairro.</p>
-          </div>
-          <Button variant="ghost" onClick={() => navigate({ to: '/apoiadores' })} className="font-bold text-orange-600 hover:text-orange-700 p-0 hover:bg-transparent">
-            Ver todos <ArrowRight className="ml-2 h-4 w-4" />
-          </Button>
-        </div>
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-          {[
-            { name: 'Mercado Preço Justo', cat: 'Alimentação' },
-            { name: 'Clínica Sorriso', cat: 'Saúde' },
-            { name: 'Academia Fitness', cat: 'Esporte' },
-            { name: 'Farmácia Saúde', cat: 'Saúde' }
-          ].map(apoiador => (
-            <div key={apoiador.name} className="bg-white border border-slate-100 p-6 rounded-[2rem] flex flex-col items-center justify-center text-center shadow-sm hover:shadow-md transition-all group border-b-4 border-b-orange-500/10">
-              <div className="text-[9px] font-black text-orange-600 uppercase tracking-widest mb-2 opacity-50 group-hover:opacity-100 transition-opacity">{apoiador.cat}</div>
-              <span className="font-black text-slate-700 text-sm uppercase tracking-tighter leading-none">{apoiador.name}</span>
-            </div>
-          ))}
-        </div>
-      </section>
-
-      {/* Acontecendo Agora - Redesigned to be less orange-heavy and more premium */}
-
+      {/* 2. Acontecendo Agora - Priority Focus */}
       <section className="max-w-7xl mx-auto px-6 mt-12 mb-12">
         <div className="flex items-center gap-2 mb-6">
           <div className="h-2 w-2 rounded-full bg-emerald-500 animate-ping" />
-          <h2 className="text-xs font-black uppercase tracking-widest text-slate-400">Destaques em Araruama</h2>
+          <h2 className="text-xs font-black uppercase tracking-widest text-slate-400">Araruama em Tempo Real</h2>
         </div>
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-          <div className="bg-white border border-slate-100 p-6 rounded-[2rem] flex items-center gap-4 shadow-sm hover:shadow-lg transition-all group">
+          <div className="bg-white border border-slate-100 p-6 rounded-[2rem] flex items-center gap-4 shadow-sm hover:shadow-lg transition-all group cursor-pointer" onClick={() => navigate({ to: '/negocios', search: { categoria: 'alimentacao' } })}>
             <div className="w-12 h-12 bg-slate-50 rounded-2xl flex items-center justify-center text-slate-600 group-hover:bg-orange-600 group-hover:text-white transition-all">
               <Croissant className="w-6 h-6" />
             </div>
@@ -358,7 +285,7 @@ function Index() {
               <div className="text-[10px] font-bold text-slate-400 uppercase tracking-tight">Pão quentinho agora</div>
             </div>
           </div>
-          <div className="bg-white border border-slate-100 p-6 rounded-[2rem] flex items-center gap-4 shadow-sm hover:shadow-lg transition-all group">
+          <div className="bg-white border border-slate-100 p-6 rounded-[2rem] flex items-center gap-4 shadow-sm hover:shadow-lg transition-all group cursor-pointer" onClick={() => navigate({ to: '/negocios', search: { hasPromotion: true } })}>
             <div className="w-12 h-12 bg-slate-50 rounded-2xl flex items-center justify-center text-slate-600 group-hover:bg-orange-600 group-hover:text-white transition-all">
               <Tag className="w-6 h-6" />
             </div>
@@ -367,7 +294,7 @@ function Index() {
               <div className="text-[10px] font-bold text-slate-400 uppercase tracking-tight">Economia garantida</div>
             </div>
           </div>
-          <div className="bg-white border border-slate-100 p-6 rounded-[2rem] flex items-center gap-4 shadow-sm hover:shadow-lg transition-all group">
+          <div className="bg-white border border-slate-100 p-6 rounded-[2rem] flex items-center gap-4 shadow-sm hover:shadow-lg transition-all group cursor-pointer" onClick={() => navigate({ to: '/transporte' })}>
             <div className="w-12 h-12 bg-slate-50 rounded-2xl flex items-center justify-center text-slate-600 group-hover:bg-orange-600 group-hover:text-white transition-all">
               <Bike className="w-6 h-6" />
             </div>
@@ -376,7 +303,7 @@ function Index() {
               <div className="text-[10px] font-bold text-slate-400 uppercase tracking-tight">Rápido e no bairro</div>
             </div>
           </div>
-          <div className="bg-white border border-slate-100 p-6 rounded-[2rem] flex items-center gap-4 shadow-sm hover:shadow-lg transition-all group">
+          <div className="bg-white border border-slate-100 p-6 rounded-[2rem] flex items-center gap-4 shadow-sm hover:shadow-lg transition-all group cursor-pointer" onClick={() => navigate({ to: '/recomendacoes' })}>
             <div className="w-12 h-12 bg-slate-50 rounded-2xl flex items-center justify-center text-slate-600 group-hover:bg-orange-600 group-hover:text-white transition-all">
               <Zap className="w-6 h-6" />
             </div>
@@ -388,8 +315,12 @@ function Index() {
         </div>
       </section>
 
-      {/* Category Grid - Simplified and Premium */}
+      {/* 3. Mais Procurados (Discovery) */}
       <section className="max-w-7xl mx-auto px-6 mt-12 mb-24">
+        <div className="text-center md:text-left mb-8">
+           <h2 className="text-2xl font-black text-slate-900 tracking-tight">Mais procurados no bairro</h2>
+           <p className="text-sm font-medium text-slate-500">Encontre o que você precisa rapidamente</p>
+        </div>
         <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-6">
           {categories.map((cat) => {
             const Icon = cat.icon;
@@ -410,6 +341,17 @@ function Index() {
           })}
         </div>
       </section>
+
+      {/* Institutional (Demoted on Mobile) */}
+      <div className="hidden lg:block">
+        <ValueProposition />
+      </div>
+
+      <div className="lg:hidden px-6 mb-12">
+        <div className="bg-orange-50 border border-orange-100 p-6 rounded-[2rem] text-center">
+           <p className="text-sm font-bold text-orange-600 tracking-tight">Descubra e fortaleça Araruama comprando no comércio local!</p>
+        </div>
+      </div>
 
       {/* Destaques do Bairro (Phase 8.3) */}
       <section className="max-w-7xl mx-auto px-6 mt-24">
