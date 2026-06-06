@@ -526,7 +526,7 @@ function Index() {
       </section>
 
       {/* 7. Notícias e Agenda Section */}
-      <section className="max-w-7xl mx-auto px-6 mt-24">
+      <section className="max-w-[1440px] mx-auto px-6 mt-24">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
           {/* Notícias */}
           <div>
