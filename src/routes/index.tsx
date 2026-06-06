@@ -221,7 +221,7 @@ function Index() {
                         <Store className="w-4 h-4 mr-2" /> Ver lojas
                       </Button>
                       <Button onClick={() => navigate({ to: '/painel' })} variant="outline" className="border-slate-200 text-slate-700 rounded-xl font-black text-xs uppercase px-6 h-11">
-                        <User className="w-4 h-4 mr-2" /> Meu Axêi
+                        <Users className="w-4 h-4 mr-2" /> Meu Axêi
                       </Button>
                       <Button onClick={() => navigate({ to: '/cadastro' })} variant="ghost" className="text-slate-500 hover:text-orange-600 font-black text-xs uppercase h-11">
                         Anunciar
