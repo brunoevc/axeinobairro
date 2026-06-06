@@ -704,7 +704,7 @@ function Index() {
         </div>
       </section>
 
-      {/* 9. Feedback Final */}
+      {/* 10. Classificados Final */}
       <section className="max-w-[1440px] mx-auto px-6 mb-24">
         <div className="bg-slate-900 rounded-[3rem] p-12 text-white flex flex-col md:flex-row items-center justify-between gap-8 relative overflow-hidden">
           <div className="absolute top-0 right-0 w-64 h-64 bg-orange-600/10 rounded-full blur-3xl -mr-32 -mt-32" />
