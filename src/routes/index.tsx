@@ -133,21 +133,21 @@ function Index() {
 
             {/* QUICK CATEGORIES */}
             <section>
-              <h2 className="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-6">Categorias Rápidas</h2>
-              <div className="grid grid-cols-3 sm:grid-cols-6 gap-4">
+              <h2 className="text-[10px] font-black text-slate-400 uppercase tracking-[0.2em] mb-8">Navegação Rápida</h2>
+              <div className="grid grid-cols-3 md:grid-cols-6 gap-6">
                 {[
-                  { label: 'Lojas', icon: Tag, path: '/negocios' },
-                  { label: 'Serviços', icon: Wrench, path: '/servicos' },
-                  { label: 'Transporte', icon: Car, path: '/transporte' },
-                  { label: 'Ofertas', icon: Flame, path: '/negocios' },
-                  { label: 'Notícias', icon: Newspaper, path: '/noticias' },
-                  { label: 'Comunidade', icon: Star, path: '/noticias' },
+                  { label: 'Lojas', icon: Tag, path: '/negocios', color: 'bg-blue-50 text-blue-600' },
+                  { label: 'Serviços', icon: Wrench, path: '/servicos', color: 'bg-orange-50 text-orange-600' },
+                  { label: 'Transporte', icon: Car, path: '/transporte', color: 'bg-emerald-50 text-emerald-600' },
+                  { label: 'Ofertas', icon: Flame, path: '/negocios', color: 'bg-red-50 text-red-600' },
+                  { label: 'Notícias', icon: Newspaper, path: '/noticias', color: 'bg-violet-50 text-violet-600' },
+                  { label: 'Comunidade', icon: Star, path: '/noticias', color: 'bg-amber-50 text-amber-600' },
                 ].map(cat => (
-                  <button key={cat.label} onClick={() => navigate({ to: cat.path as any })} className="bg-white p-4 rounded-3xl border border-slate-100 flex flex-col items-center gap-3 hover:border-orange-200 hover:shadow-xl hover:-translate-y-1 transition-all group">
-                    <div className="w-12 h-12 rounded-2xl bg-slate-50 flex items-center justify-center group-hover:bg-orange-50 transition-colors">
-                      <cat.icon className="w-6 h-6 text-slate-600 group-hover:text-orange-600 group-hover:scale-110 transition-transform" />
+                  <button key={cat.label} onClick={() => navigate({ to: cat.path as any })} className="group flex flex-col items-center gap-4">
+                    <div className={`w-full aspect-square rounded-[2rem] ${cat.color} flex items-center justify-center border border-transparent group-hover:border-current group-hover:shadow-xl group-hover:-translate-y-2 transition-all duration-300`}>
+                      <cat.icon className="w-8 h-8 group-hover:scale-110 transition-transform" />
                     </div>
-                    <span className="text-[10px] font-black uppercase text-slate-600 group-hover:text-orange-600">{cat.label}</span>
+                    <span className="text-[11px] font-black uppercase text-slate-500 group-hover:text-slate-900 transition-colors tracking-widest">{cat.label}</span>
                   </button>
                 ))}
               </div>
