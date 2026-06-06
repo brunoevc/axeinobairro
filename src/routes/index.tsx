@@ -543,7 +543,10 @@ function Index() {
           {/* Notícias */}
           <div>
             <div className="flex items-center justify-between mb-8">
-              <h2 className="text-2xl font-black text-slate-900">Notícias Locais</h2>
+              <h2 className="text-2xl font-black text-slate-900 flex items-center gap-3">
+                <Newspaper className="w-6 h-6 text-orange-600" />
+                Notícias Locais
+              </h2>
               <Link to="/noticias" className="text-orange-600 font-bold text-sm flex items-center hover:underline">
                 Ver todas <ChevronRight className="w-4 h-4" />
               </Link>
@@ -564,7 +567,10 @@ function Index() {
           {/* Agenda */}
           <div>
             <div className="flex items-center justify-between mb-8">
-              <h2 className="text-2xl font-black text-slate-900">Agenda do Bairro</h2>
+              <h2 className="text-2xl font-black text-slate-900 flex items-center gap-3">
+                <Calendar className="w-6 h-6 text-orange-600" />
+                Agenda do Bairro
+              </h2>
               <Link to="/admin/agenda" className="text-orange-600 font-bold text-sm flex items-center hover:underline">
                 Ver agenda <ChevronRight className="w-4 h-4" />
               </Link>
