@@ -166,7 +166,7 @@ function Index() {
                     <Calendar className="w-5 h-5 text-orange-600" /> Agenda Local
                   </h2>
                   <div className="space-y-4">
-                    {news.filter(n => n.category === 'Evento').slice(0, 3).map(event => (
+                    {news.filter(n => n.category === 'eventos').slice(0, 3).map(event => (
                       <div key={event.id} className="flex gap-4 group cursor-pointer" onClick={() => navigate({ to: '/noticias' })}>
                         <div className="bg-orange-50 text-orange-600 w-12 h-14 rounded-2xl flex flex-col items-center justify-center shrink-0 border border-orange-100 group-hover:bg-orange-600 group-hover:text-white transition-colors">
                           <span className="text-lg font-black leading-none">15</span>
@@ -209,7 +209,7 @@ function Index() {
                 {reps.map(rep => (
                   <div key={rep.id} className="bg-white p-4 rounded-[2rem] border border-slate-100 flex flex-col items-center text-center hover:shadow-lg transition-all group">
                     <div className="w-20 h-20 rounded-full overflow-hidden mb-4 border-2 border-slate-100 group-hover:border-orange-500 transition-colors">
-                      <img src={rep.imageUrl} alt={rep.name} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" />
+                      <img src={rep.photo || "/placeholder.svg"} alt={rep.name} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" />
                     </div>
                     <h3 className="font-black text-slate-900 text-sm leading-tight mb-1">{rep.name}</h3>
                     <p className="text-[10px] font-black text-orange-600 uppercase tracking-widest mb-4">{rep.neighborhood}</p>
