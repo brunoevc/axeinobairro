@@ -334,7 +334,7 @@ function Index() {
       </section>
 
       {/* Institutional (Demoted on Mobile) */}
-      <div className="hidden lg:block">
+      <div className="hidden lg:block max-w-[1440px] mx-auto">
         <ValueProposition />
       </div>
 
