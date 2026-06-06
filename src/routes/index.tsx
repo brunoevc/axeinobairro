@@ -158,42 +158,48 @@ function Index() {
 
             {/* OFERTAS */}
             <section>
-              <div className="flex items-center justify-between mb-8">
+              <div className="flex flex-col md:flex-row md:items-end justify-between mb-10 gap-4">
                 <div>
-                  <h2 className="text-3xl font-black text-slate-900 tracking-tighter">Ofertas do Bairro</h2>
-                  <p className="text-slate-500 text-sm font-medium">As melhores oportunidades perto de você.</p>
+                  <h2 className="text-4xl font-black text-slate-900 tracking-tighter leading-none">Ofertas do Bairro</h2>
+                  <p className="text-slate-500 text-sm font-medium mt-2">As melhores oportunidades selecionadas para você hoje.</p>
                 </div>
-                <Button variant="outline" onClick={() => navigate({ to: '/negocios' })} className="border-slate-200 text-slate-600 font-black uppercase text-[10px] rounded-xl px-6">Ver tudo</Button>
+                <Button variant="ghost" onClick={() => navigate({ to: '/negocios' })} className="text-orange-600 hover:text-orange-700 font-black uppercase text-[10px] tracking-[0.2em] p-0 h-auto gap-2">
+                  Ver todas as ofertas <ChevronRight className="w-4 h-4" />
+                </Button>
               </div>
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-8">
                 {promotionalMerchants.map(m => <MerchantCard key={m.id} merchant={m} />)}
               </div>
             </section>
 
             {/* SERVIÇOS */}
             <section>
-              <div className="flex items-center justify-between mb-8">
+              <div className="flex flex-col md:flex-row md:items-end justify-between mb-10 gap-4">
                 <div>
-                  <h2 className="text-3xl font-black text-slate-900 tracking-tighter">Serviços da Comunidade</h2>
-                  <p className="text-slate-500 text-sm font-medium">Profissionais recomendados pelos seus vizinhos.</p>
+                  <h2 className="text-4xl font-black text-slate-900 tracking-tighter leading-none">Serviços Locais</h2>
+                  <p className="text-slate-500 text-sm font-medium mt-2">Profissionais qualificados recomendados pela nossa comunidade.</p>
                 </div>
-                <Button variant="outline" onClick={() => navigate({ to: '/servicos' })} className="border-slate-200 text-slate-600 font-black uppercase text-[10px] rounded-xl px-6">Todos os serviços</Button>
+                <Button variant="ghost" onClick={() => navigate({ to: '/servicos' })} className="text-orange-600 hover:text-orange-700 font-black uppercase text-[10px] tracking-[0.2em] p-0 h-auto gap-2">
+                  Explorar serviços <ChevronRight className="w-4 h-4" />
+                </Button>
               </div>
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
                 {services.map(s => (
-                  <div key={s.id} className="bg-white p-5 rounded-[2rem] border border-slate-100 flex items-center gap-4 hover:shadow-md transition-all group cursor-pointer" onClick={() => navigate({ to: '/servicos' })}>
-                    <div className="w-16 h-16 rounded-2xl bg-slate-50 flex items-center justify-center group-hover:bg-orange-50 transition-colors shrink-0">
-                      <Wrench className="w-8 h-8 text-slate-400 group-hover:text-orange-600" />
+                  <div key={s.id} className="bg-white p-6 rounded-[2.5rem] border border-slate-100 flex items-center gap-5 hover:shadow-2xl hover:-translate-y-1 transition-all duration-500 group cursor-pointer" onClick={() => navigate({ to: '/servicos' })}>
+                    <div className="w-20 h-20 rounded-[1.5rem] bg-slate-50 flex items-center justify-center group-hover:bg-orange-50 transition-colors shrink-0">
+                      <Wrench className="w-10 h-10 text-slate-300 group-hover:text-orange-600 transition-all duration-500" />
                     </div>
                     <div className="min-w-0">
-                      <h3 className="font-black text-slate-900 text-lg leading-tight truncate">{s.name}</h3>
-                      <p className="text-orange-600 text-[10px] font-black uppercase tracking-widest">{s.category}</p>
-                      <div className="flex items-center gap-1.5 mt-1">
-                        <MapPin className="w-3 h-3 text-slate-300" />
-                        <span className="text-[10px] font-bold text-slate-400">{s.neighborhood}</span>
+                      <h3 className="font-black text-slate-900 text-xl leading-tight truncate mb-1 group-hover:text-orange-600 transition-colors">{s.name}</h3>
+                      <p className="text-orange-600 text-[10px] font-black uppercase tracking-[0.2em] mb-2">{s.category}</p>
+                      <div className="flex items-center gap-1.5">
+                        <MapPin className="w-3.5 h-3.5 text-slate-300" />
+                        <span className="text-[10px] font-black text-slate-400 uppercase tracking-widest">{s.neighborhood}</span>
                       </div>
                     </div>
-                    <ChevronRight className="w-5 h-5 text-slate-200 ml-auto group-hover:text-orange-600 transition-colors" />
+                    <div className="ml-auto w-10 h-10 rounded-full border border-slate-100 flex items-center justify-center group-hover:bg-orange-600 group-hover:text-white transition-all">
+                      <ChevronRight className="w-5 h-5" />
+                    </div>
                   </div>
                 ))}
               </div>
