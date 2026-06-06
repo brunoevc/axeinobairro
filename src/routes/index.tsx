@@ -283,41 +283,41 @@ function Index() {
           <div className="h-2 w-2 rounded-full bg-emerald-500 animate-ping" />
           <h2 className="text-xs font-black uppercase tracking-widest text-slate-400">Araruama em Tempo Real</h2>
         </div>
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-          <div className="bg-white border border-slate-100 p-6 rounded-[2rem] flex items-center gap-4 shadow-sm hover:shadow-lg transition-all group cursor-pointer" onClick={() => navigate({ to: '/negocios', search: { categoria: 'alimentacao' } })}>
-            <div className="w-12 h-12 bg-slate-50 rounded-2xl flex items-center justify-center text-slate-600 group-hover:bg-orange-600 group-hover:text-white transition-all">
-              <Croissant className="w-6 h-6" />
+        <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 md:gap-4">
+          <div className="bg-white border border-slate-100 p-4 md:p-6 rounded-2xl md:rounded-[2rem] flex items-center gap-3 md:gap-4 shadow-sm hover:shadow-lg transition-all group cursor-pointer" onClick={() => navigate({ to: '/negocios', search: { categoria: 'alimentacao' } })}>
+            <div className="w-10 h-10 md:w-12 md:h-12 bg-slate-50 rounded-xl md:rounded-2xl flex items-center justify-center text-slate-600 group-hover:bg-orange-600 group-hover:text-white transition-all shrink-0">
+              <Croissant className="w-5 h-5 md:w-6 md:h-6" />
             </div>
             <div>
-              <div className="text-sm font-black text-slate-900 leading-none mb-1">Padarias</div>
-              <div className="text-[10px] font-bold text-slate-400 uppercase tracking-tight">Pão quentinho agora</div>
+              <div className="text-xs md:text-sm font-black text-slate-900 leading-none mb-1">Padarias</div>
+              <div className="text-[8px] md:text-[10px] font-bold text-slate-400 uppercase tracking-tight">Pão quentinho</div>
             </div>
           </div>
-          <div className="bg-white border border-slate-100 p-6 rounded-[2rem] flex items-center gap-4 shadow-sm hover:shadow-lg transition-all group cursor-pointer" onClick={() => navigate({ to: '/negocios', search: { hasPromotion: true } })}>
-            <div className="w-12 h-12 bg-slate-50 rounded-2xl flex items-center justify-center text-slate-600 group-hover:bg-orange-600 group-hover:text-white transition-all">
-              <Tag className="w-6 h-6" />
+          <div className="bg-white border border-slate-100 p-4 md:p-6 rounded-2xl md:rounded-[2rem] flex items-center gap-3 md:gap-4 shadow-sm hover:shadow-lg transition-all group cursor-pointer" onClick={() => navigate({ to: '/negocios', search: { hasPromotion: true } })}>
+            <div className="w-10 h-10 md:w-12 md:h-12 bg-slate-50 rounded-xl md:rounded-2xl flex items-center justify-center text-slate-600 group-hover:bg-orange-600 group-hover:text-white transition-all shrink-0">
+              <Tag className="w-5 h-5 md:w-6 md:h-6" />
             </div>
             <div>
-              <div className="text-sm font-black text-slate-900 leading-none mb-1">Ofertas</div>
-              <div className="text-[10px] font-bold text-slate-400 uppercase tracking-tight">Economia garantida</div>
+              <div className="text-xs md:text-sm font-black text-slate-900 leading-none mb-1">Ofertas</div>
+              <div className="text-[8px] md:text-[10px] font-bold text-slate-400 uppercase tracking-tight">Economia</div>
             </div>
           </div>
-          <div className="bg-white border border-slate-100 p-6 rounded-[2rem] flex items-center gap-4 shadow-sm hover:shadow-lg transition-all group cursor-pointer" onClick={() => navigate({ to: '/transporte' })}>
-            <div className="w-12 h-12 bg-slate-50 rounded-2xl flex items-center justify-center text-slate-600 group-hover:bg-orange-600 group-hover:text-white transition-all">
-              <Bike className="w-6 h-6" />
+          <div className="bg-white border border-slate-100 p-4 md:p-6 rounded-2xl md:rounded-[2rem] flex items-center gap-3 md:gap-4 shadow-sm hover:shadow-lg transition-all group cursor-pointer" onClick={() => navigate({ to: '/transporte' })}>
+            <div className="w-10 h-10 md:w-12 md:h-12 bg-slate-50 rounded-xl md:rounded-2xl flex items-center justify-center text-slate-600 group-hover:bg-orange-600 group-hover:text-white transition-all shrink-0">
+              <Bike className="w-5 h-5 md:w-6 md:h-6" />
             </div>
             <div>
-              <div className="text-sm font-black text-slate-900 leading-none mb-1">Mobilidade</div>
-              <div className="text-[10px] font-bold text-slate-400 uppercase tracking-tight">Transporte Alternativo</div>
+              <div className="text-xs md:text-sm font-black text-slate-900 leading-none mb-1">Mobilidade</div>
+              <div className="text-[8px] md:text-[10px] font-bold text-slate-400 uppercase tracking-tight">Transporte</div>
             </div>
           </div>
-          <div className="bg-white border border-slate-100 p-6 rounded-[2rem] flex items-center gap-4 shadow-sm hover:shadow-lg transition-all group cursor-pointer" onClick={() => navigate({ to: '/noticias' })}>
-            <div className="w-12 h-12 bg-slate-50 rounded-2xl flex items-center justify-center text-slate-600 group-hover:bg-orange-600 group-hover:text-white transition-all">
-              <Newspaper className="w-6 h-6" />
+          <div className="bg-white border border-slate-100 p-4 md:p-6 rounded-2xl md:rounded-[2rem] flex items-center gap-3 md:gap-4 shadow-sm hover:shadow-lg transition-all group cursor-pointer" onClick={() => navigate({ to: '/noticias' })}>
+            <div className="w-10 h-10 md:w-12 md:h-12 bg-slate-50 rounded-xl md:rounded-2xl flex items-center justify-center text-slate-600 group-hover:bg-orange-600 group-hover:text-white transition-all shrink-0">
+              <Newspaper className="w-5 h-5 md:w-6 md:h-6" />
             </div>
             <div>
-              <div className="text-sm font-black text-slate-900 leading-none mb-1">Novidades</div>
-              <div className="text-[10px] font-bold text-slate-400 uppercase tracking-tight">Fique por dentro</div>
+              <div className="text-xs md:text-sm font-black text-slate-900 leading-none mb-1">Novidades</div>
+              <div className="text-[8px] md:text-[10px] font-bold text-slate-400 uppercase tracking-tight">Informativos</div>
             </div>
           </div>
         </div>
