@@ -212,7 +212,7 @@ function Index() {
                 </Button>
               </form>
 
-               <div className="flex flex-col sm:flex-row gap-4">
+               <div className="flex flex-col sm:flex-row gap-4 mt-2">
                 <Button 
                   onClick={() => navigate({ to: '/negocios' })}
                   className="h-16 px-10 bg-orange-600 hover:bg-orange-700 text-white rounded-2xl font-black shadow-xl shadow-orange-200 transition-all active:scale-95 text-lg group"
