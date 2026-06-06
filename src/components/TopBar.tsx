@@ -144,9 +144,9 @@ export const TopBar = memo(function TopBar() {
                 <div className="flex items-center gap-4 pl-4 border-l border-slate-100">
                   <Link 
                     to={localStorage.getItem("axei_auth_status") === "true" ? "/painel" : "/login"} 
-                    className="text-sm font-bold text-slate-900 hover:text-orange-600 transition-colors"
+                    className="inline-flex items-center gap-2 px-5 py-2 bg-orange-600 text-white rounded-xl font-black text-xs uppercase tracking-widest hover:bg-orange-700 transition-all shadow-lg shadow-orange-100"
                   >
-                    {localStorage.getItem("axei_auth_status") === "true" ? "Meu Painel" : "Entrar"}
+                    {localStorage.getItem("axei_auth_status") === "true" ? "Meu Axêi" : "Entrar"}
                   </Link>
                 </div>
 
