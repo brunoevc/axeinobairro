@@ -326,7 +326,10 @@ function Index() {
       {/* 3. Mais Procurados (Discovery) */}
       <section className="max-w-[1440px] mx-auto px-6 mt-12 mb-24">
         <div className="text-center md:text-left mb-8">
-           <h2 className="text-2xl font-black text-slate-900 tracking-tight">Mais procurados no bairro</h2>
+           <h2 className="text-2xl font-black text-slate-900 tracking-tight flex items-center gap-3 justify-center md:justify-start">
+             <SearchCheck className="w-6 h-6 text-orange-600" />
+             Mais procurados no bairro
+           </h2>
            <p className="text-sm font-medium text-slate-500">Encontre o que você precisa rapidamente</p>
         </div>
         <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-6">
