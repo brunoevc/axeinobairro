@@ -623,7 +623,7 @@ function Index() {
       )}
 
       {/* Dicas úteis para o bairro */}
-      <section className="max-w-7xl mx-auto px-6 mt-24 mb-24">
+      <section className="max-w-[1440px] mx-auto px-6 mt-24 mb-24">
         <div className="flex flex-col md:flex-row md:items-end justify-between mb-12 gap-4">
           <div>
             <div className="inline-flex items-center gap-2 px-2 py-0.5 rounded-md bg-orange-50 text-orange-600 text-[10px] font-black uppercase tracking-widest mb-4 border border-orange-100">
