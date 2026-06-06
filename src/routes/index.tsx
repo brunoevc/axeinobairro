@@ -26,7 +26,8 @@ import {
    Newspaper,
     Users,
     MessageCircle,
-    Sparkles
+    Sparkles,
+    Calendar
   } from "lucide-react";
 
 import { categories } from "@/data/merchants";
