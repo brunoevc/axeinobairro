@@ -206,37 +206,43 @@ function Index() {
             </section>
 
             {/* AGENDA + NOTÍCIAS */}
-            <section className="grid grid-cols-1 md:grid-cols-2 gap-12">
-               <div>
-                  <h2 className="text-xl font-black text-slate-900 mb-6 flex items-center gap-2">
-                    <Calendar className="w-5 h-5 text-orange-600" /> Agenda Local
-                  </h2>
-                  <div className="space-y-4">
+            <section className="grid grid-cols-1 md:grid-cols-2 gap-16">
+               <div className="bg-white p-8 md:p-10 rounded-[3rem] border border-slate-100 shadow-sm">
+                  <div className="flex items-center justify-between mb-10">
+                    <h2 className="text-2xl font-black text-slate-900 flex items-center gap-3">
+                      <Calendar className="w-6 h-6 text-orange-600" /> Agenda Local
+                    </h2>
+                    <Button variant="ghost" className="p-0 h-auto text-[10px] font-black uppercase tracking-[0.2em] text-slate-400 hover:text-orange-600">Ver tudo</Button>
+                  </div>
+                  <div className="space-y-8">
                     {news.filter(n => n.category === 'eventos').slice(0, 3).map(event => (
-                      <div key={event.id} className="flex gap-4 group cursor-pointer" onClick={() => navigate({ to: '/noticias' })}>
-                        <div className="bg-orange-50 text-orange-600 w-12 h-14 rounded-2xl flex flex-col items-center justify-center shrink-0 border border-orange-100 group-hover:bg-orange-600 group-hover:text-white transition-colors">
-                          <span className="text-lg font-black leading-none">15</span>
-                          <span className="text-[8px] font-black uppercase tracking-tighter">JUN</span>
+                      <div key={event.id} className="flex gap-6 group cursor-pointer" onClick={() => navigate({ to: '/noticias' })}>
+                        <div className="bg-slate-50 text-slate-900 w-14 h-16 rounded-[1.25rem] flex flex-col items-center justify-center shrink-0 border border-slate-100 group-hover:bg-orange-600 group-hover:text-white group-hover:border-orange-600 transition-all duration-300">
+                          <span className="text-xl font-black leading-none">15</span>
+                          <span className="text-[9px] font-black uppercase tracking-tighter">JUN</span>
                         </div>
-                        <div className="pt-1">
-                          <h4 className="font-black text-slate-900 text-sm group-hover:text-orange-600 transition-colors line-clamp-2">{event.title}</h4>
-                          <span className="text-[10px] font-bold text-slate-400 flex items-center gap-1 mt-1">
-                            <MapPin className="w-3 h-3" /> Araruama, RJ
+                        <div className="pt-1 flex-1">
+                          <h4 className="font-black text-slate-900 text-base group-hover:text-orange-600 transition-colors line-clamp-2 leading-tight tracking-tight mb-2">{event.title}</h4>
+                          <span className="text-[10px] font-black text-slate-400 uppercase tracking-widest flex items-center gap-1.5">
+                            <MapPin className="w-3.5 h-3.5" /> Araruama, RJ
                           </span>
                         </div>
                       </div>
                     ))}
                   </div>
                </div>
-               <div>
-                  <h2 className="text-xl font-black text-slate-900 mb-6 flex items-center gap-2">
-                    <Newspaper className="w-5 h-5 text-orange-600" /> Notícias
-                  </h2>
-                  <div className="space-y-6">
+               <div className="bg-white p-8 md:p-10 rounded-[3rem] border border-slate-100 shadow-sm">
+                  <div className="flex items-center justify-between mb-10">
+                    <h2 className="text-2xl font-black text-slate-900 flex items-center gap-3">
+                      <Newspaper className="w-6 h-6 text-orange-600" /> Notícias
+                    </h2>
+                    <Button variant="ghost" className="p-0 h-auto text-[10px] font-black uppercase tracking-[0.2em] text-slate-400 hover:text-orange-600">Ver tudo</Button>
+                  </div>
+                  <div className="space-y-10">
                     {news.filter(n => n.category !== 'eventos').slice(0, 3).map(n => (
                       <div key={n.id} className="group cursor-pointer" onClick={() => navigate({ to: '/noticias' })}>
-                        <span className="text-[8px] font-black uppercase text-orange-600 mb-1 block">{n.category}</span>
-                        <h4 className="font-bold text-slate-900 text-sm group-hover:text-orange-600 transition-colors leading-tight">{n.title}</h4>
+                        <span className="text-[10px] font-black uppercase text-orange-500 mb-2 block tracking-[0.2em] group-hover:translate-x-1 transition-transform">{n.category}</span>
+                        <h4 className="font-black text-slate-900 text-lg group-hover:text-orange-600 transition-colors leading-tight tracking-tight">{n.title}</h4>
                       </div>
                     ))}
                   </div>
