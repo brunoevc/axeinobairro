@@ -202,31 +202,31 @@ function Index() {
       <section className="relative overflow-hidden bg-white border-b border-slate-100">
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,_var(--tw-gradient-stops))] from-violet-50/50 via-transparent to-transparent opacity-70" />
         
-        <div className="max-w-[1440px] mx-auto px-6 py-6 md:py-16 relative z-10 flex flex-col md:flex-row items-center gap-12">
+        <div className="max-w-[1440px] mx-auto px-6 py-4 md:py-16 relative z-10 flex flex-col md:flex-row items-center gap-12">
           <div className="flex-1 text-center md:text-left">
-            <h1 className="text-4xl md:text-7xl font-black tracking-tighter text-slate-900 mb-4 leading-[0.85]">
+            <h1 className="text-4xl md:text-7xl font-black tracking-tighter text-slate-900 mb-2 md:mb-4 leading-[0.85]">
               O Ecossistema Digital <br className="hidden md:block" />
               <span className="text-orange-600">da Sua Comunidade</span>
             </h1>
-            <p className="text-slate-500 text-base md:text-lg font-medium mb-8 leading-relaxed max-w-xl mx-auto md:mx-0 hidden md:block">
+            <p className="text-slate-500 text-sm md:text-lg font-medium mb-6 md:mb-8 leading-relaxed max-w-xl mx-auto md:mx-0">
               Conectando moradores, negócios e serviços para fortalecer o bairro e criar novas oportunidades para todos.
             </p>
             
-            <div className="flex flex-col gap-6">
+            <div className="flex flex-col gap-4 md:gap-6">
               <form onSubmit={handleSearch} className="relative max-w-xl group">
-                <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-slate-400 group-focus-within:text-orange-500 transition-colors" />
+                <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-4 md:w-5 h-4 md:h-5 text-slate-400 group-focus-within:text-orange-500 transition-colors" />
                 <input 
                   type="text" 
-                  placeholder="Busque por restaurante, padaria, serviço..."
-                  className="w-full bg-white border border-slate-200 rounded-2xl py-5 pl-12 pr-32 text-sm md:text-base font-medium outline-none focus:ring-4 focus:ring-orange-500/5 focus:border-orange-600 transition-all shadow-xl shadow-slate-200/50"
+                  placeholder="O que você procura hoje?"
+                  className="w-full bg-white border border-slate-200 rounded-xl md:rounded-2xl py-4 md:py-5 pl-11 md:pl-12 pr-28 md:pr-32 text-xs md:text-base font-medium outline-none focus:ring-4 focus:ring-orange-500/5 focus:border-orange-600 transition-all shadow-xl shadow-slate-200/50"
                   value={searchTerm}
                   onChange={(e) => setSearchTerm(e.target.value)}
                 />
                 <Button 
                   type="submit"
-                  className="absolute right-2 top-1/2 -translate-y-1/2 h-12 px-6 bg-slate-900 hover:bg-slate-800 text-white rounded-xl font-black text-xs uppercase tracking-widest transition-all active:scale-95"
+                  className="absolute right-1.5 md:right-2 top-1/2 -translate-y-1/2 h-9 md:h-12 px-4 md:px-6 bg-slate-900 hover:bg-slate-800 text-white rounded-lg md:rounded-xl font-black text-[10px] md:text-xs uppercase tracking-widest transition-all active:scale-95"
                 >
-                  Pesquisar
+                  Buscar
                 </Button>
               </form>
 
