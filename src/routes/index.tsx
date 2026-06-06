@@ -307,17 +307,17 @@ function Index() {
               <Bike className="w-6 h-6" />
             </div>
             <div>
-              <div className="text-sm font-black text-slate-900 leading-none mb-1">Delivery</div>
-              <div className="text-[10px] font-bold text-slate-400 uppercase tracking-tight">Rápido e no bairro</div>
+              <div className="text-sm font-black text-slate-900 leading-none mb-1">Mobilidade</div>
+              <div className="text-[10px] font-bold text-slate-400 uppercase tracking-tight">Transporte Alternativo</div>
             </div>
           </div>
-          <div className="bg-white border border-slate-100 p-6 rounded-[2rem] flex items-center gap-4 shadow-sm hover:shadow-lg transition-all group cursor-pointer" onClick={() => navigate({ to: '/recomendacoes' })}>
+          <div className="bg-white border border-slate-100 p-6 rounded-[2rem] flex items-center gap-4 shadow-sm hover:shadow-lg transition-all group cursor-pointer" onClick={() => navigate({ to: '/noticias' })}>
             <div className="w-12 h-12 bg-slate-50 rounded-2xl flex items-center justify-center text-slate-600 group-hover:bg-orange-600 group-hover:text-white transition-all">
-              <Zap className="w-6 h-6" />
+              <Newspaper className="w-6 h-6" />
             </div>
             <div>
-              <div className="text-sm font-black text-slate-900 leading-none mb-1">Destaques</div>
-              <div className="text-[10px] font-bold text-slate-400 uppercase tracking-tight">O melhor da região</div>
+              <div className="text-sm font-black text-slate-900 leading-none mb-1">Novidades</div>
+              <div className="text-[10px] font-bold text-slate-400 uppercase tracking-tight">Fique por dentro</div>
             </div>
           </div>
         </div>
