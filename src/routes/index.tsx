@@ -236,22 +236,27 @@ function Index() {
 
             {/* REPRESENTANTES */}
             <section>
-              <div className="flex items-center justify-between mb-8">
+              <div className="flex items-center justify-between mb-10">
                 <div>
-                  <h2 className="text-3xl font-black text-slate-900 tracking-tighter">Representantes</h2>
-                  <p className="text-slate-500 text-sm font-medium">Lideranças que trabalham pelo nosso bairro.</p>
+                  <h2 className="text-4xl font-black text-slate-900 tracking-tighter">Representantes</h2>
+                  <p className="text-slate-500 text-sm font-medium mt-1">Lideranças que trabalham pela nossa comunidade.</p>
                 </div>
               </div>
-              <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
+              <div className="grid grid-cols-2 sm:grid-cols-4 gap-6">
                 {reps.map(rep => (
-                  <div key={rep.id} className="bg-white p-4 rounded-[2rem] border border-slate-100 flex flex-col items-center text-center hover:shadow-lg transition-all group">
-                    <div className="w-20 h-20 rounded-full overflow-hidden mb-4 border-2 border-slate-100 group-hover:border-orange-500 transition-colors">
-                      <img src={rep.photo || "/placeholder.svg"} alt={rep.name} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" />
+                  <div key={rep.id} className="bg-white p-6 rounded-[2.5rem] border border-slate-100 flex flex-col items-center text-center hover:shadow-2xl hover:-translate-y-2 transition-all duration-500 group">
+                    <div className="relative mb-6">
+                      <div className="w-24 h-24 rounded-full overflow-hidden border-4 border-slate-50 group-hover:border-orange-500 transition-colors duration-500 shadow-inner">
+                        <img src={rep.photo || "/placeholder.svg"} alt={rep.name} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" />
+                      </div>
+                      <div className="absolute -bottom-2 -right-2 bg-white p-1.5 rounded-full shadow-lg border border-slate-100 group-hover:border-orange-500 transition-colors">
+                        <ShieldCheck className="w-4 h-4 text-orange-500" />
+                      </div>
                     </div>
-                    <h3 className="font-black text-slate-900 text-sm leading-tight mb-1">{rep.name}</h3>
-                    <p className="text-[10px] font-black text-orange-600 uppercase tracking-widest mb-4">{rep.neighborhood}</p>
-                    <Button size="sm" variant="outline" className="h-8 rounded-full text-[9px] font-black uppercase px-4 gap-1.5 hover:bg-emerald-50 hover:text-emerald-600 hover:border-emerald-200">
-                      <MessageCircle className="w-3 h-3" /> Contato
+                    <h3 className="font-black text-slate-900 text-base leading-tight mb-1">{rep.name}</h3>
+                    <p className="text-[10px] font-black text-orange-500 uppercase tracking-[0.2em] mb-6">{rep.neighborhood}</p>
+                    <Button size="sm" variant="outline" className="h-10 rounded-full text-[10px] font-black uppercase px-6 gap-2 hover:bg-emerald-50 hover:text-emerald-600 hover:border-emerald-200 transition-all">
+                      <MessageCircle className="w-3.5 h-3.5" /> Falar agora
                     </Button>
                   </div>
                 ))}
@@ -262,22 +267,30 @@ function Index() {
 
           {/* SIDEBAR */}
           <aside className="lg:col-span-4">
-            <div className="sticky top-24 flex flex-col gap-8">
-              <section className="bg-slate-900 rounded-[3rem] p-8 text-white relative overflow-hidden group">
-                <div className="absolute top-0 right-0 p-8 opacity-10 pointer-events-none group-hover:scale-110 transition-transform duration-700">
-                  <Flame className="w-32 h-32 rotate-12" />
+            <div className="sticky top-24 flex flex-col gap-10">
+              <section className="bg-slate-900 rounded-[3rem] p-10 text-white relative overflow-hidden group shadow-2xl">
+                <div className="absolute top-0 right-0 p-8 opacity-10 pointer-events-none group-hover:scale-110 transition-transform duration-1000">
+                  <Flame className="w-40 h-40 rotate-12" />
                 </div>
-                <h3 className="text-[10px] font-black uppercase text-slate-400 mb-8 tracking-[0.2em] relative z-10">Acontecendo Agora</h3>
-                <div className="space-y-8 relative z-10">
-                  {news.slice(0, 4).map((n, i) => (
-                    <div key={n.id} className="group/item cursor-pointer flex gap-4" onClick={() => navigate({ to: '/noticias' })}>
-                      <span className="text-orange-500 font-black text-xl opacity-50 group-hover/item:opacity-100 transition-opacity">0{i+1}</span>
-                      <div>
-                        <p className="text-slate-500 text-[8px] font-black uppercase tracking-widest mb-1 group-hover/item:text-orange-400 transition-colors">{n.category}</p>
-                        <h4 className="font-bold text-white text-sm group-hover/item:text-orange-400 transition-colors line-clamp-2 leading-snug">{n.title}</h4>
+                <div className="relative z-10">
+                  <div className="flex items-center gap-2 mb-10">
+                    <div className="w-2 h-2 rounded-full bg-orange-500 animate-pulse" />
+                    <h3 className="text-[10px] font-black uppercase text-slate-400 tracking-[0.3em]">Acontecendo Agora</h3>
+                  </div>
+                  <div className="space-y-10">
+                    {news.slice(0, 4).map((n, i) => (
+                      <div key={n.id} className="group/item cursor-pointer flex gap-5" onClick={() => navigate({ to: '/noticias' })}>
+                        <div className="flex flex-col items-center">
+                          <span className="text-orange-500 font-black text-2xl opacity-40 group-hover/item:opacity-100 transition-all duration-300">0{i+1}</span>
+                          <div className="w-px h-full bg-slate-800 mt-2" />
+                        </div>
+                        <div className="pb-2">
+                          <p className="text-slate-500 text-[9px] font-black uppercase tracking-[0.2em] mb-2 group-hover/item:text-orange-400 transition-colors">{n.category}</p>
+                          <h4 className="font-bold text-white text-base group-hover/item:text-orange-400 transition-colors line-clamp-2 leading-tight tracking-tight">{n.title}</h4>
+                        </div>
                       </div>
-                    </div>
-                  ))}
+                    ))}
+                  </div>
                 </div>
               </section>
 
