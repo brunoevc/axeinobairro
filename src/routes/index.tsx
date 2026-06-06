@@ -294,32 +294,32 @@ function Index() {
                 </div>
               </section>
 
-              <section className="bg-orange-50 rounded-[3rem] p-8 border border-orange-100 shadow-sm relative overflow-hidden group">
-                <div className="absolute -bottom-8 -right-8 p-4 opacity-10 group-hover:scale-110 transition-transform">
-                  <Star className="w-32 h-32" />
+              <section className="bg-orange-50 rounded-[3rem] p-10 border border-orange-100 shadow-xl relative overflow-hidden group">
+                <div className="absolute -bottom-8 -right-8 p-4 opacity-10 group-hover:scale-110 transition-transform duration-1000">
+                  <Star className="w-40 h-40 text-orange-600" />
                 </div>
                 <div className="relative z-10">
-                  <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-orange-100 text-orange-600 text-[10px] font-black uppercase tracking-widest mb-6">
-                    <Award className="w-3 h-3" /> Patrocinador
+                  <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-orange-100 text-orange-600 text-[10px] font-black uppercase tracking-[0.2em] mb-8 shadow-sm">
+                    <Award className="w-3.5 h-3.5" /> Destaque da Semana
                   </div>
-                  <h3 className="text-xl font-black text-slate-900 mb-2">Energia Local</h3>
-                  <p className="text-slate-600 text-xs font-medium mb-6 leading-relaxed">Pague sua conta de luz com 10% de desconto no Axêi.</p>
-                  <Button className="w-full bg-slate-900 hover:bg-slate-800 rounded-2xl">Aproveitar agora</Button>
+                  <h3 className="text-2xl font-black text-slate-900 mb-3 tracking-tight">Energia Local</h3>
+                  <p className="text-slate-600 text-sm font-medium mb-8 leading-relaxed">Sua conta de luz com até <span className="text-orange-600 font-black">15% de desconto</span> exclusivo para membros da comunidade.</p>
+                  <Button className="w-full bg-slate-900 hover:bg-slate-800 text-white h-14 rounded-2xl font-black uppercase text-[10px] tracking-widest shadow-xl shadow-slate-900/10 active:scale-[0.98] transition-all">Ativar Benefício</Button>
                 </div>
               </section>
 
-              <section className="bg-white rounded-[3rem] p-8 border border-slate-100 shadow-sm">
-                <div className="flex items-center gap-3 mb-6">
-                   <div className="w-10 h-10 rounded-2xl bg-slate-50 flex items-center justify-center text-slate-400">
-                     <PlusCircle className="w-6 h-6" />
+              <section className="bg-white rounded-[3rem] p-10 border border-slate-100 shadow-lg group hover:shadow-2xl transition-all duration-500">
+                <div className="flex items-center gap-5 mb-8">
+                   <div className="w-14 h-14 rounded-2xl bg-slate-50 flex items-center justify-center text-slate-400 group-hover:bg-orange-50 group-hover:text-orange-600 transition-all duration-500">
+                     <PlusCircle className="w-8 h-8" />
                    </div>
                    <div>
-                     <h3 className="font-black text-slate-900 text-sm">Seja um Parceiro</h3>
-                     <p className="text-slate-400 text-[10px] font-bold uppercase tracking-widest">Publicidade Local</p>
+                     <h3 className="font-black text-slate-900 text-lg leading-none mb-1">Seja um Parceiro</h3>
+                     <p className="text-slate-400 text-[10px] font-black uppercase tracking-[0.2em]">Publicidade Local</p>
                    </div>
                 </div>
-                <p className="text-slate-500 text-sm mb-6 leading-relaxed">Destaque sua empresa para milhares de moradores em tempo real.</p>
-                <Button variant="outline" className="w-full border-slate-200 rounded-2xl font-black text-[10px] uppercase tracking-widest py-6">Saiba mais</Button>
+                <p className="text-slate-500 text-sm mb-8 leading-relaxed font-medium">Conecte sua marca com milhares de moradores da nossa comunidade em tempo real.</p>
+                <Button variant="outline" className="w-full h-14 border-slate-200 hover:border-orange-200 hover:bg-orange-50 hover:text-orange-600 rounded-2xl font-black text-[10px] uppercase tracking-widest transition-all">Quero saber mais</Button>
               </section>
             </div>
           </aside>
