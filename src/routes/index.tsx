@@ -751,6 +751,7 @@ function Index() {
         </div>
       </section>
 
+      <SponsorSection />
       <Footer />
 
       <FloatingNav />
