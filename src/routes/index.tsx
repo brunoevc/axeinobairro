@@ -174,12 +174,13 @@ function Index() {
   return (
     <div className="min-h-screen bg-slate-50 pb-24 font-sans selection:bg-violet-100 max-w-[1440px] mx-auto">
       <TopBar />
-      {/* Hero & Multi-Content Dobra Section */}
-      <section className="bg-white border-b border-slate-100">
+      
+      {/* 1. Portal Hero & Highlights (Multi-Content Dobra) */}
+      <section className="bg-white border-b border-slate-100 overflow-hidden">
         <div className="max-w-[1440px] mx-auto">
           <div className="flex flex-col lg:flex-row min-h-[500px]">
-            {/* Main Content Area (65%) */}
-            <div className="flex-[1.8] border-r border-slate-50 p-6 md:p-10 flex flex-col justify-center relative overflow-hidden">
+            {/* Main Content Area (Portal Hero) */}
+            <div className="flex-[1.8] border-r border-slate-50 p-6 md:p-10 flex flex-col justify-center relative">
                <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,_var(--tw-gradient-stops))] from-orange-50/40 via-transparent to-transparent opacity-70 pointer-events-none" />
                
                <div className="relative z-10">
@@ -194,7 +195,7 @@ function Index() {
                   </h1>
                   
                   <p className="text-slate-500 text-base md:text-xl font-medium mb-10 leading-relaxed max-w-xl">
-                    Tudo o que acontece agora no bairro: ofertas, <br className="hidden md:block" /> serviços, notícias e oportunidades reais.
+                    Tudo o que acontece agora no bairro: ofertas, serviços, notícias e oportunidades reais.
                   </p>
 
                   <div className="flex flex-col gap-4">
@@ -202,7 +203,7 @@ function Index() {
                       <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-slate-400 group-focus-within:text-orange-500 transition-colors" />
                       <input 
                         type="text" 
-                        placeholder="O que você procura hoje?"
+                        placeholder="O que você precisa hoje?"
                         className="w-full bg-white border border-slate-200 rounded-2xl py-5 pl-12 pr-32 text-sm md:text-base font-medium outline-none focus:ring-4 focus:ring-orange-500/5 focus:border-orange-600 transition-all shadow-xl shadow-slate-200/50"
                         value={searchTerm}
                         onChange={(e) => setSearchTerm(e.target.value)}
@@ -215,7 +216,19 @@ function Index() {
                       </Button>
                     </form>
 
-                    <div className="flex items-center gap-4 text-xs font-bold text-slate-400 mt-2 px-1 overflow-x-auto no-scrollbar whitespace-nowrap">
+                    <div className="flex flex-wrap items-center gap-x-6 gap-y-3 mt-4">
+                      <Button onClick={() => navigate({ to: '/negocios' })} className="bg-orange-600 hover:bg-orange-700 text-white rounded-xl font-black text-xs uppercase px-6 h-11 shadow-lg shadow-orange-200">
+                        <Store className="w-4 h-4 mr-2" /> Ver lojas
+                      </Button>
+                      <Button onClick={() => navigate({ to: '/painel' })} variant="outline" className="border-slate-200 text-slate-700 rounded-xl font-black text-xs uppercase px-6 h-11">
+                        <User className="w-4 h-4 mr-2" /> Meu Axêi
+                      </Button>
+                      <Button onClick={() => navigate({ to: '/cadastro' })} variant="ghost" className="text-slate-500 hover:text-orange-600 font-black text-xs uppercase h-11">
+                        Anunciar
+                      </Button>
+                    </div>
+
+                    <div className="flex items-center gap-4 text-[10px] md:text-xs font-bold text-slate-400 mt-6 px-1 overflow-x-auto no-scrollbar whitespace-nowrap">
                        <span className="flex items-center gap-1.5"><CheckCircle2 className="w-3.5 h-3.5 text-emerald-500" /> Ofertas Reais</span>
                        <span className="flex items-center gap-1.5 ml-4"><CheckCircle2 className="w-3.5 h-3.5 text-emerald-500" /> Profissionais Verificados</span>
                        <span className="flex items-center gap-1.5 ml-4"><CheckCircle2 className="w-3.5 h-3.5 text-emerald-500" /> Notícias Locais</span>
@@ -224,14 +237,14 @@ function Index() {
                </div>
             </div>
 
-            {/* Side Highlights Column (35%) */}
-            <div className="flex-1 bg-slate-50/50 p-6 md:p-8 flex flex-col gap-6">
+            {/* 2. Side Highlights Column (Acontecendo Agora - Desktop Only) */}
+            <div className="hidden lg:flex flex-1 bg-slate-50/50 p-8 flex-col gap-6">
                <div className="flex items-center justify-between mb-2">
-                  <h3 className="text-xs font-black uppercase tracking-[0.2em] text-slate-400">Em Destaque Agora</h3>
+                  <h3 className="text-xs font-black uppercase tracking-[0.2em] text-slate-400">Acontecendo Agora</h3>
                   <div className="h-2 w-2 rounded-full bg-emerald-500 animate-ping" />
                </div>
 
-               {/* Rotating Mini Banner */}
+               {/* Rotating Mini Banner (Oferta Ativa) */}
                <div className="bg-slate-900 rounded-[2rem] p-6 text-white relative overflow-hidden group cursor-pointer" onClick={() => navigate({ to: '/negocios', search: { hasPromotion: true } })}>
                   <div className="absolute top-0 right-0 p-4 opacity-10 group-hover:scale-110 transition-transform">
                      <Tag className="w-20 h-20 rotate-12" />
@@ -244,7 +257,7 @@ function Index() {
                   </div>
                </div>
 
-               {/* Upcoming Event Snippet */}
+               {/* Upcoming Event Snippet (Evento/Comunicado) */}
                <div className="bg-white border border-slate-100 rounded-[2rem] p-6 shadow-sm hover:shadow-md transition-shadow cursor-pointer" onClick={() => navigate({ to: '/admin/agenda' })}>
                   <div className="flex gap-4">
                      <div className="bg-orange-50 text-orange-600 w-12 h-12 rounded-xl flex flex-col items-center justify-center shrink-0 border border-orange-100">
@@ -260,13 +273,13 @@ function Index() {
                   </div>
                </div>
 
-               {/* Quick Info / Announcements */}
+               {/* Quick Info (Apoiador/Patrocinador) */}
                <div className="bg-white border border-slate-100 rounded-[2rem] p-6 shadow-sm flex flex-col gap-4">
                   <div className="flex items-center gap-3">
                      <div className="w-8 h-8 rounded-lg bg-violet-50 text-violet-600 flex items-center justify-center shrink-0">
                         <Users className="w-4 h-4" />
                      </div>
-                     <span className="text-[10px] font-black text-slate-500 uppercase tracking-widest">Apoiadores da Semana</span>
+                     <span className="text-[10px] font-black text-slate-500 uppercase tracking-widest">Apoiadores Locais</span>
                   </div>
                   <div className="flex -space-x-2">
                     {[1,2,3,4].map(i => (
