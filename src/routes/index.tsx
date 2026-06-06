@@ -184,7 +184,7 @@ function Index() {
       <section className="relative overflow-hidden bg-white border-b border-slate-100">
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,_var(--tw-gradient-stops))] from-violet-50/50 via-transparent to-transparent opacity-70" />
         
-        <div className="max-w-[1440px] mx-auto px-6 py-8 md:py-20 relative z-10 flex flex-col md:flex-row items-center gap-12">
+        <div className="max-w-[1440px] mx-auto px-6 py-8 md:py-16 relative z-10 flex flex-col md:flex-row items-center gap-12">
           <div className="flex-1 text-center md:text-left">
             <h1 className="text-4xl md:text-7xl font-black tracking-tighter text-slate-900 mb-4 leading-[0.85]">
               O Ecossistema Digital <br className="hidden md:block" />
