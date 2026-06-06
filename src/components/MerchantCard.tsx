@@ -39,7 +39,7 @@ export const MerchantCard = memo(function MerchantCard({ merchant }: Props) {
 
   return (
     <article
-      className="group flex flex-col overflow-hidden rounded-[2.5rem] bg-white border border-slate-100 shadow-sm transition-all hover:shadow-xl hover:-translate-y-1 active:scale-[0.98]"
+      className="group flex flex-col h-full overflow-hidden rounded-[2.5rem] bg-white border border-slate-100 shadow-sm transition-all hover:shadow-xl hover:-translate-y-1 active:scale-[0.98]"
     >
       <div className="relative aspect-[4/3] w-full overflow-hidden bg-slate-100">
         {!imageError && merchant.image ? (
