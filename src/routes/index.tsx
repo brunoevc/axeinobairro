@@ -339,7 +339,7 @@ function Index() {
           <div className="h-2 w-2 rounded-full bg-emerald-500 animate-ping" />
           <h2 className="text-xs font-black uppercase tracking-widest text-slate-400">Destaques em Araruama</h2>
         </div>
-        <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
           <div className="bg-white border border-slate-100 p-6 rounded-[2rem] flex items-center gap-4 shadow-sm hover:shadow-lg transition-all group">
             <div className="w-12 h-12 bg-slate-50 rounded-2xl flex items-center justify-center text-slate-600 group-hover:bg-orange-600 group-hover:text-white transition-all">
               <Croissant className="w-6 h-6" />
@@ -445,17 +445,17 @@ function Index() {
                         <Star className="w-3 h-3 fill-white" />
                         Destaque
                       </div>
-                      <CardContent className="p-6">
+                      <CardContent className="p-6 flex flex-col h-full">
                         <div className="flex justify-between items-start mb-4">
                           <Badge variant="outline" className="text-[10px] font-bold uppercase py-1 border-slate-200 capitalize">
                             {item.category}
                           </Badge>
                         </div>
                         <div className="flex items-center gap-4 mb-4">
-                          <div className="w-12 h-12 bg-slate-100 rounded-xl flex items-center justify-center text-slate-400 group-hover:bg-orange-600 group-hover:text-white transition-colors">
+                          <div className="w-12 h-12 bg-slate-50 rounded-xl flex items-center justify-center text-slate-400 group-hover:bg-orange-600 group-hover:text-white transition-colors shrink-0">
                             <Briefcase className="w-5 h-5" />
                           </div>
-                          <div>
+                          <div className="min-w-0">
                             <h3 className="font-black text-lg text-slate-900 truncate">{item.name}</h3>
                             <div className="flex items-center gap-1 text-orange-500">
                               <Star className="w-3 h-3 fill-current" />
@@ -464,12 +464,12 @@ function Index() {
                           </div>
                         </div>
                         <div className="mt-auto">
-                        <Button 
-                          onClick={() => window.open(servicesRepository.formatWhatsAppLink(item.phone, "Olá, vi seu destaque no Axêi no Bairro."), "_blank")}
-                          className="w-full bg-slate-900 hover:bg-orange-600 text-white rounded-xl h-12 font-black text-xs uppercase transition-all"
-                        >
-                          Ver Serviço
-                        </Button>
+                          <Button 
+                            onClick={() => window.open(servicesRepository.formatWhatsAppLink(item.phone, "Olá, vi seu destaque no Axêi no Bairro."), "_blank")}
+                            className="w-full bg-slate-900 hover:bg-orange-600 text-white rounded-xl h-12 font-black text-xs uppercase transition-all"
+                          >
+                            Ver Serviço
+                          </Button>
                         </div>
                       </CardContent>
                     </Card>
@@ -530,21 +530,28 @@ function Index() {
       </section>
 
       {/* Representantes */}
-      <section className="max-w-7xl mx-auto px-6 mt-24 bg-slate-900 rounded-[3rem] p-12 text-white">
+      <section className="max-w-7xl mx-auto px-6 mt-24 bg-slate-900 rounded-[3rem] p-8 md:p-12 text-white overflow-hidden">
         <div className="flex flex-col md:flex-row items-center justify-between gap-8">
-          <div className="max-w-xl">
+          <div className="max-w-xl text-center md:text-left">
             <h2 className="text-3xl font-black mb-4">Representantes Locais</h2>
-            <p className="text-slate-400 mb-8">Conheça quem ajuda a conectar moradores, comerciantes e oportunidades na sua região.</p>
-            <Button asChild className="bg-orange-600 hover:bg-orange-700 rounded-xl px-8">
+            <p className="text-slate-400 mb-8 font-medium">Conheça quem ajuda a conectar moradores, comerciantes e oportunidades na sua região.</p>
+            <Button asChild className="bg-orange-600 hover:bg-orange-700 rounded-xl px-8 w-full sm:w-auto h-12 font-black">
               <Link to="/representantes">Ver representantes</Link>
             </Button>
           </div>
-          <div className="flex gap-4">
+          <div className="flex -space-x-4">
             {representativesRepository.getAll().slice(0, 3).map(rep => (
-              <div key={rep.id} className="w-16 h-16 rounded-full bg-slate-700 flex items-center justify-center font-black border-2 border-slate-600">
+              <div 
+                key={rep.id} 
+                className="w-16 h-16 rounded-full bg-slate-700 flex items-center justify-center font-black border-4 border-slate-900 shadow-xl"
+                title={rep.name}
+              >
                 {rep.name.charAt(0)}
               </div>
             ))}
+            <div className="w-16 h-16 rounded-full bg-orange-600 flex items-center justify-center font-black border-4 border-slate-900 shadow-xl text-xs">
+              +{representativesRepository.getAll().length}
+            </div>
           </div>
         </div>
       </section>
@@ -569,24 +576,26 @@ function Index() {
         </div>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
           {services.slice(0, 4).map((service) => (
-            <Card key={service.id} className="rounded-3xl border border-slate-100 hover:shadow-xl transition-all group">
-              <CardContent className="p-6">
+            <Card key={service.id} className="rounded-3xl border border-slate-100 hover:shadow-xl transition-all group flex flex-col h-full">
+              <CardContent className="p-6 flex flex-col h-full">
                 <div className="flex items-center gap-4 mb-4">
-                  <div className="w-12 h-12 bg-slate-50 rounded-xl flex items-center justify-center text-slate-400 group-hover:bg-orange-600 group-hover:text-white transition-colors">
+                  <div className="w-12 h-12 bg-slate-50 rounded-xl flex items-center justify-center text-slate-400 group-hover:bg-orange-600 group-hover:text-white transition-colors shrink-0">
                     <Briefcase className="w-6 h-6" />
                   </div>
-                  <div>
+                  <div className="min-w-0">
                     <h3 className="font-black text-slate-900 truncate">{service.name}</h3>
                     <p className="text-[10px] font-bold text-slate-400 uppercase tracking-widest">{service.category}</p>
                   </div>
                 </div>
-                <Button 
-                  variant="outline"
-                  onClick={() => navigate({ to: '/servicos' })}
-                  className="w-full border-slate-200 rounded-xl font-black text-xs uppercase"
-                >
-                  Solicitar Orçamento
-                </Button>
+                <div className="mt-auto">
+                  <Button 
+                    variant="outline"
+                    onClick={() => navigate({ to: '/servicos' })}
+                    className="w-full border-slate-200 rounded-xl font-black text-xs uppercase h-11"
+                  >
+                    Solicitar Orçamento
+                  </Button>
+                </div>
               </CardContent>
             </Card>
           ))}
@@ -770,10 +779,10 @@ function Index() {
                 </div>
               </div>
               <CardContent className="p-6 flex flex-col flex-1">
-                <h3 className="text-xl font-black text-slate-900 mb-2 group-hover:text-orange-600 transition-colors">
+                <h3 className="text-xl font-black text-slate-900 mb-2 group-hover:text-orange-600 transition-colors line-clamp-1">
                   {rec.title}
                 </h3>
-                <p className="text-sm text-slate-500 mb-6 line-clamp-2 font-medium">
+                <p className="text-sm text-slate-500 mb-6 line-clamp-3 font-medium min-h-[4.5rem]">
                   {rec.description}
                 </p>
                 <div className="mt-auto">
