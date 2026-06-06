@@ -324,7 +324,7 @@ function Index() {
       </section>
 
       {/* 3. Mais Procurados (Discovery) */}
-      <section className="max-w-[1440px] mx-auto px-6 mt-8 md:mt-12 mb-24">
+      <section className="max-w-[1440px] mx-auto px-6 mt-12 md:mt-24 mb-24">
         <div className="text-center md:text-left mb-8">
            <h2 className="text-2xl font-black text-slate-900 tracking-tight flex items-center gap-3 justify-center md:justify-start">
              <SearchCheck className="w-6 h-6 text-orange-600" />
