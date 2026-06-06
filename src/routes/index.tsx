@@ -187,7 +187,7 @@ function Index() {
                     <Newspaper className="w-5 h-5 text-orange-600" /> Notícias
                   </h2>
                   <div className="space-y-6">
-                    {news.filter(n => n.category !== 'Evento').slice(0, 3).map(n => (
+                    {news.filter(n => n.category !== 'eventos').slice(0, 3).map(n => (
                       <div key={n.id} className="group cursor-pointer" onClick={() => navigate({ to: '/noticias' })}>
                         <span className="text-[8px] font-black uppercase text-orange-600 mb-1 block">{n.category}</span>
                         <h4 className="font-bold text-slate-900 text-sm group-hover:text-orange-600 transition-colors leading-tight">{n.title}</h4>
