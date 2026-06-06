@@ -344,7 +344,7 @@ function Index() {
       </div>
 
       {/* 4. Ofertas do Bairro - High Visibility */}
-      <section className="max-w-7xl mx-auto px-6 mt-24 pb-20">
+      <section className="max-w-[1440px] mx-auto px-6 mt-24 pb-20">
         <div className="bg-orange-600 rounded-[3rem] p-8 md:p-16 relative overflow-hidden shadow-2xl shadow-orange-200">
           <div className="relative z-10 flex flex-col md:flex-row md:items-end justify-between mb-12 gap-4">
             <div>
