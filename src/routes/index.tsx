@@ -306,7 +306,7 @@ function Index() {
       </section>
 
       {/* 3. Mais Procurados (Discovery) */}
-      <section className="max-w-7xl mx-auto px-6 mt-12 mb-24">
+      <section className="max-w-[1440px] mx-auto px-6 mt-12 mb-24">
         <div className="text-center md:text-left mb-8">
            <h2 className="text-2xl font-black text-slate-900 tracking-tight">Mais procurados no bairro</h2>
            <p className="text-sm font-medium text-slate-500">Encontre o que você precisa rapidamente</p>
