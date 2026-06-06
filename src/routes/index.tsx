@@ -29,7 +29,11 @@ import {
     Sparkles,
     Calendar,
     ArrowUpRight,
-    SearchCheck
+    SearchCheck,
+    LayoutGrid,
+    Flame,
+    ArrowRightCircle,
+    CheckCircle2
   } from "lucide-react";
 
 import { categories } from "@/data/merchants";
@@ -169,108 +173,105 @@ function Index() {
   return (
     <div className="min-h-screen bg-slate-50 pb-24 font-sans selection:bg-violet-100 max-w-[1440px] mx-auto">
       <TopBar />
-      
+      {/* Hero & Multi-Content Dobra Section */}
+      <section className="bg-white border-b border-slate-100">
+        <div className="max-w-[1440px] mx-auto">
+          <div className="flex flex-col lg:flex-row min-h-[500px]">
+            {/* Main Content Area (65%) */}
+            <div className="flex-[1.8] border-r border-slate-50 p-6 md:p-10 flex flex-col justify-center relative overflow-hidden">
+               <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,_var(--tw-gradient-stops))] from-orange-50/40 via-transparent to-transparent opacity-70 pointer-events-none" />
+               
+               <div className="relative z-10">
+                  <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-orange-50 text-orange-600 text-[10px] font-black uppercase tracking-widest mb-6 border border-orange-100">
+                    <Flame className="h-3 w-3 animate-pulse" />
+                    Bairro Vivo Araruama
+                  </div>
+                  
+                  <h1 className="text-4xl md:text-7xl lg:text-8xl font-black tracking-tighter text-slate-900 mb-6 leading-[0.85]">
+                    O Portal da Sua <br />
+                    <span className="text-orange-600">Comunidade.</span>
+                  </h1>
+                  
+                  <p className="text-slate-500 text-base md:text-xl font-medium mb-10 leading-relaxed max-w-xl">
+                    Tudo o que acontece agora no bairro: ofertas, <br className="hidden md:block" /> serviços, notícias e oportunidades reais.
+                  </p>
 
-      {/* Desktop-only Rotating Banner Commercial */}
-      <div className="hidden lg:block w-full bg-slate-900 overflow-hidden relative group">
-        <div className="max-w-[1440px] mx-auto px-6 py-2.5 flex items-center justify-between text-white text-[10px] font-black uppercase tracking-[0.2em]">
-          <div className="flex items-center gap-10">
-             <Link to="/negocios" className="flex items-center gap-2 hover:text-orange-500 transition-colors group">
-                <Tag className="w-3.5 h-3.5 text-orange-500 group-hover:scale-110 transition-transform" /> 
-                Ofertas da Semana
-                <ArrowUpRight className="w-2.5 h-2.5 opacity-0 group-hover:opacity-100 transition-opacity" />
-             </Link>
-             <Link to="/noticias" className="flex items-center gap-2 hover:text-orange-500 transition-colors group">
-                <Calendar className="w-3.5 h-3.5 text-orange-500 group-hover:scale-110 transition-transform" /> 
-                Próximos Eventos
-                <ArrowUpRight className="w-2.5 h-2.5 opacity-0 group-hover:opacity-100 transition-opacity" />
-             </Link>
-             <Link to="/como-funciona" className="flex items-center gap-2 hover:text-orange-500 transition-colors group">
-                <Newspaper className="w-3.5 h-3.5 text-orange-500 group-hover:scale-110 transition-transform" /> 
-                Informativo Bairro
-                <ArrowUpRight className="w-2.5 h-2.5 opacity-0 group-hover:opacity-100 transition-opacity" />
-             </Link>
-             <div className="flex items-center gap-2 text-slate-400">
-                <Users className="w-3.5 h-3.5 text-orange-500/50" /> 
-                Novos Apoiadores
-             </div>
-          </div>
-          <Link to="/planos" className="bg-orange-600 px-3 py-1 rounded-md text-[9px] hover:bg-orange-700 transition-all shadow-lg shadow-orange-900/40">Anuncie aqui</Link>
-        </div>
-      </div>
+                  <div className="flex flex-col gap-4">
+                    <form onSubmit={handleSearch} className="relative max-w-xl group">
+                      <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-slate-400 group-focus-within:text-orange-500 transition-colors" />
+                      <input 
+                        type="text" 
+                        placeholder="O que você procura hoje?"
+                        className="w-full bg-white border border-slate-200 rounded-2xl py-5 pl-12 pr-32 text-sm md:text-base font-medium outline-none focus:ring-4 focus:ring-orange-500/5 focus:border-orange-600 transition-all shadow-xl shadow-slate-200/50"
+                        value={searchTerm}
+                        onChange={(e) => setSearchTerm(e.target.value)}
+                      />
+                      <Button 
+                        type="submit"
+                        className="absolute right-2 top-1/2 -translate-y-1/2 h-12 px-6 bg-slate-900 hover:bg-slate-800 text-white rounded-xl font-black text-xs uppercase tracking-widest transition-all active:scale-95"
+                      >
+                        Buscar
+                      </Button>
+                    </form>
 
-      {/* Hero Banner - Simplified */}
-      <section className="relative overflow-hidden bg-white border-b border-slate-100">
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,_var(--tw-gradient-stops))] from-violet-50/50 via-transparent to-transparent opacity-70" />
-        
-        <div className="max-w-[1440px] mx-auto px-6 py-4 md:py-16 relative z-10 flex flex-col md:flex-row items-center gap-12">
-          <div className="flex-1 text-center md:text-left">
-            <h1 className="text-4xl md:text-7xl font-black tracking-tighter text-slate-900 mb-2 md:mb-4 leading-[0.85]">
-              O Ecossistema Digital <br className="hidden md:block" />
-              <span className="text-orange-600">da Sua Comunidade</span>
-            </h1>
-            <p className="text-slate-500 text-sm md:text-lg font-medium mb-6 md:mb-8 leading-relaxed max-w-xl mx-auto md:mx-0">
-              Conectando moradores, negócios e serviços para fortalecer o bairro e criar novas oportunidades para todos.
-            </p>
-            
-            <div className="flex flex-col gap-4 md:gap-6">
-              <form onSubmit={handleSearch} className="relative max-w-xl group">
-                <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-4 md:w-5 h-4 md:h-5 text-slate-400 group-focus-within:text-orange-500 transition-colors" />
-                <input 
-                  type="text" 
-                  placeholder="O que você procura hoje?"
-                  className="w-full bg-white border border-slate-200 rounded-xl md:rounded-2xl py-4 md:py-5 pl-11 md:pl-12 pr-28 md:pr-32 text-xs md:text-base font-medium outline-none focus:ring-4 focus:ring-orange-500/5 focus:border-orange-600 transition-all shadow-xl shadow-slate-200/50"
-                  value={searchTerm}
-                  onChange={(e) => setSearchTerm(e.target.value)}
-                />
-                <Button 
-                  type="submit"
-                  className="absolute right-1.5 md:right-2 top-1/2 -translate-y-1/2 h-9 md:h-12 px-4 md:px-6 bg-slate-900 hover:bg-slate-800 text-white rounded-lg md:rounded-xl font-black text-[10px] md:text-xs uppercase tracking-widest transition-all active:scale-95"
-                >
-                  Buscar
-                </Button>
-              </form>
-
-               <div className="flex flex-row gap-3 mt-2">
-                <Button 
-                  onClick={() => navigate({ to: '/negocios' })}
-                  className="flex-1 md:flex-none h-11 md:h-16 md:px-10 bg-orange-600 hover:bg-orange-700 text-white rounded-xl md:rounded-2xl font-black shadow-lg shadow-orange-200 transition-all active:scale-95 text-xs md:text-lg group"
-                >
-                  Ver lojas
-                  <ChevronRight className="ml-1 md:ml-2 h-4 w-4 md:h-5 md:w-5 transition-transform group-hover:translate-x-1" />
-                </Button>
-                <Button 
-                  variant="outline"
-                  onClick={() => navigate({ to: '/cadastro' })}
-                  className="flex-1 md:flex-none h-11 md:h-16 md:px-10 bg-white border-slate-200 text-slate-700 rounded-xl md:rounded-2xl font-black hover:bg-slate-50 transition-all active:scale-95 text-xs md:text-lg"
-                >
-                  Anunciar
-                </Button>
-              </div>
+                    <div className="flex items-center gap-4 text-xs font-bold text-slate-400 mt-2 px-1 overflow-x-auto no-scrollbar whitespace-nowrap">
+                       <span className="flex items-center gap-1.5"><CheckCircle2 className="w-3.5 h-3.5 text-emerald-500" /> Ofertas Reais</span>
+                       <span className="flex items-center gap-1.5 ml-4"><CheckCircle2 className="w-3.5 h-3.5 text-emerald-500" /> Profissionais Verificados</span>
+                       <span className="flex items-center gap-1.5 ml-4"><CheckCircle2 className="w-3.5 h-3.5 text-emerald-500" /> Notícias Locais</span>
+                    </div>
+                  </div>
+               </div>
             </div>
-          </div>
 
-          <div className="flex-1 w-full max-w-md hidden md:block">
-            <div className="relative">
-               <div className="absolute -inset-4 bg-orange-100 rounded-[3rem] blur-3xl opacity-30 animate-pulse" />
-               <div className="relative bg-white border border-slate-100 p-8 rounded-[3rem] shadow-2xl space-y-6">
-                  <div className="flex items-center gap-4 p-4 bg-slate-50 rounded-2xl">
-                     <div className="w-12 h-12 bg-orange-600 rounded-xl flex items-center justify-center text-white">
-                        <Star className="w-6 h-6 fill-white" />
+            {/* Side Highlights Column (35%) */}
+            <div className="flex-1 bg-slate-50/50 p-6 md:p-8 flex flex-col gap-6">
+               <div className="flex items-center justify-between mb-2">
+                  <h3 className="text-xs font-black uppercase tracking-[0.2em] text-slate-400">Em Destaque Agora</h3>
+                  <div className="h-2 w-2 rounded-full bg-emerald-500 animate-ping" />
+               </div>
+
+               {/* Rotating Mini Banner */}
+               <div className="bg-slate-900 rounded-[2rem] p-6 text-white relative overflow-hidden group cursor-pointer" onClick={() => navigate({ to: '/negocios', search: { hasPromotion: true } })}>
+                  <div className="absolute top-0 right-0 p-4 opacity-10 group-hover:scale-110 transition-transform">
+                     <Tag className="w-20 h-20 rotate-12" />
+                  </div>
+                  <Badge className="bg-orange-600 text-white mb-3 text-[9px] uppercase font-black tracking-widest border-none">Super Oferta</Badge>
+                  <h4 className="text-xl font-black leading-tight mb-2">Cantina da Nonna</h4>
+                  <p className="text-slate-400 text-xs font-medium mb-4">50% Off em Vinhos selecionados somente hoje!</p>
+                  <div className="flex items-center gap-2 text-xs font-black text-orange-500 uppercase tracking-widest">
+                     Ver Oferta <ArrowRight className="w-3 h-3" />
+                  </div>
+               </div>
+
+               {/* Upcoming Event Snippet */}
+               <div className="bg-white border border-slate-100 rounded-[2rem] p-6 shadow-sm hover:shadow-md transition-shadow cursor-pointer" onClick={() => navigate({ to: '/admin/agenda' })}>
+                  <div className="flex gap-4">
+                     <div className="bg-orange-50 text-orange-600 w-12 h-12 rounded-xl flex flex-col items-center justify-center shrink-0 border border-orange-100">
+                        <span className="text-lg font-black leading-none">15</span>
+                        <span className="text-[8px] font-black uppercase">JUN</span>
                      </div>
                      <div>
-                        <div className="text-xs font-black text-slate-400 uppercase tracking-widest">Destaque de hoje</div>
-                        <div className="text-sm font-bold text-slate-900">Cantina da Nonna</div>
+                        <h4 className="font-black text-slate-900 text-sm leading-tight mb-1">Festival do Pescado 2026</h4>
+                        <p className="text-slate-400 text-[10px] font-bold uppercase tracking-widest flex items-center gap-1">
+                           <MapPin className="w-2.5 h-2.5" /> Praça do Centro
+                        </p>
                      </div>
                   </div>
-                  <div className="flex items-center gap-4 p-4 bg-slate-50 rounded-2xl">
-                     <div className="w-12 h-12 bg-emerald-500 rounded-xl flex items-center justify-center text-white">
-                        <Tag className="w-6 h-6" />
+               </div>
+
+               {/* Quick Info / Announcements */}
+               <div className="bg-white border border-slate-100 rounded-[2rem] p-6 shadow-sm flex flex-col gap-4">
+                  <div className="flex items-center gap-3">
+                     <div className="w-8 h-8 rounded-lg bg-violet-50 text-violet-600 flex items-center justify-center shrink-0">
+                        <Users className="w-4 h-4" />
                      </div>
-                     <div>
-                        <div className="text-xs font-black text-slate-400 uppercase tracking-widest">Oferta ativa</div>
-                        <div className="text-sm font-bold text-slate-900">50% Off em Vinhos</div>
-                     </div>
+                     <span className="text-[10px] font-black text-slate-500 uppercase tracking-widest">Apoiadores da Semana</span>
+                  </div>
+                  <div className="flex -space-x-2">
+                    {[1,2,3,4].map(i => (
+                      <div key={i} className="w-8 h-8 rounded-full bg-slate-200 border-2 border-white shadow-sm" />
+                    ))}
+                    <div className="w-8 h-8 rounded-full bg-orange-600 text-white text-[8px] font-black flex items-center justify-center border-2 border-white">+12</div>
                   </div>
                </div>
             </div>
@@ -278,49 +279,59 @@ function Index() {
         </div>
       </section>
 
-      {/* 2. Acontecendo Agora - Priority Focus */}
-      <section className="max-w-[1440px] mx-auto px-6 mt-8 md:mt-12 mb-12">
-        <div className="flex items-center gap-2 mb-6">
-          <div className="h-2 w-2 rounded-full bg-emerald-500 animate-ping" />
-          <h2 className="text-xs font-black uppercase tracking-widest text-slate-400">Araruama em Tempo Real</h2>
-        </div>
-        <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 md:gap-4">
-          <div className="bg-white border border-slate-100 p-4 md:p-6 rounded-2xl md:rounded-[2rem] flex items-center gap-3 md:gap-4 shadow-sm hover:shadow-lg transition-all group cursor-pointer" onClick={() => navigate({ to: '/negocios', search: { categoria: 'alimentacao' } })}>
-            <div className="w-10 h-10 md:w-12 md:h-12 bg-slate-50 rounded-xl md:rounded-2xl flex items-center justify-center text-slate-600 group-hover:bg-orange-600 group-hover:text-white transition-all shrink-0">
-              <Croissant className="w-5 h-5 md:w-6 md:h-6" />
-            </div>
-            <div>
-              <div className="text-xs md:text-sm font-black text-slate-900 leading-none mb-1">Padarias</div>
-              <div className="text-[8px] md:text-[10px] font-bold text-slate-400 uppercase tracking-tight">Pão quentinho</div>
-            </div>
-          </div>
-          <div className="bg-white border border-slate-100 p-4 md:p-6 rounded-2xl md:rounded-[2rem] flex items-center gap-3 md:gap-4 shadow-sm hover:shadow-lg transition-all group cursor-pointer" onClick={() => navigate({ to: '/negocios', search: { hasPromotion: true } })}>
-            <div className="w-10 h-10 md:w-12 md:h-12 bg-slate-50 rounded-xl md:rounded-2xl flex items-center justify-center text-slate-600 group-hover:bg-orange-600 group-hover:text-white transition-all shrink-0">
-              <Tag className="w-5 h-5 md:w-6 md:h-6" />
-            </div>
-            <div>
-              <div className="text-xs md:text-sm font-black text-slate-900 leading-none mb-1">Ofertas</div>
-              <div className="text-[8px] md:text-[10px] font-bold text-slate-400 uppercase tracking-tight">Economia</div>
-            </div>
-          </div>
-          <div className="bg-white border border-slate-100 p-4 md:p-6 rounded-2xl md:rounded-[2rem] flex items-center gap-3 md:gap-4 shadow-sm hover:shadow-lg transition-all group cursor-pointer" onClick={() => navigate({ to: '/transporte' })}>
-            <div className="w-10 h-10 md:w-12 md:h-12 bg-slate-50 rounded-xl md:rounded-2xl flex items-center justify-center text-slate-600 group-hover:bg-orange-600 group-hover:text-white transition-all shrink-0">
-              <Bike className="w-5 h-5 md:w-6 md:h-6" />
-            </div>
-            <div>
-              <div className="text-xs md:text-sm font-black text-slate-900 leading-none mb-1">Mobilidade</div>
-              <div className="text-[8px] md:text-[10px] font-bold text-slate-400 uppercase tracking-tight">Transporte</div>
-            </div>
-          </div>
-          <div className="bg-white border border-slate-100 p-4 md:p-6 rounded-2xl md:rounded-[2rem] flex items-center gap-3 md:gap-4 shadow-sm hover:shadow-lg transition-all group cursor-pointer" onClick={() => navigate({ to: '/noticias' })}>
-            <div className="w-10 h-10 md:w-12 md:h-12 bg-slate-50 rounded-xl md:rounded-2xl flex items-center justify-center text-slate-600 group-hover:bg-orange-600 group-hover:text-white transition-all shrink-0">
-              <Newspaper className="w-5 h-5 md:w-6 md:h-6" />
-            </div>
-            <div>
-              <div className="text-xs md:text-sm font-black text-slate-900 leading-none mb-1">Novidades</div>
-              <div className="text-[8px] md:text-[10px] font-bold text-slate-400 uppercase tracking-tight">Informativos</div>
-            </div>
-          </div>
+      {/* 2. Conteúdo de Resumo e Acesso Rápido */}
+      <section className="max-w-[1440px] mx-auto px-6 mt-12 mb-12">
+        <div className="grid grid-cols-1 md:grid-cols-12 gap-8">
+           {/* Notícias Quick Feed (8 columns) */}
+           <div className="md:col-span-8">
+              <div className="flex items-center justify-between mb-6">
+                 <h2 className="text-xl font-black text-slate-900 flex items-center gap-3">
+                   <Newspaper className="w-5 h-5 text-orange-600" />
+                   Notícias do Bairro
+                 </h2>
+                 <Link to="/noticias" className="text-orange-600 font-bold text-xs flex items-center hover:underline uppercase tracking-widest">
+                   Ver todas <ArrowRightCircle className="w-3.5 h-3.5 ml-1.5" />
+                 </Link>
+              </div>
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                 {newsRepository.getAll().slice(0, 2).map(item => (
+                   <div key={item.id} className="bg-white p-4 rounded-[2rem] border border-slate-100 flex gap-4 hover:shadow-lg transition-all group cursor-pointer" onClick={() => navigate({ to: '/noticias' })}>
+                      <div className="w-20 h-20 rounded-2xl overflow-hidden shrink-0">
+                         <img src={item.imageUrl} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" alt="" />
+                      </div>
+                      <div className="min-w-0">
+                         <span className="text-[9px] font-black uppercase text-orange-600 bg-orange-50 px-2 py-0.5 rounded-md mb-2 inline-block">{item.category}</span>
+                         <h3 className="font-black text-slate-900 leading-tight text-sm line-clamp-2 group-hover:text-orange-600 transition-colors">{item.title}</h3>
+                      </div>
+                   </div>
+                 ))}
+              </div>
+           </div>
+
+           {/* Categorias / Busca Rápida (4 columns) */}
+           <div className="md:col-span-4">
+              <div className="flex items-center gap-3 mb-6">
+                 <h2 className="text-xl font-black text-slate-900">Navegar por</h2>
+              </div>
+              <div className="grid grid-cols-2 gap-3">
+                 <div className="bg-white border border-slate-100 p-4 rounded-2xl flex flex-col items-center justify-center gap-2 hover:bg-orange-600 hover:border-orange-600 group transition-all cursor-pointer shadow-sm hover:shadow-orange-200" onClick={() => navigate({ to: '/negocios', search: { categoria: 'alimentacao' } })}>
+                    <Croissant className="w-6 h-6 text-slate-400 group-hover:text-white transition-colors" />
+                    <span className="text-[10px] font-black uppercase text-slate-500 group-hover:text-white transition-colors">Padarias</span>
+                 </div>
+                 <div className="bg-white border border-slate-100 p-4 rounded-2xl flex flex-col items-center justify-center gap-2 hover:bg-orange-600 hover:border-orange-600 group transition-all cursor-pointer shadow-sm hover:shadow-orange-200" onClick={() => navigate({ to: '/negocios', search: { hasPromotion: true } })}>
+                    <Tag className="w-6 h-6 text-slate-400 group-hover:text-white transition-colors" />
+                    <span className="text-[10px] font-black uppercase text-slate-500 group-hover:text-white transition-colors">Ofertas</span>
+                 </div>
+                 <div className="bg-white border border-slate-100 p-4 rounded-2xl flex flex-col items-center justify-center gap-2 hover:bg-orange-600 hover:border-orange-600 group transition-all cursor-pointer shadow-sm hover:shadow-orange-200" onClick={() => navigate({ to: '/transporte' })}>
+                    <Bike className="w-6 h-6 text-slate-400 group-hover:text-white transition-colors" />
+                    <span className="text-[10px] font-black uppercase text-slate-500 group-hover:text-white transition-colors">Transporte</span>
+                 </div>
+                 <div className="bg-white border border-slate-100 p-4 rounded-2xl flex flex-col items-center justify-center gap-2 hover:bg-orange-600 hover:border-orange-600 group transition-all cursor-pointer shadow-sm hover:shadow-orange-200" onClick={() => navigate({ to: '/servicos' })}>
+                    <Briefcase className="w-6 h-6 text-slate-400 group-hover:text-white transition-colors" />
+                    <span className="text-[10px] font-black uppercase text-slate-500 group-hover:text-white transition-colors">Serviços</span>
+                 </div>
+              </div>
+           </div>
         </div>
       </section>
 
@@ -379,24 +390,24 @@ function Index() {
       {/* 4. Ofertas do Bairro - High Visibility */}
       <section className="max-w-[1440px] mx-auto px-6 mt-24 pb-20">
         <div className="bg-orange-600 rounded-[3rem] p-8 md:p-16 relative overflow-hidden shadow-2xl shadow-orange-200">
-          <div className="relative z-10 flex flex-col md:flex-row md:items-end justify-between mb-12 gap-4">
+          <div className="relative z-10 flex flex-col md:flex-row md:items-end justify-between mb-8 md:mb-12 gap-4">
             <div>
-              <h2 className="text-4xl md:text-6xl font-black text-white tracking-tighter">
+              <h2 className="text-3xl md:text-6xl font-black text-white tracking-tighter">
                 Ofertas do Bairro
               </h2>
-              <p className="text-orange-100 font-medium text-xl mt-4">
-                Economize comprando no comércio local de Araruama
+              <p className="text-orange-100 font-medium text-lg md:text-xl mt-2 md:mt-4">
+                Economize no comércio local
               </p>
             </div>
             <Button 
               variant="outline"
               onClick={() => navigate({ to: '/negocios', search: { hasPromotion: true } })}
-              className="bg-white text-orange-600 hover:bg-orange-50 font-black rounded-xl border-none h-12 px-8 shadow-xl shadow-orange-900/20 transition-all active:scale-95"
+              className="bg-white text-orange-600 hover:bg-orange-50 font-black rounded-xl border-none h-11 md:h-12 px-6 md:px-8 shadow-xl shadow-orange-900/20 transition-all active:scale-95"
             >
-              Ver todas as ofertas
+              Ver todas
             </Button>
           </div>
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 relative z-10">
+          <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6 relative z-10">
             {isLoading 
               ? [...Array(4)].map((_, i) => <MerchantSkeleton key={i} />)
               : promotionalMerchants.slice(0, 4).map((merchant) => (
@@ -409,17 +420,17 @@ function Index() {
 
       {/* 5. Destaques do Bairro (Phase 8.3) */}
       <section className="max-w-[1440px] mx-auto px-6 mt-12">
-        <div className="flex flex-col md:flex-row md:items-end justify-between mb-12 gap-4">
+        <div className="flex flex-col md:flex-row md:items-end justify-between mb-8 md:mb-12 gap-4">
           <div>
             <div className="inline-flex items-center gap-2 px-2 py-0.5 rounded-md bg-orange-50 text-orange-600 text-[10px] font-black uppercase tracking-widest mb-4 border border-orange-100 shadow-sm">
               <Zap className="h-3 w-3 fill-orange-600" />
               Patrocinado
             </div>
-            <h2 className="text-4xl font-black text-slate-900 tracking-tighter">
+            <h2 className="text-3xl md:text-4xl font-black text-slate-900 tracking-tighter">
               Destaques em Evidência
             </h2>
-            <p className="text-slate-500 font-medium text-lg mt-2">
-              Os melhores profissionais e lojas em destaque na sua região.
+            <p className="text-slate-500 font-medium text-base mt-1 md:mt-2">
+              Lojas e profissionais em destaque na sua região.
             </p>
           </div>
         </div>
