@@ -604,7 +604,7 @@ function Index() {
       
       {/* Promoções Comuns (Level C) */}
       {levelCMerchants.length > 0 && (
-        <section className="max-w-7xl mx-auto px-6 mt-12 pb-20">
+        <section className="max-w-[1440px] mx-auto px-6 mt-12 pb-20">
           <div className="flex flex-col md:flex-row md:items-end justify-between mb-12 gap-4">
             <div>
               <div className="inline-flex items-center gap-2 px-2 py-0.5 rounded-md bg-orange-50 text-orange-600 text-[10px] font-black uppercase tracking-widest mb-4 border border-orange-100">
@@ -612,26 +612,6 @@ function Index() {
               </div>
               <h2 className="text-4xl font-black text-slate-900 tracking-tighter">Economia Local</h2>
               <p className="text-slate-500 font-medium text-lg mt-2">Confira outras oportunidades imperdíveis no bairro</p>
-            </div>
-          </div>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-            {levelCMerchants.map((merchant) => (
-              <MerchantCard key={merchant.id} merchant={merchant} />
-            ))}
-          </div>
-        </section>
-      )}
-
-      {/* Promoções Comuns (Level C) */}
-      {levelCMerchants.length > 0 && (
-        <section className="max-w-7xl mx-auto px-6 mt-24 pb-20">
-          <div className="flex flex-col md:flex-row md:items-end justify-between mb-12 gap-4">
-            <div>
-              <div className="inline-flex items-center gap-2 px-2 py-0.5 rounded-md bg-orange-50 text-orange-600 text-[10px] font-black uppercase tracking-widest mb-4 border border-orange-100">
-                Promoção Comum
-              </div>
-              <h2 className="text-4xl font-black text-slate-900 tracking-tighter">Mais Promoções</h2>
-              <p className="text-slate-500 font-medium text-lg mt-2">Confira outras ofertas imperdíveis no bairro</p>
             </div>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
