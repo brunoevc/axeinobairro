@@ -34,7 +34,7 @@ export const FloatingNav = memo(function FloatingNav() {
         className={`flex flex-col items-center gap-1 px-3 py-2 rounded-2xl transition-all duration-300 ${isActive('/servicos') ? 'text-orange-600 bg-orange-50' : 'text-slate-400 hover:text-slate-600'}`}
       >
         <Wrench className={`w-5 h-5 ${isActive('/servicos') ? 'scale-110' : ''}`} />
-        <span className="text-[9px] font-black uppercase tracking-tighter">Jobs</span>
+        <span className="text-[9px] font-black uppercase tracking-tighter">Serviços</span>
       </Link>
 
       <Link 
@@ -42,7 +42,7 @@ export const FloatingNav = memo(function FloatingNav() {
         className={`flex flex-col items-center gap-1 px-3 py-2 rounded-2xl transition-all duration-300 ${isActive('/transporte') ? 'text-orange-600 bg-orange-50' : 'text-slate-400 hover:text-slate-600'}`}
       >
         <Car className={`w-5 h-5 ${isActive('/transporte') ? 'scale-110' : ''}`} />
-        <span className="text-[9px] font-black uppercase tracking-tighter">Rides</span>
+        <span className="text-[9px] font-black uppercase tracking-tighter">Transporte</span>
       </Link>
 
       <Link 
@@ -58,7 +58,7 @@ export const FloatingNav = memo(function FloatingNav() {
         className={`flex flex-col items-center gap-1 px-3 py-2 rounded-2xl transition-all duration-300 ${isActive('/noticias') ? 'text-orange-600 bg-orange-50' : 'text-slate-400 hover:text-slate-600'}`}
       >
         <Newspaper className={`w-5 h-5 ${isActive('/noticias') ? 'scale-110' : ''}`} />
-        <span className="text-[9px] font-black uppercase tracking-tighter">News</span>
+        <span className="text-[9px] font-black uppercase tracking-tighter">Notícias</span>
       </Link>
 
       <Link 
