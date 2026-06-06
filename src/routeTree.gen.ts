@@ -46,14 +46,19 @@ import { Route as AdminServicosRouteImport } from './routes/admin/servicos'
 import { Route as AdminRepresentantesRouteImport } from './routes/admin/representantes'
 import { Route as AdminRecomendacoesRouteImport } from './routes/admin/recomendacoes'
 import { Route as AdminPlanosRouteImport } from './routes/admin/planos'
+import { Route as AdminNoticiasRouteImport } from './routes/admin/noticias'
 import { Route as AdminLojasRouteImport } from './routes/admin/lojas'
 import { Route as AdminLeadsRouteImport } from './routes/admin/leads'
 import { Route as AdminInsightsRouteImport } from './routes/admin/insights'
 import { Route as AdminFeedbacksRouteImport } from './routes/admin/feedbacks'
 import { Route as AdminDestaquesRouteImport } from './routes/admin/destaques'
+import { Route as AdminCobrancasRouteImport } from './routes/admin/cobrancas'
 import { Route as AdminCampanhasRouteImport } from './routes/admin/campanhas'
 import { Route as AdminAvaliacoesRouteImport } from './routes/admin/avaliacoes'
 import { Route as AdminAprovacoesRouteImport } from './routes/admin/aprovacoes'
+import { Route as AdminAgendaRouteImport } from './routes/admin/agenda'
+import { Route as NegociosIdAgendarRouteImport } from './routes/negocios/$id/agendar'
+import { Route as CheckoutPixIdRouteImport } from './routes/checkout/pix/$id'
 
 const TransporteRoute = TransporteRouteImport.update({
   id: '/transporte',
@@ -240,6 +245,11 @@ const AdminPlanosRoute = AdminPlanosRouteImport.update({
   path: '/planos',
   getParentRoute: () => AdminRoute,
 } as any)
+const AdminNoticiasRoute = AdminNoticiasRouteImport.update({
+  id: '/noticias',
+  path: '/noticias',
+  getParentRoute: () => AdminRoute,
+} as any)
 const AdminLojasRoute = AdminLojasRouteImport.update({
   id: '/lojas',
   path: '/lojas',
@@ -265,6 +275,11 @@ const AdminDestaquesRoute = AdminDestaquesRouteImport.update({
   path: '/destaques',
   getParentRoute: () => AdminRoute,
 } as any)
+const AdminCobrancasRoute = AdminCobrancasRouteImport.update({
+  id: '/cobrancas',
+  path: '/cobrancas',
+  getParentRoute: () => AdminRoute,
+} as any)
 const AdminCampanhasRoute = AdminCampanhasRouteImport.update({
   id: '/campanhas',
   path: '/campanhas',
@@ -279,6 +294,21 @@ const AdminAprovacoesRoute = AdminAprovacoesRouteImport.update({
   id: '/aprovacoes',
   path: '/aprovacoes',
   getParentRoute: () => AdminRoute,
+} as any)
+const AdminAgendaRoute = AdminAgendaRouteImport.update({
+  id: '/agenda',
+  path: '/agenda',
+  getParentRoute: () => AdminRoute,
+} as any)
+const NegociosIdAgendarRoute = NegociosIdAgendarRouteImport.update({
+  id: '/agendar',
+  path: '/agendar',
+  getParentRoute: () => NegociosIdRoute,
+} as any)
+const CheckoutPixIdRoute = CheckoutPixIdRouteImport.update({
+  id: '/checkout/pix/$id',
+  path: '/checkout/pix/$id',
+  getParentRoute: () => rootRouteImport,
 } as any)
 
 export interface FileRoutesByFullPath {
@@ -303,21 +333,24 @@ export interface FileRoutesByFullPath {
   '/representantes-programa': typeof RepresentantesProgramaRoute
   '/servicos': typeof ServicosRoute
   '/transporte': typeof TransporteRoute
+  '/admin/agenda': typeof AdminAgendaRoute
   '/admin/aprovacoes': typeof AdminAprovacoesRoute
   '/admin/avaliacoes': typeof AdminAvaliacoesRoute
   '/admin/campanhas': typeof AdminCampanhasRoute
+  '/admin/cobrancas': typeof AdminCobrancasRoute
   '/admin/destaques': typeof AdminDestaquesRoute
   '/admin/feedbacks': typeof AdminFeedbacksRoute
   '/admin/insights': typeof AdminInsightsRoute
   '/admin/leads': typeof AdminLeadsRoute
   '/admin/lojas': typeof AdminLojasRoute
+  '/admin/noticias': typeof AdminNoticiasRoute
   '/admin/planos': typeof AdminPlanosRoute
   '/admin/recomendacoes': typeof AdminRecomendacoesRoute
   '/admin/representantes': typeof AdminRepresentantesRoute
   '/admin/servicos': typeof AdminServicosRoute
   '/admin/transporte': typeof AdminTransporteRoute
   '/loja/$slug': typeof LojaSlugRoute
-  '/negocios/$id': typeof NegociosIdRoute
+  '/negocios/$id': typeof NegociosIdRouteWithChildren
   '/painel/comunidade': typeof PainelComunidadeRoute
   '/painel/lojista': typeof PainelLojistaRoute
   '/painel/morador': typeof PainelMoradorRoute
@@ -327,6 +360,8 @@ export interface FileRoutesByFullPath {
   '/admin/': typeof AdminIndexRoute
   '/negocios/': typeof NegociosIndexRoute
   '/painel/': typeof PainelIndexRoute
+  '/checkout/pix/$id': typeof CheckoutPixIdRoute
+  '/negocios/$id/agendar': typeof NegociosIdAgendarRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -347,21 +382,24 @@ export interface FileRoutesByTo {
   '/representantes-programa': typeof RepresentantesProgramaRoute
   '/servicos': typeof ServicosRoute
   '/transporte': typeof TransporteRoute
+  '/admin/agenda': typeof AdminAgendaRoute
   '/admin/aprovacoes': typeof AdminAprovacoesRoute
   '/admin/avaliacoes': typeof AdminAvaliacoesRoute
   '/admin/campanhas': typeof AdminCampanhasRoute
+  '/admin/cobrancas': typeof AdminCobrancasRoute
   '/admin/destaques': typeof AdminDestaquesRoute
   '/admin/feedbacks': typeof AdminFeedbacksRoute
   '/admin/insights': typeof AdminInsightsRoute
   '/admin/leads': typeof AdminLeadsRoute
   '/admin/lojas': typeof AdminLojasRoute
+  '/admin/noticias': typeof AdminNoticiasRoute
   '/admin/planos': typeof AdminPlanosRoute
   '/admin/recomendacoes': typeof AdminRecomendacoesRoute
   '/admin/representantes': typeof AdminRepresentantesRoute
   '/admin/servicos': typeof AdminServicosRoute
   '/admin/transporte': typeof AdminTransporteRoute
   '/loja/$slug': typeof LojaSlugRoute
-  '/negocios/$id': typeof NegociosIdRoute
+  '/negocios/$id': typeof NegociosIdRouteWithChildren
   '/painel/comunidade': typeof PainelComunidadeRoute
   '/painel/lojista': typeof PainelLojistaRoute
   '/painel/morador': typeof PainelMoradorRoute
@@ -371,6 +409,8 @@ export interface FileRoutesByTo {
   '/admin': typeof AdminIndexRoute
   '/negocios': typeof NegociosIndexRoute
   '/painel': typeof PainelIndexRoute
+  '/checkout/pix/$id': typeof CheckoutPixIdRoute
+  '/negocios/$id/agendar': typeof NegociosIdAgendarRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -395,21 +435,24 @@ export interface FileRoutesById {
   '/representantes-programa': typeof RepresentantesProgramaRoute
   '/servicos': typeof ServicosRoute
   '/transporte': typeof TransporteRoute
+  '/admin/agenda': typeof AdminAgendaRoute
   '/admin/aprovacoes': typeof AdminAprovacoesRoute
   '/admin/avaliacoes': typeof AdminAvaliacoesRoute
   '/admin/campanhas': typeof AdminCampanhasRoute
+  '/admin/cobrancas': typeof AdminCobrancasRoute
   '/admin/destaques': typeof AdminDestaquesRoute
   '/admin/feedbacks': typeof AdminFeedbacksRoute
   '/admin/insights': typeof AdminInsightsRoute
   '/admin/leads': typeof AdminLeadsRoute
   '/admin/lojas': typeof AdminLojasRoute
+  '/admin/noticias': typeof AdminNoticiasRoute
   '/admin/planos': typeof AdminPlanosRoute
   '/admin/recomendacoes': typeof AdminRecomendacoesRoute
   '/admin/representantes': typeof AdminRepresentantesRoute
   '/admin/servicos': typeof AdminServicosRoute
   '/admin/transporte': typeof AdminTransporteRoute
   '/loja/$slug': typeof LojaSlugRoute
-  '/negocios/$id': typeof NegociosIdRoute
+  '/negocios/$id': typeof NegociosIdRouteWithChildren
   '/painel/comunidade': typeof PainelComunidadeRoute
   '/painel/lojista': typeof PainelLojistaRoute
   '/painel/morador': typeof PainelMoradorRoute
@@ -419,6 +462,8 @@ export interface FileRoutesById {
   '/admin/': typeof AdminIndexRoute
   '/negocios/': typeof NegociosIndexRoute
   '/painel/': typeof PainelIndexRoute
+  '/checkout/pix/$id': typeof CheckoutPixIdRoute
+  '/negocios/$id/agendar': typeof NegociosIdAgendarRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -444,14 +489,17 @@ export interface FileRouteTypes {
     | '/representantes-programa'
     | '/servicos'
     | '/transporte'
+    | '/admin/agenda'
     | '/admin/aprovacoes'
     | '/admin/avaliacoes'
     | '/admin/campanhas'
+    | '/admin/cobrancas'
     | '/admin/destaques'
     | '/admin/feedbacks'
     | '/admin/insights'
     | '/admin/leads'
     | '/admin/lojas'
+    | '/admin/noticias'
     | '/admin/planos'
     | '/admin/recomendacoes'
     | '/admin/representantes'
@@ -468,6 +516,8 @@ export interface FileRouteTypes {
     | '/admin/'
     | '/negocios/'
     | '/painel/'
+    | '/checkout/pix/$id'
+    | '/negocios/$id/agendar'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -488,14 +538,17 @@ export interface FileRouteTypes {
     | '/representantes-programa'
     | '/servicos'
     | '/transporte'
+    | '/admin/agenda'
     | '/admin/aprovacoes'
     | '/admin/avaliacoes'
     | '/admin/campanhas'
+    | '/admin/cobrancas'
     | '/admin/destaques'
     | '/admin/feedbacks'
     | '/admin/insights'
     | '/admin/leads'
     | '/admin/lojas'
+    | '/admin/noticias'
     | '/admin/planos'
     | '/admin/recomendacoes'
     | '/admin/representantes'
@@ -512,6 +565,8 @@ export interface FileRouteTypes {
     | '/admin'
     | '/negocios'
     | '/painel'
+    | '/checkout/pix/$id'
+    | '/negocios/$id/agendar'
   id:
     | '__root__'
     | '/'
@@ -535,14 +590,17 @@ export interface FileRouteTypes {
     | '/representantes-programa'
     | '/servicos'
     | '/transporte'
+    | '/admin/agenda'
     | '/admin/aprovacoes'
     | '/admin/avaliacoes'
     | '/admin/campanhas'
+    | '/admin/cobrancas'
     | '/admin/destaques'
     | '/admin/feedbacks'
     | '/admin/insights'
     | '/admin/leads'
     | '/admin/lojas'
+    | '/admin/noticias'
     | '/admin/planos'
     | '/admin/recomendacoes'
     | '/admin/representantes'
@@ -559,6 +617,8 @@ export interface FileRouteTypes {
     | '/admin/'
     | '/negocios/'
     | '/painel/'
+    | '/checkout/pix/$id'
+    | '/negocios/$id/agendar'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -584,6 +644,7 @@ export interface RootRouteChildren {
   ServicosRoute: typeof ServicosRoute
   TransporteRoute: typeof TransporteRoute
   LojaSlugRoute: typeof LojaSlugRoute
+  CheckoutPixIdRoute: typeof CheckoutPixIdRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -847,6 +908,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AdminPlanosRouteImport
       parentRoute: typeof AdminRoute
     }
+    '/admin/noticias': {
+      id: '/admin/noticias'
+      path: '/noticias'
+      fullPath: '/admin/noticias'
+      preLoaderRoute: typeof AdminNoticiasRouteImport
+      parentRoute: typeof AdminRoute
+    }
     '/admin/lojas': {
       id: '/admin/lojas'
       path: '/lojas'
@@ -882,6 +950,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AdminDestaquesRouteImport
       parentRoute: typeof AdminRoute
     }
+    '/admin/cobrancas': {
+      id: '/admin/cobrancas'
+      path: '/cobrancas'
+      fullPath: '/admin/cobrancas'
+      preLoaderRoute: typeof AdminCobrancasRouteImport
+      parentRoute: typeof AdminRoute
+    }
     '/admin/campanhas': {
       id: '/admin/campanhas'
       path: '/campanhas'
@@ -903,18 +978,42 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AdminAprovacoesRouteImport
       parentRoute: typeof AdminRoute
     }
+    '/admin/agenda': {
+      id: '/admin/agenda'
+      path: '/agenda'
+      fullPath: '/admin/agenda'
+      preLoaderRoute: typeof AdminAgendaRouteImport
+      parentRoute: typeof AdminRoute
+    }
+    '/negocios/$id/agendar': {
+      id: '/negocios/$id/agendar'
+      path: '/agendar'
+      fullPath: '/negocios/$id/agendar'
+      preLoaderRoute: typeof NegociosIdAgendarRouteImport
+      parentRoute: typeof NegociosIdRoute
+    }
+    '/checkout/pix/$id': {
+      id: '/checkout/pix/$id'
+      path: '/checkout/pix/$id'
+      fullPath: '/checkout/pix/$id'
+      preLoaderRoute: typeof CheckoutPixIdRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
 interface AdminRouteChildren {
+  AdminAgendaRoute: typeof AdminAgendaRoute
   AdminAprovacoesRoute: typeof AdminAprovacoesRoute
   AdminAvaliacoesRoute: typeof AdminAvaliacoesRoute
   AdminCampanhasRoute: typeof AdminCampanhasRoute
+  AdminCobrancasRoute: typeof AdminCobrancasRoute
   AdminDestaquesRoute: typeof AdminDestaquesRoute
   AdminFeedbacksRoute: typeof AdminFeedbacksRoute
   AdminInsightsRoute: typeof AdminInsightsRoute
   AdminLeadsRoute: typeof AdminLeadsRoute
   AdminLojasRoute: typeof AdminLojasRoute
+  AdminNoticiasRoute: typeof AdminNoticiasRoute
   AdminPlanosRoute: typeof AdminPlanosRoute
   AdminRecomendacoesRoute: typeof AdminRecomendacoesRoute
   AdminRepresentantesRoute: typeof AdminRepresentantesRoute
@@ -924,14 +1023,17 @@ interface AdminRouteChildren {
 }
 
 const AdminRouteChildren: AdminRouteChildren = {
+  AdminAgendaRoute: AdminAgendaRoute,
   AdminAprovacoesRoute: AdminAprovacoesRoute,
   AdminAvaliacoesRoute: AdminAvaliacoesRoute,
   AdminCampanhasRoute: AdminCampanhasRoute,
+  AdminCobrancasRoute: AdminCobrancasRoute,
   AdminDestaquesRoute: AdminDestaquesRoute,
   AdminFeedbacksRoute: AdminFeedbacksRoute,
   AdminInsightsRoute: AdminInsightsRoute,
   AdminLeadsRoute: AdminLeadsRoute,
   AdminLojasRoute: AdminLojasRoute,
+  AdminNoticiasRoute: AdminNoticiasRoute,
   AdminPlanosRoute: AdminPlanosRoute,
   AdminRecomendacoesRoute: AdminRecomendacoesRoute,
   AdminRepresentantesRoute: AdminRepresentantesRoute,
@@ -942,13 +1044,25 @@ const AdminRouteChildren: AdminRouteChildren = {
 
 const AdminRouteWithChildren = AdminRoute._addFileChildren(AdminRouteChildren)
 
+interface NegociosIdRouteChildren {
+  NegociosIdAgendarRoute: typeof NegociosIdAgendarRoute
+}
+
+const NegociosIdRouteChildren: NegociosIdRouteChildren = {
+  NegociosIdAgendarRoute: NegociosIdAgendarRoute,
+}
+
+const NegociosIdRouteWithChildren = NegociosIdRoute._addFileChildren(
+  NegociosIdRouteChildren,
+)
+
 interface NegociosRouteChildren {
-  NegociosIdRoute: typeof NegociosIdRoute
+  NegociosIdRoute: typeof NegociosIdRouteWithChildren
   NegociosIndexRoute: typeof NegociosIndexRoute
 }
 
 const NegociosRouteChildren: NegociosRouteChildren = {
-  NegociosIdRoute: NegociosIdRoute,
+  NegociosIdRoute: NegociosIdRouteWithChildren,
   NegociosIndexRoute: NegociosIndexRoute,
 }
 
@@ -1002,6 +1116,7 @@ const rootRouteChildren: RootRouteChildren = {
   ServicosRoute: ServicosRoute,
   TransporteRoute: TransporteRoute,
   LojaSlugRoute: LojaSlugRoute,
+  CheckoutPixIdRoute: CheckoutPixIdRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
