@@ -697,6 +697,24 @@ function Index() {
         </div>
       </section>
 
+      {/* 9. Feedback Final */}
+      <section className="max-w-[1440px] mx-auto px-6 mb-24">
+        <div className="bg-slate-900 rounded-[3rem] p-12 text-white flex flex-col md:flex-row items-center justify-between gap-8 relative overflow-hidden">
+          <div className="absolute top-0 right-0 w-64 h-64 bg-orange-600/10 rounded-full blur-3xl -mr-32 -mt-32" />
+          <div className="relative z-10">
+            <h3 className="text-3xl font-black mb-2 italic">Classificados do Bairro</h3>
+            <p className="text-slate-400 font-medium">Venda, trocas e oportunidades locais perto de você.</p>
+          </div>
+          <Button 
+            variant="secondary" 
+            className="rounded-2xl font-black h-14 px-10 bg-white text-slate-900 hover:bg-slate-100 relative z-10 shadow-xl"
+            onClick={() => navigate({ to: '/classificados' })}
+          >
+            Ver Classificados
+          </Button>
+        </div>
+      </section>
+
       <SponsorSection />
       <Footer />
 
