@@ -117,7 +117,7 @@ export const MerchantCard = memo(function MerchantCard({ merchant }: Props) {
           </div>
         </div>
 
-        <p className="line-clamp-2 text-sm text-slate-500 leading-relaxed mb-4 min-h-[2.5rem]">
+        <p className="line-clamp-3 text-sm text-slate-500 leading-relaxed mb-4 min-h-[4.5rem]">
           {merchant.description}
         </p>
 
