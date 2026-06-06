@@ -1,3 +1,4 @@
+import { createFileRoute } from "@tanstack/react-router";
 import { useState, useEffect } from "react";
 import { getPixCharges, createPixCharge, updatePixStatus, getPixLinks, createPixLink, savePixLinks } from "@/lib/payments";
 import { merchants } from "@/data/merchants";
@@ -12,7 +13,11 @@ import { Plus, Copy, ExternalLink, DollarSign, AlertTriangle, CheckCircle, XCirc
 import { toast } from "sonner";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
-export default function AdminCobrancas() {
+export const Route = createFileRoute("/admin/cobrancas")({
+  component: AdminCobrancas,
+});
+
+function AdminCobrancas() {
   const [charges, setCharges] = useState<PixCharge[]>([]);
   const [links, setLinks] = useState<PixLink[]>([]);
   const [isChargeDialogOpen, setIsChargeDialogOpen] = useState(false);

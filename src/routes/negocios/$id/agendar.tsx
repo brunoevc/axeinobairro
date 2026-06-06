@@ -1,5 +1,5 @@
+import { createFileRoute, useParams, useNavigate, useSearch, Link } from "@tanstack/react-router";
 import { useState, useEffect } from "react";
-import { useParams, useNavigate, useSearch, Link } from "@tanstack/react-router";
 import { getMerchantPublicPath } from "@/data/merchants";
 import { merchantsRepository } from "@/repositories/merchantsRepository";
 
@@ -13,7 +13,11 @@ import { createAppointment, getAppointments, generateTimeSlots } from "@/lib/sch
 import { toast } from "sonner";
 import { Calendar as CalendarIcon, Clock, User, Phone, AlertTriangle } from "lucide-react";
 
-export default function Agendar() {
+export const Route = createFileRoute("/negocios/$id/agendar")({
+  component: Agendar,
+});
+
+function Agendar() {
   const { id } = useParams({ from: "/negocios/$id/agendar" });
   const navigate = useNavigate();
   const search = useSearch({ strict: false }) as any;

@@ -1,5 +1,5 @@
+import { createFileRoute, useNavigate } from "@tanstack/react-router";
 import { useState, useEffect } from "react";
-import { useNavigate } from "@tanstack/react-router";
 import { getAppointments, updateAppointmentStatus, saveAppointments } from "@/lib/scheduling";
 import { merchants } from "@/data/merchants";
 import { Appointment } from "@/types/scheduling";
@@ -17,7 +17,11 @@ import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
 import { Calendar, Clock, User, Phone, CheckCircle, XCircle, Trash2, Info, RefreshCw } from "lucide-react";
 import { toast } from "sonner";
 
-export default function AdminAgenda() {
+export const Route = createFileRoute("/admin/agenda")({
+  component: AdminAgenda,
+});
+
+function AdminAgenda() {
   const [appointments, setAppointments] = useState<Appointment[]>([]);
   const navigate = useNavigate();
 
