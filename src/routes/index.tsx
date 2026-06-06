@@ -600,92 +600,27 @@ function Index() {
         </div>
       </section>
 
-      {/* Mais procurados do bairro - (Moved down) */}
-      <section className="max-w-7xl mx-auto px-6 mt-24">
-        <div className="flex flex-col md:flex-row md:items-end justify-between mb-12 gap-4">
-          <div>
-            <div className="inline-flex items-center gap-2 px-2 py-0.5 rounded-md bg-violet-50 text-violet-600 text-[10px] font-black uppercase tracking-widest mb-4 border border-violet-100">
-              Popular hoje
-            </div>
-            <h2 className="text-4xl font-black text-slate-900 tracking-tighter">
-              Mais procurados
-            </h2>
-            <p className="text-slate-500 font-medium text-lg mt-2">
-              Destaques que a vizinhança está amando em Araruama.
-            </p>
-          </div>
-          <Button 
-            variant="ghost"
-            onClick={() => navigate({ to: '/negocios' })}
-            className="text-orange-600 font-black hover:bg-orange-50 self-start md:self-auto"
-          >
-            Ver todos
-            <ArrowRight className="ml-2 h-4 w-4" />
-          </Button>
-        </div>
-
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {isLoading 
-            ? [...Array(3)].map((_, i) => <MerchantSkeleton key={i} />)
-            : featuredMerchants.slice(0, 3).map((merchant) => (
-                <MerchantCard key={merchant.id} merchant={merchant} />
-              ))
-          }
-        </div>
-      </section>
-
-      {/* Nearby Businesses */}
-      {nearbyMerchants.length > 0 && (
-        <section className="max-w-7xl mx-auto px-6 mt-24">
-          <div className="flex flex-col md:flex-row md:items-end justify-between mb-10 gap-4">
+      {/* Promotions Section - Removed duplicate since it's above */}
+      
+      {/* Promoções Comuns (Level C) */}
+      {levelCMerchants.length > 0 && (
+        <section className="max-w-7xl mx-auto px-6 mt-12 pb-20">
+          <div className="flex flex-col md:flex-row md:items-end justify-between mb-12 gap-4">
             <div>
-              <h2 className="text-3xl font-black text-slate-900 tracking-tighter flex items-center gap-3">
-                <Navigation className="w-8 h-8 text-orange-600" />
-                Mais próximos de você
-              </h2>
-              <div className="flex items-center gap-3 mt-2">
-                <p className="text-slate-500 font-medium text-lg">Negócios que estão a poucos passos de distância</p>
+              <div className="inline-flex items-center gap-2 px-2 py-0.5 rounded-md bg-orange-50 text-orange-600 text-[10px] font-black uppercase tracking-widest mb-4 border border-orange-100">
+                Mais Ofertas
               </div>
+              <h2 className="text-4xl font-black text-slate-900 tracking-tighter">Economia Local</h2>
+              <p className="text-slate-500 font-medium text-lg mt-2">Confira outras oportunidades imperdíveis no bairro</p>
             </div>
           </div>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {nearbyMerchants.map((merchant) => (
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+            {levelCMerchants.map((merchant) => (
               <MerchantCard key={merchant.id} merchant={merchant} />
             ))}
           </div>
         </section>
       )}
-
-      {/* Promotions Section */}
-      <section className="max-w-7xl mx-auto px-6 mt-24 pb-20">
-        <div className="bg-orange-600 rounded-[3rem] p-8 md:p-16 relative overflow-hidden">
-          <div className="relative z-10 flex flex-col md:flex-row md:items-end justify-between mb-12 gap-4">
-            <div>
-              <h2 className="text-4xl md:text-6xl font-black text-white tracking-tighter">
-                Ofertas do Bairro
-              </h2>
-              <p className="text-orange-100 font-medium text-xl mt-4">
-                Economize comprando no comércio local de Araruama
-              </p>
-            </div>
-            <Button 
-              variant="outline"
-              onClick={() => navigate({ to: '/negocios', search: { hasPromotion: true } })}
-              className="bg-white text-orange-600 hover:bg-orange-50 font-black rounded-xl border-none h-12 px-8 shadow-xl shadow-orange-900/20 transition-all active:scale-95"
-            >
-              Ver todas as ofertas
-            </Button>
-          </div>
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 relative z-10">
-            {isLoading 
-              ? [...Array(4)].map((_, i) => <MerchantSkeleton key={i} />)
-              : promotionalMerchants.slice(0, 4).map((merchant) => (
-                <MerchantCard key={merchant.id} merchant={merchant} />
-              ))
-            }
-          </div>
-        </div>
-      </section>
 
       {/* Promoções Comuns (Level C) */}
       {levelCMerchants.length > 0 && (
