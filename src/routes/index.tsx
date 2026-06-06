@@ -640,7 +640,7 @@ function Index() {
         </section>
       )}
 
-      {/* Dicas úteis para o bairro */}
+      {/* 9. Dicas úteis para o bairro */}
       <section className="max-w-[1440px] mx-auto px-6 mt-24 mb-24">
         <div className="flex flex-col md:flex-row md:items-end justify-between mb-12 gap-4">
           <div>
