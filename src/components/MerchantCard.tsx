@@ -39,21 +39,21 @@ export const MerchantCard = memo(function MerchantCard({ merchant }: Props) {
 
   return (
     <article
-      className="group flex flex-col h-full overflow-hidden rounded-[2.5rem] bg-white border border-slate-100 shadow-sm transition-all hover:shadow-xl hover:-translate-y-1 active:scale-[0.98]"
+      className="group flex flex-col h-full overflow-hidden rounded-[2.5rem] bg-white border border-slate-100 shadow-sm transition-all duration-500 hover:shadow-2xl hover:-translate-y-2 active:scale-[0.98]"
     >
       <div className="relative aspect-[4/3] w-full overflow-hidden bg-slate-100">
         {!imageError && merchant.image ? (
           <img 
             src={merchant.image} 
             alt={merchant.name}
-            className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-110"
+            className="h-full w-full object-cover transition-transform duration-1000 group-hover:scale-110"
             loading="lazy"
             onError={() => setImageError(true)}
           />
         ) : (
           <div className="w-full h-full flex flex-col items-center justify-center bg-slate-50 text-slate-300 gap-2">
-            <TrendingUp className="w-10 h-10 opacity-20" />
-            <span className="text-[10px] font-black uppercase tracking-widest">Imagem não disponível</span>
+            <TrendingUp className="w-12 h-12 opacity-10" />
+            <span className="text-[10px] font-black uppercase tracking-[0.2em]">Axêi no Bairro</span>
           </div>
         )}
         <div className="absolute top-4 left-4 flex flex-col gap-2 z-10">
@@ -64,10 +64,10 @@ export const MerchantCard = memo(function MerchantCard({ merchant }: Props) {
               if (['igreja', 'escola', 'ong', 'social'].includes(merchant.category.toLowerCase())) return { label: 'Institucional', color: 'bg-blue-600 text-white border-blue-400/30' };
               if (merchant.exposureLevel === 'B') return { label: 'Destaque', color: 'bg-orange-600 text-white border-orange-400/30' };
               if (merchant.exposureLevel === 'C') return { label: 'Premium', color: 'bg-violet-600 text-white border-violet-400/30' };
-              return { label: 'Ecossistema', color: 'bg-slate-500 text-white border-slate-300/30' };
+              return { label: 'Membro', color: 'bg-slate-500 text-white border-slate-300/30' };
             })();
             return (
-              <div className={`inline-flex items-center gap-1.5 rounded-full ${exposure.color} px-3 py-1.5 text-[9px] font-black uppercase tracking-[0.15em] shadow-xl border backdrop-blur-sm`}>
+              <div className={`inline-flex items-center gap-1.5 rounded-full ${exposure.color} px-4 py-2 text-[8px] font-black uppercase tracking-[0.2em] shadow-xl border backdrop-blur-md`}>
                 <ShieldCheck className="w-2.5 h-2.5" />
                 {exposure.label}
               </div>
@@ -75,87 +75,62 @@ export const MerchantCard = memo(function MerchantCard({ merchant }: Props) {
           })()}
         </div>
 
-        
         {merchant.featured && (
            <div className="absolute top-4 right-4 z-10">
-             <div className="bg-violet-600 text-white p-1.5 rounded-full shadow-lg">
-                <Star className="w-3.5 h-3.5 fill-white" />
+             <div className="bg-white/90 backdrop-blur-md text-orange-600 p-2 rounded-full shadow-lg border border-white/20">
+                <Star className="w-4 h-4 fill-orange-500" />
              </div>
            </div>
         )}
       </div>
 
-      <div className="flex flex-col p-5 flex-1">
-        <div className="flex items-start justify-between gap-2 mb-3">
+      <div className="flex flex-col p-6 flex-1">
+        <div className="flex items-start justify-between gap-3 mb-4">
           <div className="min-w-0 flex-1">
-            <h3 className="truncate text-xl font-black text-slate-900 leading-none tracking-tight group-hover:text-orange-600 transition-colors">
+            <h3 className="truncate text-2xl font-black text-slate-900 leading-none tracking-tight group-hover:text-orange-600 transition-colors duration-300">
               {merchant.name}
             </h3>
-            <div className="flex items-center gap-1.5 mt-2">
+            <div className="flex items-center gap-1.5 mt-3">
               <MapPin className="h-3 w-3 text-orange-500" />
-              <span className="text-[10px] font-black uppercase text-slate-400 tracking-wider truncate">
+              <span className="text-[10px] font-black uppercase text-slate-400 tracking-[0.1em] truncate">
                 {merchant.neighborhood}
                 {distance !== null && (
                   <span className="inline-flex items-center gap-1 ml-1 pl-1 border-l border-slate-200">
-                    <Navigation className="w-2 h-2" />
+                    <Navigation className="w-2.5 h-2.5" />
                     {formatDistance(distance)}
                   </span>
                 )}
               </span>
             </div>
           </div>
-          <div className="flex items-center gap-1.5 rounded-xl bg-orange-50 px-2.5 py-1.5 text-xs font-black text-orange-600 border border-orange-100 shadow-sm">
-            <Star className="h-3 w-3 fill-orange-500 text-orange-500" />
+          <div className="flex items-center gap-1.5 rounded-2xl bg-slate-50 px-3 py-2 text-xs font-black text-slate-900 border border-slate-100 shadow-sm">
+            <Star className="h-3.5 w-3.5 fill-orange-500 text-orange-500" />
             {(() => {
               const { average, total } = reviewsRepository.getAverageRating('loja', merchant.id);
-              return (
-                <div className="flex items-center gap-1">
-                  <span>{total > 0 ? average.toFixed(1) : merchant.rating.toFixed(1)}</span>
-                </div>
-              );
+              return <span>{total > 0 ? average.toFixed(1) : merchant.rating.toFixed(1)}</span>;
             })()}
           </div>
         </div>
 
-        <p className="line-clamp-3 text-sm text-slate-500 leading-relaxed mb-4 min-h-[4.5rem]">
+        <p className="line-clamp-2 text-sm text-slate-500 leading-relaxed mb-6 font-medium">
           {merchant.description}
         </p>
 
-        <div className="flex flex-wrap items-center gap-2 mb-6 mt-auto">
+        <div className="flex flex-wrap items-center gap-2 mb-8 mt-auto">
           <BusinessStatusBadge isOpen={merchant.isOpen} hours={merchant.hours} status={merchant.status} />
-
-
           {merchant.delivery && (
-            <span className="inline-flex items-center gap-1 rounded-full bg-blue-50 px-2.5 py-1 text-[10px] font-bold text-blue-600 border border-blue-100">
+            <span className="inline-flex items-center gap-1 rounded-full bg-emerald-50 px-3 py-1.5 text-[9px] font-black uppercase tracking-wider text-emerald-600 border border-emerald-100">
               <Bike className="h-3 w-3" />
-              Entrega disponível
-            </span>
-          )}
-          {merchant.id === "1" && (
-            <span className="inline-flex items-center gap-1 rounded-full bg-orange-50 px-2.5 py-1 text-[10px] font-bold text-orange-600 border border-orange-100">
-              <Star className="h-3 w-3 fill-orange-500" />
-              Perto de você
-            </span>
-          )}
-          {merchant.id === "2" && (
-            <span className="inline-flex items-center gap-1 rounded-full bg-violet-50 px-2.5 py-1 text-[10px] font-bold text-violet-600 border border-violet-100">
-              <TrendingUp className="h-3 w-3" />
-              Popular hoje
-            </span>
-          )}
-          {merchant.neighborhood === "Centro" && (
-            <span className="inline-flex items-center gap-1 rounded-full bg-slate-50 px-2.5 py-1 text-[10px] font-bold text-slate-500 border border-slate-200">
-              <MapPin className="h-3 w-3" />
-              No Centro de Araruama
+              Delivery
             </span>
           )}
         </div>
 
-        <div className="flex gap-2">
+        <div className="grid grid-cols-2 gap-3">
           <Button
             asChild
             variant="outline"
-            className="flex-1 rounded-xl h-11 text-xs font-bold border-slate-200 hover:bg-slate-50 hover:text-orange-600 group/btn"
+            className="rounded-2xl h-12 text-[10px] font-black uppercase tracking-widest border-slate-200 hover:bg-slate-50 hover:text-orange-600 group/btn transition-all"
           >
             <Link 
               to={getMerchantPublicPath(merchant)}
@@ -168,19 +143,16 @@ export const MerchantCard = memo(function MerchantCard({ merchant }: Props) {
                 });
               }}
             >
-
-              Ver Detalhes
-              <ChevronRight className="w-3 h-3 ml-1 transition-transform group-hover/btn:translate-x-0.5" />
+              Detalhes
+              <ChevronRight className="w-3.5 h-3.5 ml-1 transition-transform group-hover/btn:translate-x-1" />
             </Link>
           </Button>
           <WhatsAppButton 
             merchantId={merchant.id}
             phone={merchant.whatsapp} 
             merchantName={merchant.name} 
-            className="flex-1 h-11 shadow-md shadow-emerald-500/10"
+            className="h-12 rounded-2xl shadow-lg shadow-emerald-500/10 text-[10px] font-black uppercase tracking-widest"
           />
-
-
         </div>
       </div>
     </article>

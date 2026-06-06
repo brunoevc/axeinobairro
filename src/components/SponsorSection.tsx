@@ -25,18 +25,18 @@ export function SponsorSection() {
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
           {sponsors.map((sponsor, index) => (
-            <div key={index} className="bg-white p-8 rounded-[3rem] border border-slate-100 shadow-sm hover:shadow-xl transition-all group relative overflow-hidden">
+            <div key={index} className="bg-white p-8 rounded-[3rem] border border-slate-100 shadow-sm hover:shadow-2xl transition-all duration-500 group relative overflow-hidden grayscale hover:grayscale-0">
               <div className="absolute top-0 right-0 p-4 opacity-5 group-hover:scale-110 transition-transform">
                 <Award className="w-16 h-16 text-violet-600" />
               </div>
-              <div className="w-16 h-16 rounded-2xl bg-violet-50 text-violet-600 flex items-center justify-center mb-6 font-black text-2xl group-hover:bg-violet-600 group-hover:text-white transition-all shadow-sm">
+              <div className="w-16 h-16 rounded-2xl bg-slate-50 text-slate-400 flex items-center justify-center mb-6 font-black text-2xl group-hover:bg-violet-600 group-hover:text-white transition-all shadow-sm">
                 {sponsor.logo}
               </div>
-              <h3 className="text-xl font-black text-slate-900 mb-1">{sponsor.name}</h3>
-              <p className="text-violet-600 text-xs font-black uppercase tracking-widest mb-4">{sponsor.description}</p>
-              <div className="flex items-center gap-1.5 text-slate-400">
-                <Star className="w-3.5 h-3.5 fill-violet-100 text-violet-200" />
-                <span className="text-[10px] font-bold uppercase tracking-widest">Parceiro Estratégico</span>
+              <h3 className="text-xl font-black text-slate-900 mb-1 group-hover:text-violet-600 transition-colors">{sponsor.name}</h3>
+              <p className="text-slate-400 text-xs font-black uppercase tracking-widest mb-4 group-hover:text-violet-500 transition-colors">{sponsor.description}</p>
+              <div className="flex items-center gap-1.5 text-slate-300 group-hover:text-violet-300 transition-colors">
+                <Star className="w-3.5 h-3.5 fill-current" />
+                <span className="text-[10px] font-bold uppercase tracking-widest">Apoiador Oficial</span>
               </div>
             </div>
           ))}
