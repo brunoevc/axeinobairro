@@ -82,7 +82,7 @@ export const TopBar = memo(function TopBar() {
 
   return (
     <div className={`w-full bg-white border-b border-slate-100 sticky top-0 z-50 transition-all duration-300 ${isCompact ? 'shadow-lg' : ''}`}>
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div className="max-w-[1440px] mx-auto px-4 sm:px-6 lg:px-8">
         {/* Upper Row: Utility Info (Desktop/Tablet) */}
         {!isCompact && (
           <div className="hidden md:flex justify-between items-center py-2 text-[10px] font-medium text-slate-500 uppercase tracking-wider border-b border-slate-50">

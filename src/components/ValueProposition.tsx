@@ -33,7 +33,7 @@ export function ValueProposition() {
   ];
 
   return (
-    <section className="max-w-7xl mx-auto px-6 py-20">
+    <section className="max-w-[1440px] mx-auto px-6 py-20">
       <div className="text-center mb-16">
         <h2 className="text-3xl md:text-5xl font-black text-slate-900 mb-4 tracking-tighter">
           Um ecossistema feito <span className="text-orange-600">por pessoas para pessoas</span>

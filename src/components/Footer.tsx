@@ -7,7 +7,7 @@ const IS_ADMIN_ENABLED = import.meta.env.VITE_ADMIN_ENABLED === 'true';
 export function Footer() {
   return (
     <footer className="bg-slate-900 text-white py-20 px-6 mt-20">
-      <div className="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center gap-12">
+      <div className="max-w-[1440px] mx-auto flex flex-col md:flex-row justify-between items-center gap-12">
         <div className="flex flex-col items-center md:items-start text-center md:text-left gap-4">
           <Logo dark />
           <p className="text-slate-400 font-medium max-w-xs">
@@ -48,7 +48,7 @@ export function Footer() {
         </div>
       </div>
       
-      <div className="max-w-7xl mx-auto mt-20 pt-8 border-t border-white/5 flex flex-col md:flex-row justify-between items-center gap-6 text-[10px] font-black uppercase tracking-widest text-slate-500">
+      <div className="max-w-[1440px] mx-auto mt-20 pt-8 border-t border-white/5 flex flex-col md:flex-row justify-between items-center gap-6 text-[10px] font-black uppercase tracking-widest text-slate-500">
          <span>© 2026 Axêi no Bairro. Todos os direitos reservados.</span>
          <div className="flex items-center gap-6">
             <a href="https://www.instagram.com/axeinobairro" target="_blank" rel="noopener noreferrer" className="hover:text-white transition-colors">Instagram</a>

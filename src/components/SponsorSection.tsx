@@ -9,7 +9,7 @@ export function SponsorSection() {
 
   return (
     <section className="bg-slate-50 py-20 px-6">
-      <div className="max-w-7xl mx-auto">
+      <div className="max-w-[1440px] mx-auto">
         <div className="text-center mb-16">
           <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-violet-50 text-violet-600 text-[10px] font-black uppercase tracking-widest mb-6 border border-violet-100 shadow-sm">
             <ShieldCheck className="h-3 w-3" />
