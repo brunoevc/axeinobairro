@@ -478,6 +478,7 @@ function Index() {
           </div>
         </div>
       </section>
+      {/* 6. Serviços da Comunidade */}
       <section className="max-w-7xl mx-auto px-6 mt-24">
         <div className="flex flex-col md:flex-row md:items-end justify-between mb-12 gap-4">
           <div>
