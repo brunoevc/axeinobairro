@@ -94,6 +94,25 @@ function Index() {
           {/* MAIN CONTENT */}
           <div className="lg:col-span-8 flex flex-col gap-16">
             
+            {/* ACONTECENDO AGORA (MOBILE ONLY) */}
+            <section className=\"lg:hidden bg-slate-900 rounded-[2.5rem] p-6 text-white overflow-hidden relative group\">
+              <div className=\"absolute top-0 right-0 p-6 opacity-10 pointer-events-none group-hover:scale-110 transition-transform duration-700\">
+                <Flame className=\"w-24 h-24 rotate-12\" />
+              </div>
+              <h3 className=\"text-[10px] font-black uppercase text-slate-400 mb-4 tracking-[0.2em] relative z-10\">Acontecendo Agora</h3>
+              <div className=\"space-y-4 relative z-10\">
+                {news.slice(0, 2).map((n, i) => (
+                  <div key={n.id} className=\"group/item cursor-pointer flex gap-3\" onClick={() => navigate({ to: '/noticias' })}>
+                    <span className=\"text-orange-500 font-black text-lg opacity-50\">0{i+1}</span>
+                    <div>
+                      <p className=\"text-slate-500 text-[8px] font-black uppercase tracking-widest mb-0.5\">{n.category}</p>
+                      <h4 className=\"font-bold text-white text-xs line-clamp-2 leading-snug\">{n.title}</h4>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </section>
+
             {/* QUICK CATEGORIES */}
             <section>
               <h2 className="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-6">Categorias Rápidas</h2>
