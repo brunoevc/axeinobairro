@@ -746,7 +746,6 @@ function Index() {
       <Footer />
 
       <FloatingNav />
-      </>
     </div>
   );
 }
