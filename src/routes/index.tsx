@@ -27,7 +27,8 @@ import {
     Users,
     MessageCircle,
     Sparkles,
-    Calendar
+    Calendar,
+    ArrowUpRight
   } from "lucide-react";
 
 import { categories } from "@/data/merchants";
