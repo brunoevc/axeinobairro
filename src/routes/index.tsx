@@ -342,8 +342,39 @@ function Index() {
         </div>
       </div>
 
-      {/* Destaques do Bairro (Phase 8.3) */}
-      <section className="max-w-7xl mx-auto px-6 mt-24">
+      {/* 4. Ofertas do Bairro - High Visibility */}
+      <section className="max-w-7xl mx-auto px-6 mt-24 pb-20">
+        <div className="bg-orange-600 rounded-[3rem] p-8 md:p-16 relative overflow-hidden shadow-2xl shadow-orange-200">
+          <div className="relative z-10 flex flex-col md:flex-row md:items-end justify-between mb-12 gap-4">
+            <div>
+              <h2 className="text-4xl md:text-6xl font-black text-white tracking-tighter">
+                Ofertas do Bairro
+              </h2>
+              <p className="text-orange-100 font-medium text-xl mt-4">
+                Economize comprando no comércio local de Araruama
+              </p>
+            </div>
+            <Button 
+              variant="outline"
+              onClick={() => navigate({ to: '/negocios', search: { hasPromotion: true } })}
+              className="bg-white text-orange-600 hover:bg-orange-50 font-black rounded-xl border-none h-12 px-8 shadow-xl shadow-orange-900/20 transition-all active:scale-95"
+            >
+              Ver todas as ofertas
+            </Button>
+          </div>
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 relative z-10">
+            {isLoading 
+              ? [...Array(4)].map((_, i) => <MerchantSkeleton key={i} />)
+              : promotionalMerchants.slice(0, 4).map((merchant) => (
+                <MerchantCard key={merchant.id} merchant={merchant} />
+              ))
+            }
+          </div>
+        </div>
+      </section>
+
+      {/* 5. Destaques do Bairro (Phase 8.3) */}
+      <section className="max-w-7xl mx-auto px-6 mt-12">
         <div className="flex flex-col md:flex-row md:items-end justify-between mb-12 gap-4">
           <div>
             <div className="inline-flex items-center gap-2 px-2 py-0.5 rounded-md bg-orange-50 text-orange-600 text-[10px] font-black uppercase tracking-widest mb-4 border border-orange-100 shadow-sm">
@@ -351,10 +382,10 @@ function Index() {
               Patrocinado
             </div>
             <h2 className="text-4xl font-black text-slate-900 tracking-tighter">
-              Destaques do Bairro
+              Destaques em Evidência
             </h2>
             <p className="text-slate-500 font-medium text-lg mt-2">
-              Os melhores profissionais e lojas em evidência na sua região.
+              Os melhores profissionais e lojas em destaque na sua região.
             </p>
           </div>
         </div>
