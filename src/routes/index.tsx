@@ -202,8 +202,34 @@ function Index() {
         </div>
       </section>
 
-      {/* 2. Conteúdo de Acesso Rápido - High Density */}
+      {/* 2. Ofertas Locais - High Priority */}
       <section className="max-w-[1440px] mx-auto px-4 md:px-6 mt-8 mb-8">
+        <div className="bg-orange-600 rounded-[2.5rem] p-6 md:p-10 text-white relative overflow-hidden">
+          <div className="absolute top-0 right-0 p-8 opacity-10 pointer-events-none">
+            <Tag className="w-32 h-32 rotate-12" />
+          </div>
+          <div className="relative z-10">
+            <div className="flex items-end justify-between mb-8">
+              <div>
+                <Badge className="bg-white/20 text-white border-none mb-2 text-[9px] uppercase font-black tracking-[0.2em]">Oportunidades</Badge>
+                <h2 className="text-2xl md:text-4xl font-black tracking-tighter">Ofertas do Bairro</h2>
+              </div>
+              <Button onClick={() => navigate({ to: '/negocios' })} className="bg-white text-orange-600 hover:bg-orange-50 font-black text-[10px] uppercase h-10 px-6 rounded-xl hidden sm:flex">
+                Ver tudo
+              </Button>
+            </div>
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+              {isLoading ? [...Array(4)].map((_, i) => <MerchantSkeleton key={i} />) : promotionalMerchants.slice(0, 4).map(m => <MerchantCard key={m.id} merchant={m} />)}
+            </div>
+            <Button onClick={() => navigate({ to: '/negocios' })} className="w-full mt-6 bg-white text-orange-600 hover:bg-orange-50 font-black text-[10px] uppercase h-12 rounded-xl sm:hidden">
+              Ver todas as ofertas
+            </Button>
+          </div>
+        </div>
+      </section>
+
+      {/* 3. Notícias & Acesso Rápido - High Density */}
+      <section className="max-w-[1440px] mx-auto px-4 md:px-6 mb-16">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
            <div className="lg:col-span-8">
               <div className="flex items-center justify-between mb-4">
@@ -251,31 +277,10 @@ function Index() {
         </div>
       </section>
 
-      {/* 3. Ofertas Locais - Density focused */}
-      <section className="max-w-[1440px] mx-auto px-4 md:px-6 mt-12 pb-16">
-        <div className="bg-orange-600 rounded-[2.5rem] p-6 md:p-10 text-white relative overflow-hidden">
-          <div className="absolute top-0 right-0 p-8 opacity-10 pointer-events-none">
-            <Tag className="w-32 h-32 rotate-12" />
-          </div>
-          <div className="relative z-10">
-            <div className="flex items-end justify-between mb-8">
-              <div>
-                <Badge className="bg-white/20 text-white border-none mb-2 text-[9px] uppercase font-black tracking-[0.2em]">Oportunidades</Badge>
-                <h2 className="text-3xl md:text-5xl font-black tracking-tighter">Ofertas do Bairro</h2>
-              </div>
-              <Button onClick={() => navigate({ to: '/negocios' })} className="bg-white text-orange-600 hover:bg-orange-50 font-black text-[10px] uppercase h-10 px-6 rounded-xl hidden sm:flex">
-                Ver tudo
-              </Button>
-            </div>
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-              {isLoading ? [...Array(4)].map((_, i) => <MerchantSkeleton key={i} />) : promotionalMerchants.slice(0, 4).map(m => <MerchantCard key={m.id} merchant={m} />)}
-            </div>
-            <Button onClick={() => navigate({ to: '/negocios' })} className="w-full mt-6 bg-white text-orange-600 hover:bg-orange-50 font-black text-[10px] uppercase h-12 rounded-xl sm:hidden">
-              Ver todas as ofertas
-            </Button>
-          </div>
-        </div>
-      </section>
+      <div className="hidden lg:block">
+        <ValueProposition />
+        <SponsorSection />
+      </div>
 
       <Footer />
       <FloatingNav />
