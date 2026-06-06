@@ -252,17 +252,6 @@ function Index() {
                         <div className="text-sm font-bold text-slate-900">50% Off em Vinhos</div>
                      </div>
                   </div>
-                  <div className="pt-2">
-                     <div className="flex items-center justify-between mb-4">
-                        <div className="text-xs font-black text-slate-400 uppercase tracking-widest">Atividade Recente</div>
-                        <div className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
-                     </div>
-                     <div className="space-y-3">
-                        <div className="h-2 bg-slate-100 rounded-full w-full" />
-                        <div className="h-2 bg-slate-100 rounded-full w-3/4" />
-                        <div className="h-2 bg-slate-100 rounded-full w-1/2" />
-                     </div>
-                  </div>
                </div>
             </div>
           </div>
