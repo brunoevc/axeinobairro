@@ -29,7 +29,11 @@ import {
     Sparkles,
     Calendar,
     ArrowUpRight,
-    SearchCheck
+    SearchCheck,
+    LayoutGrid,
+    Flame,
+    ArrowRightCircle,
+    CheckCircle2
   } from "lucide-react";
 
 import { categories } from "@/data/merchants";
