@@ -168,6 +168,7 @@ function Index() {
 
   return (
     <div className="min-h-screen bg-slate-50 pb-24 font-sans selection:bg-violet-100 max-w-[1440px] mx-auto">
+      <TopBar />
       
 
       {/* Desktop-only Rotating Banner Commercial */}
