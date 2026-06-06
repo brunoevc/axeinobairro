@@ -230,20 +230,20 @@ function Index() {
                 </Button>
               </form>
 
-               <div className="flex flex-col sm:flex-row gap-4 mt-2">
+               <div className="flex flex-row gap-3 mt-2">
                 <Button 
                   onClick={() => navigate({ to: '/negocios' })}
-                  className="h-16 px-10 bg-orange-600 hover:bg-orange-700 text-white rounded-2xl font-black shadow-xl shadow-orange-200 transition-all active:scale-95 text-lg group"
+                  className="flex-1 md:flex-none h-11 md:h-16 md:px-10 bg-orange-600 hover:bg-orange-700 text-white rounded-xl md:rounded-2xl font-black shadow-lg shadow-orange-200 transition-all active:scale-95 text-xs md:text-lg group"
                 >
-                  Ver negócios
-                  <ChevronRight className="ml-2 h-5 w-5 transition-transform group-hover:translate-x-1" />
+                  Ver lojas
+                  <ChevronRight className="ml-1 md:ml-2 h-4 w-4 md:h-5 md:w-5 transition-transform group-hover:translate-x-1" />
                 </Button>
                 <Button 
                   variant="outline"
                   onClick={() => navigate({ to: '/cadastro' })}
-                  className="h-16 px-10 bg-white border-slate-200 text-slate-700 rounded-2xl font-black hover:bg-slate-50 transition-all active:scale-95 text-lg"
+                  className="flex-1 md:flex-none h-11 md:h-16 md:px-10 bg-white border-slate-200 text-slate-700 rounded-xl md:rounded-2xl font-black hover:bg-slate-50 transition-all active:scale-95 text-xs md:text-lg"
                 >
-                  Anunciar meu negócio
+                  Anunciar
                 </Button>
               </div>
             </div>
