@@ -278,7 +278,7 @@ function Index() {
       </section>
 
       {/* 2. Acontecendo Agora - Priority Focus */}
-      <section className="max-w-[1440px] mx-auto px-6 mt-12 mb-12">
+      <section className="max-w-[1440px] mx-auto px-6 mt-8 md:mt-12 mb-12">
         <div className="flex items-center gap-2 mb-6">
           <div className="h-2 w-2 rounded-full bg-emerald-500 animate-ping" />
           <h2 className="text-xs font-black uppercase tracking-widest text-slate-400">Araruama em Tempo Real</h2>
