@@ -574,7 +574,7 @@ function Index() {
       </section>
 
       {/* 8. Representantes */}
-      <section className="max-w-7xl mx-auto px-6 mt-24 bg-slate-900 rounded-[3rem] p-8 md:p-12 text-white overflow-hidden">
+      <section className="max-w-[1440px] mx-auto px-6 mt-24 bg-slate-900 rounded-[3rem] p-8 md:p-12 text-white overflow-hidden">
         <div className="flex flex-col md:flex-row items-center justify-between gap-8">
           <div className="max-w-xl text-center md:text-left">
             <h2 className="text-3xl font-black mb-4">Representantes Locais</h2>
