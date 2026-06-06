@@ -24,7 +24,6 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import {
-  Table as DialogTable, // Rename to avoid conflict if necessary
   Dialog,
   DialogContent,
   DialogHeader,
