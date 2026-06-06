@@ -113,18 +113,21 @@ function Index() {
           <div className="lg:col-span-8 flex flex-col gap-12">
             
             {/* ACONTECENDO AGORA (MOBILE ONLY) */}
-            <section className="lg:hidden bg-slate-900 rounded-[2.5rem] p-6 text-white overflow-hidden relative group">
+            <section className="lg:hidden bg-slate-900 rounded-[2.5rem] p-8 text-white overflow-hidden relative group shadow-2xl">
               <div className="absolute top-0 right-0 p-6 opacity-10 pointer-events-none group-hover:scale-110 transition-transform duration-700">
-                <Flame className="w-24 h-24 rotate-12" />
+                <Flame className="w-24 h-24 rotate-12 text-orange-500" />
               </div>
-              <h3 className="text-[10px] font-black uppercase text-slate-400 mb-4 tracking-[0.2em] relative z-10">Acontecendo Agora</h3>
-              <div className="space-y-4 relative z-10">
-                {news.slice(0, 2).map((n, i) => (
-                  <div key={n.id} className="group/item cursor-pointer flex gap-3" onClick={() => navigate({ to: '/noticias' })}>
-                    <span className="text-orange-500 font-black text-lg opacity-50">0{i+1}</span>
+              <div className="flex items-center gap-2 mb-6 relative z-10">
+                <div className="w-2 h-2 rounded-full bg-orange-500 animate-pulse" />
+                <h3 className="text-[10px] font-black uppercase text-slate-400 tracking-[0.3em]">Acontecendo Agora</h3>
+              </div>
+              <div className="space-y-6 relative z-10">
+                {news.slice(0, 3).map((n, i) => (
+                  <div key={n.id} className="group/item cursor-pointer flex gap-4" onClick={() => navigate({ to: '/noticias' })}>
+                    <span className="text-orange-500 font-black text-xl opacity-40">0{i+1}</span>
                     <div>
-                      <p className="text-slate-500 text-[8px] font-black uppercase tracking-widest mb-0.5">{n.category}</p>
-                      <h4 className="font-bold text-white text-xs line-clamp-2 leading-snug">{n.title}</h4>
+                      <p className="text-slate-500 text-[8px] font-black uppercase tracking-[0.2em] mb-1">{n.category}</p>
+                      <h4 className="font-bold text-white text-sm line-clamp-2 leading-tight">{n.title}</h4>
                     </div>
                   </div>
                 ))}
