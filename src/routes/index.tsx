@@ -65,27 +65,45 @@ function Index() {
       
       <main className="max-w-[1440px] mx-auto pt-6 px-4 md:px-6 pb-24">
         {/* HERO */}
-        <section className="bg-white rounded-[2.5rem] p-6 md:p-12 mb-8 border border-slate-100 shadow-sm relative overflow-hidden">
-          <div className="absolute top-0 right-0 p-12 opacity-5 pointer-events-none">
-            <Search className="w-64 h-64 rotate-12" />
+        <section className="bg-slate-900 rounded-[2.5rem] md:rounded-[3.5rem] p-8 md:p-20 mb-12 border border-slate-800 shadow-2xl relative overflow-hidden">
+          <div className="absolute top-0 right-0 p-12 opacity-10 pointer-events-none">
+            <Search className="w-80 h-80 rotate-12 text-white" />
           </div>
-          <div className="max-w-3xl relative z-10">
-            <h1 className="text-4xl md:text-6xl font-black tracking-tighter text-slate-900 mb-4 leading-[0.9]">
-              Tudo que você precisa, <br /><span className="text-orange-600">pertinho de você.</span>
+          <div className="absolute -bottom-20 -left-20 p-12 opacity-5 pointer-events-none">
+            <MapPin className="w-64 h-64 -rotate-12 text-white" />
+          </div>
+          
+          <div className="max-w-4xl relative z-10">
+            <Badge className="mb-6 bg-orange-500 hover:bg-orange-600 text-white border-none px-4 py-1 text-[10px] font-black uppercase tracking-widest rounded-full">
+              Portal Comunitário
+            </Badge>
+            <h1 className="text-5xl md:text-7xl lg:text-8xl font-black tracking-tighter text-white mb-6 leading-[0.85]">
+              Tudo que você precisa, <br /><span className="text-orange-500">pertinho de você.</span>
             </h1>
-            <p className="text-lg text-slate-500 mb-8 font-medium">
-              Comércio, serviços, notícias, eventos e muito mais da nossa comunidade.
+            <p className="text-xl text-slate-400 mb-12 font-medium max-w-2xl leading-relaxed">
+              Comércio, serviços, notícias, eventos e muito mais da nossa comunidade local reunidos em um só lugar.
             </p>
-            <form onSubmit={(e) => { e.preventDefault(); navigate({ to: '/negocios', search: { q: searchTerm } }); }} className="relative group max-w-xl">
-              <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-6 h-6 text-slate-400 group-focus-within:text-orange-600 transition-colors" />
-              <input 
-                type="text" 
-                placeholder="Buscar comércios, serviços ou eventos..." 
-                className="w-full bg-slate-50 border border-slate-200 rounded-2xl py-5 pl-14 pr-32 text-base font-medium outline-none focus:ring-4 focus:ring-orange-500/10 focus:border-orange-500 transition-all shadow-lg shadow-slate-100/50"
-                value={searchTerm}
-                onChange={(e) => setSearchTerm(e.target.value)}
-              />
-              <Button type="submit" className="absolute right-2 top-1/2 -translate-y-1/2 h-12 px-8 bg-slate-900 hover:bg-slate-800 rounded-xl font-black text-xs uppercase tracking-widest transition-transform active:scale-95">Buscar</Button>
+            
+            <form onSubmit={(e) => { e.preventDefault(); navigate({ to: '/negocios', search: { q: searchTerm } }); }} className="relative group max-w-3xl">
+              <div className="flex flex-col md:flex-row gap-3 bg-white/5 p-2 rounded-[2rem] md:rounded-full border border-white/10 backdrop-blur-md shadow-2xl">
+                <div className="flex-1 relative flex items-center">
+                  <Search className="absolute left-6 w-5 h-5 text-slate-400 group-focus-within:text-orange-500 transition-colors" />
+                  <input 
+                    type="text" 
+                    placeholder="O que você procura hoje?" 
+                    className="w-full bg-transparent border-none py-5 pl-14 pr-4 text-white placeholder:text-slate-500 text-lg font-medium outline-none focus:ring-0"
+                    value={searchTerm}
+                    onChange={(e) => setSearchTerm(e.target.value)}
+                  />
+                </div>
+                <div className="hidden md:flex items-center px-6 border-l border-white/10 gap-3 group/loc cursor-pointer">
+                  <MapPin className="w-5 h-5 text-slate-400 group-hover/loc:text-orange-500 transition-colors" />
+                  <span className="text-slate-300 font-bold text-sm whitespace-nowrap">Araruama, RJ</span>
+                </div>
+                <Button type="submit" className="h-14 md:h-16 px-10 bg-orange-500 hover:bg-orange-600 text-white rounded-full font-black text-sm uppercase tracking-widest transition-all active:scale-95 shadow-xl shadow-orange-500/20">
+                  Buscar Agora
+                </Button>
+              </div>
             </form>
           </div>
         </section>
