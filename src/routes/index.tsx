@@ -452,7 +452,32 @@ function Index() {
         </div>
       </section>
 
-      {/* 6. Serviços da Comunidade */}
+      {/* 5.1 Transporte Alternativo Section */}
+      <section className="max-w-7xl mx-auto px-6 mt-24">
+        <div className="bg-slate-900 rounded-[3rem] p-12 overflow-hidden relative border-8 border-slate-100 shadow-2xl">
+          <div className="absolute top-0 right-0 w-1/3 h-full opacity-10 pointer-events-none">
+             <Car className="w-full h-full text-white -rotate-12 translate-x-12 translate-y-12" />
+          </div>
+          <div className="relative z-10 flex flex-col md:flex-row items-center gap-12">
+            <div className="flex-1 text-center md:text-left">
+              <Badge className="bg-orange-600 text-white mb-6 font-black uppercase tracking-widest px-4 py-2 rounded-xl text-xs">Comunidade Viva</Badge>
+              <h2 className="text-4xl md:text-6xl font-black text-white tracking-tighter mb-6 leading-none italic">
+                Transporte <br /> <span className="text-orange-600">Alternativo Local</span>
+              </h2>
+              <p className="text-slate-400 text-lg md:text-xl font-medium mb-10 leading-relaxed max-w-xl">
+                Encontre carros e motos disponíveis no bairro e combine sua viagem pelo WhatsApp. Direto e rápido.
+              </p>
+              <Button 
+                onClick={() => navigate({ to: '/transporte' })}
+                className="h-16 px-12 bg-white hover:bg-orange-50 text-slate-900 rounded-2xl font-black text-lg transition-all active:scale-95 group shadow-xl"
+              >
+                Ver motoristas
+                <ArrowRight className="ml-3 h-6 w-6 text-orange-600 transition-transform group-hover:translate-x-2" />
+              </Button>
+            </div>
+          </div>
+        </div>
+      </section>
       <section className="max-w-7xl mx-auto px-6 mt-24">
         <div className="flex flex-col md:flex-row md:items-end justify-between mb-12 gap-4">
           <div>
