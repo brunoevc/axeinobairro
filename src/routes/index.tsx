@@ -163,24 +163,33 @@ function Index() {
   }, [coords, getDistance, locationLoading]);
 
   return (
-    <div className="min-h-screen bg-slate-50 pb-24 font-sans selection:bg-violet-100">
+    <div className=\"min-h-screen bg-slate-50 pb-24 font-sans selection:bg-violet-100 max-w-[1440px] mx-auto\">
       <TopBar />
 
-      {/* Hero Banner */}
-      <section className="relative overflow-hidden bg-white border-b border-slate-100">
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,_var(--tw-gradient-stops))] from-violet-50/50 via-transparent to-transparent opacity-70" />
+      {/* Desktop-only Rotating Banner Commercial */}
+      <div className=\"hidden lg:block w-full bg-slate-900 overflow-hidden relative group\">
+        <div className=\"max-w-7xl mx-auto px-6 py-2 flex items-center justify-between text-white text-[10px] font-black uppercase tracking-[0.2em]\">
+          <div className=\"flex items-center gap-8 animate-in slide-in-from-right duration-1000\">
+             <div className=\"flex items-center gap-2\"><Zap className=\"w-3 h-3 text-orange-500\" /> Ofertas Ativas</div>
+             <div className=\"flex items-center gap-2\"><Star className=\"w-3 h-3 text-orange-500\" /> Eventos do Fim de Semana</div>
+             <div className=\"flex items-center gap-2\"><Newspaper className=\"w-3 h-3 text-orange-500\" /> Comunicados Oficiais</div>
+             <div className=\"flex items-center gap-2\"><Users className=\"w-3 h-3 text-orange-500\" /> Novos Representantes</div>
+          </div>
+          <Link to=\"/planos\" className=\"hover:text-orange-500 transition-colors\">Anuncie aqui</Link>
+        </div>
+      </div>
+
+      {/* Hero Banner - Simplified */}
+      <section className=\"relative overflow-hidden bg-white border-b border-slate-100\">
+        <div className=\"absolute inset-0 bg-[radial-gradient(circle_at_top_right,_var(--tw-gradient-stops))] from-violet-50/50 via-transparent to-transparent opacity-70\" />
         
-        <div className="max-w-7xl mx-auto px-6 py-12 md:py-28 relative z-10 flex flex-col md:flex-row items-center gap-12">
-          <div className="flex-1 text-center md:text-left">
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-orange-50 text-orange-600 text-[10px] font-black uppercase tracking-widest mb-6 border border-orange-100 shadow-sm">
-              <Sparkles className="h-3 w-3" />
-              Ecossistema Digital da Comunidade
-            </div>
-            <h1 className="text-4xl md:text-8xl font-black tracking-tighter text-slate-900 mb-6 leading-[0.85]">
-              O Ecossistema Digital <br className="hidden md:block" />
-              <span className="text-orange-600">da Sua Comunidade</span>
+        <div className=\"max-w-7xl mx-auto px-6 py-8 md:py-20 relative z-10 flex flex-col md:flex-row items-center gap-12\">
+          <div className=\"flex-1 text-center md:text-left\">
+            <h1 className=\"text-4xl md:text-7xl font-black tracking-tighter text-slate-900 mb-4 leading-[0.85]\">
+              O Ecossistema Digital <br className=\"hidden md:block\" />
+              <span className=\"text-orange-600\">da Sua Comunidade</span>
             </h1>
-            <p className="text-slate-500 text-lg md:text-xl font-medium mb-10 leading-relaxed max-w-xl mx-auto md:mx-0">
+            <p className=\"text-slate-500 text-base md:text-lg font-medium mb-8 leading-relaxed max-w-xl mx-auto md:mx-0 hidden md:block\">
               Conectando moradores, negócios e serviços para fortalecer o bairro e criar novas oportunidades para todos.
             </p>
             
