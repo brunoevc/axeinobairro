@@ -452,7 +452,53 @@ function Index() {
         </div>
       </section>
 
-      {/* Notícias e Agenda Section */}
+      {/* 6. Serviços da Comunidade */}
+      <section className="max-w-7xl mx-auto px-6 mt-24">
+        <div className="flex flex-col md:flex-row md:items-end justify-between mb-12 gap-4">
+          <div>
+            <h2 className="text-4xl font-black text-slate-900 tracking-tighter flex items-center gap-3">
+              <Briefcase className="w-8 h-8 text-orange-600" />
+              Serviços da Comunidade
+            </h2>
+          </div>
+          <Button 
+            variant="ghost"
+            onClick={() => navigate({ to: '/servicos' })}
+            className="text-orange-600 font-black hover:bg-orange-50 self-start md:self-auto"
+          >
+            Ver todos profissionais
+            <ArrowRight className="ml-2 h-4 w-4" />
+          </Button>
+        </div>
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+          {services.slice(0, 4).map((service) => (
+            <Card key={service.id} className="rounded-3xl border border-slate-100 hover:shadow-xl transition-all group flex flex-col h-full">
+              <CardContent className="p-6 flex flex-col h-full">
+                <div className="flex items-center gap-4 mb-4">
+                  <div className="w-12 h-12 bg-slate-50 rounded-xl flex items-center justify-center text-slate-400 group-hover:bg-orange-600 group-hover:text-white transition-colors shrink-0">
+                    <Briefcase className="w-6 h-6" />
+                  </div>
+                  <div className="min-w-0">
+                    <h3 className="font-black text-slate-900 truncate">{service.name}</h3>
+                    <p className="text-[10px] font-bold text-slate-400 uppercase tracking-widest">{service.category}</p>
+                  </div>
+                </div>
+                <div className="mt-auto">
+                  <Button 
+                    variant="outline"
+                    onClick={() => navigate({ to: '/servicos' })}
+                    className="w-full border-slate-200 rounded-xl font-black text-xs uppercase h-11"
+                  >
+                    Solicitar Orçamento
+                  </Button>
+                </div>
+              </CardContent>
+            </Card>
+          ))}
+        </div>
+      </section>
+
+      {/* 7. Notícias e Agenda Section */}
       <section className="max-w-7xl mx-auto px-6 mt-24">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
           {/* Notícias */}
@@ -500,7 +546,7 @@ function Index() {
         </div>
       </section>
 
-      {/* Representantes */}
+      {/* 8. Representantes */}
       <section className="max-w-7xl mx-auto px-6 mt-24 bg-slate-900 rounded-[3rem] p-8 md:p-12 text-white overflow-hidden">
         <div className="flex flex-col md:flex-row items-center justify-between gap-8">
           <div className="max-w-xl text-center md:text-left">
@@ -522,79 +568,6 @@ function Index() {
             ))}
             <div className="w-16 h-16 rounded-full bg-orange-600 flex items-center justify-center font-black border-4 border-slate-900 shadow-xl text-xs">
               +{representativesRepository.getAll().length}
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Serviços Section */}
-      <section className="max-w-7xl mx-auto px-6 mt-24">
-        <div className="flex flex-col md:flex-row md:items-end justify-between mb-12 gap-4">
-          <div>
-            <h2 className="text-4xl font-black text-slate-900 tracking-tighter flex items-center gap-3">
-              <Briefcase className="w-8 h-8 text-orange-600" />
-              Serviços da Comunidade
-            </h2>
-          </div>
-          <Button 
-            variant="ghost"
-            onClick={() => navigate({ to: '/servicos' })}
-            className="text-orange-600 font-black hover:bg-orange-50 self-start md:self-auto"
-          >
-            Ver todos profissionais
-            <ArrowRight className="ml-2 h-4 w-4" />
-          </Button>
-        </div>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-          {services.slice(0, 4).map((service) => (
-            <Card key={service.id} className="rounded-3xl border border-slate-100 hover:shadow-xl transition-all group flex flex-col h-full">
-              <CardContent className="p-6 flex flex-col h-full">
-                <div className="flex items-center gap-4 mb-4">
-                  <div className="w-12 h-12 bg-slate-50 rounded-xl flex items-center justify-center text-slate-400 group-hover:bg-orange-600 group-hover:text-white transition-colors shrink-0">
-                    <Briefcase className="w-6 h-6" />
-                  </div>
-                  <div className="min-w-0">
-                    <h3 className="font-black text-slate-900 truncate">{service.name}</h3>
-                    <p className="text-[10px] font-bold text-slate-400 uppercase tracking-widest">{service.category}</p>
-                  </div>
-                </div>
-                <div className="mt-auto">
-                  <Button 
-                    variant="outline"
-                    onClick={() => navigate({ to: '/servicos' })}
-                    className="w-full border-slate-200 rounded-xl font-black text-xs uppercase h-11"
-                  >
-                    Solicitar Orçamento
-                  </Button>
-                </div>
-              </CardContent>
-            </Card>
-          ))}
-        </div>
-      </section>
-
-      {/* Transporte Alternativo Section */}
-      <section className="max-w-7xl mx-auto px-6 mt-24">
-        <div className="bg-slate-900 rounded-[3rem] p-12 overflow-hidden relative border-8 border-slate-100 shadow-2xl">
-          <div className="absolute top-0 right-0 w-1/3 h-full opacity-10 pointer-events-none">
-             <Car className="w-full h-full text-white -rotate-12 translate-x-12 translate-y-12" />
-          </div>
-          <div className="relative z-10 flex flex-col md:flex-row items-center gap-12">
-            <div className="flex-1 text-center md:text-left">
-              <Badge className="bg-orange-600 text-white mb-6 font-black uppercase tracking-widest px-4 py-2 rounded-xl text-xs">Comunidade Viva</Badge>
-              <h2 className="text-4xl md:text-6xl font-black text-white tracking-tighter mb-6 leading-none italic">
-                Transporte <br /> <span className="text-orange-600">Alternativo Local</span>
-              </h2>
-              <p className="text-slate-400 text-lg md:text-xl font-medium mb-10 leading-relaxed max-w-xl">
-                Encontre carros e motos disponíveis no bairro e combine sua viagem pelo WhatsApp. Direto e rápido.
-              </p>
-              <Button 
-                onClick={() => navigate({ to: '/transporte' })}
-                className="h-16 px-12 bg-white hover:bg-orange-50 text-slate-900 rounded-2xl font-black text-lg transition-all active:scale-95 group shadow-xl"
-              >
-                Ver motoristas
-                <ArrowRight className="ml-3 h-6 w-6 text-orange-600 transition-transform group-hover:translate-x-2" />
-              </Button>
             </div>
           </div>
         </div>
