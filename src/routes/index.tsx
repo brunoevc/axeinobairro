@@ -337,9 +337,20 @@ function Index() {
         <ValueProposition />
       </div>
 
-      <div className="lg:hidden px-6 mb-12">
-        <div className="bg-orange-50 border border-orange-100 p-6 rounded-[2rem] text-center">
-           <p className="text-sm font-bold text-orange-600 tracking-tight">Descubra e fortaleça Araruama comprando no comércio local!</p>
+      <div className="lg:hidden px-6 mt-12 mb-12">
+        <div className="bg-violet-600 rounded-[2rem] p-8 text-white relative overflow-hidden shadow-xl">
+          <div className="absolute top-0 right-0 w-32 h-32 bg-white/10 rounded-full blur-2xl -mr-16 -mt-16" />
+          <div className="relative z-10">
+            <h3 className="text-xl font-black mb-2 italic">A Sua Voz Importa</h3>
+            <p className="text-violet-100 text-xs font-medium mb-6">Estamos construindo o futuro do bairro com você. Deixe seu feedback!</p>
+            <Button 
+              variant="secondary" 
+              className="w-full rounded-xl font-black h-11 bg-white text-violet-600 hover:bg-violet-50"
+              onClick={() => navigate({ to: '/feedback' })}
+            >
+              Dar Feedback
+            </Button>
+          </div>
         </div>
       </div>
 
