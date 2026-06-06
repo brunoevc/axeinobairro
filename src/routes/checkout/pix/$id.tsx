@@ -1,4 +1,4 @@
-import { useParams } from "@tanstack/react-router";
+import { createFileRoute, useParams } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
 import { PixCharge, PixLink, PixPurpose } from "@/types/payment";
 import { getPixChargeById, getPixLinkById, createPixCharge } from "@/lib/payments";
@@ -8,7 +8,11 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { toast } from "sonner";
 
-export default function CheckoutPix() {
+export const Route = createFileRoute("/checkout/pix/$id")({
+  component: CheckoutPix,
+});
+
+function CheckoutPix() {
   const { id } = useParams({ from: "/checkout/pix/$id" });
   const [charge, setCharge] = useState<PixCharge | null>(null);
   const [pixLink, setPixLink] = useState<PixLink | null>(null);

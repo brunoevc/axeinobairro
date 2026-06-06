@@ -1,3 +1,4 @@
+import { createFileRoute } from "@tanstack/react-router";
 import { useState, useEffect } from "react";
 import { getNews, saveNews } from "@/lib/news";
 import { merchants } from "@/data/merchants";
@@ -23,6 +24,7 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import {
+  Table as DialogTable, // Rename to avoid conflict if necessary
   Dialog,
   DialogContent,
   DialogHeader,
@@ -32,7 +34,11 @@ import {
 import { Pencil, Trash2, Plus, Eye, MousePointer2 } from "lucide-react";
 import { toast } from "sonner";
 
-export default function AdminNoticias() {
+export const Route = createFileRoute("/admin/noticias")({
+  component: AdminNoticias,
+});
+
+function AdminNoticias() {
   const [news, setNews] = useState<NewsItem[]>([]);
   const [editingItem, setEditingItem] = useState<Partial<NewsItem> | null>(null);
   const [isDialogOpen, setIsDialogOpen] = useState(false);
