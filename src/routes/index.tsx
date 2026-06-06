@@ -171,14 +171,29 @@ function Index() {
 
       {/* Desktop-only Rotating Banner Commercial */}
       <div className="hidden lg:block w-full bg-slate-900 overflow-hidden relative group">
-        <div className="max-w-[1440px] mx-auto px-6 py-2 flex items-center justify-between text-white text-[10px] font-black uppercase tracking-[0.2em]">
-          <div className="flex items-center gap-8 animate-in slide-in-from-right duration-1000">
-             <div className="flex items-center gap-2"><Zap className="w-3 h-3 text-orange-500" /> Ofertas Ativas</div>
-             <div className="flex items-center gap-2"><Star className="w-3 h-3 text-orange-500" /> Eventos do Fim de Semana</div>
-             <div className="flex items-center gap-2"><Newspaper className="w-3 h-3 text-orange-500" /> Comunicados Oficiais</div>
-             <div className="flex items-center gap-2"><Users className="w-3 h-3 text-orange-500" /> Novos Representantes</div>
+        <div className="max-w-[1440px] mx-auto px-6 py-2.5 flex items-center justify-between text-white text-[10px] font-black uppercase tracking-[0.2em]">
+          <div className="flex items-center gap-10">
+             <Link to="/negocios" className="flex items-center gap-2 hover:text-orange-500 transition-colors group">
+                <Tag className="w-3.5 h-3.5 text-orange-500 group-hover:scale-110 transition-transform" /> 
+                Ofertas da Semana
+                <ArrowUpRight className="w-2.5 h-2.5 opacity-0 group-hover:opacity-100 transition-opacity" />
+             </Link>
+             <Link to="/noticias" className="flex items-center gap-2 hover:text-orange-500 transition-colors group">
+                <Calendar className="w-3.5 h-3.5 text-orange-500 group-hover:scale-110 transition-transform" /> 
+                Próximos Eventos
+                <ArrowUpRight className="w-2.5 h-2.5 opacity-0 group-hover:opacity-100 transition-opacity" />
+             </Link>
+             <Link to="/como-funciona" className="flex items-center gap-2 hover:text-orange-500 transition-colors group">
+                <Newspaper className="w-3.5 h-3.5 text-orange-500 group-hover:scale-110 transition-transform" /> 
+                Informativo Bairro
+                <ArrowUpRight className="w-2.5 h-2.5 opacity-0 group-hover:opacity-100 transition-opacity" />
+             </Link>
+             <div className="flex items-center gap-2 text-slate-400">
+                <Users className="w-3.5 h-3.5 text-orange-500/50" /> 
+                Novos Apoiadores
+             </div>
           </div>
-          <Link to="/planos" className="hover:text-orange-500 transition-colors">Anuncie aqui</Link>
+          <Link to="/planos" className="bg-orange-600 px-3 py-1 rounded-md text-[9px] hover:bg-orange-700 transition-all shadow-lg shadow-orange-900/40">Anuncie aqui</Link>
         </div>
       </div>
 
