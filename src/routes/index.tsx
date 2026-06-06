@@ -170,7 +170,6 @@ function Index() {
     <div className="min-h-screen bg-slate-50 pb-24 font-sans selection:bg-violet-100 max-w-[1440px] mx-auto">
       <>
         <TopBar />
-      <TopBar />
 
       {/* Desktop-only Rotating Banner Commercial */}
       <div className="hidden lg:block w-full bg-slate-900 overflow-hidden relative group">
