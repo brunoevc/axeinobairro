@@ -7,7 +7,7 @@ const IS_ADMIN_ENABLED = import.meta.env.VITE_ADMIN_ENABLED === 'true';
 export function Footer() {
   return (
     <footer className="bg-slate-900 text-white py-20 px-6 mt-20">
-      <div className="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center gap-12">
+      <div className="max-w-[1440px] mx-auto flex flex-col md:flex-row justify-between items-center gap-12">
         <div className="flex flex-col items-center md:items-start text-center md:text-left gap-4">
           <Logo dark />
           <p className="text-slate-400 font-medium max-w-xs">
