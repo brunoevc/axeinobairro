@@ -114,12 +114,13 @@ function Index() {
       intentTracker.track({
         type: 'search',
         source: 'home',
-        category: 'outros' as EconomicCategory,
+        category: 'alimentacao' as EconomicCategory,
         territory: 'Araruama' as Territory,
       });
     } else {
       navigate({ to: '/negocios' });
     }
+
   };
   
   // Prioritized governance logic: A > B > C
