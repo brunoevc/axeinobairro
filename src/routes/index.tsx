@@ -454,7 +454,7 @@ function Index() {
       </section>
 
       {/* 5.1 Transporte Alternativo Section */}
-      <section className="max-w-7xl mx-auto px-6 mt-24">
+      <section className="max-w-[1440px] mx-auto px-6 mt-24">
         <div className="bg-slate-900 rounded-[3rem] p-12 overflow-hidden relative border-8 border-slate-100 shadow-2xl">
           <div className="absolute top-0 right-0 w-1/3 h-full opacity-10 pointer-events-none">
              <Car className="w-full h-full text-white -rotate-12 translate-x-12 translate-y-12" />
