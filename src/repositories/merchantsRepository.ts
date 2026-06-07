@@ -1,4 +1,4 @@
-import { Merchant, merchants as mockMerchants } from "@/data/merchants";
+import { Merchant, initialMerchants as mockMerchants } from "@/data/merchants";
 import { storage } from "./storage";
 
 const STORAGE_KEY = "axei_merchants";
@@ -59,5 +59,3 @@ export const merchantsRepository = {
     merchantsRepository.notify();
   }
 };
-
-
