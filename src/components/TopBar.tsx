@@ -165,7 +165,7 @@ export const TopBar = memo(function TopBar() {
                 onKeyDown={(e) => {
                   if (e.key === 'Enter') {
                     const value = (e.target as HTMLInputElement).value;
-                    navigate({ to: '/negocios', search: { q: value } });
+                    navigate({ to: '/busca', search: { q: value } });
                   }
                 }}
               />
