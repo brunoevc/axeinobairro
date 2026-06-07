@@ -12,7 +12,10 @@ import {
   X,
   MessageCircle,
   Clock,
-  LayoutGrid
+  LayoutGrid,
+  History,
+  TrendingUp,
+  Heart
 } from "lucide-react";
 import { z } from "zod";
 import { merchantsRepository } from "@/repositories/merchantsRepository";
@@ -23,7 +26,9 @@ import { Footer } from "@/components/Footer";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { MerchantCard } from "@/components/MerchantCard";
-import { ListingSkeleton } from "@/components/ListingSkeleton";
+import { useSearchHistory } from "@/hooks/useSearchHistory";
+import { useFavorites } from "@/hooks/useFavorites";
+
 
 const searchSchema = z.object({
   q: z.string().optional().default(""),
@@ -40,6 +45,10 @@ function SearchPage() {
   const [searchTerm, setSearchTerm] = useState(q);
   const [activeTab, setActiveTab] = useState<"all" | "merchants" | "services" | "news">("all");
   const [isLoading, setIsLoading] = useState(true);
+  const [showHistory, setShowHistory] = useState(false);
+  const { history, addSearchTerm, clearHistory } = useSearchHistory();
+  const { toggleFavorite, isFavorite } = useFavorites();
+
 
   useEffect(() => {
     setSearchTerm(q);
@@ -72,8 +81,20 @@ function SearchPage() {
 
   const handleSearch = (e: React.FormEvent) => {
     e.preventDefault();
-    navigate({ to: "/busca", search: { q: searchTerm } });
+    if (searchTerm.trim()) {
+      addSearchTerm(searchTerm);
+      setShowHistory(false);
+      navigate({ to: "/busca", search: { q: searchTerm } });
+    }
   };
+
+  const handleHistoryClick = (term: string) => {
+    setSearchTerm(term);
+    addSearchTerm(term);
+    setShowHistory(false);
+    navigate({ to: "/busca", search: { q: term } });
+  };
+
 
   const totalResults = results.merchants.length + results.services.length + results.news.length;
 
@@ -88,25 +109,50 @@ function SearchPage() {
             Voltar para o Início
           </Link>
           
-          <form onSubmit={handleSearch} className="relative group max-w-3xl">
-            <Search className="absolute left-6 top-1/2 -translate-y-1/2 w-6 h-6 text-slate-400 group-focus-within:text-orange-600 transition-colors" />
-            <input 
-              type="text" 
-              placeholder="O que você procura hoje?" 
-              className="w-full bg-white border-2 border-slate-100 rounded-3xl py-6 pl-16 pr-8 text-xl font-black text-slate-900 placeholder:text-slate-400 outline-none focus:border-orange-600 focus:ring-4 focus:ring-orange-600/5 transition-all shadow-sm"
-              value={searchTerm}
-              onChange={(e) => setSearchTerm(e.target.value)}
-            />
-            {searchTerm && (
-              <button 
-                type="button"
-                onClick={() => setSearchTerm("")}
-                className="absolute right-6 top-1/2 -translate-y-1/2 p-2 hover:bg-slate-100 rounded-full transition-colors"
-              >
-                <X className="w-4 h-4 text-slate-400" />
-              </button>
+          <div className="relative max-w-3xl z-40">
+            <form onSubmit={handleSearch} className="relative group">
+              <Search className="absolute left-6 top-1/2 -translate-y-1/2 w-6 h-6 text-slate-400 group-focus-within:text-orange-600 transition-colors" />
+              <input 
+                type="text" 
+                placeholder="O que você procura hoje?" 
+                className="w-full bg-white border-2 border-slate-100 rounded-3xl py-6 pl-16 pr-20 text-xl font-black text-slate-900 placeholder:text-slate-400 outline-none focus:border-orange-600 focus:ring-4 focus:ring-orange-600/5 transition-all shadow-sm"
+                value={searchTerm}
+                onChange={(e) => setSearchTerm(e.target.value)}
+                onFocus={() => setShowHistory(true)}
+              />
+              <div className="absolute right-6 top-1/2 -translate-y-1/2 flex items-center gap-2">
+                {searchTerm && (
+                  <button 
+                    type="button"
+                    onClick={() => { setSearchTerm(""); setShowHistory(false); }}
+                    className="p-2 hover:bg-slate-100 rounded-full transition-colors"
+                  >
+                    <X className="w-4 h-4 text-slate-400" />
+                  </button>
+                )}
+              </div>
+            </form>
+
+            {showHistory && history.length > 0 && (
+              <div className="absolute top-full left-0 right-0 mt-2 bg-white rounded-[2rem] border border-slate-100 shadow-2xl overflow-hidden py-4 animate-in fade-in slide-in-from-top-2 duration-300">
+                <div className="px-6 py-2 flex items-center justify-between">
+                  <span className="text-[10px] font-black uppercase text-slate-400 tracking-widest">Buscas Recentes</span>
+                  <button onClick={clearHistory} className="text-[10px] font-black uppercase text-orange-600 hover:text-orange-700">Limpar</button>
+                </div>
+                {history.map((term, i) => (
+                  <button 
+                    key={i}
+                    onClick={() => handleHistoryClick(term)}
+                    className="w-full px-6 py-4 text-left flex items-center gap-4 hover:bg-slate-50 transition-colors group"
+                  >
+                    <History className="w-4 h-4 text-slate-300 group-hover:text-orange-600" />
+                    <span className="font-bold text-slate-700 group-hover:text-slate-900">{term}</span>
+                  </button>
+                ))}
+              </div>
             )}
-          </form>
+          </div>
+
           
           <p className="mt-4 text-slate-500 font-medium">
             {isLoading ? "Buscando..." : `${totalResults} resultados encontrados para "${q || "todos"}"`}
@@ -172,21 +218,33 @@ function SearchPage() {
                     <Link 
                       key={s.id} 
                       to="/servicos"
-                      className="group bg-white p-8 rounded-[2.5rem] border border-slate-100 hover:shadow-2xl hover:-translate-y-1 transition-all duration-500 flex items-center gap-6"
+                      className="group bg-white p-6 rounded-[2.5rem] border border-slate-100 hover:shadow-2xl hover:-translate-y-1 transition-all duration-500 flex items-center gap-4 relative"
                     >
-                      <div className="w-16 h-16 rounded-2xl bg-slate-50 flex items-center justify-center group-hover:bg-orange-600 group-hover:text-white transition-all shrink-0">
-                        <Wrench className="w-8 h-8 text-slate-300 group-hover:text-white" />
+                      <button 
+                        onClick={(e) => {
+                          e.preventDefault();
+                          toggleFavorite(s.id, 'service', s.name);
+                        }}
+                        className={`absolute top-4 right-4 p-2 rounded-full border transition-all ${
+                          isFavorite(s.id) ? 'bg-orange-600 border-orange-500 text-white' : 'bg-white border-slate-100 text-slate-300 hover:text-orange-600'
+                        }`}
+                      >
+                        <Heart className={`w-3.5 h-3.5 ${isFavorite(s.id) ? 'fill-white' : ''}`} />
+                      </button>
+                      <div className="w-14 h-14 rounded-2xl bg-slate-50 flex items-center justify-center group-hover:bg-orange-600 group-hover:text-white transition-all shrink-0">
+                        <Wrench className="w-7 h-7 text-slate-300 group-hover:text-white" />
                       </div>
                       <div className="min-w-0 flex-1">
-                        <h3 className="font-black text-slate-900 text-lg group-hover:text-orange-600 transition-colors truncate">{s.name}</h3>
-                        <p className="text-orange-600 text-[10px] font-black uppercase tracking-widest">{s.category}</p>
-                        <div className="flex items-center gap-2 mt-1">
-                          <MapPin className="w-3 h-3 text-slate-300" />
-                          <span className="text-[10px] font-black text-slate-400 uppercase tracking-widest">{s.neighborhood}</span>
+                        <h3 className="font-black text-slate-900 text-base group-hover:text-orange-600 transition-colors truncate">{s.name}</h3>
+                        <p className="text-orange-600 text-[9px] font-black uppercase tracking-widest">{s.category}</p>
+                        <div className="flex items-center gap-2 mt-0.5">
+                          <MapPin className="w-2.5 h-2.5 text-slate-300" />
+                          <span className="text-[9px] font-black text-slate-400 uppercase tracking-widest">{s.neighborhood}</span>
                         </div>
                       </div>
-                      <ChevronRight className="w-6 h-6 text-slate-200 group-hover:text-orange-600 transition-colors" />
+                      <ChevronRight className="w-5 h-5 text-slate-200 group-hover:text-orange-600 transition-colors" />
                     </Link>
+
                   ))}
                 </div>
               </section>
@@ -235,21 +293,41 @@ function SearchPage() {
             )}
 
             {totalResults === 0 && (
-              <div className="py-32 text-center bg-white rounded-[3rem] border border-slate-100 shadow-sm px-6">
+              <div className="py-24 text-center bg-white rounded-[3rem] border border-slate-100 shadow-sm px-6 max-w-4xl mx-auto">
                 <div className="w-24 h-24 bg-orange-50 rounded-full flex items-center justify-center mx-auto mb-6">
                   <Search className="w-10 h-10 text-orange-600" />
                 </div>
-                <h3 className="text-3xl font-black text-slate-900 mb-2 tracking-tighter italic">Nenhum resultado encontrado</h3>
-                <p className="text-slate-500 font-medium max-w-sm mx-auto mb-10 leading-relaxed">
-                  Tente usar palavras-chave mais genéricas ou verifique a ortografia da sua busca.
+                <h3 className="text-3xl font-black text-slate-900 mb-2 tracking-tighter italic">Não encontramos resultados</h3>
+                <p className="text-slate-500 font-medium max-w-sm mx-auto mb-12 leading-relaxed">
+                  Tente outro termo ou explore as categorias populares abaixo.
                 </p>
+                
+                <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-12">
+                  {[
+                    { label: "Pizzaria", icon: TrendingUp },
+                    { label: "Eletricista", icon: Wrench },
+                    { label: "Promoções", icon: Newspaper },
+                    { label: "Pet Shop", icon: Store }
+                  ].map((cat, i) => (
+                    <button 
+                      key={i}
+                      onClick={() => { setSearchTerm(cat.label); navigate({ to: "/busca", search: { q: cat.label } }); }}
+                      className="p-6 bg-slate-50 rounded-[2rem] border border-slate-100 hover:border-orange-200 hover:bg-orange-50 transition-all flex flex-col items-center gap-3 group"
+                    >
+                      <cat.icon className="w-6 h-6 text-slate-300 group-hover:text-orange-600 transition-colors" />
+                      <span className="text-xs font-black uppercase tracking-widest text-slate-500 group-hover:text-slate-900">{cat.label}</span>
+                    </button>
+                  ))}
+                </div>
+
                 <Button 
                   onClick={() => { setSearchTerm(""); navigate({ to: "/busca", search: { q: "" } }); }}
-                  className="bg-orange-600 hover:bg-orange-700 text-white rounded-2xl h-14 px-8 font-black shadow-xl shadow-orange-200 active:scale-95 transition-all"
+                  className="bg-slate-900 hover:bg-slate-800 text-white rounded-2xl h-14 px-8 font-black transition-all"
                 >
                   Ver Tudo
                 </Button>
               </div>
+
             )}
           </div>
         )}
