@@ -108,9 +108,9 @@ function Index() {
           </div>
         </section>
 
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 mb-16">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 mb-20">
           {/* MAIN CONTENT */}
-          <div className="lg:col-span-8 flex flex-col gap-12">
+          <div className="lg:col-span-9 flex flex-col gap-20">
             
             {/* ACONTECENDO AGORA (MOBILE ONLY) */}
             <section className="lg:hidden bg-slate-900 rounded-[2.5rem] p-8 text-white overflow-hidden relative group shadow-2xl">
@@ -136,8 +136,8 @@ function Index() {
 
             {/* QUICK CATEGORIES */}
             <section>
-              <h2 className="text-[10px] font-black text-slate-400 uppercase tracking-[0.2em] mb-8">Navegação Rápida</h2>
-              <div className="grid grid-cols-3 md:grid-cols-6 gap-6">
+              <h2 className="text-xs font-black text-slate-400 uppercase tracking-[0.3em] mb-10">Navegação Rápida</h2>
+              <div className="grid grid-cols-3 md:grid-cols-6 gap-8">
                 {[
                   { label: 'Lojas', icon: Tag, path: '/negocios', color: 'bg-blue-50 text-blue-600' },
                   { label: 'Serviços', icon: Wrench, path: '/servicos', color: 'bg-orange-50 text-orange-600' },
@@ -146,11 +146,11 @@ function Index() {
                   { label: 'Notícias', icon: Newspaper, path: '/noticias', color: 'bg-violet-50 text-violet-600' },
                   { label: 'Comunidade', icon: Star, path: '/noticias', color: 'bg-amber-50 text-amber-600' },
                 ].map(cat => (
-                  <button key={cat.label} onClick={() => navigate({ to: cat.path as any })} className="group flex flex-col items-center gap-4">
-                    <div className={`w-full aspect-square rounded-[2rem] ${cat.color} flex items-center justify-center border border-transparent group-hover:border-current group-hover:shadow-xl group-hover:-translate-y-2 transition-all duration-300`}>
-                      <cat.icon className="w-8 h-8 group-hover:scale-110 transition-transform" />
+                  <button key={cat.label} onClick={() => navigate({ to: cat.path as any })} className="group flex flex-col items-center gap-6">
+                    <div className={`w-full aspect-square rounded-[2.5rem] ${cat.color} flex items-center justify-center border-2 border-transparent group-hover:border-current group-hover:shadow-2xl group-hover:-translate-y-2 transition-all duration-300`}>
+                      <cat.icon className="w-12 h-12 group-hover:scale-110 transition-transform" />
                     </div>
-                    <span className="text-[11px] font-black uppercase text-slate-500 group-hover:text-slate-900 transition-colors tracking-widest">{cat.label}</span>
+                    <span className="text-xs font-black uppercase text-slate-500 group-hover:text-slate-900 transition-colors tracking-[0.2em]">{cat.label}</span>
                   </button>
                 ))}
               </div>
@@ -160,8 +160,8 @@ function Index() {
             <section>
               <div className="flex flex-col md:flex-row md:items-end justify-between mb-10 gap-4">
                 <div>
-                  <h2 className="text-4xl font-black text-slate-900 tracking-tighter leading-none">Ofertas do Bairro</h2>
-                  <p className="text-slate-500 text-sm font-medium mt-2">As melhores oportunidades selecionadas para você hoje.</p>
+                  <h2 className="text-5xl font-black text-slate-900 tracking-tighter leading-none">Ofertas do Bairro</h2>
+                  <p className="text-slate-500 text-lg font-medium mt-3">As melhores oportunidades selecionadas para você hoje.</p>
                 </div>
                 <Button variant="ghost" onClick={() => navigate({ to: '/negocios' })} className="text-orange-600 hover:text-orange-700 font-black uppercase text-[10px] tracking-[0.2em] p-0 h-auto gap-2">
                   Ver todas as ofertas <ChevronRight className="w-4 h-4" />
@@ -176,8 +176,8 @@ function Index() {
             <section>
               <div className="flex flex-col md:flex-row md:items-end justify-between mb-10 gap-4">
                 <div>
-                  <h2 className="text-4xl font-black text-slate-900 tracking-tighter leading-none">Serviços Locais</h2>
-                  <p className="text-slate-500 text-sm font-medium mt-2">Profissionais qualificados recomendados pela nossa comunidade.</p>
+                  <h2 className="text-5xl font-black text-slate-900 tracking-tighter leading-none">Serviços Locais</h2>
+                  <p className="text-slate-500 text-lg font-medium mt-3">Profissionais qualificados recomendados pela nossa comunidade.</p>
                 </div>
                 <Button variant="ghost" onClick={() => navigate({ to: '/servicos' })} className="text-orange-600 hover:text-orange-700 font-black uppercase text-[10px] tracking-[0.2em] p-0 h-auto gap-2">
                   Explorar serviços <ChevronRight className="w-4 h-4" />
@@ -185,20 +185,20 @@ function Index() {
               </div>
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
                 {services.map(s => (
-                  <div key={s.id} className="bg-white p-6 rounded-[2.5rem] border border-slate-100 flex items-center gap-5 hover:shadow-2xl hover:-translate-y-1 transition-all duration-500 group cursor-pointer" onClick={() => navigate({ to: '/servicos' })}>
-                    <div className="w-20 h-20 rounded-[1.5rem] bg-slate-50 flex items-center justify-center group-hover:bg-orange-50 transition-colors shrink-0">
-                      <Wrench className="w-10 h-10 text-slate-300 group-hover:text-orange-600 transition-all duration-500" />
+                  <div key={s.id} className="bg-white p-8 rounded-[3rem] border border-slate-100 flex items-center gap-8 hover:shadow-2xl hover:-translate-y-1 transition-all duration-500 group cursor-pointer" onClick={() => navigate({ to: '/servicos' })}>
+                    <div className="w-24 h-24 rounded-[2rem] bg-slate-50 flex items-center justify-center group-hover:bg-orange-50 transition-colors shrink-0">
+                      <Wrench className="w-12 h-12 text-slate-300 group-hover:text-orange-600 transition-all duration-500" />
                     </div>
                     <div className="min-w-0">
-                      <h3 className="font-black text-slate-900 text-xl leading-tight truncate mb-1 group-hover:text-orange-600 transition-colors">{s.name}</h3>
-                      <p className="text-orange-600 text-[10px] font-black uppercase tracking-[0.2em] mb-2">{s.category}</p>
-                      <div className="flex items-center gap-1.5">
-                        <MapPin className="w-3.5 h-3.5 text-slate-300" />
-                        <span className="text-[10px] font-black text-slate-400 uppercase tracking-widest">{s.neighborhood}</span>
+                      <h3 className="font-black text-slate-900 text-2xl leading-tight truncate mb-1 group-hover:text-orange-600 transition-colors">{s.name}</h3>
+                      <p className="text-orange-600 text-xs font-black uppercase tracking-[0.2em] mb-3">{s.category}</p>
+                      <div className="flex items-center gap-2">
+                        <MapPin className="w-4 h-4 text-slate-300" />
+                        <span className="text-xs font-black text-slate-400 uppercase tracking-widest">{s.neighborhood}</span>
                       </div>
                     </div>
-                    <div className="ml-auto w-10 h-10 rounded-full border border-slate-100 flex items-center justify-center group-hover:bg-orange-600 group-hover:text-white transition-all">
-                      <ChevronRight className="w-5 h-5" />
+                    <div className="ml-auto w-12 h-12 rounded-full border border-slate-100 flex items-center justify-center group-hover:bg-orange-600 group-hover:text-white transition-all">
+                      <ChevronRight className="w-6 h-6" />
                     </div>
                   </div>
                 ))}
@@ -253,25 +253,25 @@ function Index() {
             <section>
               <div className="flex items-center justify-between mb-10">
                 <div>
-                  <h2 className="text-4xl font-black text-slate-900 tracking-tighter">Representantes</h2>
-                  <p className="text-slate-500 text-sm font-medium mt-1">Lideranças que trabalham pela nossa comunidade.</p>
+                  <h2 className="text-5xl font-black text-slate-900 tracking-tighter">Representantes</h2>
+                  <p className="text-slate-500 text-lg font-medium mt-2">Lideranças que trabalham pela nossa comunidade.</p>
                 </div>
               </div>
               <div className="grid grid-cols-2 sm:grid-cols-4 gap-6">
                 {reps.map(rep => (
-                  <div key={rep.id} className="bg-white p-6 rounded-[2.5rem] border border-slate-100 flex flex-col items-center text-center hover:shadow-2xl hover:-translate-y-2 transition-all duration-500 group">
-                    <div className="relative mb-6">
-                      <div className="w-24 h-24 rounded-full overflow-hidden border-4 border-slate-50 group-hover:border-orange-500 transition-colors duration-500 shadow-inner">
+                  <div key={rep.id} className="bg-white p-10 rounded-[3.5rem] border border-slate-100 flex flex-col items-center text-center hover:shadow-2xl hover:-translate-y-2 transition-all duration-500 group">
+                    <div className="relative mb-8">
+                      <div className="w-32 h-32 rounded-full overflow-hidden border-[6px] border-slate-50 group-hover:border-orange-500 transition-colors duration-500 shadow-inner">
                         <img src={rep.photo || "/placeholder.svg"} alt={rep.name} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" />
                       </div>
-                      <div className="absolute -bottom-2 -right-2 bg-white p-1.5 rounded-full shadow-lg border border-slate-100 group-hover:border-orange-500 transition-colors">
-                        <ShieldCheck className="w-4 h-4 text-orange-500" />
+                      <div className="absolute -bottom-2 -right-2 bg-white p-2.5 rounded-full shadow-lg border border-slate-100 group-hover:border-orange-500 transition-colors">
+                        <ShieldCheck className="w-6 h-6 text-orange-500" />
                       </div>
                     </div>
-                    <h3 className="font-black text-slate-900 text-base leading-tight mb-1">{rep.name}</h3>
-                    <p className="text-[10px] font-black text-orange-500 uppercase tracking-[0.2em] mb-6">{rep.neighborhood}</p>
-                    <Button size="sm" variant="outline" className="h-10 rounded-full text-[10px] font-black uppercase px-6 gap-2 hover:bg-emerald-50 hover:text-emerald-600 hover:border-emerald-200 transition-all">
-                      <MessageCircle className="w-3.5 h-3.5" /> Falar agora
+                    <h3 className="font-black text-slate-900 text-xl leading-tight mb-2">{rep.name}</h3>
+                    <p className="text-xs font-black text-orange-500 uppercase tracking-[0.2em] mb-8">{rep.neighborhood}</p>
+                    <Button size="lg" variant="outline" className="h-12 rounded-full text-xs font-black uppercase px-8 gap-3 hover:bg-emerald-50 hover:text-emerald-600 hover:border-emerald-200 transition-all">
+                      <MessageCircle className="w-4 h-4" /> Falar agora
                     </Button>
                   </div>
                 ))}
@@ -281,7 +281,7 @@ function Index() {
           </div>
 
           {/* SIDEBAR */}
-          <aside className="lg:col-span-4">
+          <aside className="lg:col-span-3">
             <div className="sticky top-24 flex flex-col gap-10">
               <section className="bg-slate-900 rounded-[3rem] p-10 text-white relative overflow-hidden group shadow-2xl">
                 <div className="absolute top-0 right-0 p-8 opacity-10 pointer-events-none group-hover:scale-110 transition-transform duration-1000">
