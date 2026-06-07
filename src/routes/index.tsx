@@ -65,42 +65,42 @@ function Index() {
       
       <main className="max-w-[1440px] mx-auto pt-6 px-4 md:px-6 pb-24">
         {/* HERO */}
-        <section className="bg-slate-900 rounded-[2.5rem] md:rounded-[3.5rem] p-10 md:py-32 md:px-24 mb-16 border border-slate-800 shadow-2xl relative overflow-hidden">
-          <div className="absolute top-0 right-0 p-12 opacity-10 pointer-events-none">
-            <Search className="w-80 h-80 rotate-12 text-white" />
+        <section className="bg-white rounded-[2.5rem] md:rounded-[3.5rem] p-10 md:py-32 md:px-24 mb-16 border border-slate-100 shadow-sm relative overflow-hidden group">
+          <div className="absolute top-0 right-0 p-12 opacity-[0.03] pointer-events-none group-hover:scale-110 transition-transform duration-1000">
+            <Search className="w-80 h-80 rotate-12 text-slate-900" />
           </div>
-          <div className="absolute -bottom-20 -left-20 p-12 opacity-5 pointer-events-none">
-            <MapPin className="w-64 h-64 -rotate-12 text-white" />
+          <div className="absolute -bottom-20 -left-20 p-12 opacity-[0.02] pointer-events-none group-hover:rotate-12 transition-transform duration-1000">
+            <MapPin className="w-64 h-64 -rotate-12 text-slate-900" />
           </div>
           
           <div className="max-w-5xl relative z-10">
-            <Badge className="mb-8 bg-orange-500 hover:bg-orange-600 text-white border-none px-6 py-1.5 text-xs font-black uppercase tracking-widest rounded-full">
+            <Badge className="mb-8 bg-orange-50 hover:bg-orange-100 text-orange-600 border border-orange-200 px-6 py-1.5 text-xs font-black uppercase tracking-widest rounded-full shadow-sm">
               Portal Comunitário
             </Badge>
-            <h1 className="text-6xl md:text-8xl lg:text-[10rem] font-black tracking-tighter text-white mb-10 leading-[0.85]">
+            <h1 className="text-5xl md:text-7xl lg:text-8xl font-black tracking-tighter text-slate-900 mb-10 leading-[0.9]">
               Tudo que você precisa, <br /><span className="text-orange-500">pertinho de você.</span>
             </h1>
-            <p className="text-2xl text-slate-400 mb-16 font-medium max-w-3xl leading-relaxed">
-              Comércio, serviços, notícias, eventos e muito mais da nossa comunidade local reunidos em um só lugar.
+            <p className="text-xl md:text-2xl text-slate-500 mb-16 font-medium max-w-3xl leading-relaxed">
+              Comércio, serviços, notícias, eventos e muito mais da nossa comunidade local reunidos em um portal editorial exclusivo.
             </p>
             
             <form onSubmit={(e) => { e.preventDefault(); navigate({ to: '/negocios', search: { q: searchTerm } }); }} className="relative group max-w-5xl">
-              <div className="flex flex-col md:flex-row gap-4 bg-white/10 p-3 rounded-[2.5rem] md:rounded-full border border-white/20 backdrop-blur-md shadow-2xl">
+              <div className="flex flex-col md:flex-row gap-4 bg-slate-50 p-3 rounded-[2.5rem] md:rounded-full border border-slate-200 shadow-xl shadow-slate-200/50">
                 <div className="flex-1 relative flex items-center">
                   <Search className="absolute left-8 w-6 h-6 text-slate-400 group-focus-within:text-orange-500 transition-colors" />
                   <input 
                     type="text" 
                     placeholder="O que você procura hoje?" 
-                    className="w-full bg-transparent border-none py-6 pl-20 pr-8 text-white placeholder:text-slate-500 text-xl font-medium outline-none focus:ring-0"
+                    className="w-full bg-transparent border-none py-6 pl-20 pr-8 text-slate-900 placeholder:text-slate-400 text-xl font-bold outline-none focus:ring-0"
                     value={searchTerm}
                     onChange={(e) => setSearchTerm(e.target.value)}
                   />
                 </div>
-                <div className="hidden md:flex items-center px-8 border-l border-white/20 gap-4 group/loc cursor-pointer">
-                  <MapPin className="w-6 h-6 text-slate-400 group-hover/loc:text-orange-500 transition-colors" />
-                  <span className="text-slate-300 font-bold text-lg whitespace-nowrap">Araruama, RJ</span>
+                <div className="hidden md:flex items-center px-8 border-l border-slate-200 gap-4 group/loc cursor-pointer hover:bg-white/50 rounded-full transition-colors">
+                  <MapPin className="w-6 h-6 text-orange-500" />
+                  <span className="text-slate-600 font-black text-lg whitespace-nowrap">Araruama, RJ</span>
                 </div>
-                <Button type="submit" className="h-20 px-12 bg-orange-500 hover:bg-orange-600 text-white rounded-full font-black text-lg uppercase tracking-widest transition-all active:scale-95 shadow-xl shadow-orange-500/20">
+                <Button type="submit" className="h-20 px-12 bg-orange-600 hover:bg-orange-700 text-white rounded-full font-black text-lg uppercase tracking-widest transition-all active:scale-95 shadow-lg shadow-orange-500/20">
                   Buscar Agora
                 </Button>
               </div>
@@ -113,8 +113,8 @@ function Index() {
           <div className="lg:col-span-9 flex flex-col gap-20">
             
             {/* ACONTECENDO AGORA (MOBILE ONLY) */}
-            <section className="lg:hidden bg-slate-900 rounded-[2.5rem] p-8 text-white overflow-hidden relative group shadow-2xl">
-              <div className="absolute top-0 right-0 p-6 opacity-10 pointer-events-none group-hover:scale-110 transition-transform duration-700">
+            <section className="lg:hidden bg-white rounded-[2.5rem] p-8 text-slate-900 border border-slate-100 overflow-hidden relative group shadow-xl">
+              <div className="absolute top-0 right-0 p-6 opacity-[0.03] pointer-events-none group-hover:scale-110 transition-transform duration-700">
                 <Flame className="w-24 h-24 rotate-12 text-orange-500" />
               </div>
               <div className="flex items-center gap-2 mb-6 relative z-10">
@@ -124,10 +124,10 @@ function Index() {
               <div className="space-y-6 relative z-10">
                 {news.slice(0, 3).map((n, i) => (
                   <div key={n.id} className="group/item cursor-pointer flex gap-4" onClick={() => navigate({ to: '/noticias' })}>
-                    <span className="text-orange-500 font-black text-xl opacity-40">0{i+1}</span>
+                    <span className="text-orange-600 font-black text-xl opacity-20 group-hover/item:opacity-100 transition-opacity">0{i+1}</span>
                     <div>
-                      <p className="text-slate-500 text-[8px] font-black uppercase tracking-[0.2em] mb-1">{n.category}</p>
-                      <h4 className="font-bold text-white text-sm line-clamp-2 leading-tight">{n.title}</h4>
+                      <p className="text-slate-400 text-[8px] font-black uppercase tracking-[0.2em] mb-1">{n.category}</p>
+                      <h4 className="font-bold text-slate-900 text-sm line-clamp-2 leading-tight group-hover/item:text-orange-600 transition-colors">{n.title}</h4>
                     </div>
                   </div>
                 ))}

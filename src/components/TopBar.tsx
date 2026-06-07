@@ -191,7 +191,7 @@ export const TopBar = memo(function TopBar() {
       {/* Manual Location Modal */}
       {isLocationModalOpen && (
         <div className="fixed inset-0 z-[100] flex items-center justify-center p-4">
-          <div className="absolute inset-0 bg-slate-900/60 backdrop-blur-sm" onClick={() => setIsLocationModalOpen(false)} />
+          <div className="absolute inset-0 bg-slate-900/40 backdrop-blur-md" onClick={() => setIsLocationModalOpen(false)} />
           <div className="relative bg-white w-full max-w-md rounded-[2.5rem] shadow-2xl overflow-hidden animate-in fade-in zoom-in-95 duration-200">
             <div className="p-6 border-b border-slate-50 flex items-center justify-between bg-slate-50/50">
               <div>
