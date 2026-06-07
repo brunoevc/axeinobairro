@@ -60,9 +60,29 @@ function Index() {
 
   // Filtered and combined data
   const highlightedItems = useMemo(() => {
-    return [...allMerchants, ...allServices]
-      .filter(item => item.featured)
-      .slice(0, 6);
+    // Cast to any to avoid TS errors with missing properties in mocked data, 
+    // or handle properties safely
+    const m = allMerchants.filter(item => item.featured).map(item => ({
+      id: item.id,
+      name: item.name,
+      image: item.image,
+      category: item.category,
+      rating: item.rating,
+      neighborhood: item.neighborhood,
+      type: 'merchant' as const
+    }));
+    
+    const s = allServices.slice(0, 3).map(item => ({
+      id: item.id,
+      name: item.name,
+      image: `https://images.unsplash.com/photo-1521791136364-798a7bc0d262?w=400&q=80`, // Placeholder for services
+      category: item.category,
+      rating: item.rating || 0,
+      neighborhood: item.neighborhood,
+      type: 'service' as const
+    }));
+
+    return [...m, ...s].slice(0, 6);
   }, [allMerchants, allServices]);
 
   const communityNews = useMemo(() => {
@@ -76,20 +96,26 @@ function Index() {
   const recommendations = useMemo(() => {
     // Basic logic: if user has favorites, show items in same categories
     const favoriteCats = favorites.map(f => {
-      const m = allMerchants.find(item => item.id === f.id) || allServices.find(item => item.id === f.id);
-      return m?.category;
+      const m = allMerchants.find(item => item.id === f.id);
+      const s = allServices.find(item => item.id === f.id);
+      return m?.category || s?.category;
     }).filter(Boolean);
 
+    let items = [];
     if (favoriteCats.length > 0) {
-      return [...allMerchants, ...allServices]
-        .filter(item => favoriteCats.includes(item.category) && !favorites.some(f => f.id === item.id))
-        .slice(0, 4);
+      items = [...allMerchants, ...allServices]
+        .filter(item => favoriteCats.includes(item.category) && !favorites.some(f => f.id === item.id));
+    } else {
+      items = [...allMerchants, ...allServices]
+        .filter(item => (item.rating || 0) >= 4.5);
     }
     
-    // Default: just some high rating items
-    return [...allMerchants, ...allServices]
-      .filter(item => item.rating >= 4.5)
-      .slice(0, 4);
+    return items.slice(0, 4).map(item => ({
+      id: item.id,
+      name: item.name,
+      category: item.category,
+      image: 'image' in item ? item.image : `https://images.unsplash.com/photo-1521791136364-798a7bc0d262?w=100&q=80`
+    }));
   }, [favorites, allMerchants, allServices]);
 
   const handleSearch = (e: React.FormEvent) => {
@@ -247,7 +273,7 @@ function Index() {
                           variant="ghost" 
                           size="icon" 
                           className={`w-10 h-10 rounded-full bg-white/90 backdrop-blur shadow-sm hover:bg-white transition-all ${isFavorite(item.id) ? 'text-red-500' : 'text-slate-400'}`}
-                          onClick={(e) => { e.stopPropagation(); toggleFavorite(item.id, 'merchant', item.name); }}
+                          onClick={(e) => { e.stopPropagation(); toggleFavorite(item.id, item.type === 'merchant' ? 'merchant' : 'service', item.name); }}
                         >
                           <Heart className={`w-5 h-5 ${isFavorite(item.id) ? 'fill-current' : ''}`} />
                         </Button>
@@ -271,7 +297,7 @@ function Index() {
                         <Button 
                           variant="ghost" 
                           className="p-0 h-auto text-[10px] font-black uppercase tracking-widest text-orange-600 hover:text-orange-700"
-                          onClick={() => navigate({ to: '/negocios' })}
+                          onClick={() => navigate({ to: item.type === 'merchant' ? '/negocios' : '/servicos' })}
                         >
                           Ver Detalhes
                         </Button>
