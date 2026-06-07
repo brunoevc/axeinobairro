@@ -370,7 +370,7 @@ function Index() {
                   <div>
                     <h3 className="font-black text-slate-900 text-lg leading-tight italic">Meu Axêi</h3>
                     <div className="flex items-center gap-1.5 text-orange-600 text-[10px] font-black uppercase tracking-widest">
-                      <MapPin className="w-3 h-3" /> {locationName.split(' - ')[0]}
+                      <MapPin className="w-3 h-3" /> {locationName.split(' - ')[0] || "Araruama"}
                     </div>
                   </div>
                 </div>
