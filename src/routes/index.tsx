@@ -84,7 +84,7 @@ function Index() {
               Comércio, serviços, notícias, eventos e muito mais da nossa comunidade local reunidos em um portal editorial exclusivo.
             </p>
             
-            <form onSubmit={(e) => { e.preventDefault(); navigate({ to: '/negocios', search: { q: searchTerm } }); }} className="relative group max-w-5xl">
+            <form onSubmit={(e) => { e.preventDefault(); navigate({ to: '/busca', search: { q: searchTerm } }); }} className="relative group max-w-5xl">
               <div className="flex flex-col md:flex-row gap-4 bg-slate-50 p-3 rounded-[2.5rem] md:rounded-full border border-slate-200 shadow-xl shadow-slate-200/50">
                 <div className="flex-1 relative flex items-center">
                   <Search className="absolute left-8 w-6 h-6 text-slate-400 group-focus-within:text-orange-500 transition-colors" />
