@@ -6,10 +6,13 @@ import { Link } from "@tanstack/react-router";
 import { reviewsRepository } from "@/repositories/reviewsRepository";
 
 import { useLocation } from "@/hooks/useLocation";
+import { useFavorites } from "@/hooks/useFavorites";
 import { useState, memo, useMemo } from "react";
 import { WhatsAppButton } from "./WhatsAppButton";
 import { BusinessStatusBadge } from "./BusinessStatusBadge";
 import { intentTracker } from "@/utils/intent-tracker";
+import { Heart } from "lucide-react";
+
 import { EconomicCategory, Territory } from "@/types/business-intelligence";
 
 type Props = { merchant: Merchant };
@@ -27,7 +30,9 @@ export function PromotionBadge() {
 
 export const MerchantCard = memo(function MerchantCard({ merchant }: Props) {
   const { coords, getDistance, formatDistance } = useLocation();
+  const { isFavorite, toggleFavorite } = useFavorites();
   const [imageError, setImageError] = useState(false);
+
 
   // WhatsApp and status logic removed in favor of dedicated components
 
@@ -82,7 +87,23 @@ export const MerchantCard = memo(function MerchantCard({ merchant }: Props) {
              </div>
            </div>
         )}
+        
+        <button 
+          onClick={(e) => {
+            e.preventDefault();
+            e.stopPropagation();
+            toggleFavorite(merchant.id, 'merchant', merchant.name);
+          }}
+          className={`absolute bottom-4 right-4 z-10 p-3 rounded-full shadow-lg border backdrop-blur-md transition-all active:scale-90 ${
+            isFavorite(merchant.id) 
+              ? 'bg-orange-600 border-orange-500 text-white' 
+              : 'bg-white/80 border-white/20 text-slate-400 hover:text-orange-600 hover:bg-white'
+          }`}
+        >
+          <Heart className={`w-5 h-5 ${isFavorite(merchant.id) ? 'fill-white' : ''}`} />
+        </button>
       </div>
+
 
       <div className="flex flex-col p-8 flex-1">
         <div className="flex items-start justify-between gap-3 mb-4">

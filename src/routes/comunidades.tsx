@@ -5,7 +5,9 @@ import { Community } from "@/types/communities";
 import { Button } from "@/components/ui/button";
 import { TopBar } from "@/components/TopBar";
 import { FloatingNav } from "@/components/FloatingNav";
-import { Users, MapPin, ArrowLeft, Heart, ChevronRight, MessageSquare, ShieldCheck, Info } from "lucide-react";
+import { Users, MapPin, ArrowLeft, Heart, ChevronRight, MessageSquare, ShieldCheck, Info, UserCheck } from "lucide-react";
+import { useFollowCommunities } from "@/hooks/useFollowCommunities";
+
 import { PixDisplayCard } from "@/components/PixDisplayCard";
 import { Footer } from "@/components/Footer";
 import { EcosystemLoops } from "@/components/EcosystemLoops";
@@ -17,7 +19,9 @@ export const Route = createFileRoute("/comunidades")({
 
 function CommunitiesPage() {
   const [communities, setCommunities] = useState<Community[]>([]);
+  const { isFollowing, toggleFollow } = useFollowCommunities();
   const navigate = useNavigate();
+
 
   useEffect(() => {
     setCommunities(communitiesRepository.getAll().filter(c => c.isActive));
@@ -82,11 +86,26 @@ function CommunitiesPage() {
 
               <div className="space-y-3">
                 <Button 
-                  className="w-full h-14 rounded-2xl bg-violet-600 hover:bg-violet-700 text-white font-black uppercase text-xs shadow-lg shadow-violet-200 transition-all active:scale-95"
+                  onClick={() => toggleFollow(comm.id, comm.name)}
+                  className={`w-full h-14 rounded-2xl font-black uppercase text-xs shadow-lg transition-all active:scale-95 ${
+                    isFollowing(comm.id)
+                      ? "bg-emerald-600 hover:bg-emerald-700 shadow-emerald-200"
+                      : "bg-violet-600 hover:bg-violet-700 shadow-violet-200"
+                  }`}
                 >
-                  <Heart className="w-4 h-4 mr-2" />
-                  Seguir Comunidade
+                  {isFollowing(comm.id) ? (
+                    <>
+                      <UserCheck className="w-4 h-4 mr-2" />
+                      Seguindo
+                    </>
+                  ) : (
+                    <>
+                      <Heart className="w-4 h-4 mr-2" />
+                      Seguir Comunidade
+                    </>
+                  )}
                 </Button>
+
                 
                 {comm.whatsapp && (
                   <Button 
