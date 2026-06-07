@@ -283,9 +283,9 @@ function Index() {
           {/* SIDEBAR */}
           <aside className="lg:col-span-3">
             <div className="sticky top-24 flex flex-col gap-10">
-              <section className="bg-slate-900 rounded-[3rem] p-10 text-white relative overflow-hidden group shadow-2xl">
-                <div className="absolute top-0 right-0 p-8 opacity-10 pointer-events-none group-hover:scale-110 transition-transform duration-1000">
-                  <Flame className="w-40 h-40 rotate-12" />
+              <section className="bg-white rounded-[3rem] p-10 text-slate-900 border border-slate-100 relative overflow-hidden group shadow-lg">
+                <div className="absolute top-0 right-0 p-8 opacity-[0.03] pointer-events-none group-hover:scale-110 transition-transform duration-1000">
+                  <Flame className="w-40 h-40 rotate-12 text-orange-500" />
                 </div>
                 <div className="relative z-10">
                   <div className="flex items-center gap-2 mb-10">
@@ -296,16 +296,19 @@ function Index() {
                     {news.slice(0, 4).map((n, i) => (
                       <div key={n.id} className="group/item cursor-pointer flex gap-5" onClick={() => navigate({ to: '/noticias' })}>
                         <div className="flex flex-col items-center">
-                          <span className="text-orange-500 font-black text-2xl opacity-40 group-hover/item:opacity-100 transition-all duration-300">0{i+1}</span>
-                          <div className="w-px h-full bg-slate-800 mt-2" />
+                          <span className="text-orange-600 font-black text-2xl opacity-20 group-hover/item:opacity-100 transition-all duration-300">0{i+1}</span>
+                          <div className="w-px h-full bg-slate-100 mt-2" />
                         </div>
                         <div className="pb-2">
-                          <p className="text-slate-500 text-[9px] font-black uppercase tracking-[0.2em] mb-2 group-hover/item:text-orange-400 transition-colors">{n.category}</p>
-                          <h4 className="font-bold text-white text-base group-hover/item:text-orange-400 transition-colors line-clamp-2 leading-tight tracking-tight">{n.title}</h4>
+                          <p className="text-orange-600 text-[9px] font-black uppercase tracking-[0.2em] mb-2">{n.category}</p>
+                          <h4 className="font-black text-slate-900 text-base leading-[1.2] group-hover/item:text-orange-600 transition-colors line-clamp-3">{n.title}</h4>
                         </div>
                       </div>
                     ))}
                   </div>
+                  <Button variant="outline" onClick={() => navigate({ to: '/noticias' })} className="w-full mt-12 h-14 rounded-2xl border-slate-200 text-xs font-black uppercase tracking-widest hover:bg-orange-600 hover:text-white hover:border-orange-600 transition-all">
+                    Ver todas as notícias
+                  </Button>
                 </div>
               </section>
 
