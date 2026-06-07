@@ -8,48 +8,39 @@ export function SponsorSection() {
   ];
 
   return (
-    <section className="bg-slate-50 py-20 px-6">
-      <div className="max-w-[1440px] mx-auto">
-        <div className="text-center mb-16">
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-violet-50 text-violet-600 text-[10px] font-black uppercase tracking-widest mb-6 border border-violet-100 shadow-sm">
-            <ShieldCheck className="h-3 w-3" />
-            Autoridade Institucional
-          </div>
-          <h2 className="text-3xl md:text-5xl font-black text-slate-900 mb-4 tracking-tighter">
-            Patrocinadores <span className="text-violet-600">Oficiais</span>
-          </h2>
-          <p className="text-slate-500 text-lg font-medium max-w-2xl mx-auto">
-            Grandes empresas que investem no desenvolvimento tecnológico e social da nossa comunidade.
-          </p>
-        </div>
-
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-          {sponsors.map((sponsor, index) => (
-            <div key={index} className="bg-white p-8 rounded-[3rem] border border-slate-100 shadow-sm hover:shadow-2xl transition-all duration-500 group relative overflow-hidden grayscale hover:grayscale-0">
-              <div className="absolute top-0 right-0 p-4 opacity-5 group-hover:scale-110 transition-transform">
-                <Award className="w-16 h-16 text-violet-600" />
-              </div>
-              <div className="w-16 h-16 rounded-2xl bg-slate-50 text-slate-400 flex items-center justify-center mb-6 font-black text-2xl group-hover:bg-violet-600 group-hover:text-white transition-all shadow-sm">
-                {sponsor.logo}
-              </div>
-              <h3 className="text-xl font-black text-slate-900 mb-1 group-hover:text-violet-600 transition-colors">{sponsor.name}</h3>
-              <p className="text-slate-400 text-xs font-black uppercase tracking-widest mb-4 group-hover:text-violet-500 transition-colors">{sponsor.description}</p>
-              <div className="flex items-center gap-1.5 text-slate-300 group-hover:text-violet-300 transition-colors">
-                <Star className="w-3.5 h-3.5 fill-current" />
-                <span className="text-[10px] font-bold uppercase tracking-widest">Apoiador Oficial</span>
-              </div>
+    <section className="bg-slate-900 py-24 relative overflow-hidden">
+      <div className="absolute inset-0 opacity-5 pointer-events-none">
+        <div className="absolute top-0 left-0 w-full h-full bg-[radial-gradient(circle_at_center,_var(--tw-gradient-stops))] from-orange-500/20 via-transparent to-transparent" />
+      </div>
+      
+      <div className="max-w-[1440px] mx-auto px-6 relative z-10">
+        <div className="flex flex-col md:flex-row items-center justify-between gap-12 border-y border-white/5 py-16">
+          <div className="max-w-md">
+            <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-orange-500/10 text-orange-500 text-[10px] font-black uppercase tracking-[0.2em] mb-6 border border-orange-500/20">
+              <ShieldCheck className="h-4 w-4" />
+              Parceiros Estratégicos
             </div>
-          ))}
-        </div>
+            <h2 className="text-4xl font-black text-white tracking-tighter leading-tight mb-4">
+              Marcas que <span className="text-orange-500 italic">impulsionam</span> o bairro.
+            </h2>
+            <p className="text-slate-400 text-lg font-medium">
+              Instituições que acreditam e investem no crescimento sustentável da nossa economia local.
+            </p>
+          </div>
 
-        <div className="mt-16 text-center">
-          <p className="text-slate-400 text-sm font-medium mb-6 italic">
-            "O Axêi no Bairro é a ponte que precisávamos para estar mais próximos dos nossos clientes locais."
-          </p>
-          <div className="flex items-center justify-center gap-2">
-            <div className="h-1 w-12 bg-slate-200 rounded-full" />
-            <div className="h-1 w-4 bg-violet-600 rounded-full" />
-            <div className="h-1 w-12 bg-slate-200 rounded-full" />
+          <div className="flex-1 w-full overflow-hidden">
+            <div className="flex flex-wrap justify-center md:justify-end items-center gap-12 md:gap-20 opacity-50 hover:opacity-100 transition-opacity duration-700">
+              {sponsors.map((sponsor, index) => (
+                <div key={index} className="flex flex-col items-center group cursor-pointer">
+                  <div className="w-24 h-24 md:w-32 md:h-32 rounded-3xl bg-white/5 border border-white/10 flex items-center justify-center text-white font-black text-4xl group-hover:bg-orange-500 group-hover:border-orange-500 group-hover:scale-110 transition-all duration-500 shadow-2xl">
+                    {sponsor.logo}
+                  </div>
+                  <span className="mt-4 text-[10px] font-black text-slate-500 uppercase tracking-[0.3em] group-hover:text-white transition-colors">
+                    {sponsor.name}
+                  </span>
+                </div>
+              ))}
+            </div>
           </div>
         </div>
       </div>
