@@ -39,7 +39,7 @@ export const MerchantCard = memo(function MerchantCard({ merchant }: Props) {
 
   return (
     <article
-      className="group flex flex-col h-full overflow-hidden rounded-[2.5rem] bg-white border border-slate-100 shadow-sm transition-all duration-500 hover:shadow-2xl hover:-translate-y-2 active:scale-[0.98]"
+      className="group flex flex-col h-full overflow-hidden rounded-[3rem] bg-white border border-slate-100 shadow-sm transition-all duration-500 hover:shadow-2xl hover:-translate-y-2 active:scale-[0.98]"
     >
       <div className="relative aspect-[4/3] w-full overflow-hidden bg-slate-100">
         {!imageError && merchant.image ? (
@@ -84,15 +84,15 @@ export const MerchantCard = memo(function MerchantCard({ merchant }: Props) {
         )}
       </div>
 
-      <div className="flex flex-col p-6 flex-1">
+      <div className="flex flex-col p-8 flex-1">
         <div className="flex items-start justify-between gap-3 mb-4">
           <div className="min-w-0 flex-1">
-            <h3 className="truncate text-2xl font-black text-slate-900 leading-none tracking-tight group-hover:text-orange-600 transition-colors duration-300">
+            <h3 className="truncate text-3xl font-black text-slate-900 leading-none tracking-tight group-hover:text-orange-600 transition-colors duration-300">
               {merchant.name}
             </h3>
             <div className="flex items-center gap-1.5 mt-3">
               <MapPin className="h-3 w-3 text-orange-500" />
-              <span className="text-[10px] font-black uppercase text-slate-400 tracking-[0.1em] truncate">
+              <span className="text-xs font-black uppercase text-slate-400 tracking-[0.1em] truncate">
                 {merchant.neighborhood}
                 {distance !== null && (
                   <span className="inline-flex items-center gap-1 ml-1 pl-1 border-l border-slate-200">
@@ -112,7 +112,7 @@ export const MerchantCard = memo(function MerchantCard({ merchant }: Props) {
           </div>
         </div>
 
-        <p className="line-clamp-2 text-sm text-slate-500 leading-relaxed mb-6 font-medium">
+        <p className="line-clamp-2 text-base text-slate-500 leading-relaxed mb-8 font-medium">
           {merchant.description}
         </p>
 
@@ -130,7 +130,7 @@ export const MerchantCard = memo(function MerchantCard({ merchant }: Props) {
           <Button
             asChild
             variant="outline"
-            className="rounded-2xl h-12 text-[10px] font-black uppercase tracking-widest border-slate-200 hover:bg-slate-50 hover:text-orange-600 group/btn transition-all"
+            className="rounded-2xl h-14 text-xs font-black uppercase tracking-widest border-slate-200 hover:bg-slate-50 hover:text-orange-600 group/btn transition-all"
           >
             <Link 
               to={getMerchantPublicPath(merchant)}
@@ -151,7 +151,7 @@ export const MerchantCard = memo(function MerchantCard({ merchant }: Props) {
             merchantId={merchant.id}
             phone={merchant.whatsapp} 
             merchantName={merchant.name} 
-            className="h-12 rounded-2xl shadow-lg shadow-emerald-500/10 text-[10px] font-black uppercase tracking-widest"
+            className="h-14 rounded-2xl shadow-lg shadow-emerald-500/10 text-xs font-black uppercase tracking-widest"
           />
         </div>
       </div>
