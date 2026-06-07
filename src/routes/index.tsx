@@ -18,21 +18,27 @@ import {
   ShieldCheck,
   Award,
   Users,
-  MessageCircle
+  MessageCircle,
+  Heart,
+  Bookmark
 } from "lucide-react";
 
 import { merchantsRepository } from "@/repositories/merchantsRepository";
 import { servicesRepository } from "@/repositories/servicesRepository";
 import { newsRepository } from "@/repositories/newsRepository";
 import { representativesRepository } from "@/repositories/representativesRepository";
+import { communitiesRepository } from "@/repositories/communitiesRepository";
 import { MerchantCard } from "@/components/MerchantCard";
 import { TopBar } from "@/components/TopBar";
 import { FloatingNav } from "@/components/FloatingNav";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { useLocation } from "@/hooks/useLocation";
+import { useFavorites } from "@/hooks/useFavorites";
+import { useFollowCommunities } from "@/hooks/useFollowCommunities";
 import { Footer } from "@/components/Footer";
 import { SponsorSection } from "@/components/SponsorSection";
+
 
 export const Route = createFileRoute("/")({
   component: Index,
@@ -48,9 +54,32 @@ function Index() {
   const navigate = useNavigate();
   const [merchants, setMerchants] = useState(() => merchantsRepository.getAll());
   const [searchTerm, setSearchTerm] = useState("");
+  const { favorites } = useFavorites();
+  const { followedIds } = useFollowCommunities();
   const services = useMemo(() => servicesRepository.getAll().slice(0, 4), []);
   const reps = useMemo(() => representativesRepository.getAll().slice(0, 4), []);
   const news = useMemo(() => newsRepository.getAll(), []);
+  const allMerchants = useMemo(() => merchantsRepository.getAll(), []);
+  const communities = useMemo(() => communitiesRepository.getAll(), []);
+
+  const personalizedSection = useMemo(() => {
+    // Basic recommendation logic: 
+    // 1. Followed communities
+    // 2. Favorite categories
+    // 3. Featured items
+    const followedComms = communities.filter(c => followedIds.includes(c.id)).slice(0, 2);
+    const favoriteCategories = favorites.map(f => {
+      const m = allMerchants.find(merchant => merchant.id === f.id);
+      return m?.category;
+    }).filter(Boolean);
+    
+    const recommendedMerchants = allMerchants
+      .filter(m => favoriteCategories.includes(m.category) && !favorites.some(f => f.id === m.id))
+      .slice(0, 2);
+
+    return { followedComms, recommendedMerchants };
+  }, [favorites, followedIds, allMerchants, communities]);
+
   
   useEffect(() => {
     const unsubscribe = merchantsRepository.subscribe(() => setMerchants(merchantsRepository.getAll()));
@@ -111,6 +140,64 @@ function Index() {
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 mb-20">
           {/* MAIN CONTENT */}
           <div className="lg:col-span-9 flex flex-col gap-20">
+            
+            {/* PARA VOCÊ (PERSONALIZAÇÃO) */}
+            {(personalizedSection.followedComms.length > 0 || personalizedSection.recommendedMerchants.length > 0) && (
+              <section className="bg-orange-50/50 rounded-[3rem] p-10 border border-orange-100/50 relative overflow-hidden">
+                <div className="absolute top-0 right-0 p-12 opacity-[0.03] pointer-events-none">
+                  <Star className="w-40 h-40 text-orange-600" />
+                </div>
+                
+                <div className="relative z-10">
+                  <div className="flex items-center justify-between mb-10">
+                    <div>
+                      <h2 className="text-3xl font-black text-slate-900 tracking-tight">Para Você</h2>
+                      <p className="text-orange-600/70 text-sm font-bold uppercase tracking-widest mt-1">Destaques baseados no seu perfil</p>
+                    </div>
+                    <Button variant="ghost" className="p-0 h-auto text-[10px] font-black uppercase tracking-[0.2em] text-slate-400 hover:text-orange-600" asChild>
+                      <Link to="/painel">Ver Tudo</Link>
+                    </Button>
+                  </div>
+
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                    {personalizedSection.followedComms.map(comm => (
+                      <Link 
+                        key={comm.id} 
+                        to="/comunidades"
+                        className="bg-white p-6 rounded-[2rem] border border-orange-100 flex items-center gap-4 hover:shadow-xl transition-all group"
+                      >
+                        <div className="w-14 h-14 rounded-2xl bg-orange-100 flex items-center justify-center text-orange-600 group-hover:bg-orange-600 group-hover:text-white transition-all shrink-0">
+                          <Users className="w-7 h-7" />
+                        </div>
+                        <div className="flex-1">
+                          <p className="text-[10px] font-black text-orange-600 uppercase tracking-widest mb-1">Comunidade que você segue</p>
+                          <h4 className="font-black text-slate-900 group-hover:text-orange-600 transition-colors leading-tight">{comm.name}</h4>
+                        </div>
+                        <ArrowUpRight className="w-5 h-5 text-slate-200 group-hover:text-orange-600 transition-all" />
+                      </Link>
+                    ))}
+                    
+                    {personalizedSection.recommendedMerchants.map(m => (
+                      <Link 
+                        key={m.id} 
+                        to={`/negocios`}
+                        className="bg-white p-6 rounded-[2rem] border border-orange-100 flex items-center gap-4 hover:shadow-xl transition-all group"
+                      >
+                        <div className="w-14 h-14 rounded-2xl bg-orange-100 flex items-center justify-center text-orange-600 group-hover:bg-orange-600 group-hover:text-white transition-all shrink-0 overflow-hidden">
+                          <img src={m.image} className="w-full h-full object-cover" />
+                        </div>
+                        <div className="flex-1">
+                          <p className="text-[10px] font-black text-orange-600 uppercase tracking-widest mb-1">Recomendado para você</p>
+                          <h4 className="font-black text-slate-900 group-hover:text-orange-600 transition-colors leading-tight">{m.name}</h4>
+                        </div>
+                        <ArrowUpRight className="w-5 h-5 text-slate-200 group-hover:text-orange-600 transition-all" />
+                      </Link>
+                    ))}
+                  </div>
+                </div>
+              </section>
+            )}
+
             
             {/* ACONTECENDO AGORA (MOBILE ONLY) */}
             <section className="lg:hidden bg-white rounded-[2.5rem] p-8 text-slate-900 border border-slate-100 overflow-hidden relative group shadow-xl">
