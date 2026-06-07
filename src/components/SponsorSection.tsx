@@ -2,41 +2,31 @@ import { ShieldCheck, Star, Award, Building2 } from "lucide-react";
 
 export function SponsorSection() {
   const sponsors = [
-    { name: "Banco do Bairro", logo: <Building2 className="w-12 h-12" />, description: "Patrocinador Master" },
-    { name: "Energia Local", logo: <Star className="w-12 h-12" />, description: "Inovação e Sustentabilidade" },
-    { name: "Supermercado Real", logo: <Award className="w-12 h-12" />, description: "Apoio à Economia Local" },
-    { name: "Logística X", logo: <Building2 className="w-12 h-12" />, description: "Infraestrutura" },
+    { name: "Banco do Bairro", logo: <Building2 className="w-8 h-8" /> },
+    { name: "Energia Local", logo: <Star className="w-8 h-8" /> },
+    { name: "Supermercado Real", logo: <Award className="w-8 h-8" /> },
+    { name: "Logística X", logo: <Building2 className="w-8 h-8" /> },
+    { name: "Saúde Mais", logo: <Award className="w-8 h-8" /> },
+    { name: "ConstruTech", logo: <Star className="w-8 h-8" /> },
   ];
 
   return (
-    <section className="bg-white py-24 relative overflow-hidden border-t border-slate-100">
-      <div className="absolute inset-0 opacity-[0.03] pointer-events-none">
-        <div className="absolute top-0 left-0 w-full h-full bg-[radial-gradient(circle_at_center,_var(--tw-gradient-stops))] from-orange-500/20 via-transparent to-transparent" />
-      </div>
-      
-      <div className="max-w-[1440px] mx-auto px-6 relative z-10">
-        <div className="flex flex-col md:flex-row items-center justify-between gap-12 py-16">
-          <div className="max-w-md">
-            <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-orange-50 text-orange-600 text-[10px] font-black uppercase tracking-[0.2em] mb-6 border border-orange-100">
-              <ShieldCheck className="h-4 w-4" />
-              Parceiros Estratégicos
-            </div>
-            <h2 className="text-4xl font-black text-slate-900 tracking-tighter leading-tight mb-4">
-              Marcas que <span className="text-orange-500 italic">impulsionam</span> o bairro.
-            </h2>
-            <p className="text-slate-500 text-lg font-medium">
-              Instituições que acreditam e investem no crescimento sustentável da nossa economia local.
-            </p>
+    <section className="bg-white py-12 border-t border-slate-100">
+      <div className="max-w-[1440px] mx-auto px-6">
+        <div className="flex flex-col items-center gap-8">
+          <div className="inline-flex items-center gap-2 text-[10px] font-black text-slate-400 uppercase tracking-[0.3em]">
+            <ShieldCheck className="h-3.5 w-3.5" />
+            Parceiros e Apoiadores Locais
           </div>
-
-          <div className="flex-1 w-full overflow-hidden">
-            <div className="flex flex-wrap justify-center md:justify-end items-center gap-12 md:gap-20 opacity-60 hover:opacity-100 transition-opacity duration-700">
+          
+          <div className="w-full overflow-hidden">
+            <div className="flex flex-wrap justify-center items-center gap-8 md:gap-16 opacity-50 grayscale hover:grayscale-0 hover:opacity-100 transition-all duration-500">
               {sponsors.map((sponsor, index) => (
-                <div key={index} className="flex flex-col items-center group cursor-pointer">
-                  <div className="w-24 h-24 md:w-32 md:h-32 rounded-3xl bg-slate-50 border border-slate-100 flex items-center justify-center text-slate-300 font-black text-4xl group-hover:bg-white group-hover:border-orange-500 group-hover:text-orange-500 group-hover:scale-110 transition-all duration-500 shadow-sm group-hover:shadow-xl">
+                <div key={index} className="flex items-center gap-3 group cursor-pointer">
+                  <div className="p-2 rounded-lg bg-slate-50 border border-slate-100 group-hover:bg-white group-hover:border-orange-500 transition-all">
                     {sponsor.logo}
                   </div>
-                  <span className="mt-4 text-[10px] font-black text-slate-400 uppercase tracking-[0.3em] group-hover:text-slate-900 transition-colors">
+                  <span className="text-[11px] font-bold text-slate-500 group-hover:text-slate-900 transition-colors uppercase tracking-wider">
                     {sponsor.name}
                   </span>
                 </div>
