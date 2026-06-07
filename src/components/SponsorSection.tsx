@@ -1,10 +1,11 @@
-import { ShieldCheck, Star, Award } from "lucide-react";
+import { ShieldCheck, Star, Award, Building2 } from "lucide-react";
 
 export function SponsorSection() {
   const sponsors = [
-    { name: "Banco do Bairro", logo: "BB", description: "Patrocinador Master" },
-    { name: "Energia Local", logo: "EL", description: "Inovação e Sustentabilidade" },
-    { name: "Supermercado Real", logo: "SR", description: "Apoio à Economia Local" },
+    { name: "Banco do Bairro", logo: <Building2 className="w-12 h-12" />, description: "Patrocinador Master" },
+    { name: "Energia Local", logo: <Star className="w-12 h-12" />, description: "Inovação e Sustentabilidade" },
+    { name: "Supermercado Real", logo: <Award className="w-12 h-12" />, description: "Apoio à Economia Local" },
+    { name: "Logística X", logo: <Building2 className="w-12 h-12" />, description: "Infraestrutura" },
   ];
 
   return (
