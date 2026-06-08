@@ -43,7 +43,7 @@ function AdminNoticias() {
   const [isDialogOpen, setIsDialogOpen] = useState(false);
 
   useEffect(() => {
-    setNews(getNews());
+    getNews().then(setNews);
   }, []);
 
   const isSponsorEligible = (m: any) =>

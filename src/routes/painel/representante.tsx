@@ -1,27 +1,21 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { useAtom } from "jotai";
-import { authUserAtom } from "@/hooks/useAuth";
+import { useAuth } from "@/hooks/useAuth";
 import { Megaphone, Users, MapPin, TrendingUp, ShieldCheck } from "lucide-react";
 import { PixConfigForm } from "@/components/PixConfigForm";
 import { representativesRepository } from "@/repositories/representativesRepository";
+import { Button } from "@/components/ui/button";
+import { toast } from "sonner";
 
 export const Route = createFileRoute("/painel/representante")({
   component: RepresentantePanel,
 });
 
 function RepresentantePanel() {
-  const [authUser, setAuthUser] = useAtom(authUserAtom);
-  const rep = authUser?.linkedRepresentativeId ? representativesRepository.getAll().find(r => r.id === authUser.linkedRepresentativeId) : null;
+  const { user: authUser } = useAuth();
+  const rep = authUser?.id ? representativesRepository.getAll().find(r => r.id === authUser.id) : null;
 
   const handleSavePix = (config: any) => {
-    if (rep) {
-      const allReps = representativesRepository.getAll();
-      const updatedReps = allReps.map(r => r.id === rep.id ? { ...r, pixConfig: config } : r);
-      representativesRepository.saveAll(updatedReps);
-      if (authUser) {
-        setAuthUser({ ...authUser, pixConfig: config });
-      }
-    }
+    toast.info("Em breve: Atualização de Pix via Supabase!");
   };
 
   return (
@@ -92,5 +86,3 @@ function RepresentantePanel() {
     </div>
   );
 }
-
-import { Button } from "@/components/ui/button";

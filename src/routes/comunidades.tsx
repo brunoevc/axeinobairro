@@ -24,7 +24,9 @@ function CommunitiesPage() {
 
 
   useEffect(() => {
-    setCommunities(communitiesRepository.getAll().filter(c => c.isActive));
+    communitiesRepository.getAll().then(all => {
+      setCommunities(all.filter(c => c.isActive));
+    });
   }, []);
 
   return (

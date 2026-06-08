@@ -1,6 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { useAtom } from "jotai";
-import { authUserAtom } from "@/hooks/useAuth";
+import { useAuth } from "@/hooks/useAuth";
 import { Wrench, Calendar, LayoutDashboard, Users } from "lucide-react";
 import { PixConfigForm } from "@/components/PixConfigForm";
 import { servicesRepository } from "@/repositories/servicesRepository";
@@ -10,27 +9,22 @@ import { CRMManager } from "@/components/CRMManager";
 import { ProfessionalDashboardMetrics } from "@/components/ProfessionalDashboardMetrics";
 import { appointmentsRepository } from "@/repositories/appointmentsRepository";
 import { crmRepository } from "@/repositories/crmRepository";
+import { toast } from "sonner";
 
 export const Route = createFileRoute("/painel/profissional")({
   component: ProfissionalPanel,
 });
 
 function ProfissionalPanel() {
-  const [authUser, setAuthUser] = useAtom(authUserAtom);
-  const service = authUser?.linkedServiceId ? servicesRepository.getAll().find(s => s.id === authUser.linkedServiceId) : null;
+  const { user: authUser } = useAuth();
+  const service = authUser?.id ? servicesRepository.getAll().find(s => s.id === authUser.id) : null;
   const merchantId = service?.id || authUser?.id || "default";
 
   const appointments = appointmentsRepository.getByMerchant(merchantId);
   const customers = crmRepository.getByMerchant(merchantId);
 
   const handleSavePix = (config: any) => {
-    if (service) {
-      const updatedService = { ...service, pixConfig: config };
-      servicesRepository.save(updatedService);
-      if (authUser) {
-        setAuthUser({ ...authUser, pixConfig: config });
-      }
-    }
+    toast.info("Em breve: Atualização de Pix via Supabase!");
   };
 
   return (

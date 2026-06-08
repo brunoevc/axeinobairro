@@ -1,5 +1,6 @@
 import { MerchantAdmin, AdminState } from "@/data/admin";
 import { trackLead } from "@/lib/leads";
+import { supabase } from "@/integrations/supabase/client";
 
 const ADMIN_STATE_KEY = "axei-admin-state";
 
@@ -18,80 +19,81 @@ export type EventType =
 
 interface TrackEventMetadata {
   estimatedValue?: number;
+  neighborhood?: string;
+  [key: string]: any;
 }
 
-
-
-export const trackEvent = (merchantId: string, eventType: EventType, metadata?: TrackEventMetadata) => {
+export const trackEvent = async (entityId: string, eventType: EventType, metadata?: TrackEventMetadata) => {
   try {
+    // 1. Legacy LocalStorage Tracking (Keep for existing Admin Dashboard compatibility)
     const stored = localStorage.getItem(ADMIN_STATE_KEY);
-    if (!stored) return;
+    if (stored) {
+      const state: AdminState = JSON.parse(stored);
+      const updatedMerchants = state.merchants.map((m: MerchantAdmin) => {
+        if (m.id === entityId) {
+          const metrics = {
+            views: m.views || 0,
+            whatsappClicks: m.whatsappClicks || 0,
+            instagramClicks: m.instagramClicks || 0,
+            routeClicks: m.routeClicks || 0,
+            shareClicks: m.shareClicks || 0,
+            reportsCount: m.reportsCount || 0,
+            searchAppearances: m.searchAppearances || 0,
+            productAdded: m.productAdded || 0,
+            pedidoWhatsapp: m.pedidoWhatsapp || 0,
+          };
 
-    const state: AdminState = JSON.parse(stored);
-    const updatedMerchants = state.merchants.map((m: MerchantAdmin) => {
-      if (m.id === merchantId) {
-        const metrics = {
-          views: m.views || 0,
-          whatsappClicks: m.whatsappClicks || 0,
-          instagramClicks: m.instagramClicks || 0,
-          routeClicks: m.routeClicks || 0,
-          shareClicks: m.shareClicks || 0,
-          reportsCount: m.reportsCount || 0,
-          searchAppearances: m.searchAppearances || 0,
-          productAdded: m.productAdded || 0,
-          pedidoWhatsapp: m.pedidoWhatsapp || 0,
-        };
-
-
-        switch (eventType) {
-          case "view": metrics.views++; break;
-          case "whatsapp": metrics.whatsappClicks++; break;
-          case "instagram": metrics.instagramClicks++; break;
-          case "route": metrics.routeClicks++; break;
-          case "share": metrics.shareClicks++; break;
-          case "report": metrics.reportsCount++; break;
-          case "search_appearance": metrics.searchAppearances++; break;
-          case "product_added": metrics.productAdded++; break;
-          case "pedido_whatsapp": metrics.pedidoWhatsapp++; break;
-          case "promocao": break; // No specific metric field yet, just for lead tracking
+          switch (eventType) {
+            case "view": metrics.views++; break;
+            case "whatsapp": metrics.whatsappClicks++; break;
+            case "instagram": metrics.instagramClicks++; break;
+            case "route": metrics.routeClicks++; break;
+            case "share": metrics.shareClicks++; break;
+            case "report": metrics.reportsCount++; break;
+            case "search_appearance": metrics.searchAppearances++; break;
+            case "product_added": metrics.productAdded++; break;
+            case "pedido_whatsapp": metrics.pedidoWhatsapp++; break;
+            case "promocao": break;
+          }
+          return { ...m, ...metrics };
         }
+        return m;
+      });
 
+      const newState = { 
+        ...state, 
+        merchants: updatedMerchants,
+        lastUpdated: new Date().toISOString() 
+      };
+      localStorage.setItem(ADMIN_STATE_KEY, JSON.stringify(newState));
+    }
 
-        // Lead Tracking Integration
-        if (eventType === "whatsapp") {
-          trackLead({ merchantId, customerName: "Interessado no WhatsApp", customerPhone: "Não informado", source: "whatsapp" });
-        } else if (eventType === "pedido_whatsapp") {
-          trackLead({ 
-            merchantId, 
-            customerName: "Cliente de Pedido", 
-            customerPhone: "Não informado", 
-            source: "order",
-            estimatedValue: metadata?.estimatedValue,
-            checkoutData: (metadata as any)?.checkoutData
-          });
-        } else if (eventType === "share") {
-          trackLead({ merchantId, customerName: "Divulgador da Loja", customerPhone: "Não informado", source: "share" });
-        } else if (eventType === "promocao") {
-          trackLead({ merchantId, customerName: "Interessado em Produto", customerPhone: "Não informado", source: "promocao" });
-        }
-
-
-
-
-        return { ...m, ...metrics };
-      }
-      return m;
+    // 2. Real-time Supabase Tracking (New Phase 12.0A)
+    const { data: { user } } = await supabase.auth.getUser();
+    await supabase.from('metrics_events').insert({
+      user_id: user?.id,
+      event_type: eventType,
+      entity_type: 'merchant', // Default for this function's typical usage
+      entity_id: entityId,
+      neighborhood: metadata?.neighborhood,
+      metadata: metadata || {},
     });
 
-    const newState = { 
-      ...state, 
-      merchants: updatedMerchants,
-      lastUpdated: new Date().toISOString() 
-    };
-    localStorage.setItem(ADMIN_STATE_KEY, JSON.stringify(newState));
-    
-    // Dispatch a custom event so components can listen to changes if needed
-    window.dispatchEvent(new CustomEvent('axei-metrics-updated', { detail: { merchantId, eventType } }));
+    // 3. Lead Tracking Integration
+    if (eventType === "whatsapp") {
+      trackLead({ merchantId: entityId, customerName: "Interessado no WhatsApp", customerPhone: "Não informado", source: "whatsapp" });
+    } else if (eventType === "pedido_whatsapp") {
+      trackLead({ 
+        merchantId: entityId, 
+        customerName: "Cliente de Pedido", 
+        customerPhone: "Não informado", 
+        source: "order",
+        estimatedValue: metadata?.estimatedValue,
+        checkoutData: (metadata as any)?.checkoutData
+      });
+    }
+
+    window.dispatchEvent(new CustomEvent('axei-metrics-updated', { detail: { entityId, eventType } }));
   } catch (error) {
     console.error("Error tracking event:", error);
   }

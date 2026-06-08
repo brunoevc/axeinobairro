@@ -1,12 +1,11 @@
 import { createFileRoute, useNavigate, Link } from "@tanstack/react-router";
-import { useState } from "react";
-import { useAtom } from "jotai";
-import { isAuthenticatedAtom, authUserAtom } from "@/hooks/useAuth";
+import { useState, useEffect } from "react";
+import { useAuth } from "@/hooks/useAuth";
+import { supabase } from "@/integrations/supabase/client";
 import { Logo } from "@/components/ui/Logo";
 import { Button } from "@/components/ui/button";
 import { toast } from "sonner";
-import { Lock, Mail, User, ArrowRight, ShieldAlert, X, Eye, EyeOff, Key } from "lucide-react";
-import { usersRepository } from "@/repositories/usersRepository";
+import { Lock, Mail, ArrowRight, ShieldAlert, X, Eye, EyeOff, Key } from "lucide-react";
 
 export const Route = createFileRoute("/login")({
   component: LoginPage,
@@ -14,8 +13,7 @@ export const Route = createFileRoute("/login")({
 
 function LoginPage() {
   const navigate = useNavigate();
-  const [, setIsAuth] = useAtom(isAuthenticatedAtom);
-  const [, setAuthUser] = useAtom(authUserAtom);
+  const { isAuthenticated, loading } = useAuth();
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -23,66 +21,46 @@ function LoginPage() {
   const [showRecovery, setShowRecovery] = useState(false);
   const [recoveryEmail, setRecoveryEmail] = useState("");
   
-  const [mustChangePassword, setMustChangePassword] = useState(false);
-  const [newPassword, setNewPassword] = useState("");
-  const [confirmPassword, setConfirmPassword] = useState("");
-  const [tempUser, setTempUser] = useState<any>(null);
+  useEffect(() => {
+    if (isAuthenticated) {
+      navigate({ to: "/painel" });
+    }
+  }, [isAuthenticated, navigate]);
 
-  const handleLogin = (e: React.FormEvent) => {
+  const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
     
-    const user = usersRepository.getByEmail(email);
-    
-    if (user && user.password === password) {
-      if (user.mustChangePassword) {
-        setTempUser(user);
-        setMustChangePassword(true);
-        toast.info("Você precisa alterar sua senha no primeiro acesso.");
-        return;
-      }
-      
-      performLogin(user);
-    } else {
-      toast.error("Credenciais inválidas. Use brunoevc@gmail.com / 123456");
-    }
-  };
-
-  const handlePasswordChange = (e: React.FormEvent) => {
-    e.preventDefault();
-    if (newPassword.length < 6) {
-      toast.error("A senha deve ter pelo menos 6 caracteres.");
-      return;
-    }
-    if (newPassword !== confirmPassword) {
-      toast.error("As senhas não coincidem.");
-      return;
-    }
-
-    const updatedUser = { ...tempUser, password: newPassword, mustChangePassword: false };
-    usersRepository.save(updatedUser);
-    
-    toast.success("Senha atualizada com sucesso!");
-    performLogin(updatedUser);
-  };
-
-  const performLogin = (user: any) => {
-    setIsAuth(true);
-    setAuthUser({
-      id: user.id,
-      name: user.name,
-      email: user.email,
-      role: user.role,
-      provider: "local"
+    const { data, error } = await supabase.auth.signInWithPassword({
+      email,
+      password
     });
     
-    toast.success(`Bem-vindo, ${user.name}!`);
+    if (error) {
+      toast.error(error.message || "Credenciais inválidas.");
+      return;
+    }
     
-    if (user.role === 'master_admin') {
-      navigate({ to: "/admin" });
-    } else {
+    if (data.user) {
+      toast.success(`Bem-vindo!`);
       navigate({ to: "/painel" });
     }
   };
+
+  const handleRecovery = async (e: React.FormEvent) => {
+    e.preventDefault();
+    const { error } = await supabase.auth.resetPasswordForEmail(recoveryEmail, {
+      redirectTo: `${window.location.origin}/login`,
+    });
+    
+    if (error) {
+      toast.error(error.message);
+    } else {
+      toast.success("E-mail de recuperação enviado!");
+      setShowRecovery(false);
+    }
+  };
+
+  if (loading) return <div className="min-h-screen flex items-center justify-center">Carregando...</div>;
 
   return (
     <div className="min-h-screen bg-slate-50 flex items-center justify-center p-6">
@@ -96,52 +74,7 @@ function LoginPage() {
         </div>
 
         <div className="bg-white rounded-[2.5rem] p-8 md:p-10 shadow-2xl shadow-slate-200 border border-slate-100 relative overflow-hidden">
-          {mustChangePassword ? (
-            <div className="space-y-6 animate-in fade-in slide-in-from-right-4 duration-300">
-               <div>
-                <h2 className="text-2xl font-black text-slate-900 tracking-tighter">Alterar Senha</h2>
-                <p className="text-sm text-slate-500 font-medium mt-1 leading-relaxed">
-                  Por segurança, crie uma nova senha para sua conta.
-                </p>
-              </div>
-
-              <form onSubmit={handlePasswordChange} className="space-y-6">
-                <div className="space-y-2">
-                  <label className="text-xs font-black text-slate-400 uppercase tracking-widest ml-1">Nova Senha</label>
-                  <div className="relative group">
-                    <Key className="absolute left-5 top-1/2 -translate-y-1/2 w-5 h-5 text-slate-300 group-focus-within:text-orange-600 transition-colors" />
-                    <input 
-                      required
-                      type="password" 
-                      placeholder="••••••••"
-                      className="w-full bg-slate-50 border border-slate-200 rounded-2xl py-4 pl-14 pr-4 text-sm font-bold outline-none focus:ring-4 focus:ring-orange-500/5 focus:border-orange-600 transition-all"
-                      value={newPassword}
-                      onChange={(e) => setNewPassword(e.target.value)}
-                    />
-                  </div>
-                </div>
-
-                <div className="space-y-2">
-                  <label className="text-xs font-black text-slate-400 uppercase tracking-widest ml-1">Confirmar Senha</label>
-                  <div className="relative group">
-                    <Key className="absolute left-5 top-1/2 -translate-y-1/2 w-5 h-5 text-slate-300 group-focus-within:text-orange-600 transition-colors" />
-                    <input 
-                      required
-                      type="password" 
-                      placeholder="••••••••"
-                      className="w-full bg-slate-50 border border-slate-200 rounded-2xl py-4 pl-14 pr-4 text-sm font-bold outline-none focus:ring-4 focus:ring-orange-500/5 focus:border-orange-600 transition-all"
-                      value={confirmPassword}
-                      onChange={(e) => setConfirmPassword(e.target.value)}
-                    />
-                  </div>
-                </div>
-
-                <Button type="submit" className="w-full h-14 rounded-2xl bg-orange-600 hover:bg-orange-700 text-white font-black shadow-xl shadow-orange-100 transition-all active:scale-95">
-                  Salvar e Entrar
-                </Button>
-              </form>
-            </div>
-          ) : showRecovery ? (
+          {showRecovery ? (
             <div className="space-y-6 animate-in fade-in slide-in-from-right-4 duration-300">
               <div className="flex items-center justify-between mb-2">
                 <h2 className="text-2xl font-black text-slate-900 tracking-tighter">Recuperar Senha</h2>
@@ -150,9 +83,9 @@ function LoginPage() {
                 </button>
               </div>
               <p className="text-sm text-slate-500 font-medium leading-relaxed">
-                Esta funcionalidade está em modo mock. Em breve integrada com Supabase.
+                Digite seu e-mail para receber um link de recuperação.
               </p>
-              <form onSubmit={(e) => e.preventDefault()} className="space-y-6">
+              <form onSubmit={handleRecovery} className="space-y-6">
                 <div className="space-y-2">
                   <label className="text-xs font-black text-slate-400 uppercase tracking-widest ml-1">E-mail</label>
                   <div className="relative group">
@@ -167,8 +100,8 @@ function LoginPage() {
                     />
                   </div>
                 </div>
-                <Button onClick={() => toast.info("Modo demonstração: Email não enviado.")} className="w-full h-14 rounded-2xl bg-slate-900 text-white font-black transition-all">
-                  Simular Envio
+                <Button type="submit" className="w-full h-14 rounded-2xl bg-slate-900 text-white font-black transition-all">
+                  Enviar Link
                 </Button>
               </form>
             </div>
@@ -176,7 +109,7 @@ function LoginPage() {
             <div className="space-y-8 animate-in fade-in slide-in-from-left-4 duration-300">
               <div>
                 <h2 className="text-3xl font-black text-slate-900 tracking-tighter">Login</h2>
-                <p className="text-slate-500 font-medium mt-1">Acesse seu painel administrativo local.</p>
+                <p className="text-slate-500 font-medium mt-1">Acesse seu painel Axêi.</p>
               </div>
 
               <form onSubmit={handleLogin} className="space-y-6">
@@ -235,14 +168,14 @@ function LoginPage() {
           )}
         </div>
 
-        <div className="mt-8 p-4 bg-blue-50 rounded-2xl border border-blue-100 flex items-start gap-3">
-          <ShieldAlert className="w-5 h-5 text-blue-600 shrink-0 mt-0.5" />
+        <div className="mt-8 p-4 bg-orange-50 rounded-2xl border border-orange-100 flex items-start gap-3">
+          <ShieldAlert className="w-5 h-5 text-orange-600 shrink-0 mt-0.5" />
           <div className="space-y-1">
-            <p className="text-[10px] font-black text-blue-800 uppercase tracking-wider leading-none">
-              Autenticação Temporária Local
+            <p className="text-[10px] font-black text-orange-800 uppercase tracking-wider leading-none">
+              Portal Comunitário Axêi
             </p>
-            <p className="text-[10px] font-medium text-blue-600 leading-relaxed uppercase tracking-wider">
-              A segurança real será implementada com Supabase Auth na próxima fase.
+            <p className="text-[10px] font-medium text-orange-600 leading-relaxed uppercase tracking-wider">
+              Autenticação oficial via Lovable Cloud habilitada.
             </p>
           </div>
         </div>

@@ -1,26 +1,20 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { useAtom } from "jotai";
-import { authUserAtom } from "@/hooks/useAuth";
-import { Store, ShoppingBag, TrendingUp, Users, MessageSquare } from "lucide-react";
+import { useAuth } from "@/hooks/useAuth";
+import { Store, ShoppingBag, TrendingUp, MessageSquare } from "lucide-react";
 import { PixConfigForm } from "@/components/PixConfigForm";
 import { merchantsRepository } from "@/repositories/merchantsRepository";
+import { toast } from "sonner";
 
 export const Route = createFileRoute("/painel/lojista")({
   component: LojistaPanel,
 });
 
 function LojistaPanel() {
-  const [authUser, setAuthUser] = useAtom(authUserAtom);
-  const merchant = authUser?.linkedMerchantId ? merchantsRepository.getById(authUser.linkedMerchantId) : null;
+  const { user: authUser } = useAuth();
+  const merchant = authUser?.id ? merchantsRepository.getById(authUser.id) : null;
 
   const handleSavePix = (config: any) => {
-    if (merchant) {
-      const updatedMerchant = { ...merchant, pixConfig: config };
-      merchantsRepository.save(updatedMerchant);
-      if (authUser) {
-        setAuthUser({ ...authUser, pixConfig: config });
-      }
-    }
+    toast.info("Em breve: Atualização de Pix via Supabase!");
   };
 
   return (
@@ -83,7 +77,7 @@ function LojistaPanel() {
               </div>
             )}
             <p className="text-slate-500 font-medium mb-8">
-              A estrutura de edição de produtos, horários e fotos será integrada ao Supabase para persistência real de dados.
+              A estrutura de edição de produtos, horários e fotos está sendo integrada ao Supabase.
            </p>
            <div className="space-y-4">
               <div className="h-4 bg-slate-50 rounded-full w-full animate-pulse" />
@@ -95,10 +89,6 @@ function LojistaPanel() {
         <div className="bg-slate-900 p-10 rounded-[2.5rem] text-white">
            <h3 className="text-xl font-black mb-6">Próximos Passos</h3>
            <ul className="space-y-4">
-              <li className="flex items-center gap-3 text-sm text-slate-400">
-                 <div className="w-1.5 h-1.5 rounded-full bg-orange-600" />
-                 Integração com Supabase Storage para fotos.
-              </li>
               <li className="flex items-center gap-3 text-sm text-slate-400">
                  <div className="w-1.5 h-1.5 rounded-full bg-orange-600" />
                  Módulo de promoções em tempo real.

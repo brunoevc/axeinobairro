@@ -1,6 +1,5 @@
 import { createFileRoute, useNavigate, Outlet, redirect, Link } from "@tanstack/react-router";
-import { useAtom } from "jotai";
-import { isAuthenticatedAtom, authUserAtom } from "@/hooks/useAuth";
+import { useAuth } from "@/hooks/useAuth";
 import { toast } from "sonner";
 import { Logo } from "@/components/ui/Logo";
 import { LogOut, ArrowLeft, ShieldAlert } from "lucide-react";
@@ -8,28 +7,15 @@ import { Button } from "@/components/ui/button";
 
 export const Route = createFileRoute("/painel")({
   beforeLoad: ({ location }) => {
-    const authStatus = localStorage.getItem("axei_auth_status");
-    const isAuthenticated = authStatus === "true";
+    // Basic pre-check using localStorage as a hint for the router
+    const authStatus = localStorage.getItem("supabase.auth.token") || localStorage.getItem("sb-ntlukuadshugxopiwqyf-auth-token");
+    const isAuthenticated = !!authStatus;
     
-    if (!isAuthenticated) {
+    if (!isAuthenticated && location.pathname !== '/login') {
       throw redirect({
         to: "/login",
         search: { redirect: location.href },
       });
-    }
-
-    // No longer redirecting automatically from /painel to specific sub-panels
-    // This allows /painel to be the User Central Hub
-    if (location.pathname === '/painel') {
-      const authUserStr = localStorage.getItem("axei_auth_user");
-      let authUser = null;
-      try {
-        authUser = authUserStr ? JSON.parse(authUserStr) : null;
-      } catch (e) {}
-
-      if (authUser && authUser.role === 'master_admin') {
-        throw redirect({ to: '/admin' });
-      }
     }
   },
   component: PanelLayout,
@@ -37,15 +23,16 @@ export const Route = createFileRoute("/painel")({
 
 function PanelLayout() {
   const navigate = useNavigate();
-  const [isAuthenticated, setIsAuthenticated] = useAtom(isAuthenticatedAtom);
-  const [authUser, setAuthUser] = useAtom(authUserAtom);
+  const { user: authUser, signOut, loading } = useAuth();
 
-  const handleLogout = () => {
-    setIsAuthenticated(false);
-    setAuthUser(null);
-    toast.success("Você saiu com sucesso.");
+  const handleLogout = async () => {
+    await signOut();
     navigate({ to: "/login" });
   };
+
+  if (loading) {
+    return <div className="min-h-screen flex items-center justify-center">Carregando...</div>;
+  }
 
   return (
     <div className="min-h-screen bg-slate-50 flex flex-col">
@@ -80,24 +67,6 @@ function PanelLayout() {
 
       <main className="flex-1 p-6 md:p-12">
         <div className="max-w-7xl mx-auto">
-          {/* Alerta de Mock */}
-          <div className="mb-10 p-6 bg-blue-50 rounded-[2rem] border border-blue-100 flex flex-col md:flex-row items-center justify-between gap-6 shadow-sm">
-             <div className="flex items-center gap-4 text-center md:text-left">
-                <div className="w-12 h-12 bg-blue-100 rounded-2xl flex items-center justify-center text-blue-600 shrink-0">
-                   <ShieldAlert className="w-6 h-6" />
-                </div>
-                <div>
-                   <h4 className="text-sm font-black text-blue-900 uppercase tracking-tight">Modo de Estruturação</h4>
-                   <p className="text-xs font-medium text-blue-600 mt-1 uppercase tracking-widest leading-relaxed">
-                      Esta é uma versão preliminar do painel. A segurança real e recursos completos serão implementados na próxima fase com Supabase.
-                   </p>
-                </div>
-             </div>
-             <Button variant="outline" className="rounded-xl border-blue-200 text-blue-700 bg-white hover:bg-blue-50 font-black text-xs uppercase" asChild>
-                <Link to="/">Voltar para o Site</Link>
-             </Button>
-          </div>
-
           <Outlet />
         </div>
       </main>
@@ -108,7 +77,7 @@ function PanelLayout() {
             © 2026 Axêi no Bairro — Plataforma de Marketplace Local
           </p>
           <div className="flex items-center gap-6">
-            <span className="text-[10px] font-black text-slate-300 uppercase tracking-widest">v1.0.0 Dev</span>
+            <span className="text-[10px] font-black text-slate-300 uppercase tracking-widest">v1.0.0 Beta</span>
           </div>
         </div>
       </footer>

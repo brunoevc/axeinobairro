@@ -1,29 +1,45 @@
 import { NewsItem } from "@/types/news";
 import { initialNews } from "@/data/news";
-
-const STORAGE_KEY = "axei_news_data";
+import { supabase } from "@/integrations/supabase/client";
 
 export const newsRepository = {
-  getAll: (): NewsItem[] => {
-    const data = localStorage.getItem(STORAGE_KEY);
-    return data ? JSON.parse(data) : initialNews;
+  getAll: async (): Promise<NewsItem[]> => {
+    try {
+      const { data, error } = await supabase
+        .from('news')
+        .select('*')
+        .order('published_at', { ascending: false });
+
+      if (error) throw error;
+      
+      if (!data || data.length === 0) return initialNews;
+
+      return data.map((item: any) => ({
+        id: item.id,
+        title: item.title,
+        summary: item.excerpt || '',
+        content: item.content,
+        category: (item.category as any) || 'local',
+        date: item.published_at || item.created_at,
+        imageUrl: item.image_url || '',
+        exposureLevel: item.is_featured ? 'A' : 'C',
+        isActive: true,
+        views: 0,
+        clicks: 0,
+      }));
+    } catch (error) {
+      console.error("Error fetching news:", error);
+      return initialNews;
+    }
   },
 
-  saveAll: (news: NewsItem[]) => {
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(news));
-  },
-
-  updateInteraction: (id: string, type: "views" | "clicks") => {
-    const news = newsRepository.getAll();
-    const updated = news.map(item => {
-      if (item.id === id) {
-        return {
-          ...item,
-          [type]: (item[type] || 0) + 1
-        };
-      }
-      return item;
+  updateInteraction: async (id: string, type: "views" | "clicks") => {
+    const { data: { user } } = await supabase.auth.getUser();
+    await supabase.from('metrics_events').insert({
+      user_id: user?.id,
+      event_type: type === 'views' ? 'view' : 'click',
+      entity_type: 'news',
+      entity_id: id,
     });
-    newsRepository.saveAll(updated);
   }
 };

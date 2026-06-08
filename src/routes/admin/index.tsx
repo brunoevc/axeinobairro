@@ -8,8 +8,7 @@ import { ImageCropUpload } from "@/components/ImageCropUpload";
 import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { toast } from "sonner";
-import { useAtom } from "jotai";
-import { authUserAtom } from "@/hooks/useAuth";
+import { useAuth } from "@/hooks/useAuth";
 import ClassifiedsModeration from "@/components/admin/ClassifiedsModeration";
 
 export const Route = createFileRoute("/admin/")({
@@ -25,7 +24,7 @@ export const Route = createFileRoute("/admin/")({
 function AdminDashboard() {
   const { stats, state, loading } = useAdminState();
   const [platformLogo, setPlatformLogo] = useState("");
-  const [authUser] = useAtom(authUserAtom);
+  const { user: authUser } = useAuth();
 
   useEffect(() => {
     const saved = localStorage.getItem("platform_logo_url");
