@@ -1,7 +1,8 @@
 import { createFileRoute, useNavigate, Link } from "@tanstack/react-router";
 import { useState } from "react";
-import { useAtom } from "jotai";
-import { isAuthenticatedAtom, authUserAtom } from "@/hooks/useAuth";
+import { useState, useEffect } from "react";
+import { useAuth } from "@/hooks/useAuth";
+import { supabase } from "@/integrations/supabase/client";
 import { Logo } from "@/components/ui/Logo";
 import { Button } from "@/components/ui/button";
 import { toast } from "sonner";
@@ -14,8 +15,7 @@ export const Route = createFileRoute("/login")({
 
 function LoginPage() {
   const navigate = useNavigate();
-  const [, setIsAuth] = useAtom(isAuthenticatedAtom);
-  const [, setAuthUser] = useAtom(authUserAtom);
+  const { isAuthenticated, user, loading } = useAuth();
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -28,22 +28,23 @@ function LoginPage() {
   const [confirmPassword, setConfirmPassword] = useState("");
   const [tempUser, setTempUser] = useState<any>(null);
 
-  const handleLogin = (e: React.FormEvent) => {
+  const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
     
-    const user = usersRepository.getByEmail(email);
+    const { data, error } = await supabase.auth.signInWithPassword({
+      email,
+      password
+    });
     
-    if (user && user.password === password) {
-      if (user.mustChangePassword) {
-        setTempUser(user);
-        setMustChangePassword(true);
-        toast.info("Você precisa alterar sua senha no primeiro acesso.");
-        return;
-      }
-      
-      performLogin(user);
-    } else {
-      toast.error("Credenciais inválidas. Use brunoevc@gmail.com / 123456");
+    if (error) {
+      toast.error("Credenciais inválidas ou erro de conexão.");
+      return;
+    }
+    
+    if (data.user) {
+      toast.success(`Bem-vindo!`);
+      // Redirect handled by useEffect or navigate after login
+      navigate({ to: "/painel" });
     }
   };
 

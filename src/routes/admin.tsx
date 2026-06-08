@@ -1,8 +1,7 @@
 import { createFileRoute, useNavigate, Outlet, Link, redirect } from "@tanstack/react-router";
 import { LayoutDashboard, Store, CheckCircle, CreditCard, ArrowLeft, LogOut, User, Megaphone, Car, Zap, Lock, ShieldAlert, MessageCircle, Sparkles, TrendingUp } from "lucide-react";
 import { Logo } from "@/components/ui/Logo";
-import { useAtom } from "jotai";
-import { isAuthenticatedAtom, authUserAtom } from "@/hooks/useAuth";
+import { useAuth } from "@/hooks/useAuth";
 import { toast } from "sonner";
 
 const IS_ADMIN_ENABLED = import.meta.env.VITE_ADMIN_ENABLED === 'true' || true; // Force true for demo if env missing
@@ -37,13 +36,10 @@ export const Route = createFileRoute("/admin")({
 
 function AdminLayout() {
   const navigate = useNavigate();
-  const [isAuthenticated, setIsAuthenticated] = useAtom(isAuthenticatedAtom);
-  const [authUser, setAuthUser] = useAtom(authUserAtom);
+  const { isAuthenticated, user: authUser, signOut } = useAuth();
 
-  const handleLogout = () => {
-    setIsAuthenticated(false);
-    setAuthUser(null);
-    toast.success("Você saiu com sucesso.");
+  const handleLogout = async () => {
+    await signOut();
     navigate({ to: "/login" });
   };
 
