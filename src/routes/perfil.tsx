@@ -14,10 +14,7 @@ import {
 import { useState } from "react";
 import { TopBar } from "@/components/TopBar";
 import { FloatingNav } from "@/components/FloatingNav";
-import { Logo } from "@/components/ui/Logo";
-import { useAtom } from "jotai";
-import { isAuthenticatedAtom, authUserAtom } from "@/hooks/useAuth";
-import { usersRepository } from "@/repositories/usersRepository";
+import { useAuth } from "@/hooks/useAuth";
 import { toast } from "sonner";
 import React from "react";
 
@@ -27,16 +24,15 @@ export const Route = createFileRoute("/perfil")({
 
 function Profile() {
   const navigate = useNavigate();
-  const [isAuthenticated, setIsAuthenticated] = useAtom(isAuthenticatedAtom);
-  const [authUser, setAuthUser] = useAtom(authUserAtom);
+  const { isAuthenticated, user: authUser, signOut, loading } = useAuth();
   const [name] = useState(authUser?.name || "Morador do Bairro");
 
-  const handleLogout = () => {
-    setIsAuthenticated(false);
-    setAuthUser(null);
-    toast.success("Você saiu com sucesso.");
+  const handleLogout = async () => {
+    await signOut();
     navigate({ to: "/" });
   };
+
+  if (loading) return <div className="min-h-screen flex items-center justify-center">Carregando...</div>;
 
   return (
     <div className="min-h-screen bg-slate-50 pb-32">
@@ -136,16 +132,7 @@ function Profile() {
                     <button 
                       key={interest}
                       onClick={() => {
-                        if (authUser) {
-                          const current = authUser.interests || [];
-                          const updated = current.includes(interest as any) 
-                            ? current.filter(i => i !== interest) 
-                            : [...current, interest as any];
-                          // setAuthUser(updatedUser); // No direct setter anymore, would need a profile update hook
-                          toast.info("Em breve: Atualização de interesses via Supabase!");
-                        }
-                          toast.success("Interesses atualizados!");
-                        }
+                        toast.info("Em breve: Atualização de interesses via Supabase!");
                       }}
                       className={`px-4 py-2 rounded-xl text-[10px] font-black uppercase tracking-widest border transition-all ${
                         authUser?.interests?.includes(interest) 
