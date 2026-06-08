@@ -17,7 +17,6 @@ export interface AuthUser {
 export function useAuth() {
   const [user, setUser] = useState<AuthUser | null>(null);
   const [loading, setLoading] = useState(true);
-  // const { toast } = useToast(); // Replaced with sonner toast
 
   const fetchProfile = async (supabaseUser: User) => {
     try {
@@ -27,9 +26,8 @@ export function useAuth() {
         .eq('id', supabaseUser.id)
         .single();
 
-      if (error) {
+      if (error && error.code !== 'PGRST116') {
         console.error("Error fetching profile:", error);
-        return null;
       }
 
       return {
@@ -38,7 +36,7 @@ export function useAuth() {
         email: supabaseUser.email || '',
         role: (profile?.role as UserRole) || 'morador',
         neighborhood: profile?.neighborhood || undefined,
-        interests: profile?.interests || undefined,
+        interests: (profile?.interests as any) || undefined,
         avatar: profile?.avatar_url || undefined,
       } as AuthUser;
     } catch (err) {
@@ -48,7 +46,6 @@ export function useAuth() {
   };
 
   useEffect(() => {
-    // Check active sessions
     supabase.auth.getSession().then(({ data: { session } }) => {
       if (session?.user) {
         fetchProfile(session.user).then(profile => {
@@ -60,7 +57,6 @@ export function useAuth() {
       }
     });
 
-    // Listen for auth changes
     const { data: { subscription } } = supabase.auth.onAuthStateChange(async (event, session) => {
       if (session?.user) {
         const profile = await fetchProfile(session.user);
@@ -77,17 +73,10 @@ export function useAuth() {
   const signOut = async () => {
     const { error } = await supabase.auth.signOut();
     if (error) {
-      toast({
-        title: "Erro ao sair",
-        description: error.message,
-        variant: "destructive",
-      });
+      toast.error(error.message);
     } else {
       setUser(null);
-      toast({
-        title: "Até logo!",
-        description: "Você saiu com sucesso.",
-      });
+      toast.success("Você saiu com sucesso.");
     }
   };
 

@@ -1,10 +1,6 @@
 import { Community } from "@/types/communities";
 import { supabase } from "@/integrations/supabase/client";
-import { storage } from "./storage";
 import { initialCommunities } from "@/data/communities";
-
-const STORAGE_KEY = "axei_communities";
-
 
 export const communitiesRepository = {
   getAll: async (): Promise<Community[]> => {
@@ -18,16 +14,16 @@ export const communitiesRepository = {
       
       if (!data || data.length === 0) return initialCommunities;
 
-      return data.map(item => ({
+      return data.map((item: any) => ({
         id: item.id,
         name: item.name,
         type: (item.category as any) || 'social',
-        city: 'Araruama', // Default for now
+        city: 'Araruama',
         neighborhood: item.neighborhood,
         description: item.description || '',
         isActive: true,
-        createdAt: item.created_at,
-        updatedAt: item.updated_at,
+        createdAt: item.created_at || new Date().toISOString(),
+        updatedAt: item.updated_at || new Date().toISOString(),
       }));
     } catch (error) {
       console.error("Error fetching communities:", error);
@@ -56,4 +52,3 @@ export const communitiesRepository = {
     });
   }
 };
-

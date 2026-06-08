@@ -1,7 +1,6 @@
 import { NewsItem } from "@/types/news";
 import { initialNews } from "@/data/news";
-
-const STORAGE_KEY = "axei_news_data";
+import { supabase } from "@/integrations/supabase/client";
 
 export const newsRepository = {
   getAll: async (): Promise<NewsItem[]> => {
@@ -15,7 +14,7 @@ export const newsRepository = {
       
       if (!data || data.length === 0) return initialNews;
 
-      return data.map(item => ({
+      return data.map((item: any) => ({
         id: item.id,
         title: item.title,
         summary: item.excerpt || '',
@@ -35,7 +34,6 @@ export const newsRepository = {
   },
 
   updateInteraction: async (id: string, type: "views" | "clicks") => {
-    // For Phase 12.0A, we'll log this to metrics_events
     const { data: { user } } = await supabase.auth.getUser();
     await supabase.from('metrics_events').insert({
       user_id: user?.id,
