@@ -141,10 +141,9 @@ function Profile() {
                           const updated = current.includes(interest as any) 
                             ? current.filter(i => i !== interest) 
                             : [...current, interest as any];
-                          const updatedUser = { ...authUser, interests: updated };
-                          setAuthUser(updatedUser);
-                          // Sincronizar com repositório para simular persistência
-                          usersRepository.save(updatedUser as any);
+                          // setAuthUser(updatedUser); // No direct setter anymore, would need a profile update hook
+                          toast.info("Em breve: Atualização de interesses via Supabase!");
+                        }
                           toast.success("Interesses atualizados!");
                         }
                       }}

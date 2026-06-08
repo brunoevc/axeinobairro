@@ -17,11 +17,13 @@ function NoticiasPage() {
   const [news, setNews] = useState<NewsItem[]>([]);
 
   useEffect(() => {
-    const allNews = newsRepository.getAll().filter(n => n.isActive);
-    setNews(allNews);
-    
-    allNews.forEach(item => {
-      newsRepository.updateInteraction(item.id, "views");
+    newsRepository.getAll().then(allNews => {
+      const active = allNews.filter(n => n.isActive);
+      setNews(active);
+      
+      active.forEach(item => {
+        newsRepository.updateInteraction(item.id, "views");
+      });
     });
   }, []);
 
