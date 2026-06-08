@@ -49,6 +49,7 @@ export const communitiesRepository = {
       category: community.type,
       neighborhood: community.neighborhood,
       description: community.description,
+      updated_at: new Date().toISOString()
     });
   }
 };

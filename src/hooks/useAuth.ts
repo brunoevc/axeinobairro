@@ -12,6 +12,7 @@ export interface AuthUser {
   neighborhood?: string;
   interests?: string[];
   avatar?: string;
+  plan?: 'free' | 'community';
 }
 
 export function useAuth() {
@@ -38,6 +39,7 @@ export function useAuth() {
         neighborhood: profile?.neighborhood || undefined,
         interests: (profile?.interests as any) || undefined,
         avatar: profile?.avatar_url || undefined,
+        plan: (profile?.plan as any) || 'free',
       } as AuthUser;
     } catch (err) {
       console.error("Auth initialization error:", err);
