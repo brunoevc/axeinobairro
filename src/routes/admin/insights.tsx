@@ -14,7 +14,8 @@ import {
   Users
 } from "lucide-react";
 import { intentTracker } from "@/utils/intent-tracker";
-import { useMemo } from "react";
+import { useMemo, useEffect, useState } from "react";
+import { supabase } from "@/integrations/supabase/client";
 import { Opportunity, EconomicCategory, Territory, PlanType } from "@/types/business-intelligence";
 import { Badge } from "@/components/ui/badge";
 
@@ -23,7 +24,30 @@ export const Route = createFileRoute("/admin/insights")({
 });
 
 function InsightsDashboard() {
-  const events = useMemo(() => intentTracker.getEvents(), []);
+  const [realEvents, setRealEvents] = useState<any[]>([]);
+  const legacyEvents = useMemo(() => intentTracker.getEvents(), []);
+
+  useEffect(() => {
+    supabase.from('metrics_events')
+      .select('*')
+      .order('created_at', { ascending: false })
+      .limit(100)
+      .then(({ data }) => {
+        if (data) setRealEvents(data);
+      });
+  }, []);
+
+  const events = useMemo(() => {
+    // Combine legacy mock events with real DB events for a unified view during migration
+    const formattedReal = realEvents.map(e => ({
+      id: e.id,
+      type: e.event_type,
+      category: e.metadata?.category || 'geral',
+      territory: e.neighborhood || 'Desconhecido',
+      timestamp: new Date(e.created_at).getTime(),
+    }));
+    return [...formattedReal, ...legacyEvents];
+  }, [realEvents, legacyEvents]);
 
   // Inteligência Comercial: Calcular scores dinamicamente
   const opportunities = useMemo(() => {
