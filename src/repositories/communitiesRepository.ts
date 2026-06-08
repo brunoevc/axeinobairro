@@ -43,13 +43,18 @@ export const communitiesRepository = {
     return all.filter(c => c.neighborhood === neighborhood);
   },
   save: async (community: Community) => {
-    await supabase.from('communities').upsert({
+    const { error } = await supabase.from('communities').upsert({
       id: community.id,
       name: community.name,
       category: community.type,
       neighborhood: community.neighborhood,
       description: community.description,
       updated_at: new Date().toISOString()
-    });
+    } as any);
+
+    if (error) {
+      console.error("Error saving community:", error);
+      throw error;
+    }
   }
 };

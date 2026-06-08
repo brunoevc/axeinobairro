@@ -39,7 +39,7 @@ export function useAuth() {
         neighborhood: profile?.neighborhood || undefined,
         interests: (profile?.interests as any) || undefined,
         avatar: profile?.avatar_url || undefined,
-        plan: (profile?.plan as any) || 'free',
+        plan: (profile as any)?.plan || 'free',
       } as AuthUser;
     } catch (err) {
       console.error("Auth initialization error:", err);
