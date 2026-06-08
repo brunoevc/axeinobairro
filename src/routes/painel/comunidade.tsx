@@ -1,33 +1,29 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useAuth } from "@/hooks/useAuth";
 import { useState, useEffect } from "react";
-import { communitiesRepository } from "@/repositories/communitiesRepository";
 import { Users, Calendar, MessageSquare, Megaphone, ShieldAlert, Heart, Info } from "lucide-react";
 import { communitiesRepository } from "@/repositories/communitiesRepository";
 import { Button } from "@/components/ui/button";
 import { PixConfigForm } from "@/components/PixConfigForm";
-import { AuthUser } from "@/hooks/useAuth";
-
-
+import { toast } from "sonner";
 
 export const Route = createFileRoute("/painel/comunidade")({
   component: ComunidadePanel,
 });
 
 function ComunidadePanel() {
-  const [authUser, setAuthUser] = useAtom(authUserAtom);
-  const communities = communitiesRepository.getAll();
-  const linkedCommunity = authUser?.faithCommunity ? communities.find(c => c.name === authUser.faithCommunity) : communities[0];
+  const { user: authUser } = useAuth();
+  const [linkedCommunity, setLinkedCommunity] = useState<any>(null);
+
+  useEffect(() => {
+    communitiesRepository.getAll().then(communities => {
+      const found = authUser?.id ? communities.find(c => c.id === authUser.id) : null;
+      setLinkedCommunity(found || communities[0]);
+    });
+  }, [authUser]);
 
   const handleSavePix = (config: any) => {
-    if (linkedCommunity) {
-      const updatedCommunity = { ...linkedCommunity, pixConfig: config };
-      communitiesRepository.save(updatedCommunity);
-      // Update local auth user too if needed
-      if (authUser) {
-        setAuthUser({ ...authUser, pixConfig: config });
-      }
-    }
+    toast.info("Em breve: Atualização de Pix via Supabase!");
   };
 
   return (
@@ -133,14 +129,12 @@ function ComunidadePanel() {
               </div>
            </div>
            <div className="mt-10 p-4 bg-white/5 rounded-2xl border border-white/10 flex items-start gap-3">
-              <Info className="w-4 h-4 text-orange-500 shrink-0 mt-0.5" />
-              <p className="text-[10px] font-medium text-slate-400 uppercase tracking-wider">
-                A segurança real e recursos de engajamento serão ativados via Supabase Auth.
-              </p>
+              <span className="text-[10px] font-medium text-slate-400 uppercase tracking-wider">
+                Autenticação e dados reais habilitados via Lovable Cloud.
+              </span>
            </div>
         </div>
       </div>
     </div>
   );
 }
-

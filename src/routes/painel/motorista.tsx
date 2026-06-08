@@ -6,26 +6,19 @@ import { ridesRepository } from "@/repositories/ridesRepository";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { AgendaManager } from "@/components/AgendaManager";
 import { CRMManager } from "@/components/CRMManager";
-import { appointmentsRepository } from "@/repositories/appointmentsRepository";
-import { crmRepository } from "@/repositories/crmRepository";
+import { toast } from "sonner";
 
 export const Route = createFileRoute("/painel/motorista")({
   component: MotoristaPanel,
 });
 
 function MotoristaPanel() {
-  const [authUser, setAuthUser] = useAtom(authUserAtom);
-  const ride = authUser?.linkedDriverId ? ridesRepository.getById(authUser.linkedDriverId) : null;
+  const { user: authUser } = useAuth();
+  const ride = authUser?.id ? ridesRepository.getById(authUser.id) : null;
   const driverId = ride?.id || authUser?.id || "default";
 
   const handleSavePix = (config: any) => {
-    if (ride) {
-      const updatedRide = { ...ride, pixConfig: config };
-      ridesRepository.save(updatedRide);
-      if (authUser) {
-        setAuthUser({ ...authUser, pixConfig: config });
-      }
-    }
+    toast.info("Em breve: Atualização de Pix via Supabase!");
   };
 
   return (
