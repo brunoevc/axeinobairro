@@ -147,6 +147,7 @@ export type Database = {
           last_seen_at: string | null
           neighborhood: string | null
           onboarding_completed: boolean | null
+          plan: string | null
           role: string | null
           updated_at: string | null
         }
@@ -159,6 +160,7 @@ export type Database = {
           last_seen_at?: string | null
           neighborhood?: string | null
           onboarding_completed?: boolean | null
+          plan?: string | null
           role?: string | null
           updated_at?: string | null
         }
@@ -171,6 +173,7 @@ export type Database = {
           last_seen_at?: string | null
           neighborhood?: string | null
           onboarding_completed?: boolean | null
+          plan?: string | null
           role?: string | null
           updated_at?: string | null
         }
