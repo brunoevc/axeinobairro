@@ -19,7 +19,7 @@ export const communitiesRepository = {
         name: item.name,
         type: (item.category as any) || 'social',
         city: 'Araruama',
-        neighborhood: item.neighborhood,
+        neighborhood: item.neighborhood || undefined,
         description: item.description || '',
         isActive: true,
         createdAt: item.created_at || new Date().toISOString(),

@@ -20,6 +20,7 @@ export type EventType =
 interface TrackEventMetadata {
   estimatedValue?: number;
   neighborhood?: string;
+  [key: string]: any;
 }
 
 export const trackEvent = async (entityId: string, eventType: EventType, metadata?: TrackEventMetadata) => {
