@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { supabase } from "@/integrations/supabase/client";
-import { useToast } from "@/components/ui/use-toast";
+import { toast } from "sonner";
 import { UserRole } from "@/types/users";
 import { User } from "@supabase/supabase-js";
 
@@ -17,7 +17,7 @@ export interface AuthUser {
 export function useAuth() {
   const [user, setUser] = useState<AuthUser | null>(null);
   const [loading, setLoading] = useState(true);
-  const { toast } = useToast();
+  // const { toast } = useToast(); // Replaced with sonner toast
 
   const fetchProfile = async (supabaseUser: User) => {
     try {
@@ -36,11 +36,11 @@ export function useAuth() {
         id: supabaseUser.id,
         name: supabaseUser.user_metadata?.name || supabaseUser.email?.split('@')[0] || 'User',
         email: supabaseUser.email || '',
-        role: (profile?.role as UserRole) || 'user',
-        neighborhood: profile?.neighborhood,
-        interests: profile?.interests,
-        avatar: profile?.avatar_url,
-      };
+        role: (profile?.role as UserRole) || 'morador',
+        neighborhood: profile?.neighborhood || undefined,
+        interests: profile?.interests || undefined,
+        avatar: profile?.avatar_url || undefined,
+      } as AuthUser;
     } catch (err) {
       console.error("Auth initialization error:", err);
       return null;
@@ -94,8 +94,8 @@ export function useAuth() {
   return {
     user,
     isAuthenticated: !!user,
-    isAdmin: user?.role === 'admin' || user?.role === 'master',
-    isPartner: user?.role === 'partner',
+    isAdmin: user?.role === 'master_admin',
+    isPartner: user?.role === 'lojista' || user?.role === 'profissional' || user?.role === 'motorista',
     loading,
     signOut,
   };
