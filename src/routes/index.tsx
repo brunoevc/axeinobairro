@@ -53,10 +53,17 @@ function Index() {
   const { followedIds, toggleFollow, isFollowing } = useFollowCommunities();
   const { history: searchHistory } = useSearchHistory();
   
-  const allMerchants = useMemo(() => merchantsRepository.getAll(), []);
-  const allServices = useMemo(() => servicesRepository.getAll(), []);
-  const allNews = useMemo(() => newsRepository.getAll(), []);
-  const allCommunities = useMemo(() => communitiesRepository.getAll(), []);
+  const [allMerchants, setAllMerchants] = useState<any[]>([]);
+  const [allServices, setAllServices] = useState<any[]>([]);
+  const [allNews, setAllNews] = useState<any[]>([]);
+  const [allCommunities, setAllCommunities] = useState<any[]>([]);
+
+  useEffect(() => {
+    setAllMerchants(merchantsRepository.getAll());
+    setAllServices(servicesRepository.getAll());
+    newsRepository.getAll().then(setAllNews);
+    communitiesRepository.getAll().then(setAllCommunities);
+  }, []);
 
   // Filtered and combined data
   const highlightedItems = useMemo(() => {

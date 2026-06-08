@@ -45,6 +45,9 @@ function SearchPage() {
   const [searchTerm, setSearchTerm] = useState(q);
   const [activeTab, setActiveTab] = useState<"all" | "merchants" | "services" | "news">("all");
   const [isLoading, setIsLoading] = useState(true);
+  const [allMerchants, setAllMerchants] = useState<any[]>([]);
+  const [allServices, setAllServices] = useState<any[]>([]);
+  const [allNews, setAllNews] = useState<any[]>([]);
   const [showHistory, setShowHistory] = useState(false);
   const { history, addSearchTerm, clearHistory } = useSearchHistory();
   const { toggleFavorite, isFavorite } = useFavorites();
@@ -53,8 +56,19 @@ function SearchPage() {
   useEffect(() => {
     setSearchTerm(q);
     setIsLoading(true);
-    const timer = setTimeout(() => setIsLoading(false), 600);
-    return () => clearTimeout(timer);
+    
+    // Load data
+    const merchants = merchantsRepository.getAll();
+    const services = servicesRepository.getAll();
+    setAllMerchants(merchants);
+    setAllServices(services);
+    
+    Promise.all([
+      newsRepository.getAll()
+    ]).then(([news]) => {
+      setAllNews(news);
+      setIsLoading(false);
+    });
   }, [q]);
 
   const results = useMemo(() => {
@@ -64,15 +78,15 @@ function SearchPage() {
     const searchInString = (str: string) => 
       str.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").includes(normalizedQ);
 
-    const merchants = merchantsRepository.getAll().filter(m => 
+    const merchants = allMerchants.filter(m => 
       searchInString(m.name) || searchInString(m.description) || searchInString(m.category) || searchInString(m.neighborhood)
     );
 
-    const services = servicesRepository.getAll().filter(s => 
+    const services = allServices.filter(s => 
       searchInString(s.name) || searchInString(s.description) || searchInString(s.category) || searchInString(s.neighborhood)
     );
 
-    const news = newsRepository.getAll().filter(n => 
+    const news = allNews.filter(n => 
       searchInString(n.title) || searchInString(n.summary) || searchInString(n.category)
     );
 

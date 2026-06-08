@@ -1,15 +1,13 @@
 import { NewsItem } from "@/types/news";
 import { newsRepository } from "@/repositories/newsRepository";
 
-export const getNews = (): NewsItem[] => {
-  return newsRepository.getAll();
+// This is a bridge for Phase 12.0A to handle async repo calls in existing components
+// until we fully migrate components to use TanStack Query or direct repo calls.
+
+export const getAllNews = async (): Promise<NewsItem[]> => {
+  return await newsRepository.getAll();
 };
 
-export const saveNews = (news: NewsItem[]) => {
-  newsRepository.saveAll(news);
+export const updateNewsInteraction = async (id: string, type: "views" | "clicks") => {
+  return await newsRepository.updateInteraction(id, type);
 };
-
-export const trackNewsInteraction = (id: string, type: "view" | "click") => {
-  newsRepository.updateInteraction(id, type === "view" ? "views" : "clicks");
-};
-
