@@ -1,6 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { useAtom } from "jotai";
-import { authUserAtom } from "@/hooks/useAuth";
+import { useAuth } from "@/hooks/useAuth";
+import { useState, useEffect } from "react";
+import { communitiesRepository } from "@/repositories/communitiesRepository";
 import { Users, Calendar, MessageSquare, Megaphone, ShieldAlert, Heart, Info } from "lucide-react";
 import { communitiesRepository } from "@/repositories/communitiesRepository";
 import { Button } from "@/components/ui/button";

@@ -1,14 +1,14 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { useMemo } from "react";
+import { useState, useEffect } from "react";
 import { useFavorites } from "@/hooks/useFavorites";
 import { useFollowCommunities } from "@/hooks/useFollowCommunities";
 import { merchantsRepository } from "@/repositories/merchantsRepository";
 import { servicesRepository } from "@/repositories/servicesRepository";
 import { communitiesRepository } from "@/repositories/communitiesRepository";
-import { newsRepository } from "@/repositories/newsRepository";
-import { Heart, Store, Wrench, Newspaper, Users, ArrowRight, Bookmark } from "lucide-react";
+import { Heart, Store, Wrench, Users, ArrowRight, Bookmark } from "lucide-react";
 import { MerchantCard } from "@/components/MerchantCard";
 import { Button } from "@/components/ui/button";
+import { Community } from "@/types/communities";
 
 export const Route = createFileRoute("/painel/")({
   component: UserPanelHome,
@@ -17,20 +17,24 @@ export const Route = createFileRoute("/painel/")({
 function UserPanelHome() {
   const { favorites } = useFavorites();
   const { followedIds } = useFollowCommunities();
+  
+  const [favoriteMerchants, setFavoriteMerchants] = useState<any[]>([]);
+  const [favoriteServices, setFavoriteServices] = useState<any[]>([]);
+  const [followedCommunities, setFollowedCommunities] = useState<Community[]>([]);
 
-  const favoriteMerchants = useMemo(() => {
-    const ids = favorites.filter(f => f.type === 'merchant').map(f => f.id);
-    return merchantsRepository.getAll().filter(m => ids.includes(m.id));
-  }, [favorites]);
+  useEffect(() => {
+    // Sync merchants (still localStorage/mock for now)
+    const mIds = favorites.filter(f => f.type === 'merchant').map(f => f.id);
+    setFavoriteMerchants(merchantsRepository.getAll().filter(m => mIds.includes(m.id)));
 
-  const favoriteServices = useMemo(() => {
-    const ids = favorites.filter(f => f.type === 'service').map(f => f.id);
-    return servicesRepository.getAll().filter(s => ids.includes(s.id));
-  }, [favorites]);
+    const sIds = favorites.filter(f => f.type === 'service').map(f => f.id);
+    setFavoriteServices(servicesRepository.getAll().filter(s => sIds.includes(s.id)));
 
-  const followedCommunities = useMemo(() => {
-    return communitiesRepository.getAll().filter(c => followedIds.includes(c.id));
-  }, [followedIds]);
+    // Sync communities (Real Supabase)
+    communitiesRepository.getAll().then(all => {
+      setFollowedCommunities(all.filter(c => followedIds.includes(c.id)));
+    });
+  }, [favorites, followedIds]);
 
   const hasAnySaved = favoriteMerchants.length > 0 || favoriteServices.length > 0 || followedCommunities.length > 0;
 

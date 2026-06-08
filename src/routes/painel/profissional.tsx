@@ -1,6 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { useAtom } from "jotai";
-import { authUserAtom } from "@/hooks/useAuth";
+import { useAuth } from "@/hooks/useAuth";
 import { Wrench, Calendar, LayoutDashboard, Users } from "lucide-react";
 import { PixConfigForm } from "@/components/PixConfigForm";
 import { servicesRepository } from "@/repositories/servicesRepository";

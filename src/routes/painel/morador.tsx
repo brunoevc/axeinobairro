@@ -1,6 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { useAtom } from "jotai";
-import { authUserAtom } from "@/hooks/useAuth";
+import { useAuth } from "@/hooks/useAuth";
 import { 
   Heart, 
   ShoppingBag, 
@@ -23,7 +22,7 @@ export const Route = createFileRoute("/painel/morador")({
 });
 
 function MoradorPanel() {
-  const [authUser] = useAtom(authUserAtom);
+  const { user: authUser } = useAuth();
   const interests = authUser?.interests || [];
   const neighborhood = authUser?.neighborhood || "Meu Bairro";
 
