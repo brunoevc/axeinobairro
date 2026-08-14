@@ -85,7 +85,7 @@ export function useAuth() {
   return {
     user,
     isAuthenticated: !!user,
-    isAdmin: user?.role === 'master_admin',
+    isAdmin: user?.role === 'master_admin' || user?.role === 'admin',
     isPartner: user?.role === 'lojista' || user?.role === 'profissional' || user?.role === 'motorista',
     loading,
     signOut,
