@@ -1,11 +1,13 @@
 export type UserRole = 
   | 'master_admin' 
+  | 'admin'
   | 'lojista' 
   | 'profissional' 
   | 'motorista' 
   | 'representante' 
   | 'morador'
-  | 'lider_comunidade';
+  | 'lider_comunidade'
+  | 'user';
 
 export type Interest = 
   | 'negocios' | 'servicos' | 'transporte' | 'noticias' | 'eventos' 
