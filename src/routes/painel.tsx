@@ -1,4 +1,5 @@
-import { createFileRoute, useNavigate, Outlet, redirect, Link } from "@tanstack/react-router";
+import { createFileRoute, useNavigate, Outlet, Link } from "@tanstack/react-router";
+import { useEffect } from "react";
 import { useAuth } from "@/hooks/useAuth";
 import { toast } from "sonner";
 import { Logo } from "@/components/ui/Logo";
@@ -6,31 +7,25 @@ import { LogOut, ArrowLeft, ShieldAlert } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
 export const Route = createFileRoute("/painel")({
-  beforeLoad: ({ location }) => {
-    // Basic pre-check using localStorage as a hint for the router
-    const authStatus = localStorage.getItem("supabase.auth.token") || localStorage.getItem("sb-ntlukuadshugxopiwqyf-auth-token");
-    const isAuthenticated = !!authStatus;
-    
-    if (!isAuthenticated && location.pathname !== '/login') {
-      throw redirect({
-        to: "/login",
-        search: { redirect: location.href },
-      });
-    }
-  },
   component: PanelLayout,
 });
 
 function PanelLayout() {
   const navigate = useNavigate();
-  const { user: authUser, signOut, loading } = useAuth();
+  const { user: authUser, isAuthenticated, signOut, loading } = useAuth();
+
+  useEffect(() => {
+    if (!loading && !isAuthenticated) {
+      navigate({ to: "/login", search: { redirect: window.location.href } });
+    }
+  }, [isAuthenticated, loading, navigate]);
 
   const handleLogout = async () => {
     await signOut();
     navigate({ to: "/login" });
   };
 
-  if (loading) {
+  if (loading || !isAuthenticated) {
     return <div className="min-h-screen flex items-center justify-center">Carregando...</div>;
   }
 

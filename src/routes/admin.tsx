@@ -1,47 +1,35 @@
-import { createFileRoute, useNavigate, Outlet, Link, redirect } from "@tanstack/react-router";
+import { createFileRoute, useNavigate, Outlet, Link } from "@tanstack/react-router";
+import { useEffect } from "react";
 import { LayoutDashboard, Store, CheckCircle, CreditCard, ArrowLeft, LogOut, User, Megaphone, Car, Zap, Lock, ShieldAlert, MessageCircle, Sparkles, TrendingUp } from "lucide-react";
 import { Logo } from "@/components/ui/Logo";
 import { useAuth } from "@/hooks/useAuth";
 import { toast } from "sonner";
 
-const IS_ADMIN_ENABLED = import.meta.env.VITE_ADMIN_ENABLED === 'true' || true; // Force true for demo if env missing
+const IS_ADMIN_ENABLED = import.meta.env.VITE_ADMIN_ENABLED === 'true';
 
 export const Route = createFileRoute("/admin")({
-  beforeLoad: ({ location }) => {
-    const authStatus = localStorage.getItem("axei_auth_status");
-    const authUserStr = localStorage.getItem("axei_auth_user");
-    let authUser = null;
-    try {
-      authUser = authUserStr ? JSON.parse(authUserStr) : null;
-    } catch (e) {}
-    
-    const isAuthenticated = authStatus === "true" && authUser !== null;
-    
-    if (!isAuthenticated) {
-      throw redirect({
-        to: "/login",
-        search: { redirect: location.href },
-      });
-    }
-
-    if (authUser.role !== 'master_admin') {
-       // Se não for master_admin, vamos permitir carregar o componente e tratar lá o erro de permissão
-       // ou poderíamos redirecionar para /painel
-       return;
-    }
-  },
   component: AdminLayout,
 });
 
 
 function AdminLayout() {
   const navigate = useNavigate();
-  const { isAuthenticated, user: authUser, signOut } = useAuth();
+  const { isAuthenticated, user: authUser, signOut, loading } = useAuth();
+
+  useEffect(() => {
+    if (!loading && !isAuthenticated) {
+      navigate({ to: "/login", search: { redirect: window.location.href } });
+    }
+  }, [isAuthenticated, loading, navigate]);
 
   const handleLogout = async () => {
     await signOut();
     navigate({ to: "/login" });
   };
+
+  if (loading || !isAuthenticated) {
+    return <div className="min-h-screen flex items-center justify-center">Carregando...</div>;
+  }
 
   if (!IS_ADMIN_ENABLED) {
     return (
