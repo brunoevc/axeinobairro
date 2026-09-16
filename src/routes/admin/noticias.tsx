@@ -32,6 +32,7 @@ import {
 } from "@/components/ui/dialog";
 import { Pencil, Trash2, Plus, Eye, MousePointer2 } from "lucide-react";
 import { toast } from "sonner";
+import { RssNewsManager } from "@/components/admin/RssNewsManager";
 
 export const Route = createFileRoute("/admin/noticias")({
   component: AdminNoticias,
@@ -225,6 +226,8 @@ function AdminNoticias() {
           </DialogContent>
         </Dialog>
       </div>
+
+      <RssNewsManager />
 
       <div className="bg-white rounded-2xl border border-slate-200 overflow-hidden shadow-sm">
         <Table>

@@ -8,6 +8,7 @@ export const newsRepository = {
       const { data, error } = await supabase
         .from('news')
         .select('*')
+        .eq('publication_status', 'published')
         .order('published_at', { ascending: false });
 
       if (error) throw error;
@@ -26,6 +27,8 @@ export const newsRepository = {
         isActive: true,
         views: 0,
         clicks: 0,
+        origin: item.source_name || undefined,
+        sourceUrl: item.source_url || undefined,
       }));
     } catch (error) {
       console.error("Error fetching news:", error);
