@@ -28,6 +28,7 @@ import { Badge } from "@/components/ui/badge";
 import { MerchantCard } from "@/components/MerchantCard";
 import { useSearchHistory } from "@/hooks/useSearchHistory";
 import { useFavorites } from "@/hooks/useFavorites";
+import { normalizeForSearch } from "@/lib/text";
 
 
 const searchSchema = z.object({
@@ -72,26 +73,34 @@ function SearchPage() {
   }, [q]);
 
   const results = useMemo(() => {
-    const normalizedQ = searchTerm.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").trim();
-    if (!normalizedQ) return { merchants: [], services: [], news: [] };
+    const normalizedQuery = normalizeForSearch(searchTerm);
+    if (!normalizedQuery) return { merchants: [], services: [], news: [] };
 
-    const searchInString = (str: string) => 
-      str.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").includes(normalizedQ);
+    const matchesQuery = (value: unknown) =>
+      normalizeForSearch(value).includes(normalizedQuery);
 
-    const merchants = allMerchants.filter(m => 
-      searchInString(m.name) || searchInString(m.description) || searchInString(m.category) || searchInString(m.neighborhood)
+    const merchants = allMerchants.filter(merchant =>
+      matchesQuery(merchant.name) ||
+      matchesQuery(merchant.description) ||
+      matchesQuery(merchant.category) ||
+      matchesQuery(merchant.neighborhood)
     );
 
-    const services = allServices.filter(s => 
-      searchInString(s.name) || searchInString(s.description) || searchInString(s.category) || searchInString(s.neighborhood)
+    const services = allServices.filter(service =>
+      matchesQuery(service.name) ||
+      matchesQuery(service.description) ||
+      matchesQuery(service.category) ||
+      matchesQuery(service.neighborhood)
     );
 
-    const news = allNews.filter(n => 
-      searchInString(n.title) || searchInString(n.summary) || searchInString(n.category)
+    const news = allNews.filter(item =>
+      matchesQuery(item.title) ||
+      matchesQuery(item.summary) ||
+      matchesQuery(item.category)
     );
 
     return { merchants, services, news };
-  }, [searchTerm]);
+  }, [searchTerm, allMerchants, allServices, allNews]);
 
   const handleSearch = (e: React.FormEvent) => {
     e.preventDefault();

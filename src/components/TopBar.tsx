@@ -7,6 +7,7 @@ import { useLocation } from "@/hooks/useLocation";
 import { neighborhoods } from "@/data/merchants";
 import { Button } from "@/components/ui/button";
 import { DigitalClock, DigitalDate } from "./DigitalClock";
+import { normalizeForSearch } from "@/lib/text";
 
 const IS_ADMIN_ENABLED = import.meta.env.VITE_ADMIN_ENABLED === 'true';
 
@@ -63,16 +64,15 @@ export const TopBar = memo(function TopBar() {
   }, [setManualLocation]);
 
   const filteredNeighborhoods = useMemo(() => {
-    if (!neighborhoodSearch.trim()) return neighborhoods;
-    const search = neighborhoodSearch.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "");
-    return neighborhoods.filter(hood => 
-      hood.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").includes(search)
-    );
+    const search = normalizeForSearch(neighborhoodSearch);
+    if (!search) return neighborhoods;
+
+    return neighborhoods.filter(hood => normalizeForSearch(hood).includes(search));
   }, [neighborhoodSearch]);
 
   const groupedNeighborhoods = useMemo(() => {
     const groups: Record<string, string[]> = {};
-    filteredNeighborhoods.sort().forEach(hood => {
+    [...filteredNeighborhoods].sort().forEach(hood => {
       const firstLetter = hood.charAt(0).toUpperCase();
       if (!groups[firstLetter]) groups[firstLetter] = [];
       groups[firstLetter].push(hood);
