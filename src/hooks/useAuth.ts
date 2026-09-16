@@ -21,25 +21,43 @@ export function useAuth() {
 
   const fetchProfile = async (supabaseUser: User) => {
     try {
-      const { data: profile, error } = await supabase
-        .from('profiles')
-        .select('*')
-        .eq('id', supabaseUser.id)
-        .single();
+      const [profileResult, rolesResult] = await Promise.all([
+        supabase
+          .from('profiles')
+          .select('*')
+          .eq('id', supabaseUser.id)
+          .maybeSingle(),
+        supabase
+          .from('user_roles')
+          .select('role')
+          .eq('user_id', supabaseUser.id),
+      ]);
 
-      if (error && error.code !== 'PGRST116') {
-        console.error("Error fetching profile:", error);
+      if (profileResult.error) {
+        console.error("Error fetching profile:", profileResult.error);
       }
+
+      if (rolesResult.error) {
+        console.error("Error fetching access roles:", rolesResult.error);
+      }
+
+      const accessRoles = rolesResult.data?.map(({ role }) => role) ?? [];
+      const privilegedRole: UserRole | undefined = accessRoles.includes('master_admin')
+        ? 'master_admin'
+        : accessRoles.includes('admin')
+          ? 'admin'
+          : undefined;
+      const profile = profileResult.data;
 
       return {
         id: supabaseUser.id,
         name: supabaseUser.user_metadata?.name || supabaseUser.email?.split('@')[0] || 'User',
         email: supabaseUser.email || '',
-        role: (profile?.role as UserRole) || 'morador',
+        role: privilegedRole || (profile?.role as UserRole) || 'morador',
         neighborhood: profile?.neighborhood || undefined,
-        interests: (profile?.interests as any) || undefined,
+        interests: (profile?.interests as string[] | null) || undefined,
         avatar: profile?.avatar_url || undefined,
-        plan: (profile as any)?.plan || 'free',
+        plan: (profile as typeof profile & { plan?: 'free' | 'community' })?.plan || 'free',
       } as AuthUser;
     } catch (err) {
       console.error("Auth initialization error:", err);
@@ -59,7 +77,7 @@ export function useAuth() {
       }
     });
 
-    const { data: { subscription } } = supabase.auth.onAuthStateChange(async (event, session) => {
+    const { data: { subscription } } = supabase.auth.onAuthStateChange(async (_event, session) => {
       if (session?.user) {
         const profile = await fetchProfile(session.user);
         setUser(profile);
