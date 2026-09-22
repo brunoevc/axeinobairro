@@ -137,7 +137,7 @@ export const TopBar = memo(function TopBar() {
                   <Sparkles className="w-3.5 h-3.5" />
                   Feedback
                 </Link>
-                <Link to="/planos" className="text-sm font-bold text-white px-4 py-2 bg-orange-600 rounded-xl hover:bg-orange-700 transition-all">Participar</Link>
+                <Link to="/planos" className="text-sm font-bold text-white px-4 py-2 bg-orange-600 rounded-xl hover:bg-orange-700 transition-all">Anuncie no Axêi</Link>
 
 
 
@@ -160,7 +160,8 @@ export const TopBar = memo(function TopBar() {
               <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400 group-focus-within:text-orange-500 transition-colors" />
               <input 
                 type="text" 
-                placeholder="O que você procura hoje?"
+                placeholder="Busque lojas, serviços e notícias"
+                aria-label="Buscar lojas, serviços e notícias"
                 className="w-full bg-slate-50 border border-slate-200 rounded-xl py-2 pl-10 pr-4 text-sm outline-none focus:ring-2 focus:ring-orange-500/10 focus:border-orange-500 transition-all"
                 onKeyDown={(e) => {
                   if (e.key === 'Enter') {
@@ -195,7 +196,7 @@ export const TopBar = memo(function TopBar() {
           <div className="relative bg-white w-full max-w-md rounded-[2.5rem] shadow-2xl overflow-hidden animate-in fade-in zoom-in-95 duration-200">
             <div className="p-6 border-b border-slate-50 flex items-center justify-between bg-slate-50/50">
               <div>
-                <h3 className="text-xl font-black text-slate-900 tracking-tight italic">Escolha seu Bairro</h3>
+                <h3 className="text-xl font-black text-slate-900 tracking-tight italic">Escolha seu bairro</h3>
                 <p className="text-[10px] font-black text-orange-600 mt-1 uppercase tracking-widest">Araruama - RJ</p>
               </div>
               <button onClick={() => setIsLocationModalOpen(false)} className="p-2 hover:bg-white rounded-full transition-colors shadow-sm">
@@ -208,7 +209,8 @@ export const TopBar = memo(function TopBar() {
                 <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400 group-focus-within:text-orange-500 transition-colors" />
                 <input 
                   type="text" 
-                  placeholder="Buscar bairro..."
+                  placeholder="Digite o nome do bairro"
+                  aria-label="Buscar bairro em Araruama"
                   className="w-full bg-slate-50 border border-slate-200 rounded-2xl py-3 pl-11 pr-4 text-sm font-bold outline-none focus:ring-4 focus:ring-orange-500/5 focus:border-orange-500 transition-all"
                   value={neighborhoodSearch}
                   onChange={(e) => setNeighborhoodSearch(e.target.value)}
@@ -247,7 +249,7 @@ export const TopBar = memo(function TopBar() {
                 </div>
                 <div className="text-left">
                   <p className="text-sm font-black text-slate-900 italic">Usar localização atual</p>
-                  <p className="text-[10px] font-bold text-slate-400 uppercase tracking-widest">Ativar GPS do dispositivo</p>
+                  <p className="text-[10px] font-bold text-slate-400 uppercase tracking-widest">Permitir acesso à localização do dispositivo</p>
                 </div>
               </button>
               

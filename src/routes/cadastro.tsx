@@ -70,7 +70,7 @@ function RegistrationPage() {
     // Check for duplicate document in existing merchants
     const isDuplicate = merchants.some(m => m.document.replace(/\D/g, '') === formData.document.replace(/\D/g, ''));
     if (isDuplicate) {
-      toast.error("Este CPF/CNPJ já possui uma loja cadastrada em nossa base.");
+      toast.error("Já existe um negócio cadastrado com este CPF ou CNPJ. Confira o número informado ou fale com o suporte.");
       return;
     }
 
@@ -86,10 +86,10 @@ function RegistrationPage() {
           <CheckCircle2 className="h-12 w-12 text-emerald-600" />
         </div>
         <h1 className="text-4xl font-black text-slate-900 mb-4 leading-tight tracking-tighter">
-          Tudo certo! <br /> <span className="text-orange-600">Sua loja está na fila.</span>
+          Cadastro recebido! <br /> <span className="text-orange-600">Agora faremos a análise.</span>
         </h1>
         <p className="text-slate-500 mb-12 max-w-xs leading-relaxed font-medium text-lg">
-          Seu negócio foi cadastrado para análise. Em breve ele estará visível para todos no bairro.
+          Recebemos as informações do seu negócio. A publicação acontecerá depois da análise do cadastro.
         </p>
         <div className="flex flex-col w-full max-w-sm gap-4">
           <Button 
@@ -136,7 +136,7 @@ function RegistrationPage() {
                 Anuncie no <Logo className="inline-flex h-10 ml-2" />
               </h1>
               <p className="text-slate-500 text-lg md:text-xl font-medium mt-6 max-w-xl leading-relaxed">
-                Junte-se a centenas de comerciantes locais e comece a atrair clientes qualificados hoje mesmo.
+                Cadastre seu negócio para ser encontrado por moradores que procuram lojas e serviços em Araruama.
               </p>
             </div>
             
@@ -164,7 +164,7 @@ function RegistrationPage() {
           <section className="bg-white rounded-[2.5rem] p-8 md:p-12 border border-slate-100 shadow-sm space-y-8">
             <h2 className="text-xs font-black uppercase tracking-[0.3em] text-orange-600 flex items-center gap-3">
               <Store className="h-5 w-5" />
-              Informações da Loja
+              Informações do negócio
             </h2>
             
             <div className="space-y-3">
@@ -459,7 +459,7 @@ function RegistrationPage() {
             type="submit" 
             className="w-full h-20 rounded-[2rem] text-xl font-black bg-slate-900 hover:bg-slate-800 text-white shadow-2xl shadow-slate-200 hover:scale-[1.02] active:scale-95 transition-all"
           >
-            Finalizar e Cadastrar Loja
+            Enviar cadastro para análise
           </Button>
         </form>
       </main>

@@ -11,7 +11,7 @@ export function Footer() {
         <div className="flex flex-col items-center md:items-start text-center md:text-left gap-4">
           <Logo dark />
           <p className="text-slate-400 font-medium max-w-xs">
-            O Ecossistema Digital da Comunidade. Conectando pessoas, negócios e oportunidades.
+            Encontre negócios, serviços, notícias e iniciativas da comunidade de Araruama em um só lugar.
           </p>
           <div className="mt-4 space-y-1">
             <p className="text-[10px] font-black uppercase tracking-widest text-slate-500">Uma solução Hubia Connect</p>

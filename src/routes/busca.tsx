@@ -137,7 +137,8 @@ function SearchPage() {
               <Search className="absolute left-6 top-1/2 -translate-y-1/2 w-6 h-6 text-slate-400 group-focus-within:text-orange-600 transition-colors" />
               <input 
                 type="text" 
-                placeholder="O que você procura hoje?" 
+                placeholder="Busque por nome, categoria ou bairro" 
+                aria-label="Buscar por nome, categoria ou bairro"
                 className="w-full bg-white border-2 border-slate-100 rounded-3xl py-6 pl-16 pr-20 text-xl font-black text-slate-900 placeholder:text-slate-400 outline-none focus:border-orange-600 focus:ring-4 focus:ring-orange-600/5 transition-all shadow-sm"
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
@@ -178,7 +179,7 @@ function SearchPage() {
 
           
           <p className="mt-4 text-slate-500 font-medium">
-            {isLoading ? "Buscando..." : `${totalResults} resultados encontrados para "${q || "todos"}"`}
+            {isLoading ? "Procurando lojas, serviços e notícias..." : `${totalResults} ${totalResults === 1 ? "resultado encontrado" : "resultados encontrados"} para "${q || "sua busca"}"`}
           </p>
         </header>
 
@@ -320,9 +321,9 @@ function SearchPage() {
                 <div className="w-24 h-24 bg-orange-50 rounded-full flex items-center justify-center mx-auto mb-6">
                   <Search className="w-10 h-10 text-orange-600" />
                 </div>
-                <h3 className="text-3xl font-black text-slate-900 mb-2 tracking-tighter italic">Não encontramos resultados</h3>
+                <h3 className="text-3xl font-black text-slate-900 mb-2 tracking-tighter italic">Nenhum resultado para esta busca</h3>
                 <p className="text-slate-500 font-medium max-w-sm mx-auto mb-12 leading-relaxed">
-                  Tente outro termo ou explore as categorias populares abaixo.
+                  Confira a escrita, tente um termo mais curto ou escolha uma das sugestões abaixo.
                 </p>
                 
                 <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-12">
@@ -347,7 +348,7 @@ function SearchPage() {
                   onClick={() => { setSearchTerm(""); navigate({ to: "/busca", search: { q: "" } }); }}
                   className="bg-slate-900 hover:bg-slate-800 text-white rounded-2xl h-14 px-8 font-black transition-all"
                 >
-                  Ver Tudo
+                  Limpar busca
                 </Button>
               </div>
 

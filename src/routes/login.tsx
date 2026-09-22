@@ -36,12 +36,12 @@ function LoginPage() {
     });
     
     if (error) {
-      toast.error(error.message || "Credenciais inválidas.");
+      toast.error("Não foi possível entrar. Confira seu e-mail e sua senha e tente novamente.");
       return;
     }
     
     if (data.user) {
-      toast.success(`Bem-vindo!`);
+      toast.success("Login realizado. Abrindo seu painel...");
       navigate({ to: "/painel" });
     }
   };
@@ -53,9 +53,9 @@ function LoginPage() {
     });
     
     if (error) {
-      toast.error(error.message);
+      toast.error("Não foi possível enviar o link. Confira o e-mail informado e tente novamente.");
     } else {
-      toast.success("E-mail de recuperação enviado!");
+      toast.success("Se o e-mail estiver cadastrado, você receberá um link para redefinir sua senha.");
       setShowRecovery(false);
     }
   };
@@ -77,13 +77,13 @@ function LoginPage() {
           {showRecovery ? (
             <div className="space-y-6 animate-in fade-in slide-in-from-right-4 duration-300">
               <div className="flex items-center justify-between mb-2">
-                <h2 className="text-2xl font-black text-slate-900 tracking-tighter">Recuperar Senha</h2>
+                <h2 className="text-2xl font-black text-slate-900 tracking-tighter">Redefinir senha</h2>
                 <button onClick={() => setShowRecovery(false)} className="p-2 hover:bg-slate-50 rounded-full transition-colors">
                   <X className="w-5 h-5 text-slate-400" />
                 </button>
               </div>
               <p className="text-sm text-slate-500 font-medium leading-relaxed">
-                Digite seu e-mail para receber um link de recuperação.
+                Informe o e-mail da sua conta. Enviaremos um link para você criar uma nova senha.
               </p>
               <form onSubmit={handleRecovery} className="space-y-6">
                 <div className="space-y-2">
@@ -101,15 +101,15 @@ function LoginPage() {
                   </div>
                 </div>
                 <Button type="submit" className="w-full h-14 rounded-2xl bg-slate-900 text-white font-black transition-all">
-                  Enviar Link
+                  Enviar link de redefinição
                 </Button>
               </form>
             </div>
           ) : (
             <div className="space-y-8 animate-in fade-in slide-in-from-left-4 duration-300">
               <div>
-                <h2 className="text-3xl font-black text-slate-900 tracking-tighter">Login</h2>
-                <p className="text-slate-500 font-medium mt-1">Acesse seu painel Axêi.</p>
+                <h2 className="text-3xl font-black text-slate-900 tracking-tighter">Entre na sua conta</h2>
+                <p className="text-slate-500 font-medium mt-1">Acesse seus favoritos e recursos do painel Axêi.</p>
               </div>
 
               <form onSubmit={handleLogin} className="space-y-6">

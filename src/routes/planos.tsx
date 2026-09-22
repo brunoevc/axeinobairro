@@ -41,7 +41,7 @@ function Planos() {
             <span className="text-orange-600">presença e impacto</span>
           </h1>
           <p className="text-xl text-slate-500 font-medium max-w-2xl mx-auto leading-relaxed">
-            Seja você um morador ativo, um negócio local ou um grande parceiro, temos o plano ideal para você crescer conosco.
+            Compare os recursos para moradores, negócios locais e parceiros e escolha a opção adequada ao seu objetivo.
           </p>
         </header>
 
@@ -53,7 +53,7 @@ function Planos() {
             </div>
             <div>
               <h2 className="text-2xl font-black text-slate-900 leading-none">Negócios & Serviços</h2>
-              <p className="text-slate-500 font-medium text-sm mt-1">Para quem quer vender mais e ser referência no bairro.</p>
+              <p className="text-slate-500 font-medium text-sm mt-1">Para quem quer ampliar a presença do negócio no bairro.</p>
             </div>
           </div>
 
@@ -86,7 +86,7 @@ function Planos() {
 
             {/* Destaque */}
             <div className="bg-white p-8 rounded-[2.5rem] border-4 border-orange-500 shadow-xl shadow-orange-100 flex flex-col relative scale-105 z-10">
-              <div className="absolute -top-5 left-1/2 -translate-x-1/2 bg-orange-500 text-white text-[10px] font-black px-4 py-1.5 rounded-full uppercase tracking-widest shadow-lg">Mais Procurado</div>
+              <div className="absolute -top-5 left-1/2 -translate-x-1/2 bg-orange-500 text-white text-[10px] font-black px-4 py-1.5 rounded-full uppercase tracking-widest shadow-lg">Plano em destaque</div>
               <div className="mb-8">
                 <h3 className="text-xl font-black text-orange-600 mb-2">Destaque</h3>
                 <div className="flex items-baseline gap-1">
@@ -202,7 +202,7 @@ function Planos() {
                <div className="bg-slate-50 p-8 rounded-[2.5rem] border border-slate-100 space-y-6">
                   <div className="p-4 bg-white rounded-2xl shadow-sm border border-slate-100">
                     <div className="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-1">Exposição</div>
-                    <div className="text-sm font-bold text-slate-900 leading-tight">Sua marca para +15.000 moradores mensais.</div>
+                    <div className="text-sm font-bold text-slate-900 leading-tight">Presença da sua marca nos espaços previstos para patrocinadores.</div>
                   </div>
                   <div className="p-4 bg-white rounded-2xl shadow-sm border border-slate-100">
                     <div className="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-1">Autoridade</div>
@@ -269,7 +269,7 @@ function Planos() {
             Trabalhe com o Axêi no <span className="text-orange-600">Seu Bairro</span>
           </h2>
           <p className="text-lg text-slate-500 font-medium max-w-2xl mx-auto mb-10 leading-relaxed">
-            Seja um representante oficial, ajude a digitalizar os negócios da sua região e construa uma renda recorrente sólida.
+            Conheça o programa para representantes que desejam apoiar a presença digital de negócios da sua região.
           </p>
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
             <Button asChild className="h-16 px-10 bg-slate-900 hover:bg-slate-800 text-white rounded-2xl font-black text-lg shadow-xl">

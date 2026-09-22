@@ -150,14 +150,14 @@ function Index() {
             <section className="bg-white rounded-[2.5rem] border border-slate-100 p-8 md:p-16 flex flex-col md:flex-row items-center gap-12 relative overflow-hidden shadow-sm">
               <div className="flex-1 relative z-10">
                 <Badge className="mb-6 bg-orange-50 text-orange-600 border border-orange-100 px-4 py-1 text-[10px] font-black uppercase tracking-widest rounded-full">
-                  Portal de Descoberta Local
+                  Seu guia local em Araruama
                 </Badge>
                 <h1 className="text-4xl md:text-6xl font-black text-slate-900 mb-6 leading-[0.95] tracking-tight">
-                  Tudo que você precisa,<br />
-                  <span className="text-orange-500">pertinho de você.</span>
+                  Encontre o que seu bairro oferece,<br />
+                  <span className="text-orange-500">perto de você.</span>
                 </h1>
                 <p className="text-lg text-slate-500 mb-10 font-medium max-w-xl">
-                  Comércio, serviços, notícias, eventos e comunidades locais em um só lugar.
+                  Descubra comércios, contrate serviços e acompanhe notícias, eventos e comunidades de Araruama em um só lugar.
                 </p>
 
                 <form onSubmit={handleSearch} className="max-w-2xl mb-8">
@@ -166,7 +166,8 @@ function Index() {
                       <Search className="absolute left-6 w-5 h-5 text-slate-400" />
                       <input 
                         type="text" 
-                        placeholder="O que você procura hoje?" 
+                        placeholder="Busque por loja, serviço ou notícia" 
+                        aria-label="Buscar lojas, serviços e notícias"
                         className="w-full bg-transparent border-none py-4 pl-14 pr-4 text-slate-900 placeholder:text-slate-400 font-bold outline-none focus:ring-0"
                         value={searchTerm}
                         onChange={(e) => setSearchTerm(e.target.value)}
@@ -220,7 +221,7 @@ function Index() {
                   <h2 className="text-xl font-black text-slate-900 tracking-tight italic">Acontecendo Agora</h2>
                 </div>
                 <Link to="/noticias" className="text-[10px] font-black uppercase tracking-widest text-slate-400 hover:text-orange-600 transition-colors">
-                  Ver Feed Completo
+                  Ver todas as notícias
                 </Link>
               </div>
               
@@ -261,8 +262,8 @@ function Index() {
             <section>
               <div className="flex flex-col md:flex-row md:items-end justify-between mb-10 gap-4">
                 <div>
-                  <h2 className="text-3xl font-black text-slate-900 tracking-tighter leading-none">Destaques do Bairro</h2>
-                  <p className="text-slate-500 text-lg font-medium mt-3">Os negócios e profissionais mais recomendados da região.</p>
+                  <h2 className="text-3xl font-black text-slate-900 tracking-tighter leading-none">Negócios e serviços em destaque</h2>
+                  <p className="text-slate-500 text-lg font-medium mt-3">Conheça opções locais para comprar, contratar e resolver o que você precisa.</p>
                 </div>
                 <div className="flex gap-2">
                    <Button variant="outline" onClick={() => navigate({ to: '/negocios' })} className="rounded-full font-black text-[10px] uppercase tracking-widest h-10 px-6 border-slate-200 text-slate-600 hover:bg-slate-50">Lojas</Button>
@@ -306,7 +307,7 @@ function Index() {
                           className="p-0 h-auto text-[10px] font-black uppercase tracking-widest text-orange-600 hover:text-orange-700"
                           onClick={() => navigate({ to: item.type === 'merchant' ? '/negocios' : '/servicos' })}
                         >
-                          Ver Detalhes
+                          Conhecer negócio
                         </Button>
                         <div className="flex items-center gap-1.5 text-emerald-500">
                           <div className="w-1.5 h-1.5 rounded-full bg-current" />
@@ -323,8 +324,8 @@ function Index() {
             <section className="bg-white rounded-[3rem] border border-slate-100 p-10">
               <div className="flex flex-col md:flex-row md:items-center justify-between mb-12 gap-6">
                 <div>
-                  <h2 className="text-3xl font-black text-slate-900 tracking-tighter italic">Voz da Comunidade</h2>
-                  <p className="text-slate-500 font-medium mt-2">Grupos e associações que fazem a diferença.</p>
+                  <h2 className="text-3xl font-black text-slate-900 tracking-tighter italic">Comunidades de Araruama</h2>
+                  <p className="text-slate-500 font-medium mt-2">Acompanhe grupos e associações que atuam no seu bairro.</p>
                 </div>
                 <Button onClick={() => navigate({ to: '/comunidades' })} className="bg-slate-900 hover:bg-slate-800 text-white rounded-full h-12 px-8 font-black text-xs uppercase tracking-widest shadow-xl">
                   Explorar Comunidades
