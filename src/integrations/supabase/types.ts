@@ -99,11 +99,16 @@ export type Database = {
           content: string
           created_at: string | null
           excerpt: string | null
+          external_id: string | null
           id: string
           image_url: string | null
           is_featured: boolean | null
           neighborhood: string
+          publication_status: string
           published_at: string | null
+          rss_source_id: string | null
+          source_name: string | null
+          source_url: string | null
           title: string
           updated_at: string | null
         }
@@ -113,11 +118,16 @@ export type Database = {
           content: string
           created_at?: string | null
           excerpt?: string | null
+          external_id?: string | null
           id?: string
           image_url?: string | null
           is_featured?: boolean | null
           neighborhood: string
+          publication_status?: string
           published_at?: string | null
+          rss_source_id?: string | null
+          source_name?: string | null
+          source_url?: string | null
           title: string
           updated_at?: string | null
         }
@@ -127,15 +137,28 @@ export type Database = {
           content?: string
           created_at?: string | null
           excerpt?: string | null
+          external_id?: string | null
           id?: string
           image_url?: string | null
           is_featured?: boolean | null
           neighborhood?: string
+          publication_status?: string
           published_at?: string | null
+          rss_source_id?: string | null
+          source_name?: string | null
+          source_url?: string | null
           title?: string
           updated_at?: string | null
         }
-        Relationships: []
+        Relationships: [
+          {
+            foreignKeyName: "news_rss_source_id_fkey"
+            columns: ["rss_source_id"]
+            isOneToOne: false
+            referencedRelation: "rss_sources"
+            referencedColumns: ["id"]
+          },
+        ]
       }
       profiles: {
         Row: {
@@ -178,6 +201,86 @@ export type Database = {
           updated_at?: string | null
         }
         Relationships: []
+      }
+      rss_sources: {
+        Row: {
+          created_at: string
+          default_category: string
+          feed_url: string
+          id: string
+          is_active: boolean
+          last_error: string | null
+          last_synced_at: string | null
+          name: string
+          publication_mode: string
+          updated_at: string
+        }
+        Insert: {
+          created_at?: string
+          default_category?: string
+          feed_url: string
+          id?: string
+          is_active?: boolean
+          last_error?: string | null
+          last_synced_at?: string | null
+          name: string
+          publication_mode?: string
+          updated_at?: string
+        }
+        Update: {
+          created_at?: string
+          default_category?: string
+          feed_url?: string
+          id?: string
+          is_active?: boolean
+          last_error?: string | null
+          last_synced_at?: string | null
+          name?: string
+          publication_mode?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      rss_sync_runs: {
+        Row: {
+          error_message: string | null
+          finished_at: string | null
+          id: string
+          imported_count: number
+          skipped_count: number
+          source_id: string | null
+          started_at: string
+          status: string
+        }
+        Insert: {
+          error_message?: string | null
+          finished_at?: string | null
+          id?: string
+          imported_count?: number
+          skipped_count?: number
+          source_id?: string | null
+          started_at?: string
+          status: string
+        }
+        Update: {
+          error_message?: string | null
+          finished_at?: string | null
+          id?: string
+          imported_count?: number
+          skipped_count?: number
+          source_id?: string | null
+          started_at?: string
+          status?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "rss_sync_runs_source_id_fkey"
+            columns: ["source_id"]
+            isOneToOne: false
+            referencedRelation: "rss_sources"
+            referencedColumns: ["id"]
+          },
+        ]
       }
       user_roles: {
         Row: {
